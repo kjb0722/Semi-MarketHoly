@@ -19,9 +19,16 @@
 	이메일* <input type="text" name="email">
 	<input type="button" value="이메일중복확인">
 	<br>
-	생년월일*<input type="text" name="birth"> ex) YYYYMMDD<br> 
 	전화번호*<input type="text" name="phone"><br>
-	주소*<input type="text" name ="addr"><br>
+	배송 주소*<input type="text" name ="addr"><br>
+	<form>
+	성별<input type="radio" name="gender" value="male" >남자
+	<input type="radio" name="gender" value="female" >여자<br>
+	</form>
+	
+	생년월일*<input type="text" name="birth"> ex) YYYYMMDD<br> 
+	
+	
 	<input type="submit" value="가입하기">
 </form>
 </body>
