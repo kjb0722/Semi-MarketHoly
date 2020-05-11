@@ -16,6 +16,6 @@ public class MainController extends HttpServlet{
 		ServletContext app = req.getServletContext();
 		String cp = req.getContextPath();
 		app.setAttribute("cp", cp);
-		resp.sendRedirect(cp+"/index.jsp");
+		resp.sendRedirect(cp+"/index.jsp"); 
 	}
 }

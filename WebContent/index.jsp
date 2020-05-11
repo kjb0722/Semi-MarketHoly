@@ -9,9 +9,16 @@
 <link rel="stylesheet" href="${cp }/bootstrap/css/bootstrap.min.css">
 <title>마켓 홀리쉣</title>
 <style>
-	.carousel-inner > .item > img{
-		height: 600px;
-	}
+.carousel-inner>.item>img {
+	margin: 0 auto;
+	height: 300px;
+}
+
+.navbar>a>img {
+	margin: 0 auto;
+	width: 100%;
+	height: 100px;
+}
 </style>
 </head>
 <body>
@@ -22,11 +29,43 @@
 				<li><a href="">로그인</a></li>
 				<li><a href="">관리자</a></li>
 			</ul>
+			<a href="${cp }/main.do"><img src="img/img1.jpg" alt="Logo"></a>
 		</div>
-		
+		<nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
 	</header>
 
-	<section class="container"></section>
+	<section class="container">
 		<div id="carousel-example-generic" class="carousel slide"
 			data-ride="carousel">
 			<ol class="carousel-indicators">
@@ -64,6 +103,7 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
+	</section>
 	<footer class="container"> </footer>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="${cp }/bootstrap/js/bootstrap.min.js"></script>
