@@ -14,14 +14,6 @@ import javax.servlet.annotation.WebFilter;
  */
 @WebFilter("/encoding")
 public class encoding implements Filter {
-
-    /**
-     * Default constructor. 
-     */
-    public encoding() {
-        // TODO Auto-generated constructor stub
-    }
-
 	/**
 	 * @see Filter#destroy()
 	 */
