@@ -1,4 +1,4 @@
-package market.controller;
+package com.market.member.controller;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package market.controller;
+package com.market.product.controller;
 
 import javax.servlet.http.HttpServlet;
 

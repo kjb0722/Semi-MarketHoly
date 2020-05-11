@@ -1,4 +1,4 @@
-package market.dto;
+package com.market.product.dto;
 
 import java.util.Vector;
 
