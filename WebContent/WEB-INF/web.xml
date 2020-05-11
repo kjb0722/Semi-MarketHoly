@@ -3,11 +3,12 @@
   <display-name>Semi-MarketHoly</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
     <!-- 필터 설정 -->
   <filter>
   	<filter-name>encodingFilter</filter-name>
-  	<filter-class>test.filter.EncodingFilter</filter-class>
+  	<filter-class>market.filter.Encoding</filter-class>
   	<!-- 필터에 초기화 파라미터 전달 -->
   	<init-param>
   		<param-name>encoding</param-name>
