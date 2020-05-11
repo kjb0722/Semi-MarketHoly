@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("/Encoding")
 public class Encoding implements Filter {
 	
-	String encoding;
+	String encoding; 
 	
 	/**
 	 * @see Filter#destroy()
