@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.market.db.JDBCUtil;
 import com.market.member.dto.MemberDto;
 
+import hyo.db.JDBCUtill;
 import jdk.nashorn.api.scripting.JSObject;
 
 public class MemberDao {
@@ -45,7 +46,7 @@ public class MemberDao {
 			se.printStackTrace();
 			return check;	
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			JDBCUtill.close(rs, pstmt, con);
 		}
 		
 	}
