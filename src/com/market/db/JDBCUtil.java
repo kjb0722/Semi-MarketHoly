@@ -19,7 +19,7 @@ public class JDBCUtil {
 			return null;
 		}
 	}
-	
+	 
 	public static void close(ResultSet rs, Statement stmt, Connection con) {
 		try {
 			if(rs!=null) rs.close();
