@@ -53,17 +53,25 @@ CREATE TABLE common
 CREATE TABLE member
 (
 	num number NOT NULL,
-	id varchar2(25),
-	pwd varchar2(25),
-	name varchar2(30),
+	id varchar2(50),
+	pwd varchar2(50),
+	name varchar2(50),
 	rating number,
+<<<<<<< HEAD
 	email varchar2(40),
 	birth varchar2(30),
 	phone varchar2(30),
 	-- 1:ë‚¨ìž
 	-- 2:ì—¬ìž
+=======
+	email varchar2(80),
+	birth varchar2(50),
+	phone varchar2(50),
+	-- 1:³²ÀÚ
+	-- 2:¿©ÀÚ
+>>>>>>> 0cfe88e36497676724e95d899da637637b51694e
 	gender number,
-	addr varchar2(50),
+	addr varchar2(80),
 	reg_date date,
 	point number,
 	-- y:ì‚­ì œ
@@ -100,6 +108,7 @@ CREATE TABLE orders
 	-- ì¹´ë“œ ê²°ì œ
 	-- ë¬´í†µìž¥
 	pay_way number,
+	addr varchar2(100),
 	PRIMARY KEY (onum)
 );
 

@@ -20,6 +20,10 @@
 	width: 100%;
 	height: 100px;
 }
+
+footer{
+	margin-top: 100px;
+}
 </style>
 </head>
 <body>
@@ -35,11 +39,12 @@
 						<li><a href="${cp }/member/logout.do">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>
-				<c:if test="${sessionScope.rating == 99 }">
-					<li><a href="/admin/main.do">관리자</a></li>				
-				</c:if>
+				<%-- <c:if test="${sessionScope.rating == 99 }">
+					<li><a href="/admin/admin.do">관리자</a></li>				
+				</c:if> --%>
+				<li><a href="${cp }/admin/admin.do">관리자</a></li>
 			</ul>
-			<a href="${cp }/main.do"><img src="img/logo.png" alt="Logo"></a>
+			<a href="${cp }/main.do"><img src="${cp }/img/logo.png" alt="Logo"></a>
 		</div>
 		<nav class="navbar navbar-default">
 			<div class="container">
@@ -69,7 +74,7 @@
 
 	<section class="container">
 		<c:choose>
-			<c:when test="${page == null }">
+			<c:when test="${param.page == null }">
 				<div id="carousel-example-generic" class="carousel slide"
 					data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -112,7 +117,7 @@
 				</div>
 			</c:when>	
 			<c:otherwise>
-				<jsp:include page="${page }"></jsp:include>
+				<jsp:include page="/${param.page }"></jsp:include>
 			</c:otherwise>	
 		</c:choose>
 	</section>

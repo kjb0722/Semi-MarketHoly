@@ -29,6 +29,7 @@
 <div id="3">
 
 	<h1 >주문자 정보</h1>
+		
 		보내는 사람*  <input type="text" id="sender" value="${MemberDto.getName}">
 		<br>
 		휴대폰* <input type="text" name="phone" value="${MemberDto.getPhone}">
