@@ -19,7 +19,7 @@ public class IdCheckController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String id = req.getParameter("id");
-		 
+		  
 		MemberDao dao = MemberDao.getInstance();
 		boolean check = dao.checkId(id);
 		JSONObject json = new JSONObject();

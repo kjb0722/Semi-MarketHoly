@@ -18,7 +18,7 @@ public class EmailCheckController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = req.getParameter("email");
-		 
+		  
 		MemberDao dao = MemberDao.getInstance();
 		boolean check = dao.checkEmail(email);
 		JSONObject json = new JSONObject();

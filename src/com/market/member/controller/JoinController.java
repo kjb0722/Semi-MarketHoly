@@ -28,7 +28,7 @@ public class JoinController extends HttpServlet{
 		String phone = req.getParameter("phone");
 		String gender = req.getParameter("gender");
 		String addr= req.getParameter("addr");
-	 
+	  
 		MemberDto dto = new MemberDto(0, id, pwd, name, 10, email, birth, phone, Integer.parseInt(gender), addr, null, 1000, "N", null);
 		
 		//일반회원 rating은 10입니다.

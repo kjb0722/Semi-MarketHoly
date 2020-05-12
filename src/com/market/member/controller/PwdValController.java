@@ -18,7 +18,7 @@ public class PwdValController extends HttpServlet {
 		String pwd = req.getParameter("pwd");
 		boolean msg = false;
 		
-		 
+		  
 		if(!(pwd.length()>=6 )){		
 			msg = true;
 		}

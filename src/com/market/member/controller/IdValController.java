@@ -21,7 +21,7 @@ public class IdValController extends HttpServlet {
 		if(!(id.length()>=4 )){		
 			msg = true;
 		}
-		 
+		  
 		JSONObject json = new JSONObject();
 		json.put("msg", msg);
 		resp.setContentType("text/plain;charset=utf-8");

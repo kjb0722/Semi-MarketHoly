@@ -25,7 +25,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		boolean check = false;
-		 
+		  
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "select * from member where id =?";
