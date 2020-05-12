@@ -14,14 +14,14 @@ public class MemberDto  {
 	private int gender;
 	private String addr;
 	private Date reg_date;
-	private char del_yn;
+	private String del_yn;
 	private Date del_date;
 	private int point;
 	
 	public MemberDto() {}
 
 	public MemberDto(int num, String id, String pwd, String name, int rating, String email, String birth, String phone,
-			int gender, String addr, Date reg_date, char del_yn, Date del_date, int point) {
+			int gender, String addr, Date reg_date, String del_yn, Date del_date, int point) {
 		super();
 		this.num = num;
 		this.id = id;
@@ -118,11 +118,11 @@ public class MemberDto  {
 		this.reg_date = reg_date;
 	}
 
-	public char getDel_yn() {
+	public String getDel_yn() {
 		return del_yn;
 	}
 
-	public void setDel_yn(char del_yn) {
+	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
 

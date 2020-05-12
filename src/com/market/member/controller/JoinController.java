@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.market.member.dao.MemberDao;
 import com.market.member.dto.MemberDto;
 
-import test.dao.CommentsDao;
+
 
 
 @WebServlet("/members/join.do")
@@ -20,7 +20,7 @@ public class JoinController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		int num =1;
+	
 		
 		String id = req.getParameter("id");
 		String pwd = req.getParameter("pwd");
@@ -31,19 +31,17 @@ public class JoinController extends HttpServlet{
 		String gender = req.getParameter("gender");
 		String addr= req.getParameter("addr");
 	
-		MemberDto dto = new MemberDto();
-		dto.setId(id);
-		dto.setPwd(pwd);
-		dto.setName(name);
-		dto.setEmail(email);
-		dto.setBirth(birth);
-		dto.setPhone(phone);
-		dto.setGender(Integer.parseInt("gender"));
-		dto.setAddr(addr);
-		
+		MemberDto dto = new MemberDto(0,id,pwd,name,10,email,birth,phone,Integer.parseInt(gender),addr,null,"N",null,1000);
+		//일반회원 rating은 10입니다.
+		//기본포인트 1000원
 		
 		MemberDao dao = MemberDao.getInstance();
 		int n = dao.join(dto);
-		
+		String code = "success";
+		if(n<=0) {
+			code="fail";
+		}
+		req.setAttribute("code", code);
+		req.getRequestDispatcher("/member/result.jsp").forward(req, resp);
 	}
 }
