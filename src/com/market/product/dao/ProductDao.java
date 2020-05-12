@@ -91,8 +91,9 @@ public class ProductDao {
 						price,stock,type,thumb_org,thumb_save,description,null,null,del_yn);
 				
 			}
-			
+			 
 			return list;
+			
 			
 		}catch(SQLException se) {
 			se.getStackTrace();

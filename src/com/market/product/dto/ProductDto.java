@@ -16,10 +16,10 @@ public class ProductDto {
 	String description;
 	String detail_org;
 	String detail_save;
-	char del_yn;
+	String del_yn;
 	public ProductDto(int pnum, int cnum, int cartnum, String name, Date reg_date, int price, int stock, int type,
 			String thumb_org, String thumb_save, String description, String detail_org, String detail_save,
-			char del_yn) {
+			String del_yn) {
 		super();
 		this.pnum = pnum;
 		this.cnum = cnum;
@@ -114,10 +114,10 @@ public class ProductDto {
 	public void setDetail_save(String detail_save) {
 		this.detail_save = detail_save;
 	}
-	public char getDel_yn() {
+	public String getDel_yn() {
 		return del_yn;
 	}
-	public void setDel_yn(char del_yn) {
+	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
 		
