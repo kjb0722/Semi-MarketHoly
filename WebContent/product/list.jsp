@@ -23,7 +23,7 @@
 <h3>카테고리 타입</h3>
 <h3>카테고리 번호</h3>
 <select name="list_filter">
-	<option value="신상품순">신상품순</option>
+	<option value="신상품순">신상품순1</option>
 	<option value="인기상품순">인기상품순</option>
 	<option value="낮은가격순">낮은가격순</option>
 	<option value="높은가격순">높은가격순</option>
