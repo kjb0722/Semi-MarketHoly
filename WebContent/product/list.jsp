@@ -22,26 +22,31 @@
 <h1>상품목록</h1>
 <h3>카테고리 타입</h3>
 <h3>카테고리 번호</h3>
-<select name="list_filter">
-	<option value="신상품순">신상품순1</option>
-	<option value="인기상품순">인기상품순</option>
-	<option value="낮은가격순">낮은가격순</option>
-	<option value="높은가격순">높은가격순</option>
-</select>
+<form action="${pageContext.request.contextPath }/product/list.do"
+		method="post">
+		<select name="list_filter" size="1">
+			<option value="new" <c:if test="${list_filter=='new' }">selected</c:if>>신상품순</option>
+			<option value="best"<c:if test="${op=='best' }">selected</c:if>>인기상품순</option>
+			<option value="lowprice"<c:if test="${op=='lowprice' }">selected</c:if>>낮은가격순</option>
+			<option value="highprice"<c:if test="${op=='highprice' }">selected</c:if>>높은가격순</option>
+		</select>
+		 <input type="submit" value="검색">
+	</form>	
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
 		
 		<!-- for문돌려서 상품리스트 가져오기 -->
-		<c:forEach var="dto" items="${requestScope.list }">
+		<c:forEach var="pro" items="${requestScope.list }">
 			<tr>
-				<td>${dto.thumb_save}</td>
+				<td>${pro.thumb_save}</td>
 				<td><input type="button" id="incart" value="담기(아이콘)">
-				<td>${dto.name}</td>
-				<td>${dto.price }</td>
-				<td>${dto.description }</td>
+				<td>${pro.name}</td>
+				<td>${pro.price }</td>
+				<td>${pro.description }</td>
 				<c:set var="cp" value="${pageContext.request.contextPath }" />
-				<td><a href="${cp }/board/view.do?num=${vo.num}">${vo.title }</a></td>
+				<td><a href="${cp }/product/detail.do?pnum=${vo.pnum}">${vo.name }</a></td>
 			</tr>
 		</c:forEach>
 		</div>
@@ -49,26 +54,26 @@
 	</div>
 	<!-- 페이징 -->
 	<div>
-		<c:if test="${startPageNum>4}">
-			<a href="${cp }/board/list.do?pageNum=${startPageNum-1}">[이전]</a>
+		<c:if test="${startPageNum>5}">
+			<a href="${cp }/product/list.do?pageNum=${startPageNum-1}">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 			<c:choose>
 				<c:when test="${i==pageNum }">
-					<a href="${cp }/board/list.do?pageNum=${i}&filed=${field}&keyword=${keyword}"> <span
+					<a href="${cp }/product/list.do?pageNum=${i}&field=${field}&keyword=${keyword}"> <span
 						style='color: lightsalmon'>[${i}]</span></a>
 				</c:when>
 				<c:otherwise>
-					<a href="${cp }/board/list.do?pageNum=${i}&filed=${field}&keyword=${keyword}"> <span
+					<a href="${cp }/product/list.do?pageNum=${i}&field=${field}&keyword=${keyword}"> <span
 						style='color: gray'>[${i}]</span></a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${pageCount>endPageNum}">
-			<a href="${cp }/board/list.do?pageNum=${endPageNum+1}">[다음]</a>
+			<a href="${cp }/product/list.do?pageNum=${endPageNum+1}">[다음]</a>
 		</c:if>
 	</div>
 </div>
-				
+
 </body>
 </html>
