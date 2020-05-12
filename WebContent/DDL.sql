@@ -100,6 +100,7 @@ CREATE TABLE orders
 	-- 카드 결제
 	-- 무통장
 	pay_way number,
+	addr varchar2(100),
 	PRIMARY KEY (onum)
 );
 
