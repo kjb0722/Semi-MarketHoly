@@ -2,6 +2,7 @@ package com.market.member.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.market.member.dto.MemberDto;
 
@@ -17,7 +18,12 @@ public class MemberDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
-		
+		try {
+			
+			
+			
+			
+		}catch(SQLException se)
 	}
 	
 	
