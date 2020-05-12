@@ -12,7 +12,7 @@
 <h1>회원가입</h1>
 <br>
 *필수 입력사항
-
+ 
 <form method="post" action="${pageContext.request.contextPath }/member/join.do">
 	아이디* <input type="text" name="id" id="id" onkeyup="idvalidate()" >
 	<input type="button" value="중복체크" onclick="idcheck()">

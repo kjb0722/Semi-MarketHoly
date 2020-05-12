@@ -15,7 +15,7 @@
 	주문하실 상품명 및 수량을 정확하게 확인해 주세요.
 </div>
 <br>
-
+ 
 <form action="">
 <div id="2">
 	<table border="1" width="500">

@@ -17,5 +17,5 @@
 		<h1>회원가입실패!!!</h1>
 	</c:otherwise>
 </c:choose>
-</body>
+</body> 
 </html>

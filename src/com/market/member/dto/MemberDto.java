@@ -17,7 +17,7 @@ public class MemberDto  {
 	private int point;
 	private String del_yn;
 	private Date del_date;
-	
+	 
 	public MemberDto() {}
 	
 	public MemberDto(int num, String id, String pwd, String name, int rating, String email, String birth, String phone,

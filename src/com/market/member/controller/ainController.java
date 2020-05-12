@@ -17,5 +17,5 @@ public class ainController extends HttpServlet {
 		ServletContext application = req.getServletContext();
 		application.setAttribute("cp", contextPath);
 		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/join.jsp");
-	}
+	} 
 }
