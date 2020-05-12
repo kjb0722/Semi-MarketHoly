@@ -11,7 +11,11 @@
 	//장바구니 버튼 누르면 cart.do로 이동해서 pnum,수량,세션에 있는 아이디 넘겨주기(로그인 안되어있으면 login.do로)
 %>
 <script>
-	function () {
+	function getList() {
+		
+	}
+	
+	function result(){
 		
 	}
 </script>
