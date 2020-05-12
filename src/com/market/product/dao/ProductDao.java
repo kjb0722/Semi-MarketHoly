@@ -69,6 +69,7 @@ public class ProductDao {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		ArrayList<ProductDto> list=new ArrayList<ProductDto>();
 		try {
 			con=JDBCUtil.getConn();
 			String sql="select * from product p,category c where p.cnum=c.cnum";
@@ -87,13 +88,12 @@ public class ProductDao {
 				String thumb_save=rs.getString("thumb_save");
 				String description=rs.getString("description");
 				String del_yn=rs.getString("del_yn");
-				ProductDto list=new ProductDto(pnum,cnum,cartnum,name,reg_date,
-						price,stock,type,thumb_org,thumb_save,description,null,null,del_yn);
+				list.add(new ProductDto(pnum,cnum,cartnum,name,reg_date,
+						price,stock,type,thumb_org,thumb_save,description,null,null,del_yn));
 				
 			}
-			 
 			return list;
-			
+		
 			
 		}catch(SQLException se) {
 			se.getStackTrace();
