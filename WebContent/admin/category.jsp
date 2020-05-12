@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
-	method="get">
+	method="get" onsubmit="return catChk()">
 	<span class="label label-success">카테고리</span><br> <input
 		type="text" class="form-control" placeholder="카테고리를 입력하세요."
 		name="catName" maxlength="10">
@@ -11,7 +11,7 @@
 </form>
 <br>
 <form class="form-inline" role="form"
-	action="${cp }/admin/catTypeAdd.do" method="get">
+	action="${cp }/admin/catTypeAdd.do" method="get" onsubmit="return catTypeChk()">
 	<span class="label label-success">종류</span><br> <select name="cat"
 		class="form-control">
 		<c:forEach var="dto" items="${catList }">
@@ -95,5 +95,28 @@
 	
 	function delCat(catNum){
 		location = `${cp}/admin/catDel.do?catNum=${'${catNum}'}`;
+	}
+	
+	function catChk(){
+		let catName = document.getElementsByName("catName")[0].value;
+		if(catName == ""){
+			alert("카테고리명을 입력하세요.");
+			return false;
+		}
+		return true;
+	}
+	
+	function catTypeChk(){
+		let cat = document.getElementsByName("cat")[0].value;
+		if(cat == ""){
+			alert("카테고리가 없습니다.");
+			return false;
+		}
+		let catTypeName = document.getElementsByName("catTypeName")[0].value;
+		if(catTypeName == ""){
+			alert("타입명을 입력하세요.");	
+			return false;
+		}
+		return true;
 	}
 </script>

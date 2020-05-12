@@ -123,4 +123,21 @@ public class CategoryDao {
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
+
+	public int delCat(int catNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "delete from category where cnum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, catNum);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
 }

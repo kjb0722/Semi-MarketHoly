@@ -39,8 +39,8 @@ CREATE TABLE category
 	PRIMARY KEY (cnum)
 );
 
-DROP SEQUENCE seq_category_cnum;
-CREATE SEQUENCE seq_category_cnum;
+DROP SEQUENCE seq_category_cnum_type;
+CREATE SEQUENCE seq_category_cnum_type;
 
 CREATE TABLE common
 (
