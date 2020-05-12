@@ -30,7 +30,7 @@ footer{
 	<header class="container">
 		<div class="navbar">
 			<ul class="nav navbar-nav pull-right">
-				<li><a href="">회원가입</a></li>
+				<li><a href="${cp }/member/join.do">회원가입</a></li>
 				<c:choose>
 					<c:when test="${sessionScope.id == null }">
 						<li><a href="${cp }/member/login.do">로그인</a></li>						

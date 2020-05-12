@@ -87,4 +87,22 @@ public class CategoryDao {
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
+
+	public int insTypeCat(CategoryDto dto) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "insert into category values(seq_category_cnum_type.nextval,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getType());
+			pstmt.setString(2, dto.getName());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
 }
