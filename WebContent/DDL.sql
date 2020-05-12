@@ -53,17 +53,17 @@ CREATE TABLE common
 CREATE TABLE member
 (
 	num number NOT NULL,
-	id varchar2(25),
-	pwd varchar2(25),
-	name varchar2(30),
+	id varchar2(50),
+	pwd varchar2(50),
+	name varchar2(50),
 	rating number,
-	email varchar2(40),
-	birth varchar2(30),
-	phone varchar2(30),
+	email varchar2(80),
+	birth varchar2(50),
+	phone varchar2(50),
 	-- 1:남자
 	-- 2:여자
 	gender number,
-	addr varchar2(50),
+	addr varchar2(80),
 	reg_date date,
 	point number,
 	-- y:삭제

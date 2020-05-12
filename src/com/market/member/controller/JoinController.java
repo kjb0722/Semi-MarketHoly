@@ -15,13 +15,11 @@ import com.market.member.dto.MemberDto;
 
 
 
-@WebServlet("/members/join.do")
+@WebServlet("/member/join.do")
 public class JoinController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 	
-		
 		String id = req.getParameter("id");
 		String pwd = req.getParameter("pwd");
 		String name = req.getParameter("name");
@@ -31,7 +29,8 @@ public class JoinController extends HttpServlet{
 		String gender = req.getParameter("gender");
 		String addr= req.getParameter("addr");
 	
-		MemberDto dto = new MemberDto(0,id,pwd,name,10,email,birth,phone,Integer.parseInt(gender),addr,null,"N",null,1000);
+		MemberDto dto = new MemberDto(0, id, pwd, name, 10, email, birth, phone, Integer.parseInt(gender), addr, null, 1000, "N", null);
+		
 		//일반회원 rating은 10입니다.
 		//기본포인트 1000원
 		
