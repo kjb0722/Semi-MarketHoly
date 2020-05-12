@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +8,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${cp }/bootstrap/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="${cp }/bootstrap/js/bootstrap.min.js"></script>
 <title>마켓 홀리쉣</title>
 <style>
 .carousel-inner>.item>img {
@@ -21,7 +23,7 @@
 	height: 100px;
 }
 
-footer{
+footer {
 	margin-top: 100px;
 }
 </style>
@@ -33,7 +35,7 @@ footer{
 				<li><a href="${cp }/member/join.do">회원가입</a></li>
 				<c:choose>
 					<c:when test="${sessionScope.id == null }">
-						<li><a href="${cp }/member/login.do">로그인</a></li>						
+						<li><a href="${cp }/member/login.do">로그인</a></li>
 					</c:when>
 					<c:otherwise>
 						<li><a href="${cp }/member/logout.do">로그아웃</a></li>
@@ -44,7 +46,8 @@ footer{
 				</c:if> --%>
 				<li><a href="${cp }/admin/admin.do">관리자</a></li>
 			</ul>
-			<a href="${cp }/main.do"><img src="${cp }/img/logo.png" alt="Logo"></a>
+			<a href="${cp }/main.do"><img src="${cp }/img/logo.png"
+				alt="Logo"></a>
 		</div>
 		<nav class="navbar navbar-default">
 			<div class="container">
@@ -115,10 +118,10 @@ footer{
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
-			</c:when>	
+			</c:when>
 			<c:otherwise>
 				<jsp:include page="/${param.page }"></jsp:include>
-			</c:otherwise>	
+			</c:otherwise>
 		</c:choose>
 	</section>
 	<footer class="container">
@@ -137,7 +140,5 @@ footer{
 			</div>
 		</div>
 	</footer>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="${cp }/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
