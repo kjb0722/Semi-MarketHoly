@@ -65,11 +65,11 @@ CREATE TABLE member
 	gender number,
 	addr varchar2(50),
 	reg_date date,
+	point number,
 	-- y:삭제
 	-- n:미삭제
-	del_yn char,
+	del_yn varchar2(2),
 	del_date date,
-	point number,
 	PRIMARY KEY (num)
 );
 
@@ -127,7 +127,7 @@ CREATE TABLE point_history
 	id varchar2(35),
 	use_vol number,
 	reg_date date,
-	del_yn char,
+	del_yn varchar2(2),
 	PRIMARY KEY (ponum)
 );
 
@@ -141,12 +141,15 @@ CREATE TABLE product
 	cartnum number NOT NULL,
 	name varchar2(40),
 	reg_date date,
-	del_yn char,
 	price number,
 	stock number,
 	type number,
-	orgimg varchar2(50),
-	saveimg varchar2(50),
+	thumb_org varchar2(100),
+	thumb_save varchar2(100),
+	description varchar2(200),
+	detail_org varchar2(100),
+	detail_save varchar2(100),
+	del_yn varchar2(2),
 	PRIMARY KEY (pnum)
 );
 
@@ -166,7 +169,7 @@ CREATE TABLE qna
 	lev number,
 	step number,
 	regdate date,
-	del_yn char,
+	del_yn varchar2(2),
 	UNIQUE (pnum, num)
 );
 
@@ -191,7 +194,7 @@ CREATE TABLE review
 	title varchar2(50),
 	content varchar2(100),
 	regdate date,
-	del_yn char,
+	del_yn varchar2(2),
 	pwd varchar2(40),
 	UNIQUE (onum, pnum, num)
 );
@@ -204,7 +207,7 @@ CREATE TABLE sale
 	percent number,
 	start_date date,
 	end_date date,
-	del_yn char,
+	del_yn varchar2(2),
 	PRIMARY KEY (snum)
 );
 
