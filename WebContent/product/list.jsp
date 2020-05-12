@@ -11,7 +11,11 @@
 	//장바구니 버튼 누르면 cart.do로 이동해서 pnum,수량,세션에 있는 아이디 넘겨주기(로그인 안되어있으면 login.do로)
 %>
 <script>
-	function () {
+	function getList() {
+		
+	}
+	
+	function result(){
 		
 	}
 </script>
@@ -19,7 +23,7 @@
 <h3>카테고리 타입</h3>
 <h3>카테고리 번호</h3>
 <select name="list_filter">
-	<option value="신상품순">신상품순</option>
+	<option value="신상품순">신상품순1</option>
 	<option value="인기상품순">인기상품순</option>
 	<option value="낮은가격순">낮은가격순</option>
 	<option value="높은가격순">높은가격순</option>
