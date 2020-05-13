@@ -15,7 +15,7 @@
 
 <h1>상품목록</h1>
 <h5>${ cnum}과일.견과.쌀 > ${ type} 수입과일</h5>
-<form action="${pageContext.request.contextPath }/product/list.do"
+<form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }"
 	method="post">
 	<select name="list_filter" size="1">
 		<option value="new"
@@ -31,19 +31,19 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-3">
-			<li><c:forEach var="pro" items="${requestScope.list }">
+			<ul><c:forEach var="pro" items="${requestScope.list }">
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-						<tr>
-							<td>${pro.thumb_save}</td>
-							<td><input type="button" id="incart" value="담기(아이콘)">
-							<td>${pro.name}</td>
-							<td>${pro.price }</td>
-							<td>${pro.description }</td>
+					<td>
+							<tr><img src="img/"+ ${pro.thumb_save} + ".jpg"><br></tr>
+							<tr><img src="../img/img1.jpg" width="100"><br></tr>
+							<tr><input type="button" id="incart" value="담기(아이콘)"><br></tr>
+							<h3><tr>${pro.name}<br></tr></h3>
+							<tr>${pro.price }<br></tr>
+							<tr>${pro.description }<br></tr>
 							<c:set var="cp" value="${pageContext.request.contextPath }" />
-
-						</tr>
+					</td>
 					</a>
-				</c:forEach></li>
+				</c:forEach></ul>
 		</div>
 	</div>
 </div>

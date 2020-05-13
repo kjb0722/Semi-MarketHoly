@@ -17,14 +17,23 @@ import com.market.product.dto.ProductDto;
 public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		//index에서 cnum넘어오면 name 가져올수 있음 만약 type이 -1이 아니면 cnum이 type 인 애(대분류)도 가져오기
 		int cnum=Integer.parseInt(req.getParameter("cnum"));
-		int type=Integer.parseInt(req.getParameter("type"));
+		int scnum=0;
+		//int type=Integer.parseInt(req.getParameter("type"));
+		String sType=req.getParameter("type");
+		int type = -1;
+		if(sType != null) {
+			type = Integer.parseInt(sType);
+		}
+		if(type!=-1) {
+			type=cnum;
+		}
 		
 		String filter=req.getParameter("filter");
 		String spageNum=req.getParameter("pageNum");
 		String list_filter=req.getParameter("list_filter");
-		String keyword=req.getParameter("keyword");
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
@@ -42,7 +51,7 @@ public class ListController extends HttpServlet {
 		}
 		
 		req.setAttribute("type", type);
-		req.setAttribute("cnum", cnum);
+		req.setAttribute("cnum", scnum);
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPageNum", startPageNum);
