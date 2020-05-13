@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/member.do")
-public class MemberController extends HttpServlet{
+@WebServlet("/admin/product.do")
+public class productController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=admin/member.jsp");
+		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=admin/product.jsp");
 	}
 }

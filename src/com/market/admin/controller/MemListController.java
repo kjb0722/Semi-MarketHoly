@@ -8,10 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/member.do")
-public class MemberController extends HttpServlet{
+@WebServlet("/admin/list.do")
+public class MemListController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=admin/member.jsp");
+		String strStartList = req.getParameter("startList");
+		String strEndList = req.getParameter("endList");
+		int startList = 1;
+		int endList = 10;
+		if(strStartList != null) {
+			
+		}
 	}
 }
