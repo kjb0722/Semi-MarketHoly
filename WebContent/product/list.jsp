@@ -50,91 +50,10 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-3">
-        <ul class="gallery">
         <li>
-        <a href="">
-	        <img src="../img/img1.jpg" width="100">
-	       
-	        <li>포도</li>
-	        <li>쌔그럽고 마싯는 포도</li>
-	        <li>5,000</li>
-	        </li>
-	        <span>장바구니</span>
-        </a>
-        </div>
-        <div class="col-sm-3">
-        <img src="../img/img1.jpg" width="100">
-        <ul>
-        <li>포도</li>
-        <li>쌔그럽고 마싯는 포도</li>
-        <li>5,000</li>
-        </ul>
-        <span>장바구니</span>
-        </div>
-        <div class="col-sm-3"><src img="img/img1.jpg">
-        <img src="../img/img1.jpg" width="100">
-        <ul>
-        <li>포도</li>
-        <li>쌔그럽고 마싯는 포도</li>
-        <li>5,000</li>
-        </ul>
-        <span>장바구니</span>
-        </div>
-    </div>
-    <div class="row">
-         <div class="col-sm-3">
-        <img src="../img/img1.jpg" width="100">
-        <ul>
-        <li>포도</li>
-        <li>쌔그럽고 마싯는 포도</li>
-        <li>5,000</li>
-        </ul>
-        <span>장바구니</span>
-        </div>
-        <div class="col-sm-3">
-        <img src="../img/img1.jpg" width="100">
-        <ul>
-        <li>포도</li>
-        <li>쌔그럽고 마싯는 포도</li>
-        <li>5,000</li>
-        </ul>
-        <span>장바구니</span>
-        </div>
-        <div class="col-sm-3"><src img="img/img1.jpg">
-        <img src="../img/img1.jpg" width="100">
-        <ul>
-        <li>포도</li>
-        <li>쌔그럽고 마싯는 포도</li>
-        <li>5,000</li>
-        </ul>
-        <span>장바구니</span>
-        </div>
-    </div>
-    
-<!-- for문돌려서 상품리스트 가져오기 -->
-</div>
-		<%-- 
-		<%	
-			int startRow=1;
-			int endRow=4;
-			String filter="new";
-			ProductDao dao=new ProductDao();
-			ArrayList<ProductDto> list=dao.getList(startRow, endRow, filter);
-			for(int i=0;i<list.size();i++){
-		%>
-			<tr>
-				<td><%=list.get(i).getThumb_save() %></td>
-				<td><%=list.get(i).getName()%></td>
-				<td><%=list.get(i).getPrice()%></td>
-				<td><%=list.get(i).getDescription() %>></td>
-			</tr>
-		<%
-			}
-		%>
-		
-		 -->
-		<%--
-		<c:forEach var="pro" items="${requestScope.list }">
+ 
+        	<c:forEach var="pro" items="${requestScope.list }">
+        	 <a href="${cp }/product/detail.do?pnum=${vo.pnum}">
 			<tr>
 				<td>${pro.thumb_save}</td>
 				<td><input type="button" id="incart" value="담기(아이콘)">
@@ -142,13 +61,16 @@
 				<td>${pro.price }</td>
 				<td>${pro.description }</td>
 				<c:set var="cp" value="${pageContext.request.contextPath }" />
-				<td><a href="${cp }/product/detail.do?pnum=${vo.pnum}">${vo.name }</a></td>
+				<td>${vo.name }</td>
 			</tr>
+			</a>
 		</c:forEach>
-		 --%>
-</div>
-	 	
+	
+		</li>
+		</div>
 	</div>
+</div>
+		
 	<!-- 페이징 -->
 	<div>
 		<c:if test="${startPageNum>5}">
