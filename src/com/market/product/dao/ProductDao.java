@@ -60,9 +60,7 @@ public class ProductDao {
 		}
 
 	}
-	
-	//��ü��ǰ�� �������� getlist
-	//���ͼ��� x ����Ʈ�� > �ֽż�
+
 	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter){
 		Connection con=null;
 		PreparedStatement pstmt=null;
