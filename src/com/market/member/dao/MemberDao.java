@@ -18,7 +18,7 @@ public class MemberDao {
 		return instance;
 	}
 	
-	public ArrayList<MemberDto> getList(String ids){
+	public MemberDto getList(String ids){
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -26,13 +26,12 @@ public class MemberDao {
 		
 		try {
 			con = JDBCUtil.getConn();
-			String sql ="select * from member where id=?";
+			String sql ="select * from member where id=? and del_yn='N'";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ids);
 			rs = pstmt.executeQuery();
 			
-			ArrayList<MemberDto> list = new ArrayList<MemberDto>();
-			while(rs.next()) {
+			if(rs.next()) {
 				int num = rs.getInt("num");
 				String id = rs.getString("id");
 				String pwd = rs.getString("pwd");
@@ -48,18 +47,15 @@ public class MemberDao {
 				String del_yn = rs.getString("del_yn");
 				Date del_date =rs.getDate("del_date");
 				MemberDto dto = new MemberDto(num, id, pwd, name, rating, email, birth, phone, gender, addr, reg_date, point, del_yn, del_date);
-				list.add(dto);
+				return dto;
 			}
-			return list;
-			
-			
+			return null;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
-		
 	}
 	
 	

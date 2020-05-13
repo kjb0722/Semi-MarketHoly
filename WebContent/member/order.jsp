@@ -10,14 +10,12 @@
 
 	<h1 class="display-1">주문서</h1>
 	<span class='text-muted'>주문하실 상품명 및 수량을 정확하게 확인해 주세요.</span>
-
-
+	
 </div>
-
 
 <br>
 
-<form action="">
+<form action="/Pay.do">
 	<div id="2" class="container" style='width: 1000px;'>
 		<hr style="border: solid 1px purple;">
 		<table class="table table-hover">
@@ -52,12 +50,15 @@
 		<hr style="border: solid 1px purple;">
 
 		<p>보내는 사람*</p>
-		<input type="text" id="sender" value="${MemberDto.getName}"> <br>
+		
+		<c:forEach var="mem" items="${requestScope.member}">
+		</c:forEach>
+		<input type="text" id="sender" value="${mem.getName}" disabled="disabled"><br>
 		<p>휴대폰*</p>
-		<input type="text" name="phone" value="${MemberDto.getPhone}">
+		<input type="text" name="phone" value="${mem.getPhone}" disabled="disabled">
 		<br>
 		<p>이메일*</p>
-		<input type="text" id="email" value="${MemberDto.getEmail}">
+		<input type="text" id="email" value="${mem.getEmail}" disabled="disabled">
 
 	</div>
 	<div id="4" class="container" style='width: 1000px;'>
@@ -66,9 +67,9 @@
 		<hr style="border: solid 1px purple;">
 
 		<h4>배송지 선택</h4>
-		기본배송지<input type="radio" name="chaddr" value="oraddr"
-			onclick="sameget()"> 새로운배송지<input type="radio" name="chaddr"
-			value="newaddr" onclick="clear()"> <br> * 배송 휴무일 :일요일
+		기본배송지<input type="radio" name="chaddr" value="oraddr"onclick="sameget()"> 
+		새로운배송지<input type="radio" name="chaddr" value="newaddr" onclick="clear()"> <br> 
+		* 배송 휴무일 <p class="text-danger">- 일요일 및 공휴일 -</p>
 		<hr style="border: solid 1px purple;">
 
 	</div>
@@ -78,10 +79,14 @@
 
 		<div id="5-1">
 			<!-- 얻어온 정보가 자동으로 넘어오게  -->
-			주소<input type="text" id="addr"><br> 수령인 이름*<input
-				type="text" id="recname"><br> 휴대폰<input type="text"
-				id="phone"><br> 배송요청사항<br>
-			<textarea cols="50" rows="10" id="wants"></textarea>
+			주소* :<input type="text" class="form-control" name="tag" id="addr" placeholder="주소를 입력해 주세요">
+			<br>
+			수령인 이름* :<input type="text" class="form-control" name="tag" id="recname" placeholder="이름를 입력해 주세요">
+			<br>
+			휴대폰* :<input type="text" class="form-control" name="tag" id="phone" placeholder="번호를 입력해 주세요">
+			<br>
+			<p>배송요청사항</p>
+			<textarea cols="100" rows="5" id="wants"></textarea>
 		</div>
 
 
@@ -92,8 +97,12 @@
 
 		<h1 style="text-align: center;">적립금</h1>
 		<hr style="border: solid 1px purple;">
-		* 적립금 사용:<input type="text" id="point"> 전액사용<input
-			type="checkbox" id="allpoint">
+		적립금 사용:<input type="text" id="usepoint">
+		전액사용<input type="checkbox" id="allpoint" onclick="pointAll()" >
+		<br>
+		<br>
+		<button type="button" class="btn btn-info" id="allpointOk">사용확인</button>
+		
 
 
 	</div>
@@ -104,8 +113,8 @@
 		<hr style="border: solid 1px purple;">
 
 		카드결제<input type="radio" name="chpay" value="card" onclick="">
-		<br> 무통장<input type="radio" name="chpay" value="nocard"
-			onclick="">
+		<br> 
+		무통장<input type="radio" name="chpay" value="nocard" onclick="">
 
 
 	</div>
@@ -113,14 +122,23 @@
 	<div id="8" class="container" style='width: 1000px;'>
 
 		<h1 style="text-align: center;">결제금액</h1>
-		<hr style="border: solid 2px purple;">
+		<hr style="border: solid 1px purple;">
 
-		상품금액 :<input type="text" id="price" value="${CartDto.getPrice}"><br>
-		상품할인금액 :500원<br> 배송비 :2500원<br> 적립금사용 :<input type="text"
-			id="point" value="${CartDto.getPoint}"><br> <br>
+		상품금액 :<input type="text" id="price" value="${CartDto.getPrice} "disabled="disabled"><br>
+		상품할인금액 :500원<br>
+		배송비 :2500원<br>
+		적립금사용 :<input type="text" id="point" value="${mem.getPoint} "disabled="disabled"><br> 
+		<br>
 		최종결제금액 :<input type="text" id="total"> <br>
-		<button type="button" class="btn btn-success">Success</button>
+		
+		<hr style="border: solid 1px purple;">
+		
+		<button type="submit" class="btn btn-info">결제하기</button>
+		
 	</div>
+	
+	
+
 
 </form>
 
@@ -162,5 +180,20 @@
 		for (var i = 0; i < undercheck.length; i++) {
 			undercheck[i].checked = allchecked.checked;
 		}
+	
+	function pointAll() {
+		//전액사용 체크 하는 경우에는 포인트 사용금액에 allpoint의 내용이 들어가야하고
+		//입력 사용일 경우에는 usepoint의 값이 들어가야함.
+			
+		var allchecked = document.getElementById("allpoint");
+		
+		if(allpoint==true){
+			allpoint.value=${mem.getPoint}
+			point=allpoint.value
+			disabled=disabled;		
+		}
+			
 	}
+}
+	
 </script>
