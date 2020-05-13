@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>member/findId.jsp</title>
+<title>/member/foundPwd.jsp</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" rel="stylesheet">
@@ -19,35 +19,34 @@
         margin: 15px 0;
     }
 </style>
-
 </head>
 <body>
 <div class="container">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <div class="panel-title"><h1>아이디찾기</h1></div>
+                <div class="panel-title"><h1>비밀번호찾기</h1></div>
             </div>
             <div class="panel-body">
-                <form id="login-form" method="get" action="${pageContext.request.contextPath }/member/findPwd.do">	
+                	<br>
                     <div>
-                    	이름
-                        <input type="text" class="form-control" name="name" placeholder="고객님의 이름을 입력해주세요" autofocus>
+                    	고객님의 비밀번호는 ${pwd } 입니다.
                     </div>
+                    <br>
                     <div>
-                    	이메일
-                        <input type="text" class="form-control" name="email" placeholder="가입시 등록하신 이메일주소를 입력해주세요">
+                        <input type="button" class="form-control btn btn-primary" value="로그인페이지로 이동" onclick="intoLogin()"></input><br>
                     </div>
-                    <div>
-                        <input type="submit" class="form-control btn btn-primary" value="확인"></input><br>
-                    </div>
-                </form>
+               
             </div>
         </div>
     </div>
 </div>
 
-
-
 </body>
+<script>
+	function intoLogin() {
+		location = "${pageContext.request.contextPath }/member/loginstart.do";
+	}
+</script>
+
 </html>

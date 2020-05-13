@@ -18,7 +18,74 @@ public class MemberDao {
 		return instance;
 	}
 	
-	public ArrayList<MemberDto> getList(String ids){
+	public String findPwd(String names, String ids,String emails) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select pwd,del_yn from member where name=? and id=? and email=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, names);
+			pstmt.setString(2, ids);
+			pstmt.setString(3, emails);
+			
+			rs = pstmt.executeQuery();
+			String pwd= "이름 or 아이디 or email이 틀렸습니다.";
+			
+			while(rs.next()) {
+				if(rs.getString("del_yn").equals("N")) {
+					pwd = rs.getString("pwd");
+				}
+			}
+			return pwd;
+			
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	public String findId(String names, String emails) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select id,del_yn from member where name=? and email=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, names);
+			pstmt.setString(2, emails);
+			rs = pstmt.executeQuery();
+			String id= "없는 아이디 입니다.";
+			
+			while(rs.next()) {
+				if(rs.getString("del_yn").equals("N")) {
+					id = rs.getString("id");
+				}
+			}
+			return id;
+			
+			
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	
+	
+	public ArrayList<MemberDto> getList(String ids){ // for 효진쌤
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -58,8 +125,7 @@ public class MemberDao {
 			return null;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
-		}
-		
+		}	
 	}
 	
 	
