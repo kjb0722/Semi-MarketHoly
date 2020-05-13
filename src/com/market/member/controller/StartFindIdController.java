@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/member/main.do")
-public class StartController extends HttpServlet {
+@WebServlet("/member/startFindId.do")
+public class StartFindIdController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String contextPath = req.getContextPath();
 		ServletContext application = req.getServletContext();
 		application.setAttribute("cp", contextPath);
-		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/join.jsp");
-	}  
+		resp.sendRedirect(req.getContextPath()+"/member/findId.jsp");
+	}
 }

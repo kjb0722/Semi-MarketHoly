@@ -1,9 +1,12 @@
+
 package com.market.member.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
@@ -18,6 +21,104 @@ public class MemberDao {
 	public static MemberDao getInstance() {
 		return instance;
 	}
+	
+	public ArrayList<MemberDto> getList(String ids){
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql ="select * from member where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<MemberDto> list = new ArrayList<MemberDto>();
+			while(rs.next()) {
+				int num = rs.getInt("num");
+				String id = rs.getString("id");
+				String pwd = rs.getString("pwd");
+				String name = rs.getString("name");
+				int rating = rs.getInt("rating");
+				String email = rs.getString("email");
+				String birth = rs.getString("birth");
+				String phone = rs.getString("phone");
+				int gender = rs.getInt("gender");
+				String addr = rs.getString("addr");
+				Date reg_date = rs.getDate("reg_date");
+				int point = rs.getInt("point");
+				String del_yn = rs.getString("del_yn");
+				Date del_date =rs.getDate("del_date");
+				MemberDto dto = new MemberDto(num, id, pwd, name, rating, email, birth, phone, gender, addr, reg_date, point, del_yn, del_date);
+				list.add(dto);
+			}
+			return list;
+			
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+	}
+	
+	
+	
+	
+	public ArrayList<MemberDto> login(String ids,String pwds) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con= JDBCUtil.getConn();
+			String sql = "select * from member where id=? and pwd=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			pstmt.setString(2, pwds);
+			rs = pstmt.executeQuery();
+			
+			
+			ArrayList<MemberDto> list = new ArrayList<MemberDto>();
+			while(rs.next()){
+				if(rs.getString("del_yn").equals("N")) {
+					int num = rs.getInt("num");
+					String id = rs.getString("id");
+					String pwd = rs.getString("pwd");
+					String name = rs.getString("name");
+					int rating = rs.getInt("rating");
+					String email = rs.getString("email");
+					String birth = rs.getString("birth");
+					String phone = rs.getString("phone");
+					int gender = rs.getInt("gender");
+					String addr = rs.getString("addr");
+					Date reg_date = rs.getDate("reg_date");
+					int point = rs.getInt("point");
+					String del_yn = rs.getString("del_yn");
+					Date del_date =rs.getDate("del_date");
+					MemberDto dto = new MemberDto(num, id, pwd, name, rating, email, birth, phone, gender, addr, reg_date, point, del_yn, del_date);
+					list.add(dto);
+				}else if(rs.getString("del_yn").equals("Y")) {
+					return null;
+				}	
+			}
+			return list;
+			
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+	}
+	
 	
 
 	public boolean checkId(String id) {
