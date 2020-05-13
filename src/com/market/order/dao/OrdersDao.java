@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.market.db.JDBCUtil;
 import com.market.member.dto.MemberDto;
 import com.market.order.dto.OrdersDto;
 
@@ -33,7 +34,7 @@ public class OrdersDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			con=hyo.db.JDBCUtill.getConn();
+			con=JDBCUtil.getConn();
 			pstmt=con.prepareStatement("select * from cart c , product p where c.id=p.id and id=?");
 			pstmt.setString(1, id);
 			rs=pstmt.executeQuery();
@@ -57,7 +58,7 @@ public class OrdersDao {
 		return null;
 			
 	}finally {
-		hyo.db.JDBCUtill.close(rs, pstmt, con);
+		JDBCUtil.close(rs, pstmt, con);
 		}
 	}
 	

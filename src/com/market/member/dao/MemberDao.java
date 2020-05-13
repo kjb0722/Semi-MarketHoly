@@ -5,13 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.json.JSONObject;
-
 import com.market.db.JDBCUtil;
 import com.market.member.dto.MemberDto;
-
-import hyo.db.JDBCUtill;
-import jdk.nashorn.api.scripting.JSObject;
 
 public class MemberDao {
 	private static MemberDao instance = new MemberDao();
@@ -46,7 +41,7 @@ public class MemberDao {
 			se.printStackTrace();
 			return check;	
 		}finally {
-			JDBCUtill.close(rs, pstmt, con);
+			JDBCUtil.close(rs, pstmt, con);
 		}
 		
 	}
