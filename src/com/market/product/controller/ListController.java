@@ -49,22 +49,8 @@ public class ListController extends HttpServlet {
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
 		req.setAttribute("list_filter", list_filter);
-		req.setAttribute("keyword", keyword);
 		req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
-		/*
-		JSONArray jarr=new JSONArray();
-		for(CommentsVo vo:list){
-			JSONObject json=new JSONObject();
-			json.put("num",vo.getNum());
-			json.put("mnum",vo.getMnum());
-			json.put("id",vo.getId());
-			json.put("comments",vo.getComments());
-			jarr.put(json);
-		}
-		resp.setContentType("text/plain;charset=utf-8");
-		PrintWriter pw=resp.getWriter();
-		pw.print(jarr);	
-		*/
+		
 	}
 	
 }

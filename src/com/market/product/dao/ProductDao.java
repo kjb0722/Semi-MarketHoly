@@ -13,7 +13,7 @@ import com.market.product.dto.ProductDto;
 
 public class ProductDao {
 
-	//ÆäÀÌÂ¡ÇØÁÙ ¸Ş¼Òµå (getMaxNum,getCount)
+	//ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½ (getMaxNum,getCount)
 	public int getMaxNum() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -36,7 +36,7 @@ public class ProductDao {
 		}
 
 	}
-	// ÀüÃ¼±ÛÀÇ °¹¼ö ¸®ÅÏ
+	// ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	public int getCount() { 
 		Connection con = null;
@@ -60,9 +60,7 @@ public class ProductDao {
 		}
 
 	}
-	
-	//ÀüÃ¼»óÇ°À» °¡Á®¿À´Â getlist
-	//ÇÊÅÍ¼±ÅÃ x µğÆúÆ®°ª > ÃÖ½Å¼ø
+
 	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter){
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -71,13 +69,13 @@ public class ProductDao {
 		try {
 			con=JDBCUtil.getConn();
 			String sql = "select * from (select aa.*,rownum rnum from ("
-					+ "select * from product order by ref desc,step asc)aa" + ") where rnum>=? and rnum<=?";
+					+ "select * from product order by ref desc,step asc)aa, category c" + ") where rnum>=? and rnum<=? and aa.cnum=c.cnum";
 
-			//String sql="select * from product p,category c where p.cnum=c.cnum";
+			//String sql="select * from product p,category c where aa.cnum=c.cnum";
 			if(list_filter==null || list_filter.equals("new")) {
 				sql += " order by reg_date desc";
 			}else if(list_filter.equals("best")) {
-				sql += " order by ";  //ÆÇ¸Å·® ¸¹Àº¼ø....¾îÄÉ°¡Á®¿È ¤Ğ
+				sql += " order by ";
  			}else if(list_filter.equals("lowprice")) {
 				sql += " order by price";
 			}else if(list_filter.equals("highprice")){
@@ -112,12 +110,5 @@ public class ProductDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	/*°Ë»öÇÑ »óÇ° °¡Á®¿À´Â select
-	public ArrayList<ProductDto> search(string op,string keyword){
-	}
-	»ó¼¼¼³¸í °¡Á®¿À±â (ÇØ´ç»óÇ° ÀÌ¹ÌÁö,Á¦¸ñ Å¬¸¯½Ã)
-	public ArrayList<ProductDto> detail(pnum){
-		
-	}
-	*/
+
 }
