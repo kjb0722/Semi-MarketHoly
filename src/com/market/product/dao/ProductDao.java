@@ -37,16 +37,23 @@ public class ProductDao {
 
 	}
 	// 전체글의 갯수 리턴
-	public int getCount(String op,String keyword) { 
+	// 필터선택 안했을때 > 최신순
+	//
+	public int getCount(String list_filter) { 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "select NVL(count(num),0) cnt from product";
-			if(op!=null &&!op.equals("")) {
-				sql += " where " + op + " like '%"+ keyword + "%'";
-
+			if(list_filter==null || list_filter.equals("new")) {
+				sql += " order by reg_date desc";
+			}else if(list_filter.equals("best")) {
+				sql += " order by ";  //판매량 많은순....어케가져옴 ㅠ
+ 			}else if(list_filter.equals("lowprice")) {
+				sql += " order by price";
+			}else if(list_filter.equals("highprice")){
+				sql += " order by price desc";
 			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -65,7 +72,7 @@ public class ProductDao {
 	}
 	
 	//전체상품을 가져오는 getlist
-	public ArrayList<ProductDto> getList(int startRow,int endRow,String filter){
+	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -73,6 +80,15 @@ public class ProductDao {
 		try {
 			con=JDBCUtil.getConn();
 			String sql="select * from product p,category c where p.cnum=c.cnum";
+			if(list_filter==null || list_filter.equals("new")) {
+				sql += " order by reg_date desc";
+			}else if(list_filter.equals("best")) {
+				sql += " order by ";  //판매량 많은순....어케가져옴 ㅠ
+ 			}else if(list_filter.equals("lowprice")) {
+				sql += " order by price";
+			}else if(list_filter.equals("highprice")){
+				sql += " order by price desc";
+			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {

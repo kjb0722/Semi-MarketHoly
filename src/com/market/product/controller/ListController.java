@@ -21,7 +21,7 @@ public class ListController extends HttpServlet {
 		
 		String filter=req.getParameter("filter");
 		String spageNum=req.getParameter("pageNum");
-		String op=req.getParameter("op");
+		String list_filter=req.getParameter("list_filter");
 		String keyword=req.getParameter("keyword");
 		int pageNum=1;
 		if(spageNum!=null) {
@@ -32,7 +32,7 @@ public class ListController extends HttpServlet {
 		ProductDao dao=new ProductDao();
 		ArrayList<ProductDto>list=dao.getList(startRow, endRow,filter);
 		
-		int pageCount=(int)Math.ceil(dao.getCount(op,keyword)/5.0);
+		int pageCount=(int)Math.ceil(dao.getCount(list_filter)/5.0);
 		int startPageNum=((pageNum-1)/4)*4+1;
 		int endPageNum=startPageNum+3;
 		if(pageCount<endPageNum) {
@@ -43,9 +43,9 @@ public class ListController extends HttpServlet {
 		req.setAttribute("startPageNum", startPageNum);
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
-		req.setAttribute("op", op);
+		req.setAttribute("list_filter", list_filter);
 		req.setAttribute("keyword", keyword);
-		req.getRequestDispatcher("/board/list.jsp").forward(req, resp);
+		req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
 	}
 	
 }
