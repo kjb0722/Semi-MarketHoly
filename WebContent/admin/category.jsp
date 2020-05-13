@@ -98,23 +98,26 @@
 	}
 	
 	function catChk(){
-		let catName = document.getElementsByName("catName")[0].value;
-		if(catName == ""){
+		let catName = document.getElementsByName("catName")[0];
+		if(catName.value == ""){
 			alert("카테고리명을 입력하세요.");
+			catName.focus();
 			return false;
 		}
 		return true;
 	}
 	
 	function catTypeChk(){
-		let cat = document.getElementsByName("cat")[0].value;
-		if(cat == ""){
+		let cat = document.getElementsByName("cat")[0];
+		if(cat.value == ""){
 			alert("카테고리가 없습니다.");
+			cat.focus();
 			return false;
 		}
-		let catTypeName = document.getElementsByName("catTypeName")[0].value;
-		if(catTypeName == ""){
+		let catTypeName = document.getElementsByName("catTypeName")[0];
+		if(catTypeName.value == ""){
 			alert("타입명을 입력하세요.");	
+			catTypeName.focus();
 			return false;
 		}
 		return true;
