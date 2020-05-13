@@ -12,7 +12,7 @@
 <br>
 <form class="form-inline" role="form"
 	action="${cp }/admin/catTypeAdd.do" method="get" onsubmit="return catTypeChk()">
-	<span class="label label-success">종류</span><br> <select name="cat"
+	<span class="label label-success">세부 카테고리</span><br> <select name="cat"
 		class="form-control">
 		<c:forEach var="dto" items="${catList }">
 			<option value="${dto.cnum }">${dto.name }</option>

@@ -140,4 +140,30 @@ public class CategoryDao {
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
+
+	public ArrayList<CategoryDto> selTypeList(int pType) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select * from category where type=? order by cnum desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pType);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int cnum = rs.getInt("cnum");
+				int type = rs.getInt("type");
+				String name = rs.getString("name");
+				list.add(new CategoryDto(cnum, type, name));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
 }

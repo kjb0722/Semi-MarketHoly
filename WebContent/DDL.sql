@@ -1,12 +1,12 @@
 
 /* Drop Tables */
 
+DROP TABLE cart CASCADE CONSTRAINTS;
 DROP TABLE order_product CASCADE CONSTRAINTS;
 DROP TABLE qna CASCADE CONSTRAINTS;
 DROP TABLE review CASCADE CONSTRAINTS;
 DROP TABLE sale CASCADE CONSTRAINTS;
 DROP TABLE product CASCADE CONSTRAINTS;
-DROP TABLE cart CASCADE CONSTRAINTS;
 DROP TABLE category CASCADE CONSTRAINTS;
 DROP TABLE common CASCADE CONSTRAINTS;
 DROP TABLE refund_history CASCADE CONSTRAINTS;
@@ -22,14 +22,12 @@ DROP TABLE member CASCADE CONSTRAINTS;
 CREATE TABLE cart
 (
 	cartnum number NOT NULL,
-	id varchar2(25) NOT NULL,
 	pnum number NOT NULL,
+	id varchar2(25) NOT NULL,
 	EA number NOT NULL,
 	PRIMARY KEY (cartnum)
 );
 
-DROP SEQUENCE seq_cart_num;
-CREATE SEQUENCE seq_cart_num;
 
 CREATE TABLE category
 (
@@ -39,8 +37,6 @@ CREATE TABLE category
 	PRIMARY KEY (cnum)
 );
 
-DROP SEQUENCE seq_category_cnum_type;
-CREATE SEQUENCE seq_category_cnum_type;
 
 CREATE TABLE common
 (
@@ -53,25 +49,17 @@ CREATE TABLE common
 CREATE TABLE member
 (
 	num number NOT NULL,
-	id varchar2(50),
-	pwd varchar2(50),
-	name varchar2(50),
+	id varchar2(25),
+	pwd varchar2(25),
+	name varchar2(30),
 	rating number,
-<<<<<<< HEAD
 	email varchar2(40),
 	birth varchar2(30),
 	phone varchar2(30),
 	-- 1:ë‚¨ìž
 	-- 2:ì—¬ìž
-=======
-	email varchar2(80),
-	birth varchar2(50),
-	phone varchar2(50),
-	-- 1:³²ÀÚ
-	-- 2:¿©ÀÚ
->>>>>>> 0cfe88e36497676724e95d899da637637b51694e
 	gender number,
-	addr varchar2(80),
+	addr varchar2(100),
 	reg_date date,
 	point number,
 	-- y:ì‚­ì œ
@@ -81,8 +69,6 @@ CREATE TABLE member
 	PRIMARY KEY (num)
 );
 
-DROP SEQUENCE seq_member_num;
-CREATE SEQUENCE seq_member_num;
 
 CREATE TABLE orders
 (
@@ -112,8 +98,6 @@ CREATE TABLE orders
 	PRIMARY KEY (onum)
 );
 
-DROP SEQUENCE seq_orders_onum;
-CREATE SEQUENCE seq_orders_onum;
 
 CREATE TABLE order_product
 (
@@ -126,8 +110,6 @@ CREATE TABLE order_product
 	PRIMARY KEY (opnum)
 );
 
-DROP SEQUENCE seq_order_product_opnum;
-CREATE SEQUENCE seq_order_product_opnum;
 
 CREATE TABLE point_history
 (
@@ -140,30 +122,25 @@ CREATE TABLE point_history
 	PRIMARY KEY (ponum)
 );
 
-DROP SEQUENCE seq_point_history_ponum;
-CREATE SEQUENCE seq_point_history_ponum;
 
 CREATE TABLE product
 (
 	pnum number NOT NULL,
 	cnum number NOT NULL,
-	cartnum number NOT NULL,
+	type number,
 	name varchar2(40),
-	reg_date date,
 	price number,
 	stock number,
-	type number,
+	description varchar2(200),
 	thumb_org varchar2(100),
 	thumb_save varchar2(100),
-	description varchar2(200),
 	detail_org varchar2(100),
 	detail_save varchar2(100),
+	reg_date date,
 	del_yn varchar2(2),
 	PRIMARY KEY (pnum)
 );
 
-DROP SEQUENCE seq_product_pnum;
-CREATE SEQUENCE seq_product_pnum;
 
 CREATE TABLE qna
 (
@@ -220,16 +197,31 @@ CREATE TABLE sale
 	PRIMARY KEY (snum)
 );
 
+DROP SEQUENCE seq_cart_num;
+CREATE SEQUENCE seq_cart_num;
+
+DROP SEQUENCE seq_category_cnum_type;
+CREATE SEQUENCE seq_category_cnum_type;
+
+DROP SEQUENCE seq_member_num;
+CREATE SEQUENCE seq_member_num;
+
+DROP SEQUENCE seq_orders_onum;
+CREATE SEQUENCE seq_orders_onum;
+
+DROP SEQUENCE seq_order_product_opnum;
+CREATE SEQUENCE seq_order_product_opnum;
+
+DROP SEQUENCE seq_point_history_ponum;
+CREATE SEQUENCE seq_point_history_ponum;
+
+DROP SEQUENCE seq_product_pnum;
+CREATE SEQUENCE seq_product_pnum;
+
 DROP SEQUENCE seq_sale_snum;
 CREATE SEQUENCE seq_sale_snum;
 
 /* Create Foreign Keys */
-
-ALTER TABLE product
-	ADD FOREIGN KEY (cartnum)
-	REFERENCES cart (cartnum)
-;
-
 
 ALTER TABLE product
 	ADD FOREIGN KEY (cnum)
@@ -282,6 +274,12 @@ ALTER TABLE refund_history
 ALTER TABLE review
 	ADD FOREIGN KEY (onum)
 	REFERENCES orders (onum)
+;
+
+
+ALTER TABLE cart
+	ADD FOREIGN KEY (pnum)
+	REFERENCES product (pnum)
 ;
 
 
