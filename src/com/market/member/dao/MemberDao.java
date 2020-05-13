@@ -8,12 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
 import com.market.db.JDBCUtil;
 import com.market.member.dto.MemberDto;
-
-import jdk.nashorn.api.scripting.JSObject;
 
 public class MemberDao {
 	private static MemberDao instance = new MemberDao();

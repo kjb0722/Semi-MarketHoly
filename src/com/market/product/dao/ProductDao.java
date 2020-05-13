@@ -37,24 +37,14 @@ public class ProductDao {
 
 	}
 	// 전체글의 갯수 리턴
-	// 필터선택 안했을때 > 최신순
-	//
-	public int getCount(String list_filter) { 
+
+	public int getCount() { 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "select NVL(count(num),0) cnt from product";
-			if(list_filter==null || list_filter.equals("new")) {
-				sql += " order by reg_date desc";
-			}else if(list_filter.equals("best")) {
-				sql += " order by ";  //판매량 많은순....어케가져옴 ㅠ
- 			}else if(list_filter.equals("lowprice")) {
-				sql += " order by price";
-			}else if(list_filter.equals("highprice")){
-				sql += " order by price desc";
-			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -72,6 +62,7 @@ public class ProductDao {
 	}
 	
 	//전체상품을 가져오는 getlist
+	//필터선택 x 디폴트값 > 최신순
 	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter){
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -79,7 +70,10 @@ public class ProductDao {
 		ArrayList<ProductDto> list=new ArrayList<ProductDto>();
 		try {
 			con=JDBCUtil.getConn();
-			String sql="select * from product p,category c where p.cnum=c.cnum";
+			String sql = "select * from (select aa.*,rownum rnum from ("
+					+ "select * from product order by ref desc,step asc)aa" + ") where rnum>=? and rnum<=?";
+
+			//String sql="select * from product p,category c where p.cnum=c.cnum";
 			if(list_filter==null || list_filter.equals("new")) {
 				sql += " order by reg_date desc";
 			}else if(list_filter.equals("best")) {
