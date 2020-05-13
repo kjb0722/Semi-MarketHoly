@@ -17,7 +17,7 @@ import com.market.product.dto.ProductDto;
 public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//index¿¡¼­ cnum³Ñ¾î¿À¸é name °¡Á®¿Ã¼ö ÀÖÀ½ ¸¸¾à typeÀÌ -1ÀÌ ¾Æ´Ï¸é cnumÀÌ type ÀÎ ¾Ö(´ëºĞ·ù)µµ °¡Á®¿À±â
+		//indexì—ì„œ cnumë„˜ì–´ì˜¤ë©´ name ê°€ì ¸ì˜¬ìˆ˜ ìˆìŒ ë§Œì•½ typeì´ -1ì´ ì•„ë‹ˆë©´ cnumì´ type ì¸ ì• (ëŒ€ë¶„ë¥˜)ë„ ê°€ì ¸ì˜¤ê¸°
 		int cnum=Integer.parseInt(req.getParameter("cnum"));
 		int type=Integer.parseInt(req.getParameter("type"));
 		
