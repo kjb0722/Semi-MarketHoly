@@ -35,7 +35,6 @@
                     	이름
                         <input type="text" class="form-control" name="name" placeholder="고객님의 이름을 입력해주세요" autofocus>
                     </div>
-                    	
                     <div>
                     	이메일
                         <input type="text" class="form-control" name="email" placeholder="가입시 등록하신 이메일주소를 입력해주세요">
