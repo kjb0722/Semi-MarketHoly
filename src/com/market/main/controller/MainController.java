@@ -24,11 +24,11 @@ public class MainController extends HttpServlet {
 		//"전체 카테고리" 카테고리
 		CategoryDao dao = CategoryDao.getInstance();
 		ArrayList<CategoryDto> catList = dao.selList();
-		req.setAttribute("catList", catList);
+		app.setAttribute("catList", catList);
 
 		//"전체 카테고리" 카테고리
 		ArrayList<CategoryDto> catTypeList = dao.selTypeList();
-		req.setAttribute("catTypeList", catTypeList);
+		app.setAttribute("catTypeList", catTypeList);
 		
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}

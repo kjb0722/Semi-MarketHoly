@@ -40,9 +40,10 @@ CREATE TABLE category
 
 CREATE TABLE common
 (
-	type varchar2(40) UNIQUE,
+	type varchar2(40),
 	conum number,
-	name varchar2(50)
+	name varchar2(50),
+	val varchar2(50)
 );
 
 
@@ -202,6 +203,9 @@ CREATE SEQUENCE seq_cart_num;
 
 DROP SEQUENCE seq_category_cnum_type;
 CREATE SEQUENCE seq_category_cnum_type;
+
+DROP SEQUENCE seq_common_conum;
+CREATE SEQUENCE seq_common_conum;
 
 DROP SEQUENCE seq_member_num;
 CREATE SEQUENCE seq_member_num;

@@ -7,7 +7,7 @@
 		<span class="label label-success">카테고리</span><br> <input
 			type="text" class="form-control" placeholder="카테고리를 입력하세요."
 			name="catName" maxlength="10">
-		<button type="submit" class="btn btn-lg btn-primary">추가</button>
+		<input type="submit" class="btn btn-primary" value="추가">
 	</form>
 	<br>
 	<form class="form-inline" role="form"
@@ -19,7 +19,7 @@
 			</c:forEach>
 		</select> <input type="text" class="form-control" placeholder="종류를 입력하세요."
 			name="catTypeName">
-		<button type="submit" class="btn btn-lg btn-primary">추가</button>
+		<input type="submit" class="btn btn-primary" value="추가">
 	</form>
 	
 	<table class="table table-striped">
@@ -41,16 +41,16 @@
 					<td>${dto.cnum }</td>
 					<td>${dto.name }</td>
 					<td><button data-toggle="modal" data-target="#catUpdate"
-							class="btn btn-info" onclick="modalVal(${dto.cnum},'${dto.name}')">수정</button></td>
-					<td><button class="btn btn-danger" onclick="delCat(${dto.cnum})">삭제</button></td>
+							class="btn btn-xs btn-info glyphicon glyphicon-pencil" onclick="modalVal(${dto.cnum},'${dto.name}')"></button></td>
+					<td><button class="btn btn-xs btn-danger glyphicon glyphicon-trash" onclick="delCat(${dto.cnum})"></button></td>
 					<td>${dto.tnum }</td>
 					<td>${dto.tname }</td>
 					<c:choose>
 						<c:when test="${dto.tname != null }">
 							<td><button data-toggle="modal" data-target="#catUpdate"
-									class="btn btn-info"
-									onclick="modalVal(${dto.tnum},'${dto.tname}')">수정</button></td>
-							<td><button class="btn btn-danger" onclick="delCat(${dto.tnum})">삭제</button></td>
+									class="btn btn-xs btn-info glyphicon glyphicon-pencil"
+									onclick="modalVal(${dto.tnum},'${dto.tname}')"></button></td>
+							<td><button class="btn btn-xs btn-danger glyphicon glyphicon-trash" onclick="delCat(${dto.tnum})"></button></td>
 						</c:when>
 						<c:otherwise>
 							<td></td>

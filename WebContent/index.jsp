@@ -48,10 +48,10 @@
 					<li class="droupdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">전체 카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<c:forEach var="cat" items="${catList }">
+							<c:forEach var="cat" items="${applicationScope.catList }">
 								<li class="dropdown-submenu"><a href="">${cat.name }</a>
 									<ul class="dropdown-menu">
-										<c:forEach var="type" items="${catTypeList }">
+										<c:forEach var="type" items="${applicationScope.catTypeList }">
 											<c:if test="${cat.cnum == type.type }">
 												<li><a href="">${type.name }</a></li>
 											</c:if>
@@ -59,13 +59,6 @@
 									</ul></li>
 							</c:forEach>
 						</ul>
-					<li class="droupdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">코드맵핑<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="/bbs/bbs_admin.php">엑셀주문서등록</a></li>
-							<li class="divider"></li>
-							<li><a href="/adm/code_manager.php?gu=deal_kind">쇼핑몰코드</a></li>
-						</ul></li>
 					<li><a href="#">신상품</a></li>
 					<li><a href="#">베스트</a></li>
 					<li><a href="#">알뜰쇼핑</a></li>

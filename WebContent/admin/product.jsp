@@ -55,8 +55,8 @@
 			</label>
 			<br>
 			<br>
-			<input type="submit" value="저장">
-			<input type="reset" value="초기화">
+			<input type="submit" class="btn btn-lg btn-success" value="저장">
+			<input type="reset" class="btn btn-lg btn-default" value="초기화">
 		</form>
 	</div>
 </div>

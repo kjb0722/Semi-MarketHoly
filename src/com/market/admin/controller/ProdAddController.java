@@ -55,7 +55,9 @@ public class ProdAddController extends HttpServlet {
 		dto.setThumb_save(thumb_save);
 		dto.setDetail_org(detail_org);
 		dto.setDetail_save(detail_save);
-	
+		System.out.println(path);
+		System.out.println(thumb_org);
+		System.out.println(thumb_save);
 		int n = dao.insProd(dto);
 		if (n > 0) {
 			resp.sendRedirect(req.getContextPath() + "/admin/product.do");
