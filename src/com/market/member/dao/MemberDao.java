@@ -25,7 +25,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		boolean check = false;
-		
+		  
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "select * from member where id =?";
@@ -58,7 +58,6 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		
 	
-		
 		try {
 			con =JDBCUtil.getConn();
 			String sql = "insert into member values(seq_member_num.nextval,?,?,?,?,?,?,?,?,?,sysdate,?,?,'')";
@@ -86,8 +85,31 @@ public class MemberDao {
 		}
 	}
 	
-	
-	
+	public boolean checkEmail(String email) {
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		boolean check = false;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select * from member where email=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				check = true;
+			}
+			return check;
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return false;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
 	
 	
 }

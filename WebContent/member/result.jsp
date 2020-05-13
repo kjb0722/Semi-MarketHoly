@@ -9,7 +9,7 @@
 <title>member/result.jsp</title>
 </head>
 <body>
-<c:choose>
+<c:choose> 
 	<c:when test="${code=='success' }">
 		<h1>회원가입성공!!!!!!</h1>
 	</c:when>
@@ -17,5 +17,5 @@
 		<h1>회원가입실패!!!</h1>
 	</c:otherwise>
 </c:choose>
-</body>
+</body> 
 </html>
