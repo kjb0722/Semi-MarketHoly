@@ -25,7 +25,7 @@
 						<li><a href="${cp }/member/loginstart.do">로그인</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${cp }/member/logout.do">${sessionScope.dto.id}님</a></li>
+						<li><a href="${cp }/member/startChangeInfo.do">${sessionScope.dto.id}님</a></li>
 					</c:otherwise>
 				</c:choose>
 				<%-- <c:if test="${sessionScope.rating == 99 }">

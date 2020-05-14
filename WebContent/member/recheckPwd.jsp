@@ -11,14 +11,14 @@
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-title">비밀번호 재확인</div>
-            	<h3>회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.</h3>
+            	회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.
             </div>
             <div class="panel-body">
-                <form id="login-form" method="post" action="">
-                                           아이디<br>                       
-                    {session.dto.id}             
-                                           
+                <form id="login-form" method="post" action="/Semi-MarketHoly/member/checkPwd.do">
+                                           아이디<br>    
+                    ${sessionScope.dto.id} <br>
                                            비밀번호<br>
+                    <input type="text" name= "id" value="${sessionScope.dto.id}" hidden="hidden">
                     <div>
                         <input type="text" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요" autofocus>
                     </div>

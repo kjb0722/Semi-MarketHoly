@@ -18,6 +18,53 @@ public class MemberDao {
 		return instance;
 	}
 	
+	public MemberDto intoChangeInfo(String ids, String pwds) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select * from member where id=? and pwd=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			pstmt.setString(2, pwds);
+			rs = pstmt.executeQuery();
+			
+			MemberDto dto = new MemberDto();
+			while(rs.next()) {
+				if(rs.getString("del_yn").equals("N")) {
+					int num = rs.getInt("num");
+					String id = rs.getString("id");
+					String pwd = rs.getString("pwd");
+					String name = rs.getString("name");
+					int rating = rs.getInt("rating");
+					String email = rs.getString("email");
+					String birth = rs.getString("birth");
+					String phone = rs.getString("phone");
+					int gender = rs.getInt("gender");
+					String addr = rs.getString("addr");
+					Date reg_date = rs.getDate("reg_date");
+					int point = rs.getInt("point");
+					String del_yn = rs.getString("del_yn");
+					Date del_date =rs.getDate("del_date");
+					dto = new MemberDto(num, id, pwd, name, rating, email, birth, phone, gender, addr, reg_date, point, del_yn, del_date);
+				}
+			}
+			return dto;
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+			
+	}
+	
+	
+	
+	
 	public MemberDto getList(String ids){
 		Connection con = null;
 		PreparedStatement pstmt =null;
@@ -219,7 +266,7 @@ public class MemberDao {
 					return 0;
 				}	
 			}
-			
+			pstmt1.close();
 			
 			String sql = "insert into member values(seq_member_num.nextval,?,?,?,?,?,?,?,?,?,sysdate,?,?,'')";
 			pstmt = con.prepareStatement(sql);
