@@ -16,14 +16,14 @@
                 	기본정보
             </div>
             <div class="panel-body">
-                <form id="login-form" method="post">	
+                <form id="login-form" method="post" action="${cp }/member/updateInfo.do">	
                     <div>
                     	아이디
-                        <input type="text" class="form-control" name="id" id="id" value=${sessionScope.dto.id} disabled="disabled">
+                        <input type="text" class="form-control" name="id" id="id" value=${sessionScope.dto.id} readonly="readonly">
                     </div>
                     <div>
                     	현재비밀번호
-                        <input type="password" class="form-control" name="curPwd" id="pwd" >
+                        <input type="password" class="form-control" name="curPwd" id="curpwd" >
                     </div>
                     <div>
                     	새 비밀번호
@@ -51,11 +51,8 @@
                     </div>
           
                     <div>
-                        <input type="submit" class="form-control btn btn-primary" formaction=""  value="회원정보수정"></input><br>
-                    </div>
-                    <div>
-                        <input type="submit" class="form-control btn btn-primary" formaction="" value="회원탈퇴"></input><br>
-                    </div>             
+                        <input type="submit" class="form-control btn btn-primary" value="회원정보수정"></input><br>
+                    </div>        
                 </form>
             </div>
         </div>
@@ -65,11 +62,11 @@
 
 <script>
 	function checkPwd1(){
-		var pwd = document.getElementById("pwd").value;
+		var curpwd = document.getElementById("curpwd").value;
 		var nextPwd = document.getElementById("nextPwd").value;
 		var div = document.getElementById("checkDiv");
 		
-		if(pwd==nextPwd){
+		if(curpwd==nextPwd){
 			div.innerHTML="현재 비밀번호와 같습니다. 다르게 입력하세요";
 			div.style.color="red";
 		}else{
