@@ -18,16 +18,14 @@
 	<div class="form-inline">
 		<span class="label label-success">세부 카테고리 추가</span><br> <select
 			name="cat" class="form-control">
-			<c:forEach var="dto" items="${catList }">
-				<option value="${dto.cnum }">${dto.name }</option>
-			</c:forEach>
+
 		</select> <input type="text" class="form-control" placeholder="종류를 입력하세요."
 			name="catTypeName"> <input type="button"
 			class="btn btn-primary" value="추가" id="btnCatTypeAdd">
 	</div>
 	<!-- </form> -->
 
-	<table class="table table-striped">
+	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th>카테고리 번호</th>
@@ -41,34 +39,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="dto" items="${catListAll }">
-				<tr>
-					<td>${dto.cnum }</td>
-					<td>${dto.name }</td>
-					<td><button data-toggle="modal" data-target="#catUpdate"
-							class="btn btn-xs btn-info glyphicon glyphicon-pencil"
-							onclick="modalVal(${dto.cnum},'${dto.name}')"></button></td>
-					<td><button
-							class="btn btn-xs btn-danger glyphicon glyphicon-trash"
-							onclick="delCat(${dto.cnum})"></button></td>
-					<td>${dto.tnum }</td>
-					<td>${dto.tname }</td>
-					<c:choose>
-						<c:when test="${dto.tname != null }">
-							<td><button data-toggle="modal" data-target="#catUpdate"
-									class="btn btn-xs btn-info glyphicon glyphicon-pencil"
-									onclick="modalVal(${dto.tnum},'${dto.tname}')"></button></td>
-							<td><button
-									class="btn btn-xs btn-danger glyphicon glyphicon-trash"
-									onclick="delCat(${dto.tnum})"></button></td>
-						</c:when>
-						<c:otherwise>
-							<td></td>
-							<td></td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
-			</c:forEach>
+
 		</tbody>
 	</table>
 
@@ -92,14 +63,17 @@
 	</div>
 </div>
 <script type="text/javascript">
-
+	$("document").ready(function() {
+		catListLoad();
+		catComboLoad();
+	});
+	
 	//카테고리 추가 기능//
 	$("#btnCatAdd").on("click",catAdd);
-	
 	let xhr;
 	function catAdd(){
 		let catName = $("input[name=catName]").val();
-		if(catName.value == ""){
+		if(catName == ""){
 			alert("카테고리명을 입력하세요.");
 			catName.focus();
 			return false;
@@ -122,7 +96,7 @@
 	}
 	//카테고리 추가 기능//
 	
-	//카테고리 combobox 불러오기
+	//카테고리 combobox 불러오기//
 	let xhrCat;
 	function catComboLoad(){
 		xhrCat = new XMLHttpRequest();
@@ -132,42 +106,156 @@
 	}
 	function catComboLoadOk(){
 		if(xhrCat.readyState == 4 && xhrCat.status == 200){
-			let json = JSON.parse(xhr.responseText);
-			console.log(json.length);
+			let json = JSON.parse(xhrCat.responseText);
+			$("select[name=cat]").empty();
+			$("input[name=catName]").val("");
 			for(let j of json){
-				
+				$("select[name=cat]").append("<option value="+j.cnum+">"+j.name+"</option>");
 			}
 		}
 	}
+	//카테고리 combobox 불러오기//
+	
+	//세부 카테고리 추가//
+	$("#btnCatTypeAdd").on("click", catTypeAdd);
+	let xhrCatType;
+	function catTypeAdd(){
+		let cat = $("select[name=cat]").val();
+		if(cat == ""){
+			alert("카테고리가 선택되지 않았습니다.");
+			return;
+		}
+		let catTypeName = $("input[name=catTypeName]").val();
+		if(catTypeName == ""){
+			alert("세부 카테고리명을 입력해주세요.");
+			return;
+		}
+		xhrCatType = new XMLHttpRequest();
+		xhrCatType.onreadystatechange = catTypeAddOk;
+		xhrCatType.open("get", `${cp}/admin/catTypeAdd.do?cat=${'${cat}'}&catTypeName=${'${catTypeName}'}`, true);
+		xhrCatType.send();
+	}
+	function catTypeAddOk(){
+		if(xhrCatType.readyState == 4 && xhrCatType.status == 200){
+			let json = JSON.parse(xhrCatType.responseText);	
+			if(json.n > 0){
+				$("input[name=catTypeName]").val("");
+				alert("세부 카테고리 추가 성공");
+				catListLoad();
+			}else{
+				alert("실패");
+			}
+		}		
+	}
+	//세부 카테고리 추가//
+	
+	//카테고리 및 세부 카테고리 리스트 불러오기//
+	let xhrCatList;
+	function catListLoad(){
+		xhrCatList = new XMLHttpRequest();
+		xhrCatList.onreadystatechange = catListLoadOk;
+		xhrCatList.open("get",`${cp}/admin/catSelAll.do`,true);
+		xhrCatList.send();
+	}
+	function catListLoadOk(){
+		if(xhrCatList.readyState == 4 && xhrCatList.status == 200){
+			let json = JSON.parse(xhrCatList.responseText);
+			$("tbody").empty();
+			for(let j of json){
+				let row = "<tr>";
+				row += "<td>"+j.cnum+"</td>";
+				row += "<td>"+j.name+"</td>";
+				row += "<td>";
+				row += "<button data-toggle='modal'";
+				row += "data-target='#catUpdate'";
+				row += "class='btn btn-xs btn-info glyphicon glyphicon-pencil'";
+				row += "onclick='modalVal("+ j.cnum +",'"+ j.name +"')'></button>";
+				row += "<td>";
+				row += "<button class='btn btn-xs btn-danger glyphicon glyphicon-trash'";
+				row += "onclick='delCat("+ j.cnum+")'></button>";
+				if(j.tnum == 0){
+					row += "<td></td>";
+				}else{
+					row += "<td>"+j.tnum+"</td>";				
+				}
+				if(j.tname == null){
+					row += "<td></td>";
+				}else{
+					row += "<td>"+j.tname+"</td>";
+				}
+				if(j.tname != null){
+					row += "<td>";
+					row += "<button data-toggle='modal' data-target='#catUpdate'";
+					row += "class='btn btn-xs btn-info glyphicon glyphicon-pencil'";
+					row += "onclick='modalVal("+j.tnum+","+j.tname+")></button>'";
+					row += "</td>";
+					row += "<td>";
+					row += "<button class='btn btn-xs btn-danger glyphicon glyphicon-trash'";
+					row += "onclick='delCat("+j.tnum+")'></button>";
+					row += "</td>";
+				}else{
+					row += "<td></td>";
+					row += "<td></td>";
+				}
+				row += "</tr>";
+				console.log(row);
+				$("tbody").append(row);
+			}
+		}
+	}
+	//카테고리 및 세부 카테고리 리스트 불러오기//
+	
+	//수정//
+	function memModify(){
+		let catNum = $("#catNum").val();
+		let catName = $("#catName").val();
+		jQuery.ajax({
+	           url:`${cp}/admin/catUpdate.do`,
+	           method:"GET",
+	           data:{catNum:catNum,
+	        	   	 catName:catName},
+	           dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+	           success : function(data) {
+	                 alert("dd");
+	           }
+	     });
+	}
+	
+	$("#btnCatUpdate").on("click",function(){
+		memModify();
+	});
+	//수정//
 	
 	function modalVal(catNum, catName) {
+		console.log(catNum);
+		console.log(catName);
 		$("#catNum").val(catNum);
 		$("#catName").val(catName);
 	}
 	
-	document.getElementById("btnCatUpdate").onclick = function(){
+/* 	document.getElementById("btnCatUpdate").onclick = function(){
 		let catNum = document.getElementById("catNum").value;
 		let catName = document.getElementById("catName").value;
 		location = `${cp}/admin/catUpdate.do?catNum=${'${catNum}'}&catName=${'${catName}'}`;
-	};
+	}; */
 	
 	function delCat(catNum){
 		location = `${cp}/admin/catDel.do?catNum=${'${catNum}'}`;
 	}
 	
-	function catTypeChk(){
-		let cat = document.getElementsByName("cat")[0];
-		if(cat.value == ""){
-			alert("카테고리가 없습니다.");
-			cat.focus();
-			return false;
-		}
-		let catTypeName = document.getElementsByName("catTypeName")[0];
-		if(catTypeName.value == ""){
-			alert("타입명을 입력하세요.");	
-			catTypeName.focus();
-			return false;
-		}
-		return true;
-	}
 </script>
+
+<tr>
+	<td>105</td>
+	<td>ㄱㄱ</td>
+	<td><button data-toggle='modal' data-target='#catUpdate'
+			class='btn btn-xs btn-info glyphicon glyphicon-pencil'
+			onclick='modalVal(105,'ㄱㄱ')'></button>
+	<td><button
+			class='btn btn-xs btn-danger glyphicon glyphicon-trash'
+			onclick='delCat(105)'></button>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>

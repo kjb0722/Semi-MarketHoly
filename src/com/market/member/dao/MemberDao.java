@@ -490,4 +490,21 @@ public class MemberDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	
+	public int delMemNum(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "update member set del_yn = 'Y' where num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
 }
