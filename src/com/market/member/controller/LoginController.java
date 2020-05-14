@@ -23,11 +23,11 @@ public class LoginController extends HttpServlet{
 		
 
 		MemberDao dao = MemberDao.getInstance();
-		ArrayList<MemberDto> list = dao.login(id,pwd);
+		MemberDto dto  = dao.login(id,pwd);
 		
-		if(list.size() != 0) {
+		if(dto != null) {
 			HttpSession session = req.getSession();
-			session.setAttribute("list", list);
+			session.setAttribute("dto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
 		}else {
 			resp.sendRedirect(req.getContextPath()+"/member/loginResult.jsp");

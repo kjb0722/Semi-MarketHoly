@@ -61,7 +61,7 @@ public class MemberDao {
 	
 	
 	
-	public ArrayList<MemberDto> login(String ids,String pwds) {
+	public MemberDto login(String ids,String pwds) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -75,7 +75,7 @@ public class MemberDao {
 			rs = pstmt.executeQuery();
 			
 			
-			ArrayList<MemberDto> list = new ArrayList<MemberDto>();
+			MemberDto dto = new MemberDto();
 			while(rs.next()){
 				if(rs.getString("del_yn").equals("N")) {
 					int num = rs.getInt("num");
@@ -92,13 +92,12 @@ public class MemberDao {
 					int point = rs.getInt("point");
 					String del_yn = rs.getString("del_yn");
 					Date del_date =rs.getDate("del_date");
-					MemberDto dto = new MemberDto(num, id, pwd, name, rating, email, birth, phone, gender, addr, reg_date, point, del_yn, del_date);
-					list.add(dto);
+					dto = new MemberDto(num, id, pwd, name, rating, email, birth, phone, gender, addr, reg_date, point, del_yn, del_date);
 				}else if(rs.getString("del_yn").equals("Y")) {
 					return null;
 				}	
 			}
-			return list;
+			return dto;
 			
 			
 		}catch(SQLException se) {
@@ -106,9 +105,7 @@ public class MemberDao {
 			return null;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
-		}
-		
-		
+		}	
 	}
 	
 	
