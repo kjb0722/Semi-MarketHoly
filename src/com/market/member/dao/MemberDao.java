@@ -18,6 +18,36 @@ public class MemberDao {
 		return instance;
 	}
 	
+	public int updateInfo(String id,String curPwd,String nextPwd,String checkPwd,String name ,String email,String phone) {
+		Connection con  = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "update member set pwd=?,name=?,email=?,phone=? where id=? and pwd=? and del_yn='N'";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, nextPwd);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			pstmt.setString(4, phone);
+			pstmt.setString(5, id);
+			pstmt.setString(6, curPwd);
+			int n =pstmt.executeUpdate();
+			
+			return n;
+		
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally{
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+	}
+	
+	
+	
 	public MemberDto intoChangeInfo(String ids, String pwds) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

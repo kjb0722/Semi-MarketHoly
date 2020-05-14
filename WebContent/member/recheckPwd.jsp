@@ -32,7 +32,7 @@
 </div>
 <script>
 	function intoJoin() {
-		location = "${pageContext.request.contextPath }/member/start.do";
+		location = "${pageContext.request.contextPath }/member/startJoin.do";
 	}
 
 </script>
