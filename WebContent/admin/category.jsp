@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+table, th {
+	text-align: center;
+}
+</style>
 <div class="container">
 	<%-- <form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
 		method="get" onsubmit="return catChk()"> --%>
@@ -89,6 +94,7 @@
 			if(json.n>0){
 				alert("카테고리 추가 성공");
 				catComboLoad();
+				catListLoad();
 			}else{
 				alert("실패");
 			}
@@ -187,7 +193,8 @@
 					row += "<td>";
 					row += "<button data-toggle='modal' data-target='#catUpdate'";
 					row += "class='btn btn-xs btn-info glyphicon glyphicon-pencil'";
-					row += "onclick='modalVal("+j.tnum+","+j.tname+")></button>'";
+					//row += "onclick='modalVal("+j.tnum+","+j.tname+")></button>";
+					row += "></button>";
 					row += "</td>";
 					row += "<td>";
 					row += "<button class='btn btn-xs btn-danger glyphicon glyphicon-trash'";
@@ -201,6 +208,11 @@
 				console.log(row);
 				$("tbody").append(row);
 			}
+			$("tbody>button").on("click",function(){
+				let rowIndex = $(this).parent().parent().children().index($(this).parent());
+				var colIndex = $(this).parent().children().index($(this));
+				alert("aa");
+			});
 		}
 	}
 	//카테고리 및 세부 카테고리 리스트 불러오기//
@@ -214,7 +226,7 @@
 	           method:"GET",
 	           data:{catNum:catNum,
 	        	   	 catName:catName},
-	           dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+	           dataType:"JSON",
 	           success : function(data) {
 	                 alert("dd");
 	           }
@@ -244,18 +256,3 @@
 	}
 	
 </script>
-
-<tr>
-	<td>105</td>
-	<td>ㄱㄱ</td>
-	<td><button data-toggle='modal' data-target='#catUpdate'
-			class='btn btn-xs btn-info glyphicon glyphicon-pencil'
-			onclick='modalVal(105,'ㄱㄱ')'></button>
-	<td><button
-			class='btn btn-xs btn-danger glyphicon glyphicon-trash'
-			onclick='delCat(105)'></button>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
