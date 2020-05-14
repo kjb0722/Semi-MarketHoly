@@ -21,7 +21,7 @@ public class ProdAddController extends HttpServlet {
 		ServletContext app = req.getServletContext();
 		String path = app.getRealPath("/img");
 		MultipartRequest mr = new MultipartRequest(req, path, 1024 * 1024 * 50, "utf-8", new DefaultFileRenamePolicy());
-		int cnum = Integer.parseInt(mr.getParameter("cat"));
+		int cnum = Integer.parseInt(mr.getParameter("cnum"));
 		int type = Integer.parseInt(mr.getParameter("catType"));
 		int price = Integer.parseInt(mr.getParameter("price"));
 		int stock = Integer.parseInt(mr.getParameter("stock"));
@@ -55,9 +55,6 @@ public class ProdAddController extends HttpServlet {
 		dto.setThumb_save(thumb_save);
 		dto.setDetail_org(detail_org);
 		dto.setDetail_save(detail_save);
-		System.out.println(path);
-		System.out.println(thumb_org);
-		System.out.println(thumb_save);
 		int n = dao.insProd(dto);
 		if (n > 0) {
 			resp.sendRedirect(req.getContextPath() + "/admin/product.do");

@@ -123,7 +123,8 @@
 			let json = JSON.parse(xhr.responseText);
 			$("select[name=catType]").empty();
 			for(let j of json){
-				$("select[name=catType]").append("<option value="+j.cnum+">"+j.name+"</option>");
+				$("select[name=catType]").append("<option value="+j.type+">"+j.name+"</option>");
+				$("select[name=catType]").append("<input type='hidden' name='cnum' value="+j.cnum+">");
 			}
 		}
 	}
