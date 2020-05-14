@@ -19,15 +19,12 @@ public class ListController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		int cnum=Integer.parseInt(req.getParameter("cnum"));
-		int scnum=0;
 		String sType=req.getParameter("type");
 		int type = -1;
 		if(sType != null) {
 			type = Integer.parseInt(sType);
 		}
-		if(type!=-1) {
-			type=cnum;
-		}
+		
 		
 		String filter=req.getParameter("filter");
 		String spageNum=req.getParameter("pageNum");
@@ -39,7 +36,7 @@ public class ListController extends HttpServlet {
 		int startRow=(pageNum-1)*5+1;
 		int endRow=startRow+4;
 		ProductDao dao=new ProductDao();
-		ArrayList<ProductDto>list=dao.getList(startRow, endRow,filter);
+		ArrayList<ProductDto>list=dao.getList(startRow, endRow,filter,cnum,type);
 		
 		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
 		int startPageNum=((pageNum-1)/4)*4+1;
@@ -49,7 +46,7 @@ public class ListController extends HttpServlet {
 		}
 		
 		req.setAttribute("type", type);
-		req.setAttribute("cnum", scnum);
+		req.setAttribute("cnum", cnum);
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPageNum", startPageNum);

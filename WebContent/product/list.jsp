@@ -29,16 +29,26 @@
 <div class="container">
 	<div class="row">
 			<ul><c:forEach var="pro" items="${requestScope.list }">
-		<div class="col-sm-3">
+		<div class="col-sm-4">
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-					<tr>
-							<td><img src="../img/${pro.thumb_save}" width="100px" height="100px"><br></td>
-							<td><input type="button" id="incart" value="담기(아이콘)"><br></td>
-							<td><h3>${pro.name}<br></h3></td>
-							<td>>${pro.price }<br></td>
-							<td>${pro.description }<br></td>
-							<c:set var="cp" value="${pageContext.request.contextPath }" />
-					</tr>
+					<div style="position: relative;">
+						<img src="../img/${pro.thumb_save}" width="300px" height="400px">
+						<div style="position: absolute; top:340px; left:210px" >
+							<button type="button" id="incart" ><img src="../img/1.png" alt="" width="50px" height="50px">담기</button>
+						</div>
+					</div>
+					
+					<div>
+						<h3>${pro.name}<br></h3>
+					</div>
+					<div>
+						${pro.price }
+					</div>
+					<div>
+						${pro.description }
+					</div>
+						
+					<c:set var="cp" value="${pageContext.request.contextPath }" />
 					</a>
 		</div>
 				</c:forEach></ul>

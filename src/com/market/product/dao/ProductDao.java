@@ -60,14 +60,14 @@ public class ProductDao {
 
 	}
 
-	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter){
+	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter,int type,int cnum){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		ArrayList<ProductDto> list=new ArrayList<ProductDto>();
 		try {
 			con=JDBCUtil.getConn();
-			String sql = "select * from(select aa.*,rownum rnum from (select * from product order by reg_date asc)"
+			String sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date asc)"
 					+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
 
 			/*
@@ -82,17 +82,17 @@ public class ProductDao {
 			}
 			*/
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, type);
+			pstmt.setInt(2, cnum);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int pnum=rs.getInt("pnum");
-				int cnum=rs.getInt("cnum");
 				String name=rs.getString("name");
 				Date reg_date=rs.getDate("reg_date");
 				int price=rs.getInt("price");
 				int stock=rs.getInt("stock");
-				int type=rs.getInt("type");
 				String thumb_org=rs.getString("thumb_org");
 				String thumb_save=rs.getString("thumb_save");
 				String description=rs.getString("description");
