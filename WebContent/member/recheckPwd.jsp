@@ -11,19 +11,19 @@
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-title">비밀번호 재확인</div>
+            	<h3>회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.</h3>
             </div>
             <div class="panel-body">
-                <form id="login-form" method="post" action="/Semi-MarketHoly/member/login.do">
+                <form id="login-form" method="post" action="">
+                                           아이디<br>                       
+                    {session.dto.id}             
+                                           
+                                           비밀번호<br>
                     <div>
-                        <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주세요" autofocus>
+                        <input type="text" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요" autofocus>
                     </div>
                     <div>
-                        <input type="password" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요.">
-                    </div>
-                    <a href="${pageContext.request.contextPath }/member/startFindId.do">아이디찾기</a> /
-                    <a href="${pageContext.request.contextPath }/member/startFindPwd.do">비밀번호찾기</a>
-                    <div>
-                        <input type="submit" class="form-control btn btn-primary" value="로그인"></input>
+                        <input type="submit" class="form-control btn btn-primary" value="확인"></input>
                     </div>
                 </form>
             </div>

@@ -21,11 +21,11 @@
 			<ul class="nav navbar-nav pull-right">
 				<li><a href="${cp }/member/start.do">회원가입</a></li>
 				<c:choose>
-					<c:when test="${sessionScope.id == null }">
+					<c:when test="${sessionScope.dto == null }">
 						<li><a href="${cp }/member/loginstart.do">로그인</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${cp }/member/logout.do">로그아웃</a></li>
+						<li><a href="${cp }/member/logout.do">${sessionScope.dto.id}님</a></li>
 					</c:otherwise>
 				</c:choose>
 				<%-- <c:if test="${sessionScope.rating == 99 }">
