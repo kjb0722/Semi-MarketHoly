@@ -37,8 +37,8 @@
                     <div>
                         <input type="password" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요.">
                     </div>
-                    <a href="${pageContext.request.contextPath }/member/startFindId.do">아이디찾기</a>
-                    <a href="${pageContext.request.contextPath }/member/startFindPwd.do">비밀번호찾기</a>
+                    <a href="${pageContext.request.contextPath }/member/findId.do">아이디찾기</a>
+                    <a href="${pageContext.request.contextPath }/member/findPwd.do">비밀번호찾기</a>
                     <div>
                         <input type="submit" class="form-control btn btn-primary" value="로그인"></input><br><br>
                         <button type="button" class="form-control btn btn-primary" onclick="intoJoin()">회원가입</button>
