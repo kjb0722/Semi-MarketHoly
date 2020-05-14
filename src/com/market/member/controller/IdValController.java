@@ -26,7 +26,7 @@ public class IdValController extends HttpServlet {
 		json.put("msg", msg);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(json);	//json문자열로 응답	
+		pw.print(json);		
 		
 	}
 }

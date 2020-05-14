@@ -26,6 +26,6 @@ public class IdCheckController extends HttpServlet{
 		json.put("check",check);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(json);	//json문자열로 응답	
+		pw.print(json);		
 	}
 }

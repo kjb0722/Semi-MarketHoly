@@ -7,8 +7,9 @@
 <title>member/loginResult.jsp</title>
 <script>
 	alert("존재하지 않는 아이디 혹은 비밀번호가 틀렸습니다.");
-	history.go(-1);
+	window.history.back();	
 </script>
+
 </head>
 <body>
 </body>

@@ -6,19 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.market.db.JDBCUtil;
 import com.market.product.dto.ProductDto;
 
 public class ProductDao {
 
+	//����¡���� �޼ҵ� (getMaxNum,getCount)
 	public int getMaxNum() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select max(nvl(pnum,0)) maxnum from product";
+			String sql = "select max(nvl(num,0)) maxnum from product";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -35,13 +37,14 @@ public class ProductDao {
 
 	}
 
+
 	public int getCount() { 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select NVL(count(pnum),0) cnt from product";
+			String sql = "select NVL(count(num),0) cnt from product";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -65,10 +68,10 @@ public class ProductDao {
 		ArrayList<ProductDto> list=new ArrayList<ProductDto>();
 		try {
 			con=JDBCUtil.getConn();
-			String sql = "select * from(select aa.*,rownum rnum from (" + 
-					"select * from product order by reg_date asc)aa)" + 
-					"where rnum>=? and rnum<=?";
+			String sql = "select * from (select aa.*,rownum rnum from ("
+					+ "select * from product order by ref desc,step asc)aa, category c" + ") where rnum>=? and rnum<=? and aa.cnum=c.cnum";
 
+			//String sql="select * from product p,category c where aa.cnum=c.cnum";
 			if(list_filter==null || list_filter.equals("new")) {
 				sql += " order by reg_date desc";
 			}else if(list_filter.equals("best")) {
@@ -79,8 +82,6 @@ public class ProductDao {
 				sql += " order by price desc";
 			}
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int pnum=rs.getInt("pnum");

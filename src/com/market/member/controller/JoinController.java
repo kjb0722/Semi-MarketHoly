@@ -28,19 +28,32 @@ public class JoinController extends HttpServlet{
 		String phone = req.getParameter("phone");
 		String gender = req.getParameter("gender");
 		String addr= req.getParameter("addr");
-	  
+		
+		if(gender==null) {
+			gender = "3";
+		}
+		
 		MemberDto dto = new MemberDto(0, id, pwd, name, 10, email, birth, phone, Integer.parseInt(gender), addr, null, 1000, "N", null);
 		
-		//일반회원 rating은 10입니다.
-		//기본포인트 1000원
+		
 		
 		MemberDao dao = MemberDao.getInstance();
 		int n = dao.join(dto);
 		String code = "success";
-		if(n<=0) {
-			code="fail";
+		
+		if(n==-1) {
+			code="fail1";
+			req.setAttribute("code", code);
+			req.getRequestDispatcher("/index.jsp?page=/member/joinResult.jsp").forward(req, resp);
+		
+		}else if(n==0) {
+			code="fail2";
+			req.setAttribute("code", code);
+			req.getRequestDispatcher("/index.jsp?page=/member/joinResult.jsp").forward(req, resp);
+		}else {
+			resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/login.jsp");
 		}
-		req.setAttribute("code", code);
-		req.getRequestDispatcher("/index.jsp?page=member/result.jsp").forward(req, resp);
+		
+		
 	}
 }

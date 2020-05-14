@@ -207,10 +207,23 @@ public class MemberDao {
 	public int join(MemberDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt1 = null;
+		ResultSet rs = null;
 		
-	
 		try {
-			con =JDBCUtil.getConn();
+			con = JDBCUtil.getConn();
+			String sql1 = "select id,del_yn from member where id = ?";
+			pstmt1 = con.prepareStatement(sql1);
+			pstmt1.setString(1, dto.getId());
+			rs = pstmt1.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("del_yn").equals("N")) {
+					return 0;
+				}	
+			}
+			
+			
 			String sql = "insert into member values(seq_member_num.nextval,?,?,?,?,?,?,?,?,?,sysdate,?,?,'')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getId());
@@ -223,9 +236,9 @@ public class MemberDao {
 			pstmt.setInt(8, dto.getGender());
 			pstmt.setString(9,dto.getAddr());
 			pstmt.setInt(10, dto.getPoint());
-			pstmt.setString(11, dto.getDel_yn());
-		
-			int n = pstmt.executeUpdate();
+			pstmt.setString(11, dto.getDel_yn());	
+
+			int n =pstmt.executeUpdate();
 			return n;
 			
 		}catch(SQLException se) {
