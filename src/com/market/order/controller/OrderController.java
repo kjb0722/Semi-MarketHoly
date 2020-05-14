@@ -19,7 +19,7 @@ public class OrderController extends HttpServlet{
 		
 			String id=req.getParameter("id");
 
-			
+			 
 			MemberDao dao=MemberDao.getInstance();
 			//회원정보 보낸거.
 			MemberDto member=dao.getList(id);

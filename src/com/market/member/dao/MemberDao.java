@@ -22,7 +22,7 @@ public class MemberDao {
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
-		
+		 
 		
 		try {
 			con = JDBCUtil.getConn();
