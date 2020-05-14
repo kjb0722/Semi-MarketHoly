@@ -21,8 +21,9 @@ public class ProdAddController extends HttpServlet {
 		ServletContext app = req.getServletContext();
 		String path = app.getRealPath("/img");
 		MultipartRequest mr = new MultipartRequest(req, path, 1024 * 1024 * 50, "utf-8", new DefaultFileRenamePolicy());
-		int cnum = Integer.parseInt(mr.getParameter("cnum"));
-		int type = Integer.parseInt(mr.getParameter("catType"));
+		String catType = mr.getParameter("catType");
+		int cnum = Integer.parseInt(catType.substring(0,catType.indexOf("|")));
+		int type = Integer.parseInt(catType.substring(catType.indexOf("|")+1));
 		int price = Integer.parseInt(mr.getParameter("price"));
 		int stock = Integer.parseInt(mr.getParameter("stock"));
 		String name = mr.getParameter("name");

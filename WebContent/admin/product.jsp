@@ -9,7 +9,7 @@
 		<form class="form-inline" role="form" action="${cp }/admin/prodAdd.do"
 			method="post" onsubmit="return prodChk()"
 			enctype="multipart/form-data">
-			<div class="form-group">
+			<div class="form-group" id="wrap-add">
 			<span class="label label-success">카테고리</span>
 			
 			<select name="cat" class="form-control" onchange="catChange(this)">
@@ -123,8 +123,7 @@
 			let json = JSON.parse(xhr.responseText);
 			$("select[name=catType]").empty();
 			for(let j of json){
-				$("select[name=catType]").append("<option value="+j.type+">"+j.name+"</option>");
-				$("select[name=catType]").append("<input type='hidden' name='cnum' value="+j.cnum+">");
+				$("select[name=catType]").append("<option value='"+j.cnum+"|"+j.type+"''>"+j.name+"</option>");
 			}
 		}
 	}

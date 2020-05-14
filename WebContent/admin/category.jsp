@@ -2,26 +2,31 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container">
-	<form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
-		method="get" onsubmit="return catChk()">
+	<%-- <form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
+		method="get" onsubmit="return catChk()"> --%>
+	<div class="form-inline">
 		<span class="label label-success">카테고리</span><br> <input
 			type="text" class="form-control" placeholder="카테고리를 입력하세요."
-			name="catName" maxlength="10">
-		<input type="submit" class="btn btn-primary" value="추가">
-	</form>
+			name="catName" maxlength="10"> <input type="button"
+			class="btn btn-primary" value="추가" id="btnCatAdd">
+	</div>
+	<!-- </form> -->
 	<br>
-	<form class="form-inline" role="form"
-		action="${cp }/admin/catTypeAdd.do" method="get" onsubmit="return catTypeChk()">
-		<span class="label label-success">세부 카테고리</span><br> <select name="cat"
-			class="form-control">
+	<%-- <form class="form-inline" role="form"
+		action="${cp }/admin/catTypeAdd.do" method="get"
+		onsubmit="return catTypeChk()"> --%>
+	<div class="form-inline">
+		<span class="label label-success">세부 카테고리 추가</span><br> <select
+			name="cat" class="form-control">
 			<c:forEach var="dto" items="${catList }">
 				<option value="${dto.cnum }">${dto.name }</option>
 			</c:forEach>
 		</select> <input type="text" class="form-control" placeholder="종류를 입력하세요."
-			name="catTypeName">
-		<input type="submit" class="btn btn-primary" value="추가">
-	</form>
-	
+			name="catTypeName"> <input type="button"
+			class="btn btn-primary" value="추가" id="btnCatTypeAdd">
+	</div>
+	<!-- </form> -->
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -41,8 +46,11 @@
 					<td>${dto.cnum }</td>
 					<td>${dto.name }</td>
 					<td><button data-toggle="modal" data-target="#catUpdate"
-							class="btn btn-xs btn-info glyphicon glyphicon-pencil" onclick="modalVal(${dto.cnum},'${dto.name}')"></button></td>
-					<td><button class="btn btn-xs btn-danger glyphicon glyphicon-trash" onclick="delCat(${dto.cnum})"></button></td>
+							class="btn btn-xs btn-info glyphicon glyphicon-pencil"
+							onclick="modalVal(${dto.cnum},'${dto.name}')"></button></td>
+					<td><button
+							class="btn btn-xs btn-danger glyphicon glyphicon-trash"
+							onclick="delCat(${dto.cnum})"></button></td>
 					<td>${dto.tnum }</td>
 					<td>${dto.tname }</td>
 					<c:choose>
@@ -50,7 +58,9 @@
 							<td><button data-toggle="modal" data-target="#catUpdate"
 									class="btn btn-xs btn-info glyphicon glyphicon-pencil"
 									onclick="modalVal(${dto.tnum},'${dto.tname}')"></button></td>
-							<td><button class="btn btn-xs btn-danger glyphicon glyphicon-trash" onclick="delCat(${dto.tnum})"></button></td>
+							<td><button
+									class="btn btn-xs btn-danger glyphicon glyphicon-trash"
+									onclick="delCat(${dto.tnum})"></button></td>
 						</c:when>
 						<c:otherwise>
 							<td></td>
@@ -61,7 +71,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	
+
 	<div class="modal fade" id="catUpdate" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -82,6 +92,54 @@
 	</div>
 </div>
 <script type="text/javascript">
+
+	//카테고리 추가 기능//
+	$("#btnCatAdd").on("click",catAdd);
+	
+	let xhr;
+	function catAdd(){
+		let catName = $("input[name=catName]").val();
+		if(catName.value == ""){
+			alert("카테고리명을 입력하세요.");
+			catName.focus();
+			return false;
+		}
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = catAddOk;
+		xhr.open("get", `${cp }/admin/catAdd.do?catName=${'${catName}'}`, true);
+		xhr.send();
+	}
+	function catAddOk(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			let json = JSON.parse(xhr.responseText);
+			if(json.n>0){
+				alert("카테고리 추가 성공");
+				catComboLoad();
+			}else{
+				alert("실패");
+			}
+		}
+	}
+	//카테고리 추가 기능//
+	
+	//카테고리 combobox 불러오기
+	let xhrCat;
+	function catComboLoad(){
+		xhrCat = new XMLHttpRequest();
+		xhrCat.onreadystatechange = catComboLoadOk;
+		xhrCat.open("get", `${cp}/admin/catSel.do`, true);
+		xhrCat.send();
+	}
+	function catComboLoadOk(){
+		if(xhrCat.readyState == 4 && xhrCat.status == 200){
+			let json = JSON.parse(xhr.responseText);
+			console.log(json.length);
+			for(let j of json){
+				
+			}
+		}
+	}
+	
 	function modalVal(catNum, catName) {
 		$("#catNum").val(catNum);
 		$("#catName").val(catName);
@@ -95,16 +153,6 @@
 	
 	function delCat(catNum){
 		location = `${cp}/admin/catDel.do?catNum=${'${catNum}'}`;
-	}
-	
-	function catChk(){
-		let catName = document.getElementsByName("catName")[0];
-		if(catName.value == ""){
-			alert("카테고리명을 입력하세요.");
-			catName.focus();
-			return false;
-		}
-		return true;
 	}
 	
 	function catTypeChk(){
