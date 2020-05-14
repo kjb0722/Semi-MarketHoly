@@ -23,7 +23,8 @@ public class FindPwdController extends HttpServlet{
 		
 		if(pwd!=null) {
 			req.setAttribute("pwd", pwd);	//req.setAttribute있으면 무조권 forward방식
-			req.getRequestDispatcher("/member/foundPwd.jsp").forward(req,resp);	
+			req.getRequestDispatcher("/index.jsp?page=/member/foundPwd.jsp").forward(req,resp);	
+			
 		}
 		
 	}

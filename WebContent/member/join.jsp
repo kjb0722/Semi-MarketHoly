@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>member/join.jsp</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
 <style type="text/css">
-	.input { width:500px;}
+	.input { width:500px;  }
 	label{margin-top: 10px;}
 </style>
 
@@ -18,11 +14,11 @@
 <div id="wrap">
 	<h1>회원가입</h1>
 	<form method="post" action="${pageContext.request.contextPath }/member/join.do">
-		<label for="exampleInputEmail1">아이디</label>
+		<label for="exampleInputEmail1">아이디*</label>
 		<div class="input input-group mb-3"> 	
 		  <input type="text" name="id" id="id" onkeyup="idvalidate()" class="form-control" placeholder="사용할 아이디를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-		  <div class="input-group-append">
-		    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="idcheck()">중복확인</button>	
+		  <div class="input-group-btn">
+		    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="idcheck()" >중복확인</button> 	
 		  </div>
 		</div>
 		 <div id="idval"></div>
@@ -50,7 +46,7 @@
 		<label for="exampleInputEmail1">이메일* </label>		
 		<div class="input input-group mb-3"> 	
 		  <input type="text"  name="email" id= "email" class="form-control" placeholder="이메일을 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">
-		  <div class="input-group-append">
+		  <div class="input-group-btn">
 		    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="emailCheck()">이메일중복확인</button>	
 		  </div>
 		</div>
@@ -66,7 +62,7 @@
 		  <input type="text" name="addr" class="form-control" placeholder="주소를 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">	
 		</div>	
 			
-		<label for="exampleInputEmail1">성별* </label><br>
+		<label for="exampleInputEmail1">성별 </label><br>
 		
 		<input type="radio" name="gender" value="1" >남자 &nbsp&nbsp&nbsp
 		<input type="radio" name="gender" value="2" >여자<br>
@@ -197,14 +193,5 @@
 		xhr4.open('get','${pageContext.request.contextPath }/member/emailCheck.do?email='+email, true);
 		xhr4.send();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 </script>
-</html>

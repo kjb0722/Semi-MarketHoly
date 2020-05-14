@@ -40,27 +40,26 @@ CREATE TABLE category
 
 CREATE TABLE common
 (
-	type varchar2(40),
+	type varchar2(40) UNIQUE,
 	conum number,
-	name varchar2(50),
-	val varchar2(50)
+	name varchar2(50)
 );
 
 
 CREATE TABLE member
 (
 	num number NOT NULL,
-	id varchar2(25),
-	pwd varchar2(25),
-	name varchar2(30),
+	id varchar2 NOT NULL(25),
+	pwd varchar2 NOT NULL(25),
+	name varchar2 NOT NULL(30),
 	rating number,
-	email varchar2(40),
+	email varchar2 NOT NULL(40),
 	birth varchar2(30),
-	phone varchar2(30),
+	phone varchar2 NOT NULL(30),
 	-- 1:남자
 	-- 2:여자
 	gender number,
-	addr varchar2(100),
+	addr varchar2 NOT NULL(100),
 	reg_date date,
 	point number,
 	-- y:삭제
@@ -203,9 +202,6 @@ CREATE SEQUENCE seq_cart_num;
 
 DROP SEQUENCE seq_category_cnum_type;
 CREATE SEQUENCE seq_category_cnum_type;
-
-DROP SEQUENCE seq_common_conum;
-CREATE SEQUENCE seq_common_conum;
 
 DROP SEQUENCE seq_member_num;
 CREATE SEQUENCE seq_member_num;

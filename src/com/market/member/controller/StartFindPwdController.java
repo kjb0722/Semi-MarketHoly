@@ -16,6 +16,8 @@ public class StartFindPwdController extends HttpServlet {
 		String contextPath = req.getContextPath();
 		ServletContext application = req.getServletContext();
 		application.setAttribute("cp", contextPath);
-		resp.sendRedirect(req.getContextPath()+"/member/findPwd.jsp");
+		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/findPwd.jsp");
+		
+		
 	}
 }

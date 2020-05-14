@@ -30,7 +30,7 @@ public class LoginController extends HttpServlet{
 			session.setAttribute("list", list);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
 		}else {
-			resp.sendRedirect(req.getContextPath()+"/member/loginstart.do");
+			resp.sendRedirect(req.getContextPath()+"/member/loginResult.jsp");
 		}	
 	}
 }

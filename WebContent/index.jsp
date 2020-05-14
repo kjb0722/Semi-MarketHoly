@@ -8,12 +8,27 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${cp }/bootstrap/css/bootstrap.min.css">
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
 	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous"></script>	
 <script src="${cp }/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${cp }/css/index.css" />
-<title>Market Holy</title>
+<title>마켓 홀리쉣</title>
+<style>
+.carousel-inner>.item>img {
+	margin: 0 auto;
+	height: 300px;
+}
+
+.navbar>a>img {
+	width: 206px;
+	height: 208px;
+}
+
+footer {
+	margin-top: 100px;
+}
+</style>
 </head>
 <body>
 	<header class="container">
@@ -33,51 +48,33 @@
 				</c:if> --%>
 				<li><a href="${cp }/admin/admin.do">관리자</a></li>
 			</ul>
-			<div id="wrap-logo">
-				<a href="${cp }/main.do"><img src="${cp }/img/logo1.png"
-					alt="Logo"></a>
-			</div>
+			<a href="${cp }/main.do"><img src="${cp }/img/logo1.png"
+				alt="Logo"></a>
 		</div>
-
 		<nav class="navbar navbar-default">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">마켓홀리</a>
-			</div>
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav">
-					<li class="droupdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">전체 카테고리<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<c:forEach var="cat" items="${applicationScope.catList }">
-								<li class="dropdown-submenu"><a href="">${cat.name }</a>
-									<ul class="dropdown-menu">
-										<c:forEach var="type" items="${applicationScope.catTypeList }">
-											<c:if test="${cat.cnum == type.type }">
-												<li><a href="">${type.name }</a></li>
-											</c:if>
-										</c:forEach>
-									</ul></li>
-							</c:forEach>
-						</ul>
-					<li><a href="#">신상품</a></li>
-					<li><a href="#">베스트</a></li>
-					<li><a href="#">알뜰쇼핑</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="http://www.ekolping.co.kr"><b
-							class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a></li>
-					<li><a href="#"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
-				</ul>
-				<form class="navbar-form pull-right">
-					<input class="form-control mr-sm-2" type="text"
-						placeholder="Search" aria-label="Search">
-					<button type="submit" class="btn">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</form>
+			<div class="container">
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">전체 카테고리 <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li role="separator" class="divider"></li>
+								<li class="dropdown-header">Nav header</li>
+								<li><a href="#">Separated link</a></li>
+								<li><a href="#">One more separated link</a></li>
+							</ul></li>
+						<li class="active"><a href="#">신상품</a></li>
+						<li><a href="#">베스트</a></li>
+						<li><a href="#">알뜰쇼핑</a></li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
 			</div>
 		</nav>
-
 	</header>
 
 	<section class="container">

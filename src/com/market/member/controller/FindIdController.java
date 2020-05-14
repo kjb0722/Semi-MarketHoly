@@ -21,7 +21,7 @@ public class FindIdController extends HttpServlet {
 
 		if(id!=null) {
 			req.setAttribute("id", id);	//req.setAttribute있으면 무조권 forward방식
-			req.getRequestDispatcher("/member/foundId.jsp").forward(req,resp);	
+			req.getRequestDispatcher("/index.jsp?page=/member/foundId.jsp").forward(req,resp);	
 		}
 	}
 }

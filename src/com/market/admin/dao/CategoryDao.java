@@ -20,7 +20,6 @@ public class CategoryDao {
 	private CategoryDao() {
 	}
 
-	//카테고리 전체 목록
 	public ArrayList<CategoryListDto> selListAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -28,7 +27,7 @@ public class CategoryDao {
 		ArrayList<CategoryListDto> list = new ArrayList<CategoryListDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select a.cnum,a.name,b.cnum tnum,b.name tname from category a inner join category b on a.cnum=b.type(+) where a.type = -1 order by a.cnum, b.cnum desc";
+			String sql = "select a.cnum,a.name,b.cnum tnum,b.name tname from category a inner join category b on a.cnum=b.type(+) where a.type = -1 order by a.cnum";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -47,7 +46,6 @@ public class CategoryDao {
 		}
 	}
 
-	//큰 카테고리 목록
 	public ArrayList<CategoryDto> selList() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -72,34 +70,7 @@ public class CategoryDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	
-	//세부 카테고리 목록
-	public ArrayList<CategoryDto> selTypeList() {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
-		try {
-			con = JDBCUtil.getConn();
-			String sql = "select * from category where type!=-1 order by cnum";
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				int cnum = rs.getInt("cnum");
-				int type = rs.getInt("type");
-				String name = rs.getString("name");
-				list.add(new CategoryDto(cnum, type, name));
-			}
-			return list;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		} finally {
-			JDBCUtil.close(rs, pstmt, con);
-		}
-	}
 
-	//큰 카테고리 추가
 	public int insCategory(String catName) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -117,7 +88,6 @@ public class CategoryDao {
 		}
 	}
 
-	//세부 카테고리 추가
 	public int insTypeCat(CategoryDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -136,7 +106,6 @@ public class CategoryDao {
 		}
 	}
 
-	//카테고리 수정
 	public int updateCat(CategoryDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -155,7 +124,6 @@ public class CategoryDao {
 		}
 	}
 
-	//카테고리 삭제
 	public int delCat(int catNum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -173,7 +141,6 @@ public class CategoryDao {
 		}
 	}
 
-	//세부 카테고리 번호로 세부 카테고리 목록 불러오기
 	public ArrayList<CategoryDto> selTypeList(int pType) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
