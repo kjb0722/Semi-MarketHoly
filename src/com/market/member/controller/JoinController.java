@@ -40,6 +40,7 @@ public class JoinController extends HttpServlet{
 		MemberDao dao = MemberDao.getInstance();
 		int n = dao.join(dto);
 		String code = "success";
+		System.out.println(n);
 		
 		if(n==-1) {
 			code="fail1";
