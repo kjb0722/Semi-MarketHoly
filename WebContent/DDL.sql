@@ -53,7 +53,7 @@ CREATE TABLE member
 	pwd varchar2 NOT NULL(25),
 	name varchar2 NOT NULL(30),
 	rating number,
-	email varchar2 NOT NULL(40),
+	email varchar2 NOT NULL unique(40),
 	birth varchar2(30),
 	phone varchar2 NOT NULL(30),
 	-- 1:남자
@@ -68,6 +68,8 @@ CREATE TABLE member
 	del_date date,
 	PRIMARY KEY (num)
 );
+
+alter table member add unique(email);
 
 
 CREATE TABLE orders
