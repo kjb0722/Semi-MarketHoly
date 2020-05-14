@@ -52,6 +52,43 @@ footer {
 				alt="Logo"></a>
 		</div>
 		<nav class="navbar navbar-default">
+<<<<<<< HEAD
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">마켓홀리</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li class="droupdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">전체 카테고리<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<c:forEach var="cat" items="${applicationScope.catList }">
+								<li class="dropdown-submenu"><a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
+									<ul class="dropdown-menu">
+										<c:forEach var="type" items="${applicationScope.catTypeList }">
+											<c:if test="${cat.cnum == type.type }">
+												<li><a href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
+											</c:if>
+										</c:forEach>
+									</ul></li>
+							</c:forEach>
+						</ul>
+					<li><a href="#">신상품</a></li>
+					<li><a href="#">베스트</a></li>
+					<li><a href="#">알뜰쇼핑</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="http://www.ekolping.co.kr"><b
+							class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a></li>
+					<li><a href="#"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
+				</ul>
+				<form class="navbar-form pull-right">
+					<input class="form-control mr-sm-2" type="text"
+						placeholder="Search" aria-label="Search">
+					<button type="submit" class="btn">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</form>
+=======
 			<div class="container">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -73,6 +110,7 @@ footer {
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
+>>>>>>> branch 'master' of https://github.com/kjb0722/Semi-MarketHoly.git
 			</div>
 		</nav>
 	</header>

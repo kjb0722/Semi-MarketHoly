@@ -86,7 +86,6 @@ public class ProductDao {
 			while(rs.next()) {
 				int pnum=rs.getInt("pnum");
 				int cnum=rs.getInt("cnum");
-				int cartnum=rs.getInt("cartnum");
 				String name=rs.getString("name");
 				Date reg_date=rs.getDate("reg_date");
 				int price=rs.getInt("price");
@@ -96,7 +95,7 @@ public class ProductDao {
 				String thumb_save=rs.getString("thumb_save");
 				String description=rs.getString("description");
 				String del_yn=rs.getString("del_yn");
-				list.add(new ProductDto(pnum,cnum,cartnum,name,reg_date,
+				list.add(new ProductDto(pnum,cnum,name,reg_date,
 						price,stock,type,thumb_org,thumb_save,description,null,null,del_yn));
 				
 			}
@@ -104,7 +103,7 @@ public class ProductDao {
 		
 			
 		}catch(SQLException se) {
-			se.getStackTrace();
+			System.out.println(se.getMessage());
 			return null;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
