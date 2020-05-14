@@ -19,5 +19,4 @@ public class StartLoginController extends HttpServlet{
 		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/login.jsp");
 	}
 	
-	
 }

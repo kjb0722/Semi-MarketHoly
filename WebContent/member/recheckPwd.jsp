@@ -20,7 +20,7 @@
                                            비밀번호<br>
                     <input type="text" name= "id" value="${sessionScope.dto.id}" hidden="hidden">
                     <div>
-                        <input type="text" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요" autofocus>
+                        <input type="password" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요" autofocus>
                     </div>
                     <div>
                         <input type="submit" class="form-control btn btn-primary" value="확인"></input>

@@ -21,7 +21,7 @@
 			<ul class="nav navbar-nav pull-right">
 				<c:choose>
 					<c:when test="${sessionScope.dto == null }">
-						<li><a href="${cp }/member/start.do">회원가입</a></li>
+						<li><a href="${cp }/member/startJoin.do">회원가입</a></li>
 						<li><a href="${cp }/member/loginstart.do">로그인</a></li>
 					</c:when>
 					<c:otherwise>
@@ -66,7 +66,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="http://www.ekolping.co.kr"><b
 							class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a></li>
-					<li><a href="#"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
+					<li><a href="${cp }/member/logout.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
 				</ul>
 				<form class="navbar-form pull-right">
 					<input class="form-control mr-sm-2" type="text"

@@ -21,6 +21,8 @@
                     	아이디
                         <input type="text" class="form-control" name="id" id="id" value=${sessionScope.dto.id} readonly="readonly">
                     </div>
+                    
+                    
                     <div>
                     	현재비밀번호
                         <input type="password" class="form-control" name="curPwd" id="curpwd" >
@@ -35,24 +37,30 @@
                     	새 비밀번호 확인
                         <input type="password" class="form-control" name="checkPwd" id="checkPwd" onkeyup="checkPwd2()">
                     </div>
+                    
+                     
                     <div id="checkDiv2"></div>
                     <div>
-                    	이름
+                    	이름*
                         <input type="text" class="form-control" name="name" id="name" value="${sessionScope.dto.name}">
                     </div>
                     <div>
-                    	이메일
+                    	이메일*
                         <input type="text" class="form-control" name="email" id="email" value ="${sessionScope.dto.email}">
     
                     </div>
                     <div>
-                    	휴대폰번호
+                    	휴대폰번호*
                         <input type="text" class="form-control" name="phone" id="phone" value= "${sessionScope.dto.phone}">
                     </div>
           
                     <div>
                         <input type="submit" class="form-control btn btn-primary" value="회원정보수정"></input><br>
-                    </div>        
+                    </div> 
+                    <div>
+                        <input type="submit" class="form-control btn btn-primary" formaction="${cp }/member/deleteAccount.do" value="회원탈퇴"></input><br>
+                    </div> 
+					
                 </form>
             </div>
         </div>

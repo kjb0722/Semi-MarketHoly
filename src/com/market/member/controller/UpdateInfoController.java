@@ -24,23 +24,26 @@ public class UpdateInfoController extends HttpServlet {
 		String email = req.getParameter("email");
 		String phone = req.getParameter("phone");
 		
-
+	
 		MemberDao dao = MemberDao.getInstance();
-		int n = dao.updateInfo(id,curPwd,nextPwd,checkPwd,name,email,phone);
 		
 		
-		if(n>0) {
-			MemberDto dto = dao.login(id, nextPwd);
-			
+		if(curPwd.equals("") || nextPwd.equals("") || checkPwd.equals("")) {
+			int n= dao.updateInfo2(id,name,email,phone);	
+	
+			MemberDto dto = dao.getDto(id);
 			HttpSession session = req.getSession();
 			session.setAttribute("dto", dto);
+			resp.sendRedirect(req.getContextPath()+"/main.do");
 			
-			resp.sendRedirect(req.getContextPath()+"/main.do");	
+				
 		}else {
-			resp.sendRedirect(req.getContextPath()+"/member/updateResult.jsp");
+			dao.updateInfo(id,curPwd,nextPwd,checkPwd,name,email,phone);
+			MemberDto dto = dao.getDto(id);
+			HttpSession session = req.getSession();
+			session.setAttribute("dto", dto);
+			resp.sendRedirect(req.getContextPath()+"/main.do");
 		}
-		
-		
 		
 	}
 }

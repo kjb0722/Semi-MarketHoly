@@ -30,7 +30,7 @@ public class CheckPwdController extends HttpServlet{
 			
 		
 		}else if(dto.getId() == null){
-			resp.sendRedirect(req.getContextPath()+"/member/.jsp");
+			resp.sendRedirect(req.getContextPath()+"/member/checkPwdResult.jsp");
 		}	
 		
 		
