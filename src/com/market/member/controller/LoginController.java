@@ -25,11 +25,12 @@ public class LoginController extends HttpServlet{
 		MemberDao dao = MemberDao.getInstance();
 		MemberDto dto  = dao.login(id,pwd);
 		
-		if(dto != null) {
+		
+		if(dto.getId() != null) {
 			HttpSession session = req.getSession();
 			session.setAttribute("dto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
-		}else {
+		}else if(dto.getId() == null){
 			resp.sendRedirect(req.getContextPath()+"/member/loginResult.jsp");
 		}	
 	}
