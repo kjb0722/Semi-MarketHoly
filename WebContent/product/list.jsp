@@ -14,13 +14,8 @@
 %>
 
 <h1>상품목록</h1>
-<<<<<<< HEAD
 <h5>${ cnum} > ${ type} </h5>
 <form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }"
-=======
-<h5>${ cnum}과일.견과.쌀 > ${ type} 수입과일</h5>
-<form action="${pageContext.request.contextPath }/product/list.do"
->>>>>>> branch 'master' of https://github.com/kjb0722/Semi-MarketHoly.git
 	method="post">
 	<select name="list_filter" size="1">
 		<option value="new"
@@ -35,41 +30,18 @@
 </form>
 <div class="container">
 	<div class="row">
-<<<<<<< HEAD
 			<ul><c:forEach var="pro" items="${requestScope.list }">
 		<div class="col-sm-3">
-=======
-		<div class="col-sm-3">
-			<li><c:forEach var="pro" items="${requestScope.list }">
->>>>>>> branch 'master' of https://github.com/kjb0722/Semi-MarketHoly.git
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-<<<<<<< HEAD
 					<tr>
 							<td><img src="../img/${pro.thumb_save}" width="100px" height="100px"><br></td>
 							<td><input type="button" id="incart" value="담기(아이콘)"><br></td>
 							<td><h3>${pro.name}<br></h3></td>
 							<td>>${pro.price }<br></td>
 							<td>${pro.description }<br></td>
-=======
-						<tr>
-							<td>${pro.thumb_save}</td>
-							<td><input type="button" id="incart" value="담기(아이콘)">
-							<td>${pro.name}</td>
-							<td>${pro.price }</td>
-							<td>${pro.description }</td>
->>>>>>> branch 'master' of https://github.com/kjb0722/Semi-MarketHoly.git
 							<c:set var="cp" value="${pageContext.request.contextPath }" />
-<<<<<<< HEAD
 					</tr>
-=======
-
-						</tr>
->>>>>>> branch 'master' of https://github.com/kjb0722/Semi-MarketHoly.git
 					</a>
-<<<<<<< HEAD
-=======
-				</c:forEach></li>
->>>>>>> branch 'master' of https://github.com/kjb0722/Semi-MarketHoly.git
 		</div>
 				</c:forEach></ul>
 	</div>
