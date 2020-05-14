@@ -49,11 +49,11 @@
 						data-toggle="dropdown">전체 카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<c:forEach var="cat" items="${applicationScope.catList }">
-								<li class="dropdown-submenu"><a href="">${cat.name }</a>
+								<li class="dropdown-submenu"><a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
 									<ul class="dropdown-menu">
 										<c:forEach var="type" items="${applicationScope.catTypeList }">
 											<c:if test="${cat.cnum == type.type }">
-												<li><a href="">${type.name }</a></li>
+												<li><a href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
 											</c:if>
 										</c:forEach>
 									</ul></li>

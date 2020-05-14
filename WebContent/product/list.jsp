@@ -14,7 +14,7 @@
 %>
 
 <h1>상품목록</h1>
-<h5>${ cnum}과일.견과.쌀 > ${ type} 수입과일</h5>
+<h5>${ cnum} > ${ type} </h5>
 <form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }"
 	method="post">
 	<select name="list_filter" size="1">
@@ -30,21 +30,20 @@
 </form>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-3">
 			<ul><c:forEach var="pro" items="${requestScope.list }">
+		<div class="col-sm-3">
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-					<td>
-							<tr><img src="img/"+ ${pro.thumb_save} + ".jpg"><br></tr>
-							<tr><img src="../img/img1.jpg" width="100"><br></tr>
-							<tr><input type="button" id="incart" value="담기(아이콘)"><br></tr>
-							<h3><tr>${pro.name}<br></tr></h3>
-							<tr>${pro.price }<br></tr>
-							<tr>${pro.description }<br></tr>
+					<tr>
+							<td><img src="../img/${pro.thumb_save}" width="100px" height="100px"><br></td>
+							<td><input type="button" id="incart" value="담기(아이콘)"><br></td>
+							<td><h3>${pro.name}<br></h3></td>
+							<td>>${pro.price }<br></td>
+							<td>${pro.description }<br></td>
 							<c:set var="cp" value="${pageContext.request.contextPath }" />
-					</td>
+					</tr>
 					</a>
-				</c:forEach></ul>
 		</div>
+				</c:forEach></ul>
 	</div>
 </div>
 
@@ -57,13 +56,13 @@
 		<c:choose>
 			<c:when test="${i==pageNum }">
 				<a
-					href="${cp }/product/list.do?pageNum=${i}&field=${field}&keyword=${keyword}">
+					href="${cp }/product/list.do?pageNum=${i}">
 					<span style='color: lightsalmon'>[${i}]</span>
 				</a>
 			</c:when>
 			<c:otherwise>
 				<a
-					href="${cp }/product/list.do?pageNum=${i}&field=${field}&keyword=${keyword}">
+					href="${cp }/product/list.do?pageNum=${i}">
 					<span style='color: gray'>[${i}]</span>
 				</a>
 			</c:otherwise>

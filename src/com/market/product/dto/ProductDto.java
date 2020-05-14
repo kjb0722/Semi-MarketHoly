@@ -5,7 +5,6 @@ import java.sql.Date;
 public class ProductDto {
 	int pnum;
 	int cnum;
-	int cartnum;
 	String name;
 	Date reg_date;
 	int price;
@@ -17,13 +16,12 @@ public class ProductDto {
 	String detail_org;
 	String detail_save;
 	String del_yn;
-	public ProductDto(int pnum, int cnum, int cartnum, String name, Date reg_date, int price, int stock, int type,
-			String thumb_org, String thumb_save, String description, String detail_org, String detail_save,
-			String del_yn) {
+	public ProductDto() {}
+	public ProductDto(int pnum, int cnum, String name, Date reg_date, int price, int stock, int type, String thumb_org,
+			String thumb_save, String description, String detail_org, String detail_save, String del_yn) {
 		super();
 		this.pnum = pnum;
 		this.cnum = cnum;
-		this.cartnum = cartnum;
 		this.name = name;
 		this.reg_date = reg_date;
 		this.price = price;
@@ -47,12 +45,6 @@ public class ProductDto {
 	}
 	public void setCnum(int cnum) {
 		this.cnum = cnum;
-	}
-	public int getCartnum() {
-		return cartnum;
-	}
-	public void setCartnum(int cartnum) {
-		this.cartnum = cartnum;
 	}
 	public String getName() {
 		return name;
@@ -120,5 +112,5 @@ public class ProductDto {
 	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
-		
+	
 }

@@ -18,10 +18,8 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//index에서 cnum넘어오면 name 가져올수 있음 만약 type이 -1이 아니면 cnum이 type 인 애(대분류)도 가져오기
 		int cnum=Integer.parseInt(req.getParameter("cnum"));
 		int scnum=0;
-		//int type=Integer.parseInt(req.getParameter("type"));
 		String sType=req.getParameter("type");
 		int type = -1;
 		if(sType != null) {
@@ -58,7 +56,7 @@ public class ListController extends HttpServlet {
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
 		req.setAttribute("list_filter", list_filter);
-		req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+		req.getRequestDispatcher("/index.jsp?page=product/list.jsp").forward(req, resp);
 		
 	}
 	
