@@ -176,7 +176,7 @@ CREATE TABLE review
 	onum number NOT NULL,
 	pnum number NOT NULL,
 	num number NOT NULL,
-	rnum number,
+	rnum number primary key,
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
@@ -198,6 +198,9 @@ CREATE TABLE sale
 	del_yn varchar2(2),
 	PRIMARY KEY (snum)
 );
+
+DROP SEQUENCE seq_review_num;
+CREATE SEQUENCE seq_review_num;
 
 DROP SEQUENCE seq_cart_num;
 CREATE SEQUENCE seq_cart_num;
