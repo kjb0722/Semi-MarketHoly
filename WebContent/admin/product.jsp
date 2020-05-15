@@ -46,12 +46,12 @@
 			<span class="label label-success">썸네일</span>
 			<br>
 			<label class="file-upload btn btn-warning"> 파일을 선택해주세요.
-			<input type="file" name="thumb" />
+			<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" />
 			</label>
 			<br>
 			<br>
 			<span class="label label-success">상품 상세 설명 이미지</span><br> <label class="file-upload btn btn-warning"> 파일을
-				선택해주세요. <input type="file" name="detail" />
+				선택해주세요. <input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" />
 			</label>
 			<br>
 			<br>
