@@ -45,36 +45,37 @@
 <style>
  #s{font-size:20px;}
  #minimini{font-size:25px;}
- #mini{width:50px;height: 200px;}
- .a{border: solid 1px gray;width: 200px;height: 200px;float:left;text-align: center;}
+ .mini{width:30px;height: 200px; margin:80px 10px;text-align: center;}
+ .a{border: solid 1px gray;width: 200px;height: 200px;text-align: center;}
+ .b{float:left;}
 </style>
-	<div id="outbox" class="container" style="padding-left: 70px" >
-		<div id="box1" class="a">
+	<div id="outbox" class="container" style="padding-left: 110px;padding-top: 100px" >
+		<div id="box1" class="a b">
 			<span>상품금액</span><br>
 			<span id="s">?</span>
 		</div>
-				<div class="mini">
+				<div class="mini b">
 				<span id="minimini">-</span>
 				</div>
 		
-		<div id="box2" class="a">
+		<div id="box2" class="a b">
 			<span>상품할인금액</span><br>
 			<span id="s">?</span>
 		</div>
-				<div class="mini">
+				<div class="mini b">
 				<span id="minimini">+</span>
 				</div>
 				
-		<div id="box3" class="a">
+		<div id="box3" class="a b">
 			<span >배송비</span><br>
 			<span id="s">2500원</span>
 		</div>
 		
-				<div class="mini">
+				<div class="mini b">
 				<span id="minimini">=</span>
 				</div>
 	
-		<div id="box3" class="a">
+		<div id="box3" class="a b">
 			<span>상품금액</span><br>
 			<span id="s">?</span>
 		</div>
