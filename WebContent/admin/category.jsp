@@ -175,10 +175,12 @@ table, th {
 				row += "<button data-toggle='modal'";
 				row += "data-target='#catUpdate'";
 				row += "class='btn btn-xs btn-info glyphicon glyphicon-pencil'";
-				row += "onclick='modalVal("+ j.cnum +",'"+ j.name +"')'></button>";
+				//row += "onclick='modalVal("+ j.cnum +",'"+ j.name +"')'></button>";
+				row += "name='btnCatModi'></button>";
 				row += "<td>";
 				row += "<button class='btn btn-xs btn-danger glyphicon glyphicon-trash'";
-				row += "onclick='delCat("+ j.cnum+")'></button>";
+				//row += "onclick='delCat("+ j.cnum+")'></button>";
+				row += "name='btnCatDel'></button>";
 				if(j.tnum == 0){
 					row += "<td></td>";
 				}else{
@@ -194,24 +196,49 @@ table, th {
 					row += "<button data-toggle='modal' data-target='#catUpdate'";
 					row += "class='btn btn-xs btn-info glyphicon glyphicon-pencil'";
 					//row += "onclick='modalVal("+j.tnum+","+j.tname+")></button>";
-					row += "></button>";
+					row += "name='btnCatTypeModi'></button>";
 					row += "</td>";
 					row += "<td>";
 					row += "<button class='btn btn-xs btn-danger glyphicon glyphicon-trash'";
-					row += "onclick='delCat("+j.tnum+")'></button>";
+					//row += "onclick='delCat("+j.tnum+")'></button>";
+					row += "name='btnCatTypeDel'></button>";
 					row += "</td>";
 				}else{
 					row += "<td></td>";
 					row += "<td></td>";
 				}
 				row += "</tr>";
-				console.log(row);
 				$("tbody").append(row);
 			}
-			$("tbody>button").on("click",function(){
-				let rowIndex = $(this).parent().parent().children().index($(this).parent());
-				var colIndex = $(this).parent().children().index($(this));
-				alert("aa");
+			
+			//수정 모달창 값 전달 이벤트
+			$("button[name=btnCatModi]").on("click",function(){
+				let td = $(this).parent().parent().children();
+				$("#catNum").val(td.eq(0).text());
+				$("#catName").val(td.eq(1).text());
+			});
+			$("button[name=btnCatTypeModi]").on("click",function(){
+				let td = $(this).parent().parent().children();
+				$("#catNum").val(td.eq(4).text());
+				$("#catName").val(td.eq(5).text());
+			});
+			
+			//삭제 이벤트
+			$("button[name=btnCatDel]").on("click",function(){
+				let result = confirm("카테고리를 삭제하시겠습니까?");
+				let catNum = $(this).parent().parent().children().eq(0).text();
+				
+				if(result){
+					catDel(catNum);
+				}
+			});
+			$("button[name=btnCatTypeDel]").on("click",function(){
+				let result = confirm("세부 카테고리를 삭제하시겠습니까?");
+				let catNum = $(this).parent().parent().children().eq(4).text();
+				
+				if(result){
+					catDel(catNum);
+				}
 			});
 		}
 	}
@@ -228,7 +255,9 @@ table, th {
 	        	   	 catName:catName},
 	           dataType:"JSON",
 	           success : function(data) {
-	                 alert("dd");
+	        	   alert("수정 완료");
+	        	   $("#catUpdate").modal("hide");
+	        	   catListLoad();
 	           }
 	     });
 	}
@@ -238,21 +267,18 @@ table, th {
 	});
 	//수정//
 	
-	function modalVal(catNum, catName) {
-		console.log(catNum);
-		console.log(catName);
-		$("#catNum").val(catNum);
-		$("#catName").val(catName);
+	//삭제//
+	function catDel(catNum){
+		jQuery.ajax({
+			url:`${cp}/admin/catDel.do`,
+			mothod:"get",
+			data:{catNum:catNum},
+			dataType:"JSON",
+			success:function(data){
+				alert("삭제 완료");
+				catListLoad();
+			}
+		});
 	}
-	
-/* 	document.getElementById("btnCatUpdate").onclick = function(){
-		let catNum = document.getElementById("catNum").value;
-		let catName = document.getElementById("catName").value;
-		location = `${cp}/admin/catUpdate.do?catNum=${'${catNum}'}&catName=${'${catName}'}`;
-	}; */
-	
-	function delCat(catNum){
-		location = `${cp}/admin/catDel.do?catNum=${'${catNum}'}`;
-	}
-	
+	//삭제//
 </script>
