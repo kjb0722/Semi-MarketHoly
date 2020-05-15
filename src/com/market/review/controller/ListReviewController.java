@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.market.review.dao.ReviewDao;
 import com.market.review.dto.ReviewDto;
 
-@WebServlet("")
+@WebServlet("/member/listReview.do")
 public class ListReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,7 +20,7 @@ public class ListReviewController extends HttpServlet {
 		ArrayList<ReviewDto> list = reviewDao.listReview();
 		
 		req.setAttribute("list", list);
-		System.out.println(list.get(0).getId());
+		//System.out.println(list.get(0).getId());
 		req.getRequestDispatcher("/review/reviewList.jsp").forward(req, resp);
 		//"/index.jsp?page=/member/joinResult.jsp"
 	}

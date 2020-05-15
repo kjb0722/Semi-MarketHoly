@@ -22,21 +22,19 @@
 		
 
 <c:forEach var='list' items='${list }'>
-	${list.id}
-	<tr>
+	<tr onclick="">
 		<td>${list.rnum }</td>
 		<td>${list.name }</td>
 		<td>${list.title }</td>
 		<td>${list.content }</td> 
 		<td>${list.regdate }</td>
-		<td><img src="img/${list.savefilename }"></td>
+		<td><img src="${pageContext.request.contextPath }/img/${list.savefilename }"></td>
 	</tr>		
-</c:forEach>
-
-	
-	
-	
-	
+</c:forEach>	
 </table>	
 </body>
+<script></script>
+
+
+
 </html>
