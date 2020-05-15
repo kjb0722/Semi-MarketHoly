@@ -12,7 +12,7 @@ import com.market.product.dto.ProductDto;
 
 public class ProductDao {
 
-	//����¡���� �޼ҵ� (getMaxNum,getCount)
+	// ����¡���� �޼ҵ� (getMaxNum,getCount)
 	public int getMaxNum() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -36,8 +36,7 @@ public class ProductDao {
 
 	}
 
-
-	public int getCount() { 
+	public int getCount() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -59,55 +58,85 @@ public class ProductDao {
 		}
 
 	}
-
-	public ArrayList<ProductDto> getList(int startRow,int endRow,String list_filter,int type,int cnum){
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		ArrayList<ProductDto> list=new ArrayList<ProductDto>();
+	//상세페이지
+	public ProductDto getDetail(int pnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProductDto dto = null;
 		try {
-			con=JDBCUtil.getConn();
+			con = JDBCUtil.getConn();
+			String sql = "select * from product where pnum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pnum);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				String thumb_org = rs.getString("thumb_org");
+				String thumb_save = rs.getString("thumb_save");
+				String detail_org = rs.getString("detail_org");
+				String detail_save = rs.getString("detail_save");
+				String description = rs.getString("description");
+				String del_yn = rs.getString("del_yn");
+				dto = new ProductDto(pnum, 0, name, reg_date, price, stock, 0, thumb_org, thumb_save, description,
+						detail_org, detail_save, del_yn);
+			}
+			return dto;
+
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public ArrayList<ProductDto> getList(int startRow, int endRow, String list_filter, int type, int cnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
+		try {
+			con = JDBCUtil.getConn();
 			String sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date asc)"
 					+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
 
 			/*
-			if(list_filter==null || list_filter.equals("new")) {
-				sql += " order by reg_date desc";
-			}else if(list_filter.equals("best")) {
-				sql += " order by ";
- 			}else if(list_filter.equals("lowprice")) {
-				sql += " order by price";
-			}else if(list_filter.equals("highprice")){
-				sql += " order by price desc";
-			}
-			*/
+			 * if(list_filter==null || list_filter.equals("new")) { sql +=
+			 * " order by reg_date desc"; }else if(list_filter.equals("best")) { sql +=
+			 * " order by "; }else if(list_filter.equals("lowprice")) { sql +=
+			 * " order by price"; }else if(list_filter.equals("highprice")){ sql +=
+			 * " order by price desc"; }
+			 */
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, type);
 			pstmt.setInt(2, cnum);
 			pstmt.setInt(3, startRow);
 			pstmt.setInt(4, endRow);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				int pnum=rs.getInt("pnum");
-				String name=rs.getString("name");
-				Date reg_date=rs.getDate("reg_date");
-				int price=rs.getInt("price");
-				int stock=rs.getInt("stock");
-				String thumb_org=rs.getString("thumb_org");
-				String thumb_save=rs.getString("thumb_save");
-				String description=rs.getString("description");
-				String del_yn=rs.getString("del_yn");
-				list.add(new ProductDto(pnum,cnum,name,reg_date,
-						price,stock,type,thumb_org,thumb_save,description,null,null,del_yn));
-				
+			while (rs.next()) {
+				int pnum = rs.getInt("pnum");
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				String thumb_org = rs.getString("thumb_org");
+				String thumb_save = rs.getString("thumb_save");
+				String description = rs.getString("description");
+				String del_yn = rs.getString("del_yn");
+				list.add(new ProductDto(pnum, cnum, name, reg_date, price, stock, type, thumb_org, thumb_save,
+						description, null, null, del_yn));
+
 			}
 			return list;
-		
-			
-		}catch(SQLException se) {
+
+		} catch (SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
-		}finally {
+		} finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}

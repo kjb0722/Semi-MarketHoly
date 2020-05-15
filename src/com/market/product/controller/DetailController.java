@@ -8,12 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.market.product.dao.ProductDao;
 import com.market.product.dto.ProductDto;
 
 public class DetailController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int pnum=Integer.parseInt(req.getParameter("pnum"));
-		ArrayList<ProductDto>list=new ArrayList<ProductDto>();
+		ProductDao dao=new ProductDao();
+		ProductDto dto=dao.getDetail(pnum);
+		req.setAttribute("dto",dto);
+		req.getRequestDispatcher("/index.jsp?page=product/list.jsp").forward(req, resp);
 	}
 }

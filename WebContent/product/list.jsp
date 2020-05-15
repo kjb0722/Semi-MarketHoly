@@ -13,7 +13,7 @@
 
 <h1>상품목록</h1>
 <h5>${ cnum} > ${ type} </h5>
-<form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }"
+<form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }&type=${type }"
 	method="post">
 	<select name="list_filter" size="1">
 		<option value="new"
