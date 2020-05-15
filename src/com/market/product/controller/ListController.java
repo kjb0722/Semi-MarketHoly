@@ -42,7 +42,8 @@ public class ListController extends HttpServlet {
 		ProductDao dao=new ProductDao();
 		ArrayList<ProductDto>list=dao.getList(startRow, endRow,filter,cnum,type);
 		
-		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
+		int pageCount=(int)Math.ceil(dao.getCount(cnum,type)/9.0);
+		System.out.println(pageCount);
 		int startPageNum=((pageNum-1)/4)*4+1;
 		int endPageNum=startPageNum+3;
 		if(pageCount<endPageNum) {

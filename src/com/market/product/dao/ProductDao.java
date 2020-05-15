@@ -36,14 +36,16 @@ public class ProductDao {
 
 	}
 
-	public int getCount() {
+	public int getCount(int cnum, int type) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select NVL(count(pnum),0) cnt from product";
+			String sql = "select NVL(count(pnum),0) cnt from product where cnum=? and type=?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cnum);
+			pstmt.setInt(2, type);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt("cnt");
