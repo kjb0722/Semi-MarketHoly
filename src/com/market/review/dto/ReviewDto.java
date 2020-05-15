@@ -12,13 +12,15 @@ public class ReviewDto {
 	private String title;
 	private String content;
 	private Date regdate;
+	private String orgfilename;
+	private String savefilename;
 	private String del_yn;
 	private String pwd;
 	
 	public ReviewDto() {}
 
 	public ReviewDto(int onum, int pnum, int num, int rnum, String id, String name, String title, String content,
-			Date regdate, String del_yn, String pwd) {
+			Date regdate, String orgfilename, String savefilename, String del_yn, String pwd) {
 		super();
 		this.onum = onum;
 		this.pnum = pnum;
@@ -29,6 +31,8 @@ public class ReviewDto {
 		this.title = title;
 		this.content = content;
 		this.regdate = regdate;
+		this.orgfilename = orgfilename;
+		this.savefilename = savefilename;
 		this.del_yn = del_yn;
 		this.pwd = pwd;
 	}
@@ -105,6 +109,22 @@ public class ReviewDto {
 		this.regdate = regdate;
 	}
 
+	public String getOrgfilename() {
+		return orgfilename;
+	}
+
+	public void setOrgfilename(String orgfilename) {
+		this.orgfilename = orgfilename;
+	}
+
+	public String getSavefilename() {
+		return savefilename;
+	}
+
+	public void setSavefilename(String savefilename) {
+		this.savefilename = savefilename;
+	}
+
 	public String getDel_yn() {
 		return del_yn;
 	}
@@ -120,4 +140,6 @@ public class ReviewDto {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
+	
 }

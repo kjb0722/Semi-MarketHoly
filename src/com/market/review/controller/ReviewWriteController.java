@@ -21,8 +21,13 @@ public class ReviewWriteController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String upload = req.getSession().getServletContext().getRealPath("${pageContext.request.contextPath }/img");
-
+		
+		String upload = req.getServletContext().getRealPath("/img");
+				//getRealPath("${pageContext.request.contextPath }");
+		
+		System.out.println(upload);
+		
+		
 		MultipartRequest mr = new MultipartRequest(
 					req,
 					upload,
@@ -30,19 +35,24 @@ public class ReviewWriteController extends HttpServlet {
 					"utf-8",
 					new DefaultFileRenamePolicy()
 				);
+	
+		int onum =  Integer.parseInt(mr.getParameter("onum"));
+		int pnum =  Integer.parseInt(mr.getParameter("pnum"));
+		int num =  Integer.parseInt(mr.getParameter("num"));
+		String id = mr.getParameter("id");
+		String name = mr.getParameter("name");
+		String pwd= mr.getParameter("pwd");
+		String title = mr.getParameter("title");
+		String content = mr.getParameter("content");
+		String orgfilename = mr.getOriginalFileName("file1");   //전송된 파일명
+		String savefilename = mr.getFilesystemName("file1");  //저장된 파일명	
 		File file1 = mr.getFile("file1");
-		String writer= req.getParameter("writer");
-		String title = req.getParameter("title");
-		String content = req.getParameter("content");
-		
-		
 		ReviewDao dao = ReviewDao.getInstance();
-		ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, del_yn, pwd);
+		ReviewDto dto = new ReviewDto(onum, pnum, num, 0, id, name, title, content, null, orgfilename, savefilename, null, pwd);
 		
 		
+		int n = dao.writeReview(dto);
 		
-		
-		
-		
+		resp.sendRedirect(req.getContextPath()+"/main.do");
 	}
 }

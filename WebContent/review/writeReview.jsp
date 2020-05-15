@@ -10,12 +10,14 @@
 <h1>상품 후기 작성하기</h1>
 <form method="post" action="${pageContext.request.contextPath }/member/writeReview.do" enctype="multipart/form-data">
     <!-- 답글인 경우 부모글에 대한 정보 보내기 -->
-	<input type="hidden" name="num" value="${param.num }">
-	<input type="hidden" name="ref" value="${param.ref }">
-	<input type="hidden" name="lev" value="${param.lev }">
-	<input type="hidden" name="step" value="${param.step }">
+	onum<input type="text" name="onum" ><br>		<!-- request를 오는걸 hidden -->
+	pnum<input type="text" name="pnum" ><br>
+	num<input type="text" name="num" ><br>
+	id<input type="text" name="id" ><br>
 	작성자 <br>
-	<input type="text" name="writer"><br>
+	<input type="text" name="name"><br>
+	비밀번호<br>
+	<input type="password" name="pwd"><br>
 	제목 <br>
 	<input type="text" name="title"><br>
 	내용 <br>
