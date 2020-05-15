@@ -49,21 +49,17 @@ CREATE TABLE common
 CREATE TABLE member
 (
 	num number NOT NULL,
-	id varchar2 NOT NULL(25),
-	pwd varchar2 NOT NULL(25),
-	name varchar2 NOT NULL(30),
+	id varchar2(25) NOT NULL,
+	pwd varchar2(25) NOT NULL,
+	name varchar2(30) NOT NULL,
 	rating number,
-	email varchar2 NOT NULL unique(40),
+	email varchar2(40) NOT NULL unique,
 	birth varchar2(30),
-	phone varchar2 NOT NULL(30),
-	-- 1:남자
-	-- 2:여자
+	phone varchar2(30) NOT NULL,
 	gender number,
-	addr varchar2 NOT NULL(100),
+	addr varchar2(100) NOT NULL,
 	reg_date date,
 	point number,
-	-- y:삭제
-	-- n:미삭제
 	del_yn varchar2(2),
 	del_date date,
 	PRIMARY KEY (num)
@@ -182,6 +178,8 @@ CREATE TABLE review
 	title varchar2(50),
 	content varchar2(100),
 	regdate date,
+	orgfilename varchar2(150),		--전송된 파일명
+	savefilename varchar2(150),		--저장된 파일명
 	del_yn varchar2(2),
 	pwd varchar2(40),
 	UNIQUE (onum, pnum, num)
