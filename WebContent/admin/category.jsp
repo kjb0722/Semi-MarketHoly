@@ -100,6 +100,11 @@ table, th {
 			}
 		}
 	}
+	$("input[name=catName]").keydown(function(key){
+		if(key.keyCode == 13){
+			$("#btnCatAdd").trigger("click");		
+		}
+	});
 	//카테고리 추가 기능//
 	
 	//카테고리 combobox 불러오기//
@@ -153,6 +158,11 @@ table, th {
 			}
 		}		
 	}
+	$("input[name=catTypeName]").keydown(function(key){
+		if(key.keyCode == 13){
+			$("#btnCatTypeAdd").trigger("click");		
+		}
+	});
 	//세부 카테고리 추가//
 	
 	//카테고리 및 세부 카테고리 리스트 불러오기//
