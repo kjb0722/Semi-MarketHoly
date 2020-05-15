@@ -10,7 +10,15 @@
 	//재고수량 0인 상품 품절 표시
 	//장바구니 버튼 누르면 cart.do로 이동해서 pnum,수량,세션에 있는 아이디 넘겨주기(로그인 안되어있으면 login.do로)
 %>
-
+<style>
+.pagination{
+	display: block;
+	text-align: center;
+}
+.pagination > li > a{
+	float: none;
+}
+</style>
 <h1>상품목록</h1>
 <h5>${ cnum} > ${ type} </h5>
 <form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }&type=${type }"
@@ -54,31 +62,35 @@
 				</c:forEach></ul>
 	</div>
 </div>
-
+<br><br>
 <!-- 페이징 -->
 <div>
-	<c:if test="${startPageNum>5}">
-		<a href="${cp }/product/list.do?pageNum=${startPageNum-1}&cnum=${cnum }&type=${type }">[이전]</a>
+<ul class="pagination pagination-lg">
+	<li class="page-item">
+	
+	<c:if test="${startPageNum }>1">
+		<a href="${cp }/product/list.do?pageNum=${startPageNum-1}&cnum=${cnum }&type=${type }"> < </a>
 	</c:if>
+	</li>
 	<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a
+				<li class="page-item active"><a
 					href="${cp }/product/list.do?pageNum=${i}&cnum=${cnum }&type=${type }">
-					<span style='color: lightsalmon'>[${i}]</span>
-				</a>
+					<span style='color: white'>${i}</span>
+				</a></li>
 			</c:when>
 			<c:otherwise>
-				<a
+					<li class="page-item"><a
 					href="${cp }/product/list.do?pageNum=${i}&cnum=${cnum }&type=${type }">
-					<span style='color: gray'>[${i}]</span>
-				</a>
+					<span style='color: gray'>${i}</span>
+				</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-	<c:if test="${pageCount>endPageNum}">
-		<a href="${cp }/product/list.do?pageNum=${endPageNum+1}">[다음]</a>
-	</c:if>
+	<li class="page-item"><a href="${cp }/product/list.do?pageNum=${endPageNum+1}">></a>
+
+</ul>
 </div>
 
 </body>

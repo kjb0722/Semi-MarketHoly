@@ -28,8 +28,6 @@ public class ListController extends HttpServlet {
 		if(sType != null) {
 			type = Integer.parseInt(sType);
 		}
-		
-		
 		String filter=req.getParameter("filter");
 		String spageNum=req.getParameter("pageNum");
 		String list_filter=req.getParameter("list_filter");
@@ -39,17 +37,17 @@ public class ListController extends HttpServlet {
 		}
 		int startRow=(pageNum-1)*9+1;
 		int endRow=startRow+8;
+		
 		ProductDao dao=new ProductDao();
 		ArrayList<ProductDto>list=dao.getList(startRow, endRow,filter,cnum,type);
 		
 		int pageCount=(int)Math.ceil(dao.getCount(cnum,type)/9.0);
-		System.out.println(pageCount);
-		int startPageNum=((pageNum-1)/4)*4+1;
-		int endPageNum=startPageNum+3;
+		int startPageNum=((pageNum-1)/3)*3+1;
+		int endPageNum=startPageNum+4;
 		if(pageCount<endPageNum) {
 			endPageNum=pageCount;
 		}
-		
+	
 		req.setAttribute("type", type);
 		req.setAttribute("cnum", cnum);
 		req.setAttribute("list", list);

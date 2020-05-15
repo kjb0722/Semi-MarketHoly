@@ -40,12 +40,19 @@ public class ProductDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql=null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select NVL(count(pnum),0) cnt from product where cnum=? and type=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, cnum);
-			pstmt.setInt(2, type);
+			if(type==-1) {
+				sql="select NVL(count(pnum),0) cnt from product where type=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, cnum);
+			}else {
+				sql = "select NVL(count(pnum),0) cnt from product where cnum=? and type=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, cnum);
+				pstmt.setInt(2, type);
+			}
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt("cnt");
@@ -96,29 +103,44 @@ public class ProductDao {
 		}
 	}
 
-	public ArrayList<ProductDto> getList(int startRow, int endRow, String list_filter, int type, int cnum) {
+	public ArrayList<ProductDto> getList(int startRow, int endRow, String list_filter, int cnum,int type) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql =null;
 		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date asc)"
-					+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+			if(type==-1) {
+				sql = "select * from(select aa.*,rownum rnum from (select * from product where type=? order by reg_date asc)"
+						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, cnum);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+				
+			}else{
+				
+				sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date asc)"
+						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
 
-			/*
-			 * if(list_filter==null || list_filter.equals("new")) { sql +=
-			 * " order by reg_date desc"; }else if(list_filter.equals("best")) { sql +=
-			 * " order by "; }else if(list_filter.equals("lowprice")) { sql +=
-			 * " order by price"; }else if(list_filter.equals("highprice")){ sql +=
-			 * " order by price desc"; }
-			 */
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, type);
-			pstmt.setInt(2, cnum);
-			pstmt.setInt(3, startRow);
-			pstmt.setInt(4, endRow);
+				/*
+				 * if(list_filter==null || list_filter.equals("new")) { sql +=
+				 * " order by reg_date desc"; }else if(list_filter.equals("best")) { sql +=
+				 * " order by "; }else if(list_filter.equals("lowprice")) { sql +=
+				 * " order by price"; }else if(list_filter.equals("highprice")){ sql +=
+				 * " order by price desc"; }
+				 */
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, cnum);
+				pstmt.setInt(2, type);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+				
+			}
 			rs = pstmt.executeQuery();
+		
 			while (rs.next()) {
 				int pnum = rs.getInt("pnum");
 				String name = rs.getString("name");
