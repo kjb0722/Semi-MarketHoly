@@ -44,6 +44,86 @@ table, th, td {
 			</tbody>
 		</table>
 	</div>
+
+	<div class="modal fade" id="memModify" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">회원 정보 수정</h5>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<h4>
+								<label class="label label-success">회원 번호</label>
+							</h4>
+							<input type="text" class="form-control" id="mNum"
+								disabled="disabled">
+						</div>
+						<div class="col-md-4">
+							<h4>
+								<label class="label label-success">아이디</label>
+							</h4>
+							<input type="text" class="form-control" id="mId"
+								disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<h4>
+								<label class="label label-success">이름</label>
+							</h4>
+							<input type="text" class="form-control" id="mName">
+						</div>
+						<div class="col-md-4">
+							<h4>
+								<label class="label label-success">생일</label>
+							</h4>
+							<input type="text" class="form-control" id="mBirth">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<h4>
+								<label class="label label-success">이메일</label>
+							</h4>
+							<input type="text" class="form-control" id="mEmail">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<h4>
+								<label class="label label-success">전화번호</label>
+							</h4>
+							<input type="text" class="form-control" id="mPhone">
+						</div>
+						<div class="col-md-6">
+							<h4>
+								<label class="label label-success">성별</label>
+							</h4>
+							<input type="radio" id="men" name="gender" value="1"> <label
+								class="form-check-label" for="men">남자</label> <input
+								type="radio" id="women" name="gender" value="2" checked>
+							<label class="form-check-label" for="women">여자</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<h4>
+								<label class="label label-success">주소</label>
+							</h4>
+							<input type="text" class="form-control" id="mAddress">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="btnMemModi">수정</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -105,26 +185,118 @@ table, th, td {
 				}else{
 					row += "<td>"+j.del_date+"</td>";				
 				}
-				row += "<td><button class='btn btn-xs btn-info glyphicon glyphicon-pencil' id='btnModify'></button></td>";
-				row += "<td><button class='btn btn-xs btn-danger glyphicon glyphicon-trash' id='btnDelete'></button></td>";
+				row += "<td>";
+				row += "<button class='btn btn-xs btn-info glyphicon glyphicon-pencil' ";
+				row += "name='btnModify' data-toggle='modal' data-target='#memModify'></button>";
+				row += "</td>";
+				row += "<td><button class='btn btn-xs btn-danger glyphicon glyphicon-trash' name='btnDelete'></button></td>";
 				row += "</tr>";
 				$("tbody").append(row);
+				
+				//탈퇴 회원이면 색상
+				if(j.del_yn == "Y"){
+					$("tbody tr").last().css("background-color", "#F08080");
+				}
 			}
+			
+			//삭제 이벤트
+			$("button[name=btnDelete]").click(function() {
+				let num = $(this).parent().parent().children().eq(0).text();
+				memDelete(num);
+			});
+			
+			//수정 이벤트
+			$("button[name=btnModify]").click(function(){
+				let tr = $(this).parent().parent().children();
+				let num = tr.eq(0).text();
+				let id = tr.eq(1).text();
+				let name = tr.eq(2).text();
+				let email = tr.eq(4).text();
+				let birth = tr.eq(5).text();
+				let phone = tr.eq(6).text();
+				let gender = tr.eq(7).text();
+				let addr = tr.eq(8).text();
+				$("#mNum").val(num);
+				$("#mId").val(id);
+				$("#mName").val(name);
+				$("#mEmail").val(email);
+				$("#mBirth").val(birth);
+				$("#mPhone").val(phone);
+				if(gender == "남"){
+					$("#men").prop("checked",true);
+					$("input:radio[name='test']:input[value='1']").prop("checked",true);
+				}else{
+					$("#women").prop("checked",true);
+					$("input:radio[name='test']:input[value='2']").prop("checked",true);
+				}
+				$("#mAddress").val(addr);
+			});
 		}
 	}
+	
+	//탈퇴//
+	function memDelete(num){
+		let result = confirm("선택하신 회원을 삭제하시겠습니까?");
+		if(result){
+			jQuery.ajax({
+		           url:`${cp}/admin/memDel.do`,
+		           method:"GET",
+		           data:{num:num},
+		           dataType:"JSON",
+		           success : function(data) {
+		        	   if(data.n > 0){
+		        		   alert("탈퇴 처리 완료");
+		        		   getMemList("","");
+		        	   }else{
+		        		   location = `${cp}/error.do`;
+		        	   }
+		           }
+		     });
+		}
+	}
+	//탈퇴//
 	
 	//목록 전체 삭제
 	function removeList() {
 		$("table>tbody").empty();
 	}
 	
-	//수정 이벤트
-	$("table tr input").on('click', function(e){
-   		alert($(this).closest('td').parent()[0].sectionRowIndex);
-	});​
-	
-	//삭제 이벤트
-	function memDelete(target){
-		
+	//수정//
+	$("#btnMemModi").click(function(){
+		let result = confirm("수정하시겠습니까?");
+		if(result){
+			memModify();
+		}
+	});
+	function memModify(){
+		let num = $("#mNum").val();
+		let name = $("#mName").val();
+		let birth = $("#mBirth").val();
+		let email = $("#mPhone").val();
+		let gender = $("input[name='gender']:checked").val();
+		let phone = $("#mPhone").val();
+		let addr = $("#mAddress").val();
+		jQuery.ajax({
+			url:`${cp}/admin/memModify.do`,
+			method:"get",
+			data:{num:num,
+				name:name,
+				birth:birth,
+				email:email,
+				gender:gender,
+				phone:phone,
+				addr:addr},
+			dataType:"JSON",
+			success: function(data){
+				if(data.n>0){
+					alert("회원 정보 수정 완료");
+					$("#memModify").modal("hide");
+					getMemList("","");
+				}else{
+					location = `${cp}/error.jsp`;
+				}
+			}
+		});
 	}
+	//수정//
 </script>

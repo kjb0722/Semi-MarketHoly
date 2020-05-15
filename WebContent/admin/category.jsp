@@ -96,7 +96,7 @@ table, th {
 				catComboLoad();
 				catListLoad();
 			}else{
-				alert("실패");
+				location = `${cp}/error.do`;
 			}
 		}
 	}
@@ -154,7 +154,7 @@ table, th {
 				alert("세부 카테고리 추가 성공");
 				catListLoad();
 			}else{
-				alert("실패");
+				location = `${cp}/error.do`;
 			}
 		}		
 	}
@@ -265,9 +265,13 @@ table, th {
 	        	   	 catName:catName},
 	           dataType:"JSON",
 	           success : function(data) {
-	        	   alert("수정 완료");
-	        	   $("#catUpdate").modal("hide");
-	        	   catListLoad();
+	        	   if(data.n>0){
+		        	   alert("수정 완료");
+		        	   $("#catUpdate").modal("hide");
+		        	   catListLoad();	        		   
+	        	   }else{
+	        		   location = `${cp}/error.do`;
+	        	   }
 	           }
 	     });
 	}
@@ -285,8 +289,12 @@ table, th {
 			data:{catNum:catNum},
 			dataType:"JSON",
 			success:function(data){
-				alert("삭제 완료");
-				catListLoad();
+				if(data.n>0){
+					alert("삭제 완료");
+					catListLoad();					
+				}else{
+					location = `${cp}/error.do`;
+				}
 			}
 		});
 	}

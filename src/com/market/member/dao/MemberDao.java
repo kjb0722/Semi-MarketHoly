@@ -507,4 +507,26 @@ public class MemberDao {
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
+	public int updMemFromAdmin(MemberDto dto) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "update member set name=?,birth=?,email=?,gender=?,phone=?,addr=? where num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getBirth());
+			pstmt.setString(3, dto.getEmail());
+			pstmt.setInt(4, dto.getGender());
+			pstmt.setString(5, dto.getPhone());
+			pstmt.setString(6, dto.getAddr());
+			pstmt.setInt(7, dto.getNum());
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
 }
