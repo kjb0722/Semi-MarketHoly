@@ -38,7 +38,7 @@
 					alt="Logo"></a>
 			</div>
 		</div>
-
+		
 		<nav class="navbar navbar-default">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">마켓홀리</a>
@@ -49,11 +49,13 @@
 						data-toggle="dropdown">전체 카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<c:forEach var="cat" items="${applicationScope.catList }">
-								<li class="dropdown-submenu"><a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
+								<li class="dropdown-submenu"><a
+									href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
 									<ul class="dropdown-menu">
 										<c:forEach var="type" items="${applicationScope.catTypeList }">
 											<c:if test="${cat.cnum == type.type }">
-												<li><a href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
+												<li><a
+													href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
 											</c:if>
 										</c:forEach>
 									</ul></li>
@@ -66,7 +68,8 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="http://www.ekolping.co.kr"><b
 							class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a></li>
-					<li><a href="${cp }/member/logout.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
+					<li><a href="${cp }/member/logout.do"><b
+							class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
 				</ul>
 				<form class="navbar-form pull-right">
 					<input class="form-control mr-sm-2" type="text"
@@ -77,7 +80,11 @@
 				</form>
 			</div>
 		</nav>
-
+		<c:if test="${sessionScope.dto.rating == 99 }">
+			<div class="container">
+				<jsp:include page="/admin/admin.jsp"></jsp:include>
+			</div>
+		</c:if>
 	</header>
 
 	<section class="container">
