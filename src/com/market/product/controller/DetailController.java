@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.market.product.dao.ProductDao;
 import com.market.product.dto.ProductDto;
-
+@WebServlet("/product/detail.do")
 public class DetailController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -18,6 +19,6 @@ public class DetailController extends HttpServlet {
 		ProductDao dao=new ProductDao();
 		ProductDto dto=dao.getDetail(pnum);
 		req.setAttribute("dto",dto);
-		req.getRequestDispatcher("/index.jsp?page=product/list.jsp").forward(req, resp);
+		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp").forward(req, resp);
 	}
 }
