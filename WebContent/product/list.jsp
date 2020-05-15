@@ -34,7 +34,7 @@
 					<div style="position: relative;">
 						<img src="../img/${pro.thumb_save}" width="300px" height="400px">
 						<div style="position: absolute; top:340px; left:210px" >
-							<button type="button" id="incart" ><img src="../img/1.png" alt="" width="50px" height="50px">담기</button>
+							<button type="button" id="incart" ><img src="../img/btn-cart.png" alt="담기" width="50px" height="50px"></button>
 						</div>
 					</div>
 					
@@ -58,19 +58,19 @@
 <!-- 페이징 -->
 <div>
 	<c:if test="${startPageNum>5}">
-		<a href="${cp }/product/list.do?pageNum=${startPageNum-1}">[이전]</a>
+		<a href="${cp }/product/list.do?pageNum=${startPageNum-1}&cnum=${cnum }&type=${type }">[이전]</a>
 	</c:if>
 	<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
 				<a
-					href="${cp }/product/list.do?pageNum=${i}">
+					href="${cp }/product/list.do?pageNum=${i}&cnum=${cnum }&type=${type }">
 					<span style='color: lightsalmon'>[${i}]</span>
 				</a>
 			</c:when>
 			<c:otherwise>
 				<a
-					href="${cp }/product/list.do?pageNum=${i}">
+					href="${cp }/product/list.do?pageNum=${i}&cnum=${cnum }&type=${type }">
 					<span style='color: gray'>[${i}]</span>
 				</a>
 			</c:otherwise>

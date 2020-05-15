@@ -18,7 +18,11 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		int cnum=Integer.parseInt(req.getParameter("cnum"));
+		String sCnum=req.getParameter("cnum");
+		int cnum= 0;
+		if(sCnum != null ) {
+			cnum=Integer.parseInt(req.getParameter("cnum"));
+		}
 		String sType=req.getParameter("type");
 		int type = -1;
 		if(sType != null) {
@@ -33,14 +37,14 @@ public class ListController extends HttpServlet {
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
-		int startRow=(pageNum-1)*5+1;
-		int endRow=startRow+4;
+		int startRow=(pageNum-1)*9+1;
+		int endRow=startRow+8;
 		ProductDao dao=new ProductDao();
 		ArrayList<ProductDto>list=dao.getList(startRow, endRow,filter,cnum,type);
 		
 		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
-		int startPageNum=((pageNum-1)/4)*4+1;
-		int endPageNum=startPageNum+3;
+		int startPageNum=((pageNum-1)/8)*8+1;
+		int endPageNum=startPageNum+7;
 		if(pageCount<endPageNum) {
 			endPageNum=pageCount;
 		}

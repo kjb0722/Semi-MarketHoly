@@ -16,6 +16,7 @@ import com.market.admin.dto.CategoryDto;
 @WebServlet("/main.do")
 public class MainController extends HttpServlet {
 	@Override
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ServletContext app = req.getServletContext();
 		String cp = req.getContextPath();
