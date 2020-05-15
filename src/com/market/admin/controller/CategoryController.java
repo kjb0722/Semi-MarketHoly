@@ -19,11 +19,10 @@ public class CategoryController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		CategoryDao dao = CategoryDao.getInstance();
 
-		// Å« Ä«Å×°í¸® ¸®½ºÆ® °Ë»ö
 		ArrayList<CategoryDto> catList = dao.selList();
 		req.setAttribute("catList", catList);
 
-		// Ä«Å×°í¸®,Á¾·ù ¸®½ºÆ® °Ë»ö
+		// Ä«ï¿½×°ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ë»ï¿½
 		ArrayList<CategoryListDto> catListAll = dao.selListAll();
 		req.setAttribute("catListAll", catListAll);
 		req.getRequestDispatcher("/index.jsp?page=admin/category.jsp").forward(req, resp);
