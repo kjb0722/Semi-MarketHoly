@@ -23,7 +23,7 @@ public class ReviewWriteController extends HttpServlet {
 		
 		
 		String upload = req.getServletContext().getRealPath("/img");
-				//getRealPath("${pageContext.request.contextPath }");
+	
 		
 		System.out.println(upload);
 		
@@ -53,6 +53,10 @@ public class ReviewWriteController extends HttpServlet {
 		
 		int n = dao.writeReview(dto);
 		
-		resp.sendRedirect(req.getContextPath()+"/main.do");
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/member/listReview.do");
+		}else {
+			resp.sendRedirect(req.getContextPath()+"/member/reviewResult.jsp");
+		}
 	}
 }

@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="wrap">
-	<h1>회원가입</h1>
+	<h1>회원가입</h1>	
 	<form method="post" action="${pageContext.request.contextPath }/member/join.do">
 		<label for="exampleInputEmail1">아이디*</label>
 		<div class="input input-group mb-3"> 	

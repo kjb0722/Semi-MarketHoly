@@ -1,8 +1,11 @@
 package com.market.review.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.market.db.JDBCUtil;
 import com.market.member.dao.MemberDao;
@@ -21,7 +24,7 @@ public class ReviewDao {
 		
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into review values(?,?,?,seq_review_num.nextval,?,?,?,?,sysdate,?,?,?,?)";
+			String sql = "insert into review values(?,?,?,seq_review_num.nextval,?,?,?,?,sysdate,?,?,'N',?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getOnum());
 			pstmt.setInt(2, dto.getPnum());
@@ -45,6 +48,46 @@ public class ReviewDao {
 		}	
 	}
 	
+	
+	public ArrayList<ReviewDto> listReview(){ 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql ="select * from review where del_yn ='N'";
+			pstmt =con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<ReviewDto> list = new ArrayList<ReviewDto>();
+			while(rs.next()) {
+				int onum = rs.getInt("onum");
+				int pnum = rs.getInt("pnum");
+				int num = rs.getInt("num");
+				int rnum = rs.getInt("rnum");
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				Date regdate = rs.getDate("regdate");
+				String orgfilename = rs.getString("orgfilename");
+				String savefilename = rs.getString("savefilename");
+				String del_yn = rs.getString("del_yn");
+				String pwd = rs.getString("pwd");
+				ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn, pwd);
+				list.add(dto);
+			}
+			return list;
+			
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
 
 	
 	
