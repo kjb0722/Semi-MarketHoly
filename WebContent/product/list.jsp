@@ -19,8 +19,13 @@
 	float: none;
 }
 </style>
-<h1>상품목록</h1>
-<h5>${ cnum} > ${ type} </h5>
+<h3>${ cname}</h3>
+<h3> ${ tname}</h3>
+<c:forEach var="clist" items="${requestScope.clist }">
+	${clist.name}
+</c:forEach>
+
+<!-- 정렬 필터 -->
 <form action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }&type=${type }"
 	method="post">
 	<select name="list_filter" size="1">
@@ -34,13 +39,14 @@
 			<c:if test="${list_filter=='highprice' }">selected</c:if>>높은가격순</option>
 	</select> <input type="submit" value="검색">
 </form>
+<!-- 상품리스트 -->
 <div class="container">
 	<div class="row">
 			<ul><c:forEach var="pro" items="${requestScope.list }">
 		<div class="col-sm-4">
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
 					<div style="position: relative;">
-						<img src="../img/${pro.thumb_save}" width="300px" height="400px">
+						<img src="${cp }/img/${pro.thumb_save}" width="300px" height="400px">
 						<div style="position: absolute; top:340px; left:210px" >
 							<button type="button" id="incart" ><img src="../img/btn-cart.png" alt="담기" width="50px" height="50px"></button>
 						</div>
@@ -63,6 +69,7 @@
 	</div>
 </div>
 <br><br>
+
 <!-- 페이징 -->
 <div>
 <ul class="pagination pagination-lg">

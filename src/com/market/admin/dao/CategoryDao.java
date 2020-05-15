@@ -116,7 +116,7 @@ public class CategoryDao {
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
-
+	
 	//세부 카테고리 추가
 	public int insTypeCat(CategoryDto dto) {
 		Connection con = null;
@@ -192,6 +192,59 @@ public class CategoryDao {
 				list.add(new CategoryDto(cnum, type, name));
 			}
 			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	//카테고리 번호로 세부카테고리의 cnum가져오기
+	
+	public ArrayList<CategoryDto> selSub(int cnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select * from category where type=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cnum);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int tcnum = rs.getInt("cnum");
+				int type = rs.getInt("type");
+				String name = rs.getString("name");
+				list.add(new CategoryDto(tcnum, type, name));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	
+	
+	//카테고리 이름 가져오기
+	public String getName(int cnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String name=null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select name from category where cnum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cnum);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				name = rs.getString("name");
+			}
+			return name;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
