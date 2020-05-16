@@ -34,6 +34,20 @@ public class ProductDto {
 		this.detail_save = detail_save;
 		this.del_yn = del_yn;
 	}
+	public ProductDto(int pnum, String name, Date reg_date, int price, int stock, String thumb_org,
+			String thumb_save, String description, String del_yn) {
+		super();
+		this.pnum = pnum;
+		this.name = name;
+		this.reg_date = reg_date;
+		this.price = price;
+		this.stock = stock;
+		this.thumb_org = thumb_org;
+		this.thumb_save = thumb_save;
+		this.description = description;
+		this.del_yn = del_yn;
+		
+	}
 	public int getPnum() {
 		return pnum;
 	}

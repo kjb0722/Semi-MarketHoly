@@ -68,7 +68,7 @@ body {
 									</ul></li>
 							</c:forEach>
 						</ul>
-					<li><a href="#">신상품</a></li>
+					<li><a href="${cp }/product/new.do">신상품</a></li>
 					<li><a href="#">베스트</a></li>
 					<li><a href="#">알뜰쇼핑</a></li>
 				</ul>

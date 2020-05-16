@@ -40,14 +40,14 @@ public class ProductDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql=null;
+		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
-			if(type==-1) {
-				sql="select NVL(count(pnum),0) cnt from product where type=?";
+			if (type == -1) {
+				sql = "select NVL(count(pnum),0) cnt from product where type=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, cnum);
-			}else {
+			} else {
 				sql = "select NVL(count(pnum),0) cnt from product where cnum=? and type=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, cnum);
@@ -67,7 +67,8 @@ public class ProductDao {
 		}
 
 	}
-	//상세페이지
+
+	// 상세페이지
 	public ProductDto getDetail(int pnum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -103,25 +104,32 @@ public class ProductDao {
 		}
 	}
 
-	public ArrayList<ProductDto> getList(int startRow, int endRow, String list_filter, int cnum,int type) {
+	public ArrayList<ProductDto> getList(int startRow, int endRow, String list_filter, int cnum, int type) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql =null;
+		String sql = null;
 		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
 		try {
 			con = JDBCUtil.getConn();
-			if(type==-1) {
-				sql = "select * from(select aa.*,rownum rnum from (select * from product where type=? order by reg_date asc)"
+			if (type == -1) {
+				sql = "select * from(select aa.*,rownum rnum from (select * from product where type=? order by reg_date desc)"
 						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, cnum);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
+
+			}else if(cnum==0 && type==0){
+				sql = "select * from(select aa.*,rownum rnum from (select * from product order by reg_date desc)"
+						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
 				
-			}else{
-				
-				sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date asc)"
+			}else {
+
+				sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date desc)"
 						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
 
 				/*
@@ -131,16 +139,16 @@ public class ProductDao {
 				 * " order by price"; }else if(list_filter.equals("highprice")){ sql +=
 				 * " order by price desc"; }
 				 */
-				
+
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, cnum);
 				pstmt.setInt(2, type);
 				pstmt.setInt(3, startRow);
 				pstmt.setInt(4, endRow);
-				
+
 			}
 			rs = pstmt.executeQuery();
-		
+
 			while (rs.next()) {
 				int pnum = rs.getInt("pnum");
 				String name = rs.getString("name");
@@ -153,6 +161,48 @@ public class ProductDao {
 				String del_yn = rs.getString("del_yn");
 				list.add(new ProductDto(pnum, cnum, name, reg_date, price, stock, type, thumb_org, thumb_save,
 						description, null, null, del_yn));
+
+			}
+			return list;
+
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	//신상품 리스트
+	public ArrayList<ProductDto> getNewList(int startRow, int endRow) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
+		try {
+			con = JDBCUtil.getConn();
+
+			String sql = "select * from(select aa.*,rownum rnum from "
+					+ "(select * from product where reg_date between sysdate-7 and sysdate "
+					+ "order by reg_date desc)"
+					+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int pnum = rs.getInt("pnum");
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				String thumb_org = rs.getString("thumb_org");
+				String thumb_save = rs.getString("thumb_save");
+				String description = rs.getString("description");
+				String del_yn = rs.getString("del_yn");
+				list.add(new ProductDto(pnum,name,reg_date,price,stock,thumb_org
+						 ,thumb_save,description,del_yn));
 
 			}
 			return list;
