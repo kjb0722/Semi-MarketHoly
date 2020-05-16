@@ -1,6 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+table, th, td {
+	text-align: center;
+}
+</style>
 <div class="container">
 	<div class="row">
 		<h3>세일 상품 관리</h3>
@@ -8,7 +12,7 @@
 	<div class="row">
 		<div class="col-md-2">
 			<span class="label label-success">카테고리</span>
-			<select name="cat" class="form-control" onchange="catChange(this)">
+			<select id="cat" name="cat" class="form-control" onchange="catChange(this)">
 				<c:forEach var="dto" items="${catList }">
 					<option value="${dto.cnum }">${dto.name }</option>
 				</c:forEach>
@@ -16,35 +20,40 @@
 		</div>
 		<div class="col-md-2">
 			<span class="label label-success">세부 카테고리명</span>
-			<select name="catType" class="form-control">
+			<select id="catType" name="catType" class="form-control">
 
 			</select>
 		</div>
 	</div>
 	<div class="row">
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th class="col-md-1">선택</th>
-					<th class="col-md-1">상품 번호</th>
-					<th>썸네일</th>
-					<th>상품명</th>
-					<th>가격</th>
-					<th>재고</th>
-					<th>적용 할인</th>
-				</tr>
-			</thead>
-			<tbody>
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th style="width: 5%">선택</th>
+						<th style="width: 5%">상품 번호</th>
+						<th style="width: 15%">썸네일</th>
+						<th>상품명</th>
+						<th style="width: 12.5%">가격</th>
+						<th style="width: 12.5%">재고</th>
+						<th>적용 할인</th>
+					</tr>
+				</thead>
+				<tbody>
 
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		//최초 페이지 이동시 세부 카테고리 로드
-		$("select[name=cat]").change();
+		$("#cat").change();
+		
+		//상품 리스트 로드
+		//prodListLoad();
 	});
 
 	//카테고리 변경시 세부 카테고리 로드//
@@ -65,11 +74,36 @@
 	function catTypeLoadOk(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			let json = JSON.parse(xhr.responseText);
-			$("select[name=catType]").empty();
+			$("#catType").empty();
 			for(let j of json){
-				$("select[name=catType]").append("<option value='"+j.cnum+"|"+j.type+"''>"+j.name+"</option>");
+				$("#catType").append("<option value='"+j.cnum+"|"+j.type+"''>"+j.name+"</option>");
 			}
+			
+			prodListLoad();
 		}
 	}
 	//카테고리 변경시 세부 카테고리 로드//
+	
+	//상품 리스트 로드//
+	function prodListLoad(){
+		let num = $("#catType").val();
+		if(num != null){
+			let catNum = num.substr(0,num.indexOf("|"));
+			let catTypeNum = num.substr(num.indexOf("|")+1);
+			jQuery.ajax({
+				dataType:"JSON",
+				url: `${cp}/admin/saleProdList.do`,
+				method:"get",
+				data:{catNum:catNum,
+					catTypeNum:catTypeNum},
+				success:function(){
+					alert("aa");
+				}
+			});
+		}else{
+			alert("세부 카테고리가 없습니다.");
+			return;
+		}
+	}
+	//상품 리스트 로드//
 </script>

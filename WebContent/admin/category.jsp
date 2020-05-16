@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 table, th {
@@ -13,25 +12,26 @@ table, th {
 	<%-- <form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
 		method="get" onsubmit="return catChk()"> --%>
 	<div class="form-inline">
-		<span class="label label-success">카테고리</span><br> <input
-			type="text" class="form-control" placeholder="카테고리를 입력하세요."
-			name="catName" maxlength="10"> <input type="button"
-			class="btn btn-primary" value="추가" id="btnCatAdd">
+		<span class="label label-success">카테고리</span>
+		<br>
+		<input type="text" class="form-control" placeholder="카테고리를 입력하세요." name="catName" maxlength="10">
+		<input type="button" class="btn btn-primary" value="추가" id="btnCatAdd">
 	</div>
-	<!-- </form> -->
+	
 	<br>
 	<%-- <form class="form-inline" role="form"
 		action="${cp }/admin/catTypeAdd.do" method="get"
 		onsubmit="return catTypeChk()"> --%>
 	<div class="form-inline">
-		<span class="label label-success">세부 카테고리 추가</span><br> <select
-			name="cat" class="form-control">
+		<span class="label label-success">세부 카테고리 추가</span>
+		<br>
+		<select name="cat" class="form-control">
 
-		</select> <input type="text" class="form-control" placeholder="종류를 입력하세요."
-			name="catTypeName"> <input type="button"
-			class="btn btn-primary" value="추가" id="btnCatTypeAdd">
+		</select>
+		<input type="text" class="form-control" placeholder="종류를 입력하세요." name="catTypeName">
+		<input type="button" class="btn btn-primary" value="추가" id="btnCatTypeAdd">
 	</div>
-	<!-- </form> -->
+	
 
 	<table class="table table-bordered">
 		<thead>
@@ -51,16 +51,15 @@ table, th {
 		</tbody>
 	</table>
 
-	<div class="modal fade" id="catUpdate" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="catUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">카테고리 명을 입력하세요.</h5>
 				</div>
 				<div class="modal-body">
-					<input type="hidden" id="catNum"> <input type="text"
-						id="catName">
+					<input type="hidden" id="catNum">
+					<input type="text" id="catName">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="btnCatUpdate">확인</button>

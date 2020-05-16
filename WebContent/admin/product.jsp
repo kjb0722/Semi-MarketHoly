@@ -1,60 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript"
-	src="${cp }/bootstrap/js/bootstrap-filestyle.min.js">
+<script type="text/javascript" src="${cp }/bootstrap/js/bootstrap-filestyle.min.js">
 </script>
 <div class="container">
 	<div class="row">
 		<h3>상품 추가</h3>
 	</div>
 	<div class="contaainer-fluid">
-		<form class="form-inline" role="form" action="${cp }/admin/prodAdd.do"
-			method="post" onsubmit="return prodChk()"
-			enctype="multipart/form-data">
+		<form class="form-inline" role="form" action="${cp }/admin/prodAdd.do" method="post" onsubmit="return prodChk()" enctype="multipart/form-data">
 			<div class="form-group" id="wrap-add">
-			<span class="label label-success">카테고리</span>
-			
-			<select name="cat" class="form-control" onchange="catChange(this)">
-				<c:forEach var="dto" items="${catList }">
-					<option value="${dto.cnum }">${dto.name }</option>
-				</c:forEach>
-			</select>
-			
-			<span class="label label-success">세부 카테고리명</span>
-			
-			<select name="catType" class="form-control">
-	
-			</select>
+				<span class="label label-success">카테고리</span>
+
+				<select name="cat" class="form-control" onchange="catChange(this)">
+					<c:forEach var="dto" items="${catList }">
+						<option value="${dto.cnum }">${dto.name }</option>
+					</c:forEach>
+				</select>
+
+				<span class="label label-success">세부 카테고리명</span>
+
+				<select name="catType" class="form-control">
+
+				</select>
 			</div>
 			<br>
 			<span class="label label-success">상품명</span>
 			<br>
-			<input type="text" class="form-control" placeholder="상품명을 입력하세요."
-				maxlength="10" name="name">
+			<input type="text" class="form-control" placeholder="상품명을 입력하세요." maxlength="10" name="name">
 			<br>
 			<span class="label label-success">상품 설명</span>
 			<br>
 			<textarea class="form-control" rows="5" cols="35" name="description"></textarea>
 			<br>
-			<br> 
+			<br>
 			<span class="label label-success">가격</span>
-			
+
 			<input name="price" type="number" class="form-control" placeholder="가격을 입력하세요." min="1" max="999999999999">
-			
+
 			<span class="label label-success">수량</span>
-			
+
 			<input name="stock" type="number" class="form-control" placeholder="수량을 입력하세요." min="1" max="999999999999">
 			<br>
 			<span class="label label-success">썸네일</span>
 			<br>
-			<label class="file-upload btn btn-warning"> 파일을 선택해주세요.
-			<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" />
+			<label class="file-upload btn btn-warning"> 파일을 선택해주세요. <input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" />
 			</label>
 			<br>
 			<br>
-			<span class="label label-success">상품 상세 설명 이미지</span><br> <label class="file-upload btn btn-warning"> 파일을
-				선택해주세요. <input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" />
+			<span class="label label-success">상품 상세 설명 이미지</span>
+			<br>
+			<label class="file-upload btn btn-warning"> 파일을 선택해주세요. <input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" />
 			</label>
 			<br>
 			<br>
