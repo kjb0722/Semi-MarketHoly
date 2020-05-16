@@ -4,6 +4,10 @@
 table, th, td {
 	text-align: center;
 }
+table>tbody>th>td {
+	background-color: aqua;
+	vertical-align: middle;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -30,7 +34,7 @@ table, th, td {
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th style="width: 5%">선택</th>
+						<th style="width: 5%"><input type="checkbox" id=""></th>
 						<th style="width: 5%">상품 번호</th>
 						<th style="width: 15%">썸네일</th>
 						<th>상품명</th>
@@ -96,8 +100,23 @@ table, th, td {
 				method:"get",
 				data:{catNum:catNum,
 					catTypeNum:catTypeNum},
-				success:function(){
-					alert("aa");
+				success:function(data){
+					let table = $("table>tbody");
+					table.empty();
+					for(let dto of data){
+						let row = "<tr class='align-middle'>";
+						row += "<td><input type='checkbox' class='custom-control-input aria-label='Checkbox for following text input'></td>";
+						row += "<td>"+dto.pnum+"</td>";
+						row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
+						row += "<td>"+dto.name+"</td>";
+						row += "<td>"+dto.price+"</td>";
+						row += "<td>"+dto.stock+"</td>";
+						row += "<td></td>";
+						row += "</tr>";
+						table.append(row);
+					}
+					
+					$("tbody>tr>td").css("vertical-align","middle");
 				}
 			});
 		}else{
@@ -106,4 +125,10 @@ table, th, td {
 		}
 	}
 	//상품 리스트 로드//
+	
+	//세부 카테고리 이벤트
+	$("#catType").change(function(){
+		prodListLoad();
+	});
+	//세부 카테고리 이벤트
 </script>

@@ -2,9 +2,9 @@ package com.market.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,11 +23,9 @@ public class SaleProdList extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int catNum = Integer.parseInt(req.getParameter("catNum"));
 		int catTypeNum = Integer.parseInt(req.getParameter("catTypeNum"));
-		System.out.println(catNum);
-		System.out.println(catTypeNum);
 		ProductDao dao = new ProductDao();
-		ArrayList<ProductDto> prodList = dao.getList(0, 10, null, catTypeNum, catTypeNum);
-
+		ArrayList<ProductDto> prodList = dao.getList(0, 10, null, catNum, catTypeNum);
+		
 		JSONArray jarr = new JSONArray();
 		for (ProductDto dto : prodList) {
 			JSONObject json = new JSONObject();
@@ -38,12 +36,7 @@ public class SaleProdList extends HttpServlet {
 			json.put("price", dto.getPrice());
 			json.put("stock", dto.getStock());
 			json.put("type", dto.getType());
-			json.put("thumb_org", dto.getThumb_org());
 			json.put("thumb_save", dto.getThumb_save());
-			json.put("description", dto.getDescription());
-			json.put("detail_org", dto.getDetail_org());
-			json.put("detail_save", dto.getDetail_save());
-			json.put("del_yn", dto.getDel_yn());
 			jarr.put(json);
 		}
 
