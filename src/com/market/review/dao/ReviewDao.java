@@ -35,8 +35,7 @@ public class ReviewDao {
 			pstmt.setString(7, dto.getContent());
 			pstmt.setString(8, dto.getOrgfilename());
 			pstmt.setString(9, dto.getSavefilename());
-			pstmt.setString(10, dto.getDel_yn());
-			pstmt.setString(11, dto.getPwd());
+			pstmt.setString(10, dto.getPwd());
 			
 			int n =pstmt.executeUpdate();
 			return n;
