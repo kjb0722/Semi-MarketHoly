@@ -54,6 +54,11 @@ table>tbody>th>td {
 			<input type="text" class="form-control" placeholder="할인명을 입력하세요." maxlength="30" name="name">
 		</div>
 	</div>
+	<div class="row form-group">
+		<div class="col-md-3">
+			<input type="button" class="btn btn-outline-primary form-control " name="name" value="적용">
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<table class="table table-bordered">
