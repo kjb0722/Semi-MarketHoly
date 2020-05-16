@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <div class="container">
 	<div class="row">
+		<h3>관리자 메뉴</h3>
+	</div>
+	<div class="row">
 		<div class="well col-md-11">
 			<input type="button" class="btn btn-success" value="카테고리 관리" name="category">
 			<input type="button" class="btn btn-success" value="상품 추가" name="product">  

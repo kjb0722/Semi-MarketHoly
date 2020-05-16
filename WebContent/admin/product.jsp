@@ -5,6 +5,9 @@
 	src="${cp }/bootstrap/js/bootstrap-filestyle.min.js">
 </script>
 <div class="container">
+	<div class="row">
+		<h3>상품 추가</h3>
+	</div>
 	<div class="contaainer-fluid">
 		<form class="form-inline" role="form" action="${cp }/admin/prodAdd.do"
 			method="post" onsubmit="return prodChk()"
@@ -63,9 +66,11 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		//최초 페이지 이동시 세부 카테고리 로드
 		$("select[name=cat]").change();
 	});
 	
+	//재고, 가격은 12자리까지만 입력되도록//
 	$("input[name=stock]").on("input",function(){
 		if($(this).val().length > 12){
 			$(this).val($(this).val().slice(0,12));
@@ -77,7 +82,9 @@
 			$(this).val($(this).val().slice(0,12));
 		}
 	});
+	//재고, 가격은 12자리까지만 입력되도록//
 	
+	//form 전송 전 체크//
 	function prodChk() {
 		let cat = $("select[name=cat]");
 		if(cat.val() == null){
@@ -103,7 +110,9 @@
 
 		return true;
 	}
+	//form 전송 전 체크//
 	
+	//카테고리 변경시 세부 카테고리 로드//
 	function catChange(e){
 		if(e.value != ""){
 			catTypeLoad(e.value);
@@ -127,4 +136,5 @@
 			}
 		}
 	}
+	//카테고리 변경시 세부 카테고리 로드//
 </script>

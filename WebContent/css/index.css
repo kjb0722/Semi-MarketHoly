@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+p{
+	font-family: serif;
+}
+
 .carousel-inner>.item>img {
 	margin: 0 auto;
 	height: 500px;
@@ -14,7 +18,16 @@ footer {
 	margin-top: 100px;
 }
 
+.navbar-nav>li>a{
+	line-height: 30px;
+}
+
+.cat-submenu{
+	font-size: 25px;
+}
+
 .dropdown-submenu {
+	font-size: 25px;
 	position: relative;
 }
 
@@ -62,6 +75,6 @@ footer {
 	border-radius: 6px 0 6px 6px;
 }
 
-#wrap-logo{
+#wrap-logo {
 	text-align: center;
 }

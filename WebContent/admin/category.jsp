@@ -7,6 +7,9 @@ table, th {
 }
 </style>
 <div class="container">
+	<div class="row">
+		<h3>카테고리 관리</h3>
+	</div>
 	<%-- <form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
 		method="get" onsubmit="return catChk()"> --%>
 	<div class="form-inline">

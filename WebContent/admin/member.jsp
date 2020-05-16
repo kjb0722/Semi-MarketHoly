@@ -7,6 +7,9 @@ table, th, td {
 }
 </style>
 <div class="container">
+	<div class="row">
+		<h3>회원 관리</h3>
+	</div>
 	<div class="form-inline">
 		<select class="form-control" name="type">
 			<c:forEach var="dto" items="${comList }">
@@ -22,21 +25,21 @@ table, th, td {
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th>회원 번호</th>
+					<th style="width: 5%">번호</th>
 					<th>아이디</th>
 					<th>이름</th>
-					<th>등급</th>
+					<th style="width: 5%">등급</th>
 					<th>이메일</th>
 					<th>생일</th>
 					<th>전화번호</th>
-					<th>성별</th>
+					<th style="width: 5%">성별</th>
 					<th>주소</th>
-					<th>가입날짜</th>
+					<th style="width: 13%">가입날짜</th>
 					<th>포인트</th>
-					<th>탈퇴 여부</th>
+					<th style="width: 5%">탈퇴</th>
 					<th>탈퇴 날짜</th>
-					<th>수정</th>
-					<th>탈퇴</th>
+					<th style="width: 5%">수정</th>
+					<th style="width: 5%">탈퇴</th>
 				</tr>
 			</thead>
 			<tbody>

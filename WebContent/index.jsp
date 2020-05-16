@@ -12,8 +12,17 @@
 	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
 	crossorigin="anonymous"></script>
 <script src="${cp }/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="${cp }/css/index.css" />
 <title>Market Holy</title>
+<style type="text/css">
+body {
+	font-family: 'Black Han Sans', sans-serif;
+	font-size: 20px;
+}
+</style>
 </head>
 <body>
 	<header class="container">
@@ -38,15 +47,13 @@
 					alt="Logo"></a>
 			</div>
 		</div>
-		
+
 		<nav class="navbar navbar-default">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">마켓홀리</a>
-			</div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li class="droupdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">전체 카테고리<b class="caret"></b></a>
+						data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체
+							카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<c:forEach var="cat" items="${applicationScope.catList }">
 								<li class="dropdown-submenu"><a
@@ -54,7 +61,7 @@
 									<ul class="dropdown-menu">
 										<c:forEach var="type" items="${applicationScope.catTypeList }">
 											<c:if test="${cat.cnum == type.type }">
-												<li><a
+												<li><a class="cat-submenu"
 													href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
 											</c:if>
 										</c:forEach>
