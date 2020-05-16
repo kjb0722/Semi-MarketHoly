@@ -16,6 +16,11 @@ import com.market.review.dto.ReviewDto;
 public class ListReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String spageNum=req.getParameter("pageNum");
+		String field = req.getParameter("field");
+		String keyword = req.getParameter("keyword");
+		
+		
 		ReviewDao reviewDao = ReviewDao.getInstance();
 		ArrayList<ReviewDto> list = reviewDao.listReview();
 		
