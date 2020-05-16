@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>461</y>
+	<y>237</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path>WebContent\DDL.sql</output_path>
+				<output_path>WebContent\DB\DDL.sql</output_path>
 				<encoding>x-windows-949</encoding>
 				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>true</is_open_after_saved>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2020-05-08 04:45:02</creation_date>
-			<updated_date>2020-05-17 05:08:05</updated_date>
+			<updated_date>2020-05-17 05:27:29</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -602,7 +602,7 @@
 		</word>
 		<word>
 			<id>27</id>
-			<length>40</length>
+			<length>70</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1518,7 +1518,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>53</word_id>
+					<word_id>55</word_id>
 					<id>4</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1551,7 +1551,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>8</word_id>
+					<word_id>9</word_id>
 					<id>5</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2020,7 +2020,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>56</word_id>
+					<word_id>54</word_id>
 					<id>15</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2493,7 +2493,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>9</word_id>
+					<word_id>10</word_id>
 					<id>27</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2935,7 +2935,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>10</word_id>
+					<word_id>8</word_id>
 					<id>37</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3258,7 +3258,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>46</word_id>
+					<word_id>45</word_id>
 					<id>44</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3619,7 +3619,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>1</word_id>
+					<word_id>0</word_id>
 					<id>54</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3652,7 +3652,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>55</word_id>
+					<word_id>56</word_id>
 					<id>55</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4201,7 +4201,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>54</word_id>
+					<word_id>53</word_id>
 					<id>70</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4234,7 +4234,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>9</word_id>
+					<word_id>10</word_id>
 					<id>71</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5056,7 +5056,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>45</word_id>
+					<word_id>46</word_id>
 					<id>91</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5188,7 +5188,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>0</word_id>
+					<word_id>1</word_id>
 					<id>95</id>
 					<description></description>
 					<unique_key_name></unique_key_name>

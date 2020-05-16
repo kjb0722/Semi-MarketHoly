@@ -28,7 +28,7 @@ public class CategoryDao {
 		ArrayList<CategoryListDto> list = new ArrayList<CategoryListDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select a.cnum,a.name,b.cnum tnum,b.name tname from category a inner join category b on a.cnum=b.type(+) where a.type = -1 order by a.cnum, b.cnum desc";
+			String sql = "select a.cnum,a.name,b.cnum tnum,b.name tname from category a inner join category b on a.cnum=b.type(+) where a.type = -1 order by a.cnum, b.cnum";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -81,7 +81,7 @@ public class CategoryDao {
 		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from category where type!=-1 order by cnum";
+			String sql = "select * from category where type!=-1 order by cnum desc";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

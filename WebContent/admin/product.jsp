@@ -26,7 +26,7 @@
 			<br>
 			<span class="label label-success">상품명</span>
 			<br>
-			<input type="text" class="form-control" placeholder="상품명을 입력하세요." maxlength="10" name="name">
+			<input type="text" class="form-control" placeholder="상품명을 입력하세요." maxlength="30" name="name">
 			<br>
 			<span class="label label-success">상품 설명</span>
 			<br>

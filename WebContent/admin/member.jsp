@@ -10,7 +10,7 @@
 	<div class="row">
 		<h3>회원 관리</h3>
 	</div>
-	<div class="form-inline">
+	<div class="form-inline form-group">
 		<select class="form-control" name="type">
 			<c:forEach var="dto" items="${comList }">
 				<option value="${dto.val }">${dto.name }</option>
@@ -56,7 +56,7 @@
 					<h5 class="modal-title">회원 정보 수정</h5>
 				</div>
 				<div class="modal-body">
-					<div class="row">
+					<div class="row form-group">
 						<div class="col-md-4">
 							<h4>
 								<label class="label label-success">회원 번호</label>
@@ -72,7 +72,7 @@
 								disabled="disabled">
 						</div>
 					</div>
-					<div class="row">
+					<div class="row form-group">
 						<div class="col-md-4">
 							<h4>
 								<label class="label label-success">이름</label>
@@ -86,7 +86,7 @@
 							<input type="text" class="form-control" id="mBirth">
 						</div>
 					</div>
-					<div class="row">
+					<div class="row form-group">
 						<div class="col-md-6">
 							<h4>
 								<label class="label label-success">이메일</label>
@@ -94,7 +94,7 @@
 							<input type="text" class="form-control" id="mEmail">
 						</div>
 					</div>
-					<div class="row">
+					<div class="row form-group">
 						<div class="col-md-4">
 							<h4>
 								<label class="label label-success">전화번호</label>
@@ -111,7 +111,7 @@
 							<label class="form-check-label" for="women">여자</label>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row form-group">
 						<div class="col-md-8">
 							<h4>
 								<label class="label label-success">주소</label>

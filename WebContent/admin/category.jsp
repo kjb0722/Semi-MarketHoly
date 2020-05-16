@@ -6,23 +6,23 @@ table, th {
 }
 </style>
 <div class="container">
-	<div class="row">
+	<div class="row form-group">
 		<h3>카테고리 관리</h3>
 	</div>
 	<%-- <form class="form-inline" role="form" action="${cp }/admin/catAdd.do"
 		method="get" onsubmit="return catChk()"> --%>
-	<div class="form-inline">
+	<div class="form-inline form-group">
 		<span class="label label-success">카테고리</span>
 		<br>
 		<input type="text" class="form-control" placeholder="카테고리를 입력하세요." name="catName" maxlength="10">
 		<input type="button" class="btn btn-primary" value="추가" id="btnCatAdd">
 	</div>
-	
+
 	<br>
 	<%-- <form class="form-inline" role="form"
 		action="${cp }/admin/catTypeAdd.do" method="get"
 		onsubmit="return catTypeChk()"> --%>
-	<div class="form-inline">
+	<div class="form-inline form-group">
 		<span class="label label-success">세부 카테고리 추가</span>
 		<br>
 		<select name="cat" class="form-control">
@@ -31,7 +31,6 @@ table, th {
 		<input type="text" class="form-control" placeholder="종류를 입력하세요." name="catTypeName">
 		<input type="button" class="btn btn-primary" value="추가" id="btnCatTypeAdd">
 	</div>
-	
 
 	<table class="table table-bordered">
 		<thead>

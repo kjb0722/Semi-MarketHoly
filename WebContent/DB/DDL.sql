@@ -40,32 +40,34 @@ CREATE TABLE category
 
 CREATE TABLE common
 (
-	type varchar2(40),
+	type varchar2(40) UNIQUE,
 	conum number,
-	name varchar2(50),
-	val varchar2(50)
+	name varchar2(50)
 );
+
 
 CREATE TABLE member
 (
 	num number NOT NULL,
-	id varchar2(25) NOT NULL,
-	pwd varchar2(25) NOT NULL,
-	name varchar2(30) NOT NULL,
+	id varchar2(25),
+	pwd varchar2(25),
+	name varchar2(30),
 	rating number,
-	email varchar2(40) NOT NULL unique,
+	email varchar2(40),
 	birth varchar2(30),
-	phone varchar2(30) NOT NULL,
+	phone varchar2(30),
+	-- 1:³²ÀÚ
+	-- 2:¿©ÀÚ
 	gender number,
-	addr varchar2(100) NOT NULL,
+	addr varchar2(100),
 	reg_date date,
 	point number,
+	-- y:»èÁ¦
+	-- n:¹Ì»èÁ¦
 	del_yn varchar2(2),
 	del_date date,
 	PRIMARY KEY (num)
 );
-
-alter table member add unique(email);
 
 
 CREATE TABLE orders
@@ -73,15 +75,15 @@ CREATE TABLE orders
 	onum number NOT NULL,
 	num number NOT NULL,
 	opnum number,
-	-- 1:ìƒí’ˆ ì¤€ë¹„
-	-- 2:ë°°ì†¡ ì¤€ë¹„
-	-- 3:ë°°ì†¡ ì¤‘
-	-- 4:ë°°ì†¡ ì™„ë£Œ
-	-- 5:êµ¬ë§¤ ì™„ë£Œ
-	-- 6:ì£¼ë¬¸ ì·¨ì†Œ
+	-- 1:»óÇ° ÁØºñ
+	-- 2:¹è¼Û ÁØºñ
+	-- 3:¹è¼Û Áß
+	-- 4:¹è¼Û ¿Ï·á
+	-- 5:±¸¸Å ¿Ï·á
+	-- 6:ÁÖ¹® Ãë¼Ò
 	status number,
-	-- 1:ë¯¸ê²°ì œ
-	-- 2:ê²°ì œ
+	-- 1:¹Ì°áÁ¦
+	-- 2:°áÁ¦
 	pay_yn number,
 	reg_date date,
 	end_date date,
@@ -89,8 +91,8 @@ CREATE TABLE orders
 	price number,
 	use_point number,
 	sale_price number,
-	-- ì¹´ë“œ ê²°ì œ
-	-- ë¬´í†µì¥
+	-- Ä«µå °áÁ¦
+	-- ¹«ÅëÀå
 	pay_way number,
 	addr varchar2(100),
 	PRIMARY KEY (onum)
@@ -126,7 +128,7 @@ CREATE TABLE product
 	pnum number NOT NULL,
 	cnum number NOT NULL,
 	type number,
-	name varchar2(40),
+	name varchar2(70),
 	price number,
 	stock number,
 	description varchar2(200),
@@ -172,14 +174,12 @@ CREATE TABLE review
 	onum number NOT NULL,
 	pnum number NOT NULL,
 	num number NOT NULL,
-	rnum number primary key,
+	rnum number,
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
 	content varchar2(100),
 	regdate date,
-	orgfilename varchar2(150),		--ì „ì†¡ëœ íŒŒì¼ëª…
-	savefilename varchar2(150),		--ì €ì¥ëœ íŒŒì¼ëª…
 	del_yn varchar2(2),
 	pwd varchar2(40),
 	UNIQUE (onum, pnum, num)
@@ -190,6 +190,7 @@ CREATE TABLE sale
 (
 	snum number NOT NULL,
 	pnum number NOT NULL,
+	name varchar2(50),
 	percent number,
 	start_date date,
 	end_date date,
@@ -197,35 +198,7 @@ CREATE TABLE sale
 	PRIMARY KEY (snum)
 );
 
-DROP SEQUENCE seq_review_num;
-CREATE SEQUENCE seq_review_num;
 
-DROP SEQUENCE seq_cart_num;
-CREATE SEQUENCE seq_cart_num;
-
-DROP SEQUENCE seq_category_cnum_type;
-CREATE SEQUENCE seq_category_cnum_type;
-
-DROP SEQUENCE seq_common_conum;
-CREATE SEQUENCE seq_common_conum;
-
-DROP SEQUENCE seq_member_num;
-CREATE SEQUENCE seq_member_num;
-
-DROP SEQUENCE seq_orders_onum;
-CREATE SEQUENCE seq_orders_onum;
-
-DROP SEQUENCE seq_order_product_opnum;
-CREATE SEQUENCE seq_order_product_opnum;
-
-DROP SEQUENCE seq_point_history_ponum;
-CREATE SEQUENCE seq_point_history_ponum;
-
-DROP SEQUENCE seq_product_pnum;
-CREATE SEQUENCE seq_product_pnum;
-
-DROP SEQUENCE seq_sale_snum;
-CREATE SEQUENCE seq_sale_snum;
 
 /* Create Foreign Keys */
 
@@ -316,20 +289,20 @@ ALTER TABLE sale
 
 /* Comments */
 
-COMMENT ON COLUMN member.gender IS '1:ë‚¨ì
-2:ì—¬ì';
-COMMENT ON COLUMN member.del_yn IS 'y:ì‚­ì œ
-n:ë¯¸ì‚­ì œ';
-COMMENT ON COLUMN orders.status IS '1:ìƒí’ˆ ì¤€ë¹„
-2:ë°°ì†¡ ì¤€ë¹„
-3:ë°°ì†¡ ì¤‘
-4:ë°°ì†¡ ì™„ë£Œ
-5:êµ¬ë§¤ ì™„ë£Œ
-6:ì£¼ë¬¸ ì·¨ì†Œ';
-COMMENT ON COLUMN orders.pay_yn IS '1:ë¯¸ê²°ì œ
-2:ê²°ì œ';
-COMMENT ON COLUMN orders.pay_way IS 'ì¹´ë“œ ê²°ì œ
-ë¬´í†µì¥';
+COMMENT ON COLUMN member.gender IS '1:³²ÀÚ
+2:¿©ÀÚ';
+COMMENT ON COLUMN member.del_yn IS 'y:»èÁ¦
+n:¹Ì»èÁ¦';
+COMMENT ON COLUMN orders.status IS '1:»óÇ° ÁØºñ
+2:¹è¼Û ÁØºñ
+3:¹è¼Û Áß
+4:¹è¼Û ¿Ï·á
+5:±¸¸Å ¿Ï·á
+6:ÁÖ¹® Ãë¼Ò';
+COMMENT ON COLUMN orders.pay_yn IS '1:¹Ì°áÁ¦
+2:°áÁ¦';
+COMMENT ON COLUMN orders.pay_way IS 'Ä«µå °áÁ¦
+¹«ÅëÀå';
 
 
 
