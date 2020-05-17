@@ -71,7 +71,7 @@ table>tbody>th>td {
 	<div class="row form-group">
 		<div class="col-md-2">
 			<span class="label label-success">할인율</span>
-			<input name="price" type="number" class="form-control" placeholder="할인율을 입력하세요." min="1" max="100">
+			<input name="percent" id="percent" type="number" class="form-control" placeholder="할인율을 입력하세요." min="1" max="100">
 		</div>
 	</div>
 	<div class="row form-group">
@@ -137,10 +137,27 @@ table>tbody>th>td {
 			startDate.focus();
 			return;
 		}
+		let percent = $("#percent");
+		if(percent.val() == ""){
+			alert("할인율을 입력하세요.");
+			percent.focus();
+			return;
+		}
+		
+		let sale = {
+				name:name.val(),
+				/* startDate:startDate.datepicker("getDate"),
+				endDate:endDate.datepicker("getDate"), */
+				startDate:startDate.datepicker({dateFormat:"yyyy-mm-dd"}).val(),
+				endDate:endDate.datepicker({dateFormat:"yyyy-mm-dd"}).val(),
+				percent:percent.val()
+		};
 		
 		if($("#sale-cat").prop("checked") == true){
-			let cat = $("cat").val();
-			catSaleAdd(cat,-1);
+			let cat = $("#cat").val();
+			sale.catNum = cat;
+			sale.catTypeNum = -1;
+			catSaleAdd(sale);
 		}else if($("#sale-catType").prop("checked") == true){
 			let num = $("#catType").val();
 			if(num == null){
@@ -149,22 +166,41 @@ table>tbody>th>td {
 			}
 			catNum = num.substr(0,num.indexOf("|"));
 			catTypeNum = num.substr(num.indexOf("|")+1);
-			catSaleAdd(catNum, catTypeNum);
+			
+			sale.catNum = catNum;
+			sale.catTypeNum = catTypeNum;
+			catSaleAdd(sale);
 		}
 	}
-	function catSaleAdd(catNum, catTypeNum){
+	function catSaleAdd(sale){
 		jQuery.ajax({
 			dataType: "JSON",
 			url: `${cp}/admin/saleCatAdd.do`,
 			method: "get",
-			data:{catNum:catNum,
-				catTypeNum:catTypeNum},
+			data:{catNum:sale.catNum,
+				catTypeNum:sale.catTypeNum,
+				name:sale.name,
+				startDate:sale.startDate,
+				endDate:sale.endDate,
+				percent:sale.percent},
 			success:function(data){
-				alert();
+				if(data.n>0){
+					alert(data.n+"건 할인 적용 완료");	
+					inputInit();
+				}else{
+					location = `${cp}/error.do`;
+				}
 			}
 		});
 	}
 	//할인 적용
+	
+	//input 초기화//
+	function inputInit(){
+		$("#name").val("");
+		$("#percent").val("");
+	}
+	//input 초기화//
 	
 	//시작 날짜, 종료 날짜
 	$("#start-date,#end-date").datepicker({

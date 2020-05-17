@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.market.admin.dao.SaleDao;
 import com.market.product.dao.ProductDao;
 import com.market.product.dto.ProductDto;
 
@@ -23,11 +24,15 @@ public class SaleProdList extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int catNum = Integer.parseInt(req.getParameter("catNum"));
 		int catTypeNum = Integer.parseInt(req.getParameter("catTypeNum"));
-		ProductDao dao = new ProductDao();
-		ArrayList<ProductDto> prodList = dao.getList(0, 10, null, catNum, catTypeNum);
+		
+		SaleDao dao = SaleDao.getInstance();
+		ArrayList<SaleProdList> prodList = dao.selProdList(catNum, catTypeNum);
+//		ProductDao dao = new ProductDao();
+//		int endRow = dao.getCount(catNum, catTypeNum);
+//		ArrayList<ProductDto> prodList = dao.getList(0, endRow, null, catNum, catTypeNum);
 		
 		JSONArray jarr = new JSONArray();
-		for (ProductDto dto : prodList) {
+		for (SaleProdList dto : prodList) {
 			JSONObject json = new JSONObject();
 			json.put("pnum", dto.getPnum());
 			json.put("cnum", dto.getCnum());
@@ -37,6 +42,7 @@ public class SaleProdList extends HttpServlet {
 			json.put("stock", dto.getStock());
 			json.put("type", dto.getType());
 			json.put("thumb_save", dto.getThumb_save());
+			json.put("onSaleName", dto.getOnSaleName());
 			jarr.put(json);
 		}
 
