@@ -22,6 +22,7 @@ public class ListController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 카테고리
 		String sCnum = req.getParameter("cnum");
+		String list_filter = req.getParameter("list_filter");
 		int cnum = 0;
 		if (sCnum != null) {
 			cnum = Integer.parseInt(req.getParameter("cnum"));
@@ -40,10 +41,9 @@ public class ListController extends HttpServlet {
 		}
 		int startRow = (pageNum - 1) * 9 + 1;
 		int endRow = startRow + 8;
-		String filter = null;
 
 		ProductDao dao = new ProductDao();
-		ArrayList<ProductDto> list = dao.getList(startRow, endRow, filter, cnum, type);
+		ArrayList<ProductDto> list = dao.getList(startRow, endRow, list_filter, cnum, type);
 
 		int pageCount = (int) Math.ceil(dao.getCount(cnum, type) / 9.0);
 		int startPageNum = ((pageNum - 1) / 5) * 5 + 1;
@@ -68,6 +68,8 @@ public class ListController extends HttpServlet {
 		req.setAttribute("startPageNum", startPageNum);
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("list_filter", list_filter);
+		
 		req.getRequestDispatcher("/index.jsp?page=product/list.jsp").forward(req, resp);
 
 	}

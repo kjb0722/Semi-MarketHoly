@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import com.market.db.JDBCUtil;
 import com.market.product.dto.ProductDto;
@@ -109,44 +111,55 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
+		ArrayList<Integer> paramList = new ArrayList<Integer>();
 		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
 		try {
 			con = JDBCUtil.getConn();
+
+			sql = "select * from(select aa.*,rownum rnum from (select * from product where 1=1";
 			if (type == -1) {
-				sql = "select * from(select aa.*,rownum rnum from (select * from product where type=? order by reg_date desc)"
-						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cnum);
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, endRow);
-
-			}else if(cnum==0 && type==0){
-				sql = "select * from(select aa.*,rownum rnum from (select * from product order by reg_date desc)"
-						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
-				
-			}else {
-
-				sql = "select * from(select aa.*,rownum rnum from (select * from product where cnum=? and type=? order by reg_date desc)"
-						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
-
-				/*
-				 * if(list_filter==null || list_filter.equals("new")) { sql +=
-				 * " order by reg_date desc"; }else if(list_filter.equals("best")) { sql +=
-				 * " order by "; }else if(list_filter.equals("lowprice")) { sql +=
-				 * " order by price"; }else if(list_filter.equals("highprice")){ sql +=
-				 * " order by price desc"; }
-				 */
-
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cnum);
-				pstmt.setInt(2, type);
-				pstmt.setInt(3, startRow);
-				pstmt.setInt(4, endRow);
-
+				sql += "and type=?";
+				paramList.add(cnum);
+			} else if (cnum == 0 && type == 0) {
+				sql += "";
+			} else {
+				sql += "and cnum=? and type=?";
+				paramList.add(cnum);
+				paramList.add(type);
 			}
+			String sort;
+			if(list_filter == null) {
+				list_filter = "new";
+			} 
+				
+			switch(list_filter) {
+				case "best":
+					sort = "reg_date";
+					break;
+				case "lowprice":
+					sort = "price";
+					break;
+				case "highprice":
+					sort = "price desc";
+					break;
+				case "new":
+				default:
+					sort = "reg_date desc";
+					break;
+			}
+			
+			sql += "order by " + sort + ")aa)where rnum>=? and rnum<=? order by " + sort;
+			
+			paramList.add(startRow);
+			paramList.add(endRow);
+			pstmt = con.prepareStatement(sql);
+
+			ListIterator<Integer> iter = paramList.listIterator();
+
+			while (iter.hasNext()) {
+				pstmt.setInt(iter.nextIndex() + 1, iter.next());
+			}
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -172,7 +185,8 @@ public class ProductDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	//신상품 리스트
+
+	// 신상품 리스트
 	public ArrayList<ProductDto> getNewList(int startRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -182,8 +196,7 @@ public class ProductDao {
 			con = JDBCUtil.getConn();
 
 			String sql = "select * from(select aa.*,rownum rnum from "
-					+ "(select * from product where reg_date between sysdate-7 and sysdate "
-					+ "order by reg_date desc)"
+					+ "(select * from product where reg_date between sysdate-7 and sysdate " + "order by reg_date desc)"
 					+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -201,8 +214,8 @@ public class ProductDao {
 				String thumb_save = rs.getString("thumb_save");
 				String description = rs.getString("description");
 				String del_yn = rs.getString("del_yn");
-				list.add(new ProductDto(pnum,name,reg_date,price,stock,thumb_org
-						 ,thumb_save,description,del_yn));
+				list.add(
+						new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
 
 			}
 			return list;
