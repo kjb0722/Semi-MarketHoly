@@ -141,5 +141,11 @@ public class ReviewDto {
 		this.pwd = pwd;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "ReviewDto [onum=" + onum + ", pnum=" + pnum + ", num=" + num + ", rnum=" + rnum + ", id=" + id
+				+ ", name=" + name + ", title=" + title + ", content=" + content + ", regdate=" + regdate
+				+ ", orgfilename=" + orgfilename + ", savefilename=" + savefilename + ", del_yn=" + del_yn + ", pwd="
+				+ pwd + "]";
+	}
 }

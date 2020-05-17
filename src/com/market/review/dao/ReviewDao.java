@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.market.db.JDBCUtil;
-import com.market.member.dao.MemberDao;
 import com.market.review.dto.ReviewDto;
+
 
 public class ReviewDao {
 	private static ReviewDao instance = new ReviewDao();
@@ -48,16 +48,49 @@ public class ReviewDao {
 	}
 	
 	
-	public ArrayList<ReviewDto> listReview(){ 
+	public int getCount() {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=JDBCUtil.getConn();
+			String sql="select NVL(count(*),0) from review";
+			
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int cnt=rs.getInt(1);
+				return cnt;
+			}
+			return 0;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}	
+	}
+	
+	
+	
+	public ArrayList<ReviewDto> listReview(int startRow,int endRow){ 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = JDBCUtil.getConn();
-			String sql ="select * from review where del_yn ='N'";
+		
+			String sql ="select * from"
+					+ "(select aa.*,rownum rnums from "
+					+ "(select * from review order by num desc)aa) "
+					+ "where rnums>=? and rnums<=?";
+			
 			pstmt =con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
+			
 			
 			ArrayList<ReviewDto> list = new ArrayList<ReviewDto>();
 			while(rs.next()) {
@@ -75,6 +108,7 @@ public class ReviewDao {
 				String del_yn = rs.getString("del_yn");
 				String pwd = rs.getString("pwd");
 				ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn, pwd);
+				
 				list.add(dto);
 			}
 			return list;

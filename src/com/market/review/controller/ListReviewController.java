@@ -1,6 +1,6 @@
 package com.market.review.controller;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -17,16 +17,35 @@ public class ListReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String spageNum=req.getParameter("pageNum");
-		String field = req.getParameter("field");
-		String keyword = req.getParameter("keyword");
+	
+		int pageNum=1;
+		if(spageNum!=null) {
+			pageNum=Integer.parseInt(spageNum);
+		}
+		int startRow=(pageNum-1)*5+1;
+		int endRow=startRow+4;
+		ReviewDao dao = ReviewDao.getInstance();
+		dao.listReview(startRow,endRow);
+		
 		
 		
 		ReviewDao reviewDao = ReviewDao.getInstance();
-		ArrayList<ReviewDto> list = reviewDao.listReview();
+		ArrayList<ReviewDto> list = reviewDao.listReview(startRow,endRow);
+		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
+		int startPageNum=((pageNum-1)/4)*4+1;
+		int endPageNum=startPageNum+3;
+		if(pageCount<endPageNum) {
+			endPageNum=pageCount;
+		}
 		
 		req.setAttribute("list", list);
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("startPage", startPageNum);
+		req.setAttribute("endPage", endPageNum);
+		req.setAttribute("pageNum", pageNum);
+		
 		//System.out.println(list.get(0).getId());
-		req.getRequestDispatcher("/review/reviewList.jsp").forward(req, resp);
+		req.getRequestDispatcher("/index.jsp?page=review/reviewList.jsp").forward(req, resp);
 		//"/index.jsp?page=/member/joinResult.jsp"
 	}
 }

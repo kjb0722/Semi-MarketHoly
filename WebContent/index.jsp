@@ -84,7 +84,7 @@
 						<a href="http://www.ekolping.co.kr"><b class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a>
 					</li>
 					<li>
-						<a href="${cp }/member/logout.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a>
+						<a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a>
 					</li>
 				</ul>
 				<form class="navbar-form pull-right">
@@ -135,7 +135,7 @@
 	<footer class="container">
 		<div class="panel panel-success">
 			<div class="panel-heading">
-				<h3 class="panel-title">마켓 홀리쒯</h3>
+				<h3 class="panel-title">마켓 홀리</h3>
 			</div>
 			<div class="panel-body">
 				<h3>제작자</h3>
