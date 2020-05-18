@@ -49,3 +49,6 @@ public class ListReviewController extends HttpServlet {
 		//"/index.jsp?page=/member/joinResult.jsp"
 	}
 }
+
+
+
