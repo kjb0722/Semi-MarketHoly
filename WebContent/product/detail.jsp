@@ -44,9 +44,9 @@
 					<td>${vo.title }</td>
 					<td>${vo.regdate }</td>
 				</tr>
-				<tr id='${vo.rnum }' style='display:none'>
-					<td><img src="${pageContext.request.contextPath }/img/${vo.savefilename }"></td>
-					<td>${vo.content }</td>
+				<tr id='${vo.rnum }' style='display:none;'>
+					<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }"></p>${vo.content }</td>
+<!-- 					<td>${vo.content }</td> -->
 				</tr>	
 			</tbody>	
 		</c:forEach>	
@@ -56,7 +56,7 @@
 <div>
 <c:choose>
 	<c:when test ="${startPage>4 }">
-		<a href="${pageContext.request.contextPath }/review/reviewList?pageNum=${startPage-1}">[이전]</a>
+		<a href="${pageContext.request.contextPath }/product/detail?pageNum=${startPage-1}">[이전]</a>
 	</c:when>
 	<c:otherwise>
 		이전
@@ -65,18 +65,18 @@
 <c:forEach var="i" begin="${startPage }" end="${endPage }">
 	<c:choose>
 		<c:when test="${i==pageNum }">
-			<a href="${pageContext.request.contextPath }/review/reviewList?pageNum=${i}">
+			<a href="${pageContext.request.contextPath }/product/detail.do?pageNum=${i}">
 			<span style='color:blue'>[${i }]</span></a>
 		</c:when>		
 		<c:otherwise>
-			<a href = "${pageContext.request.contextPath }/review/reviewList?pageNum=${i}">
+			<a href = "${pageContext.request.contextPath }/product/detail.do?pageNum=${i}">
 			<span style='color:#999'>[${i }]</span></a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
 <c:choose>
 	<c:when test ="${endPage<pageCount }">
-		<a href="${pageContext.request.contextPath }/review/reviewList?pageNum=${endPage+1}">[다음]</a>
+		<a href="${pageContext.request.contextPath }/product/detail.do?pageNum=${endPage+1}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		다음
@@ -91,7 +91,4 @@
 		else id.style.display = 'none' ;
 	}
 	
-	function reviewServletCall(){
-		alert();
-	}
 </script>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>상품 후기 작성하기</h1>
-<form method="post" action="${pageContext.request.contextPath }/member/writeReview.do" enctype="multipart/form-data">
+<form method="post" action="${pageContext.request.contextPath }/review/writeReview.do" enctype="multipart/form-data">
     <!-- 답글인 경우 부모글에 대한 정보 보내기 -->
 	onum<input type="text" name="onum" ><br>		<!-- request를 오는걸 hidden -->
 	pnum<input type="text" name="pnum" ><br>

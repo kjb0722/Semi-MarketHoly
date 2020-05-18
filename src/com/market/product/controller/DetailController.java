@@ -25,11 +25,15 @@ public class DetailController extends HttpServlet {
 		
 		//리뷰 콜
 		String spageNum=req.getParameter("pageNum");
+		System.out.println(spageNum);
 		
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
+		
+		
+		
 		int startRow=(pageNum-1)*5+1;
 		int endRow=startRow+4;
 		ReviewDao dao1 = ReviewDao.getInstance();
@@ -50,7 +54,7 @@ public class DetailController extends HttpServlet {
 		req.setAttribute("endPage", endPageNum);
 		req.setAttribute("pageNum", pageNum);
 		
-		System.out.println(req.getAttribute("pageNum"));
+
 		//req.getRequestDispatcher("/index.jsp?page=review/reviewList.jsp").forward(req, resp);
 		
 		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp").forward(req, resp);

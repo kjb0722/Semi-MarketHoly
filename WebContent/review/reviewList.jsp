@@ -35,7 +35,7 @@
 			</thead>
 			<c:forEach var='list' items='${list }'>
 				<tbody>
-					<tr onclick="showHidden(${list.rnum })">	
+					<tr onclick="showHidden(${list.rnum }">	
 						<td>${list.rnum }</td>
 						<td>${list.name }</td>
 						<td>${list.title }</td>
@@ -44,9 +44,8 @@
 						<%-- <td><img src="${pageContext.request.contextPath }/img/${list.savefilename }"></td> --%>
 					</tr>
 					<tr id='${list.rnum }' style='display:none'>
-						<td><img src="${pageContext.request.contextPath }/img/${list.savefilename }"></td>
-						<td>${list.content }</td>
-					</tr>	
+							<td style="word-break:break-all"><img src="${pageContext.request.contextPath }/img/${list.savefilename }"></td>
+					</tr>
 				</tbody>	
 			</c:forEach>	
 		</table>
@@ -92,14 +91,11 @@
 <script>
 	function showHidden(rNum) {
 		var id =document.getElementById(rNum);
-		
 		if(id.style.display == 'none') id.style.display = 'block' ;
 		else id.style.display = 'none' ;
 	}
 	
-	function reviewServletCall(){
-		alert();
-	}
+
 </script>
 
 

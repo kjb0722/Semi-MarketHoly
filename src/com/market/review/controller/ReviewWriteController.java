@@ -16,7 +16,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
-@WebServlet("/member/writeReview.do")
+@WebServlet("/review/writeReview.do")
 public class ReviewWriteController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,15 +41,14 @@ public class ReviewWriteController extends HttpServlet {
 		int num =  Integer.parseInt(mr.getParameter("num"));
 		String id = mr.getParameter("id");
 		String name = mr.getParameter("name");
-		String pwd= mr.getParameter("pwd");
 		String title = mr.getParameter("title");
 		String content = mr.getParameter("content");
 		String orgfilename = mr.getOriginalFileName("file1");   //전송된 파일명
 		String savefilename = mr.getFilesystemName("file1");  //저장된 파일명	
+		String pwd= mr.getParameter("pwd");
 		File file1 = mr.getFile("file1");
 		ReviewDao dao = ReviewDao.getInstance();
-		ReviewDto dto = new ReviewDto(onum, pnum, num, 0, id, name, title, content, null, orgfilename, savefilename, null, pwd);
-		
+		ReviewDto dto = new ReviewDto(onum, pnum, num, 0, id, name, title, content, null, orgfilename, savefilename, null, pwd);		
 		
 		int n = dao.writeReview(dto);
 		
