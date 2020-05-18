@@ -17,8 +17,6 @@ table, th {
 		<input type="text" class="form-control" placeholder="카테고리를 입력하세요." name="catName" maxlength="10">
 		<input type="button" class="btn btn-primary" value="추가" id="btnCatAdd">
 	</div>
-
-	<br>
 	<%-- <form class="form-inline" role="form"
 		action="${cp }/admin/catTypeAdd.do" method="get"
 		onsubmit="return catTypeChk()"> --%>

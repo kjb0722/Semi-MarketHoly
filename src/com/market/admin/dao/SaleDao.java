@@ -1,14 +1,15 @@
 package com.market.admin.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.market.admin.controller.SaleProdList;
-import com.market.admin.dto.CategoryListDto;
 import com.market.admin.dto.SaleDto;
+import com.market.admin.dto.SaleProdListDto;
 import com.market.db.JDBCUtil;
 
 public class SaleDao {
@@ -43,19 +44,32 @@ public class SaleDao {
 		}
 	}
 
-	public ArrayList<SaleProdList> selProdList(int cnum, int type) {
+	public ArrayList<SaleProdListDto> selProdList(int pCnum, int pType) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<SaleProdList> list = new ArrayList<SaleProdList>();
+		ArrayList<SaleProdListDto> list = new ArrayList<SaleProdListDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select ";
+			String sql = "";
+			if (pType == -1) {
+				sql = "select a.*,(select name from sale where pnum=a.pnum) onSaleName from product a where a.type = " + pCnum;
+			} else {
+				sql = "select a.*,(select name from sale where pnum=a.pnum) onSaleName from product a where a.cnum = " + pCnum + " and type = " + pType;
+			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				
-				list.add(new SaleProdList());
+				int pnum = rs.getInt("pnum");
+				int cnum = rs.getInt("cnum");
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				int type = rs.getInt("type");
+				String thumb_save = rs.getString("thumb_save");
+				String onSaleName = rs.getString("onSaleName");
+				list.add(new SaleProdListDto(pnum, cnum, name, reg_date, price, stock, type, thumb_save, onSaleName));
 			}
 			return list;
 		} catch (SQLException e) {

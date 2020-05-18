@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.market.admin.dao.SaleDao;
-import com.market.product.dao.ProductDao;
-import com.market.product.dto.ProductDto;
+import com.market.admin.dto.SaleProdListDto;
 
 @WebServlet("/admin/saleProdList.do")
 public class SaleProdList extends HttpServlet {
@@ -26,13 +24,13 @@ public class SaleProdList extends HttpServlet {
 		int catTypeNum = Integer.parseInt(req.getParameter("catTypeNum"));
 		
 		SaleDao dao = SaleDao.getInstance();
-		ArrayList<SaleProdList> prodList = dao.selProdList(catNum, catTypeNum);
+		ArrayList<SaleProdListDto> prodList = dao.selProdList(catNum, catTypeNum);
 //		ProductDao dao = new ProductDao();
 //		int endRow = dao.getCount(catNum, catTypeNum);
 //		ArrayList<ProductDto> prodList = dao.getList(0, endRow, null, catNum, catTypeNum);
 		
 		JSONArray jarr = new JSONArray();
-		for (SaleProdList dto : prodList) {
+		for (SaleProdListDto dto : prodList) {
 			JSONObject json = new JSONObject();
 			json.put("pnum", dto.getPnum());
 			json.put("cnum", dto.getCnum());

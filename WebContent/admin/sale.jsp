@@ -76,7 +76,7 @@ table>tbody>th>td {
 	</div>
 	<div class="row form-group">
 		<div class="col-md-2">
-			<input type="button" class="btn btn-success form-control " id="btnSale" value="적용">
+			<input type="button" class="btn btn-primary form-control " id="btnSale" value="할인 적용">
 		</div>
 	</div>
 	<div class="row">
@@ -146,8 +146,6 @@ table>tbody>th>td {
 		
 		let sale = {
 				name:name.val(),
-				/* startDate:startDate.datepicker("getDate"),
-				endDate:endDate.datepicker("getDate"), */
 				startDate:startDate.datepicker({dateFormat:"yyyy-mm-dd"}).val(),
 				endDate:endDate.datepicker({dateFormat:"yyyy-mm-dd"}).val(),
 				percent:percent.val()
@@ -218,8 +216,8 @@ table>tbody>th>td {
             ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
             ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
             ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-            ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-            ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)   
+            /* ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)    */
 	});
 	//시작 날짜, 종료 날짜
 
@@ -238,7 +236,9 @@ table>tbody>th>td {
 	});
 	//상품별 적용
 	$("#sale-prod").click(function() {
+		$("#catType").prop("disabled", false);
 		$("input[name='prod-chk']").prop("disabled", false);
+		prodListLoad();
 	});
 	//세일 방법 라디오버튼 이벤트
 	
@@ -320,6 +320,10 @@ table>tbody>th>td {
 				}
 				
 				$("tbody>tr>td").css("vertical-align","middle");
+				
+				$("tbody>tr>td>img").css("width","200px");
+				$("tbody>tr>td>img").css("height","200px");
+				
 				let saleCat = $("#sale-cat").prop("checked");
 				let saleCatType = $("#sale-catType").prop("checked");
 				if(saleCat == true || saleCatType == true){
