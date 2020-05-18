@@ -51,10 +51,14 @@
 							<img src="${cp }/img/${pro.thumb_save}" width="300px"
 								height="400px">
 							<div style="position: absolute; top: 340px; left: 210px">
+								
+								<a href="${cp }/member/cartAdd.do?pnum=${pro.pnum}">
 								<button type="button" id="incart">
 									<img src="../img/btn-cart.png" alt="담기" width="50px"
 										height="50px">
 								</button>
+								</a>
+								
 							</div>
 						</div>
 

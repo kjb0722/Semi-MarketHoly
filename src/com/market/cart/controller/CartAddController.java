@@ -3,14 +3,29 @@ package com.market.cart.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.market.cart.dao.CartDao;
+@WebServlet("/member/cartAdd.do")
 public class CartAddController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//카트에 상품 insert   
+		String id = req.getParameter("id");
+		int pnum= Integer.parseInt(req.getParameter("pnum"));
+		int EA= Integer.parseInt(req.getParameter("EA"));
+		CartDao dao=CartDao.getInstance();
+		int n = dao.inCart(pnum, id, EA);
+		
+		if (n > 0) {
+			resp.sendRedirect(req.getContextPath() + "/index.jsp?page=product/member/cart.do");
+		} else {
+			resp.sendRedirect(req.getContextPath() + "/error.do");		
+		}
+	
 	}
 	
 }
