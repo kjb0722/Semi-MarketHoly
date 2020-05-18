@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.market.cart.dao.CartDao;
 import com.market.cart.dto.CartDto;
@@ -17,8 +18,8 @@ public class CartController extends HttpServlet{
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-			String id=req.getParameter("id");
-
+			HttpSession session=req.getSession();
+			String id=(String)session.getAttribute("id");
 			 
 			CartDao dao=CartDao.getInstance();
 			//회원정보 보낸거.
