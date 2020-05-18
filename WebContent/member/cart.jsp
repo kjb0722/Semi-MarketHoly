@@ -26,16 +26,11 @@
 
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td>${cart.getName}</td>
-				<td>${cart.getEA}</td>
-				<td>${cart.getPrice}</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" size="5" name="undercheck"></td>
 				<td>${cart.name}</td>
 				<td>${cart.EA}</td>
 				<td>${cart.price}</td>
 			</tr>
+	
 		</table>
 		<hr style="border: solid 1px purple;">
 		<button type="submit" class="btn btn-info">선택삭제</button>
@@ -52,15 +47,15 @@
 	<div id="outbox" class="container" style="padding-left: 110px;padding-top: 100px" >
 		<div id="box1" class="a b">
 			<span>상품금액</span><br>
-			<span id="s">?</span>
+			<span id="s">${cart.price}원</span>
 		</div>
 				<div class="mini b">
 				<span id="minimini">-</span>
 				</div>
 		
 		<div id="box2" class="a b">
-			<span>상품할인금액</span><br>
-			<span id="s">?</span>
+			<span>상품할인금액 </span><br>
+			<span id="s">${cart.price*0.2}원</span><!-- cart.percent -->
 		</div>
 				<div class="mini b">
 				<span id="minimini">+</span>
@@ -77,7 +72,7 @@
 	
 		<div id="box3" class="a b">
 			<span>상품금액</span><br>
-			<span id="s">?</span>
+			<span id="s">${cart.price-(cart.price*0.2)}원</span>
 		</div>
 	</div>	
 
