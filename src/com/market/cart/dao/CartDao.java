@@ -23,8 +23,8 @@ public class CartDao {
 		try {
 			con = JDBCUtil.getConn();
 			pstmt = con.prepareStatement("insert into cart values(seq_cart_num.nextval,?,?,?)");
-			pstmt.setString(1, id);
-			pstmt.setInt(2, pnum);
+			pstmt.setInt(1, pnum);
+			pstmt.setString(2, id);
 			pstmt.setInt(3, EA);
 			return pstmt.executeUpdate();
 

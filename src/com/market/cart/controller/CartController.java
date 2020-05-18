@@ -24,14 +24,7 @@ public class CartController extends HttpServlet{
 			CartDao dao=CartDao.getInstance();
 			//회원정보 보낸거.
 			CartDto cart=dao.getcart(id);
-			cart.getId();
-			cart.getPnum();
-			cart.getName();
-			cart.getEA();
-			cart.getPrice();
-			cart.getPercent();
-			cart.getThumb_save();
-			
+		
 			
 			req.setAttribute("cart", cart);
 			req.getRequestDispatcher("/index.jsp?page=member/cart.jsp").forward(req, resp);
