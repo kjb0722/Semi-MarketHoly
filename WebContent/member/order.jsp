@@ -27,19 +27,11 @@
 				<th>상품금액</th>
 				<!-- 장바구니에 담겨있는 리스트 얻어오기 -->
 			</tr>
-
-
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td>딸기</td>
-				<td>2box</td>
-				<td>12000원</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td>수박</td>
-				<td>1개</td>
-				<td>11500원</td>
+				<td>${cart.name}</td>
+				<td>${cart.EA}</td>
+				<td>${cart.price}</td>
 			</tr>
 		</table>
 	</div>
@@ -53,12 +45,12 @@
 		
 		<c:forEach var="mem" items="${requestScope.member}">
 		</c:forEach>
-		<input type="text" id="sender" value="${mem.getName}" disabled="disabled"><br>
+		<input type="text" id="sender" value="${member.name}" disabled="disabled"><br>
 		<p>휴대폰*</p>
-		<input type="text" name="phone" value="${mem.getPhone}" disabled="disabled">
+		<input type="text" name="phone" value="${member.phone}" disabled="disabled">
 		<br>
 		<p>이메일*</p>
-		<input type="text" id="email" value="${mem.getEmail}" disabled="disabled">
+		<input type="text" id="email" value="${member.email}" disabled="disabled">
 
 	</div>
 	<div id="4" class="container" style='width: 1000px;'>
@@ -124,10 +116,10 @@
 		<h1 style="text-align: center;">결제금액</h1>
 		<hr style="border: solid 1px purple;">
 
-		상품금액 :<input type="text" id="price" value="${CartDto.getPrice} "disabled="disabled"><br>
+		상품금액 :<input type="text" id="price" value="${cart.price}" disabled="disabled"><br>
 		상품할인금액 :500원<br>
 		배송비 :2500원<br>
-		적립금사용 :<input type="text" id="point" value="${mem.getPoint} "disabled="disabled"><br> 
+		적립금사용 :<input type="text" id="point" value="${member.point}" disabled="disabled"><br> 
 		<br>
 		최종결제금액 :<input type="text" id="total"> <br>
 		
@@ -145,9 +137,9 @@
 <script>
 	var xhrsame = null;
 	function sameget() {
-		var addr = document.getElementById("addr")
-		var recname = document.getElementById("recname")
-		var phone = document.getElementById("phone")
+		var addr = ${member.addr}
+		var rename = ${member.name}
+		var phone = ${member.phone}
 		xhrsame = new XMLHttpRequest();
 		xhrsame.onreadystatechange = samegetOk;
 		xhrsame.open('post', 'list.do', true);
@@ -156,6 +148,8 @@
 		xhrsame
 				.send('addr=' + addr + '&recname=' + recname + '&phone='
 						+ phone);
+		
+		document.getElementsById("addr").disabled=true;
 	}
 
 	function samegetOk() {

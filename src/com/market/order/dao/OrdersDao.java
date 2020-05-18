@@ -46,7 +46,9 @@ public class OrdersDao {
 					rs.getString("id"),
 					rs.getInt("pnum"),
 					rs.getInt("EA"),
-					rs.getString("name")
+					rs.getString("name"),
+					rs.getInt("price"),
+					rs.getInt("percent")
 					);
 			list.add(dto);
 		
