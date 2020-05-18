@@ -79,4 +79,25 @@ public class SaleDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+
+	public int insSaleProd(int pnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "insert into sale values(seq_sale_snum.nextval,?,?,?,?,?,'N')";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getPnum());
+			pstmt.setString(2, dto.getName());
+			pstmt.setInt(3, dto.getPercent());
+			pstmt.setDate(4, dto.getStartDate());
+			pstmt.setDate(5, dto.getEndDate());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
 }

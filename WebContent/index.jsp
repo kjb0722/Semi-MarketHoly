@@ -44,7 +44,7 @@
 				</li>
 			</ul>
 			<div id="wrap-logo">
-				<a href="${cp }/main.do"><img src="${cp }/img/logo1.png" alt="Logo"></a>
+				<a href="${cp }/main.do"><img src="${cp }/img/logo_0518.jpg" alt="Logo"></a>
 			</div>
 		</div>
 

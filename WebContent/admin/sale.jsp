@@ -116,21 +116,6 @@ input[type="checkbox"] {
 	
 	//할인 적용
 	$("#btnSale").click(function(){
-		$("#table-prod>tbody>tr").each(function(i, tr) {
-			if($(this).find("td").eq(0).children().prop("checked") == true){
-				let pnum = $(this).find("td").eq(1).text();
-				jQuery.ajax({
-					dataType:"JSON",
-					url:`${cp}/admin/saleProdAdd.do`,
-					method:"get",
-					data:{pnum:pnum},
-					success:function(data){
-						alert("aa");
-					}
-				});
-			}
-		});
-		
 		saleAdd();
 	});
 	
@@ -190,10 +175,28 @@ input[type="checkbox"] {
 			sale.catTypeNum = catTypeNum;
 			catSaleAdd(sale);
 		}else{
-			$("#table-prod>tbody>tr").each(function(i, tr) {
-				
-			});
+			prodSaleAdd(sale);
 		}
+	}
+	function prodSaleAdd(sale){
+		$("#table-prod>tbody>tr").each(function(i, tr) {
+			if($(this).find("td").eq(0).children().prop("checked") == true){
+				let pnum = $(this).find("td").eq(1).text();
+				jQuery.ajax({
+					dataType:"JSON",
+					url:`${cp}/admin/saleProdAdd.do`,
+					method:"get",
+					data:{pnum:pnum,
+						name:sale.name,
+						startDate:sale.startDate,
+						endDate:sale.endDate,
+						percent:sale.percent},
+					success:function(data){
+						alert("aa");
+					}
+				});
+			}
+		});
 	}
 	function catSaleAdd(sale){
 		jQuery.ajax({
