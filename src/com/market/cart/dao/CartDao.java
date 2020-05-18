@@ -12,7 +12,7 @@ public class CartDao {
 	public static CartDao getInstance() {
 		return instance;
 	}
-	public CartDto inCart(int pnum,String id,int EA) {
+	public int inCart(int pnum,String id,int EA) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -21,18 +21,15 @@ public class CartDao {
 			pstmt.setString(1, id);
 			pstmt.setInt(2, pnum);
 			pstmt.setInt(3, EA);
-			int n=pstmt.executeUpdate();
+			return pstmt.executeUpdate();
 			
-		
 	}catch(SQLException se) {
 		se.printStackTrace();
-		return null;
-			
+		return -1;			
 	}finally {
 		JDBCUtil.close(null, pstmt, con);
-		}
-	}
 	
+	}
 	public CartDto getcart(String id) {
 		//회원 아이디,상품번호,상품이름(name),개수,상품금액,상품 할인률,상품사진
 		Connection con=null;
