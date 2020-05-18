@@ -15,7 +15,9 @@
 	<h2>${dto.price}</h2>
 	구매수량 <br>
 	총 상품금액 : ${dto.price } 원 <br>
-	<input type="button" value="장바구니 담기" id="incart"><br>
-	<br>
+	
+	<a href="${cp }/member/cartAdd.do?id=${id}&pnum=${pnum }&EA=1">
+	<input type="button" value="장바구니 담기" id="incart"></a><br>
+
 	
 	------------------하단 탭 (상품설명/상품이미지/고객후기/상품문의 )
