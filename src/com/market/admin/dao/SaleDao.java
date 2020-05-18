@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.market.admin.controller.SaleProdList;
+import com.market.admin.controller.SaleProdListController;
 import com.market.admin.dto.SaleDto;
 import com.market.admin.dto.SaleProdListDto;
 import com.market.db.JDBCUtil;
@@ -53,9 +53,9 @@ public class SaleDao {
 			con = JDBCUtil.getConn();
 			String sql = "";
 			if (pType == -1) {
-				sql = "select a.*,(select name from sale where pnum=a.pnum) onSaleName from product a where a.type = " + pCnum;
+				sql = "select a.*,nvl((select name from sale where pnum=a.pnum),-1) onSaleName from product a where a.type = " + pCnum;
 			} else {
-				sql = "select a.*,(select name from sale where pnum=a.pnum) onSaleName from product a where a.cnum = " + pCnum + " and type = " + pType;
+				sql = "select a.*,nvl((select name from sale where pnum=a.pnum),-1) onSaleName from product a where a.cnum = " + pCnum + " and type = " + pType;
 			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();

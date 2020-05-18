@@ -14,6 +14,12 @@ table>tbody>th>td {
 	background-color: aqua;
 	vertical-align: middle;
 }
+
+input[type="checkbox"] {
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
+	zoom: 1.8;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -81,7 +87,7 @@ table>tbody>th>td {
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<table class="table table-bordered">
+			<table id="table-prod" class="table table-bordered">
 				<thead>
 					<tr>
 						<th style="width: 5%"><input type="checkbox" id="chkbox-all" name="prod-chk"></th>
@@ -110,6 +116,21 @@ table>tbody>th>td {
 	
 	//할인 적용
 	$("#btnSale").click(function(){
+		$("#table-prod>tbody>tr").each(function(i, tr) {
+			if($(this).find("td").eq(0).children().prop("checked") == true){
+				let pnum = $(this).find("td").eq(1).text();
+				jQuery.ajax({
+					dataType:"JSON",
+					url:`${cp}/admin/saleProdAdd.do`,
+					method:"get",
+					data:{pnum:pnum},
+					success:function(data){
+						alert("aa");
+					}
+				});
+			}
+		});
+		
 		saleAdd();
 	});
 	
@@ -168,6 +189,10 @@ table>tbody>th>td {
 			sale.catNum = catNum;
 			sale.catTypeNum = catTypeNum;
 			catSaleAdd(sale);
+		}else{
+			$("#table-prod>tbody>tr").each(function(i, tr) {
+				
+			});
 		}
 	}
 	function catSaleAdd(sale){
@@ -245,7 +270,7 @@ table>tbody>th>td {
 	
 	//상품 체크박스 전체 선택 이벤트
 	$("#chkbox-all").click(function(){
-		$("table tbody tr input[type=checkbox]").prop("checked",$(this).prop("checked"));
+		$("#table-prod tbody tr input[type=checkbox]").prop("checked",$(this).prop("checked"));
 	});
 	//상품 체크박스 전체 선택 이벤트
 
@@ -304,25 +329,33 @@ table>tbody>th>td {
 			data:{catNum:catNum,
 				catTypeNum:catTypeNum},
 			success:function(data){
-				let table = $("table>tbody");
+				let table = $("#table-prod>tbody");
 				table.empty();
 				for(let dto of data){
 					let row = "<tr class='align-middle'>";
-					row += "<td><input type='checkbox' name='prod-chk'></td>";
+					if(dto.onSaleName == -1){						
+						row += "<td><input type='checkbox' name='prod-chk'></td>";
+					}else{
+						row += "<td><input type='checkbox' name='prod-chk' disabled='disabled'></td>";
+					}
 					row += "<td>"+dto.pnum+"</td>";
 					row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
 					row += "<td>"+dto.name+"</td>";
 					row += "<td>"+dto.price+"</td>";
 					row += "<td>"+dto.stock+"</td>";
-					row += "<td></td>";
+					if(dto.onSaleName == -1){
+						row += "<td></td>";						
+					}else{
+						row += "<td>"+dto.onSaleName+"</td>";											
+					}
 					row += "</tr>";
 					table.append(row);
 				}
 				
-				$("tbody>tr>td").css("vertical-align","middle");
+				$("#table-prod>tbody>tr>td").css("vertical-align","middle");
 				
-				$("tbody>tr>td>img").css("width","200px");
-				$("tbody>tr>td>img").css("height","200px");
+				$("#table-prod>tbody>tr>td>img").css("width","200px");
+				$("#table-prod>tbody>tr>td>img").css("height","200px");
 				
 				let saleCat = $("#sale-cat").prop("checked");
 				let saleCatType = $("#sale-catType").prop("checked");

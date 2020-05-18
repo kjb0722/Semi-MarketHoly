@@ -20,7 +20,7 @@ import com.market.product.dao.ProductDao;
 import com.market.product.dto.ProductDto;
 
 @WebServlet("/admin/saleCatAdd.do")
-public class SaleCatAdd extends HttpServlet {
+public class SaleCatAddController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int cnum = Integer.parseInt(req.getParameter("catNum"));
