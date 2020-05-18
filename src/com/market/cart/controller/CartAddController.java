@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.json.JSONObject;
 
 import com.market.cart.dao.CartDao;
@@ -17,24 +18,18 @@ public class CartAddController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//카트에 상품 insert   
-		String id = req.getParameter("id");
+		String id=req.getParameter("id");
 		int pnum= Integer.parseInt(req.getParameter("pnum"));
 		int EA= Integer.parseInt(req.getParameter("EA"));
 		CartDao dao=CartDao.getInstance();
 		int n = dao.inCart(pnum, id, EA);
-		
-		if (n > 0) {
-			resp.sendRedirect(req.getContextPath() + "/index.jsp?page=member/cart.jsp");
-		} else {
-			resp.sendRedirect(req.getContextPath() + "/error.do");		
-		}
-		/*
+	
 		JSONObject json = new JSONObject();
 		json.put("n", n);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
 		pw.print(json);
-		*/
+		
 	}
 	
 }

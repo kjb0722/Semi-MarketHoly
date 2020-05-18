@@ -52,7 +52,7 @@
 								height="400px">
 							<div style="position: absolute; top: 340px; left: 210px">
 								
-								<a href="${cp }/member/cartAdd.do?pnum=${pro.pnum}">
+								<a href="${cp }/member/cartAdd.do?pnum=${pro.pnum}&id=${id}&EA=1">
 								<button type="button" id="incart">
 									<img src="../img/btn-cart.png" alt="담기" width="50px"
 										height="50px">

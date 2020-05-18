@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -20,6 +21,9 @@ import com.market.product.dto.ProductDto;
 public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		HttpSession session=req.getSession();
+		String id=(String)session.getAttribute("id");
 		// 카테고리
 		String sCnum = req.getParameter("cnum");
 		String list_filter = req.getParameter("list_filter");
@@ -58,7 +62,7 @@ public class ListController extends HttpServlet {
 		String cname = cdao.getName(type); //선택된 카테고리 이름
 		String tname = cdao.getName(cnum); //선택된 세부카테고리 이름
 
-		req.setAttribute("clist", clist);
+		req.setAttribute("id", id);
 		req.setAttribute("cname", cname);
 		req.setAttribute("tname", tname);
 		req.setAttribute("cnum", cnum);
