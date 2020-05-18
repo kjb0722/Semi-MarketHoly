@@ -22,7 +22,7 @@
 		<div class="navbar">
 			<ul class="nav navbar-nav pull-right">
 				<c:choose>
-					<c:when test="${sessionScope.dto == null }">
+					<c:when test="${sessionScope.memberDto == null }">
 						<li>
 							<a href="${cp }/member/startJoin.do">회원가입</a>
 						</li>
@@ -32,7 +32,7 @@
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="${cp }/member/startChangeInfo.do">${sessionScope.dto.id}님</a>
+							<a href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

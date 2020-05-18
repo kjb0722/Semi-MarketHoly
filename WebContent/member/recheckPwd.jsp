@@ -16,9 +16,9 @@
             <div class="panel-body">
                 <form id="login-form" method="post" action="/Semi-MarketHoly/member/checkPwd.do">
                                            아이디<br>    
-                    ${sessionScope.dto.id} <br>
+                    ${sessionScope.memberDto.id} <br>
                                            비밀번호<br>
-                    <input type="text" name= "id" value="${sessionScope.dto.id}" hidden="hidden">
+                    <input type="text" name= "id" value="${sessionScope.memberDto.id}" hidden="hidden">
                     <div>
                         <input type="password" class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요" autofocus>
                     </div>

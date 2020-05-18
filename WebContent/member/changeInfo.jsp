@@ -19,7 +19,7 @@
                 <form id="login-form" method="post" action="${cp }/member/updateInfo.do">	
                     <div>
                     	아이디
-                        <input type="text" class="form-control" name="id" id="id" value=${sessionScope.dto.id} readonly="readonly">
+                        <input type="text" class="form-control" name="id" id="id" value=${sessionScope.memberDto.id} readonly="readonly">
                     </div>
                     
                     
@@ -42,16 +42,16 @@
                     <div id="checkDiv2"></div>
                     <div>
                     	이름*
-                        <input type="text" class="form-control" name="name" id="name" value="${sessionScope.dto.name}">
+                        <input type="text" class="form-control" name="name" id="name" value="${sessionScope.memberDto.name}">
                     </div>
                     <div>
                     	이메일*
-                        <input type="text" class="form-control" name="email" id="email" value ="${sessionScope.dto.email}">
+                        <input type="text" class="form-control" name="email" id="email" value ="${sessionScope.memberDto.email}">
     
                     </div>
                     <div>
                     	휴대폰번호*
-                        <input type="text" class="form-control" name="phone" id="phone" value= "${sessionScope.dto.phone}">
+                        <input type="text" class="form-control" name="phone" id="phone" value= "${sessionScope.memberDto.phone}">
                     </div>
           
                     <div>

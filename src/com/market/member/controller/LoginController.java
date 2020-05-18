@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet{
 		
 		if(dto.getId() != null) {
 			HttpSession session = req.getSession();
-			session.setAttribute("dto", dto);
+			session.setAttribute("memberDto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
 		}else if(dto.getId() == null){
 			resp.sendRedirect(req.getContextPath()+"/member/loginResult.jsp");

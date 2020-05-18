@@ -15,8 +15,8 @@
 		<thead>
 			<tr>
 				<th>qna번호</th>
-				<th>아이디</th>
 				<th>제목</th>
+				<th>아이디</th>
 				<th>등록일</th>
 			</tr>
 			<tr style='display:none'>
@@ -30,10 +30,18 @@
 		</thead>
 		<c:forEach var='dto' items='${list }'>
 			<tbody>
-				<tr onclick="showHidden(${dto.qnum})">	
+				
+				<tr onclick="showHidden(${dto.qnum},${dto.id })">					
 					<td>${dto.qnum }</td>
+					<c:choose>
+						<c:when test="${dto.pwd == 'Y'}">
+							<td>${dto.title } <img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px"></td>
+						</c:when>
+						<c:otherwise>
+							<td>${dto.title } </td>
+						</c:otherwise>
+					</c:choose>
 					<td>${dto.id }</td>
-					<td>${dto.title }</td>
 					<td>${dto.regdate }</td>
 				</tr>
 				<tr id='${dto.qnum }' style='display:none;'>					
@@ -53,11 +61,16 @@
 </body>
 
 <script>
-	function showHidden(qNum) {
+	function showHidden(qNum,ids) {
 		var id =document.getElementById(qNum);
 		
-		if(id.style.display == 'none') id.style.display = 'block' ;
-		else id.style.display = 'none' ;
+		if(ids == ${memberDto.id}){
+			id.style.display = 'block' ;
+			
+		}else{
+			id.style.display = 'none' ;
+		}
+			
 	}
 	
 </script>
