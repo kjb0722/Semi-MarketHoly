@@ -1,12 +1,15 @@
 package com.market.cart.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
 
 import com.market.cart.dao.CartDao;
 @WebServlet("/member/cartAdd.do")
@@ -21,11 +24,17 @@ public class CartAddController extends HttpServlet {
 		int n = dao.inCart(pnum, id, EA);
 		
 		if (n > 0) {
-			resp.sendRedirect(req.getContextPath() + "/index.jsp?page=product/member/cart.do");
+			resp.sendRedirect(req.getContextPath() + "/index.jsp?page=member/cart.jsp");
 		} else {
 			resp.sendRedirect(req.getContextPath() + "/error.do");		
 		}
-	
+		/*
+		JSONObject json = new JSONObject();
+		json.put("n", n);
+		resp.setContentType("text/plain;charset=utf-8");
+		PrintWriter pw = resp.getWriter();
+		pw.print(json);
+		*/
 	}
 	
 }
