@@ -28,13 +28,14 @@ public class SaleDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into sale values(seq_sale_snum.nextval,?,?,?,?,?,'N')";
+			String sql = "insert into sale select seq_sale_snum.nextval,?,?,?,?,?,'N' from dual where not exists(select pnum from sale where pnum=? and del_yn='N')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPnum());
 			pstmt.setString(2, dto.getName());
 			pstmt.setInt(3, dto.getPercent());
 			pstmt.setDate(4, dto.getStartDate());
 			pstmt.setDate(5, dto.getEndDate());
+			pstmt.setInt(6, dto.getPnum());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -53,9 +54,11 @@ public class SaleDao {
 			con = JDBCUtil.getConn();
 			String sql = "";
 			if (pType == -1) {
-				sql = "select a.*,nvl((select name from sale where pnum=a.pnum),-1) onSaleName from product a where a.type = " + pCnum;
+				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.type = "
+						+ pCnum + " and del_yn = 'N'";
 			} else {
-				sql = "select a.*,nvl((select name from sale where pnum=a.pnum),-1) onSaleName from product a where a.cnum = " + pCnum + " and type = " + pType;
+				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.cnum = "
+						+ pCnum + " and type = " + pType + " and del_yn = 'N'";
 			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -85,13 +88,54 @@ public class SaleDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into sale values(seq_sale_snum.nextval,?,?,?,?,?,'N')";
+			String sql = "insert into sale select seq_sale_snum.nextval,?,?,?,?,?,'N' from dual where not exists(select pnum from sale where pnum=? and del_yn='N')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPnum());
 			pstmt.setString(2, dto.getName());
 			pstmt.setInt(3, dto.getPercent());
 			pstmt.setDate(4, dto.getStartDate());
 			pstmt.setDate(5, dto.getEndDate());
+			pstmt.setInt(6, dto.getPnum());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
+
+	public int delSale(int pCnum, int pType) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "";
+			if (pType == -1) {
+				sql = "update sale set del_yn='Y' where pnum in(select a.pnum from sale a inner join product b on a.pnum=b.pnum where a.del_yn = 'N' and b.del_yn='N' and b.type = "
+						+ pCnum + ") and del_yn='N'";
+			} else {
+				sql = "update sale set del_yn='Y' where pnum in(select a.pnum from sale a inner join product b on a.pnum=b.pnum where a.del_yn = 'N' and b.del_yn='N' and b.cnum = "
+						+ pCnum + " and type = " + pType + ") and del_yn = 'N'";
+			}
+			pstmt = con.prepareStatement(sql);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	}
+
+	public int delSaleProd(int pnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "update sale set del_yn='Y' where pnum = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pnum);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

@@ -119,8 +119,77 @@ input[type="checkbox"] {
 	
 	//할인 해제
 	$("#btnSaleRemove").click(function() {
-		
+		saleRemove();
 	});
+	function saleRemove(){
+		if($("#sale-cat").prop("checked") == true){
+			let catNum = $("#cat").val();
+			if(confirm("선택하신 카테고리의 모든 할인을 해제하시겠습니까?")){			
+				catSaleRemove(catNum, -1);
+			}
+		}else if($("#sale-catType").prop("checked") == true){
+			let num = $("#catType").val();
+			if(num == null){
+				alert("세부 카테고리가 없습니다.");
+				return;
+			}
+			catNum = num.substr(0,num.indexOf("|"));
+			catTypeNum = num.substr(num.indexOf("|")+1);
+			
+			if(confirm("선택하신 세부 카테고리의 모든 할인을 해제하시겠습니까?")){
+				catSaleRemove(catNum, catTypeNum);			
+			}
+		}else{
+			if(confirm("선택하신 상품들의 할인을 해제하시겠습니까?")){			
+				prodSaleRemove();
+			}
+		}
+	}
+	function catSaleRemove(catNum, catTypeNum){
+		jQuery.ajax({
+			dataType: "JSON",
+			url: `${cp}/admin/saleCatRemove.do`,
+			method: "get",
+			data:{catNum:catNum,
+				catTypeNum:catTypeNum},
+			success:function(data){
+				if(data.n>0){
+					alert(data.n+"건 할인 해제 완료");	
+					prodListLoad();
+					inputInit();
+				}else{
+					alert("할인이 적용된 상품이 없습니다.");
+					return;
+				}
+			}
+		});
+	}	
+	function prodSaleRemove(){
+		let removeCnt = 0;
+		$("#table-prod>tbody>tr").each(function(i, tr) {
+			if($(this).find("td").eq(0).children().prop("checked") == true){
+				let pnum = $(this).find("td").eq(1).text();
+				jQuery.ajax({
+					dataType:"JSON",
+					url:`${cp}/admin/saleProdRemove.do`,
+					method:"get",
+					async : false,
+					data:{pnum:pnum},
+					success:function(data){
+						if(data.n > 0){
+							removeCnt++;
+						}
+					}
+				});
+			}
+		});
+		
+		if(removeCnt > 0){
+			alert(removeCnt+"건 적용 완료");
+			prodListLoad();
+			inputInit();
+		}
+	}
 	//할인 해제
 	
 	//할인 적용
@@ -196,6 +265,7 @@ input[type="checkbox"] {
 					dataType:"JSON",
 					url:`${cp}/admin/saleProdAdd.do`,
 					method:"get",
+					async : false,
 					data:{pnum:pnum,
 						name:sale.name,
 						startDate:sale.startDate,
@@ -210,13 +280,10 @@ input[type="checkbox"] {
 			}
 		});
 		
-		if(addCnt > 0){
-			alert(addCnt+"건 적용 완료");
-			prodListLoad();
-			inputInit();
-		}else{
-			location = `${cp}/error.do`;
-		}
+		alert(addCnt+"건 적용 완료");
+		prodListLoad();
+		inputInit();
+		
 	}
 	function catSaleAdd(sale){
 		jQuery.ajax({
@@ -230,13 +297,9 @@ input[type="checkbox"] {
 				endDate:sale.endDate,
 				percent:sale.percent},
 			success:function(data){
-				if(data.n>0){
-					alert(data.n+"건 할인 적용 완료");	
-					prodListLoad();
-					inputInit();
-				}else{
-					location = `${cp}/error.do`;
-				}
+				alert(data.n+"건 할인 적용 완료");	
+				prodListLoad();
+				inputInit();
 			}
 		});
 	}
@@ -246,6 +309,7 @@ input[type="checkbox"] {
 	function inputInit(){
 		$("#name").val("");
 		$("#percent").val("");
+		$("#chkbox-all").prop("checked", false);
 	}
 	//input 초기화//
 	
@@ -293,12 +357,17 @@ input[type="checkbox"] {
 	
 	//상품 체크박스 전체 선택 이벤트
 	$("#chkbox-all").click(function(){
-		let chk = $(this).prop("checked");
+		/* let chk = $(this).prop("checked");
 		$("#table-prod>tbody>tr").each(function(i, tr) {
 			if($(this).find("td").eq(6).text() == ""){
 				$(this).find("td").eq(0).children().prop("checked",chk);
 			}
+		}); */
+		
+		$("#table-prod>tbody>tr").each(function(i, tr) {
+			$(this).find("td").eq(0).children().prop("checked",$("#chkbox-all").prop("checked"));
 		});
+		
 	});
 	//상품 체크박스 전체 선택 이벤트
 
@@ -361,11 +430,12 @@ input[type="checkbox"] {
 				table.empty();
 				for(let dto of data){
 					let row = "<tr class='align-middle'>";
-					if(dto.onSaleName == -1){						
+					/* if(dto.onSaleName == -1){						
 						row += "<td><input type='checkbox' name='prod-chk'></td>";
 					}else{
 						row += "<td><input type='checkbox' name='prod-chk' disabled='disabled'></td>";
-					}
+					} */
+					row += "<td><input type='checkbox' name='prod-chk'></td>";
 					row += "<td>"+dto.pnum+"</td>";
 					row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
 					row += "<td>"+dto.name+"</td>";

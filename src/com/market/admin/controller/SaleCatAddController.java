@@ -50,14 +50,14 @@ public class SaleCatAddController extends HttpServlet {
 		int resultCnt = 0;
 		for (ProductDto dto : list) {
 			int n = saleDao.insSale(new SaleDto(-1, dto.getPnum(), name, percent, startDate, endDate, "N"));
-			if(n>0) {
+			if (n > 0) {
 				resultCnt++;
 			}
 		}
-		
+
 		JSONObject json = new JSONObject();
 		json.put("n", resultCnt);
-		
+
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
 		pw.print(json);

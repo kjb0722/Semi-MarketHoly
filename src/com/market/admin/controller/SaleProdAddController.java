@@ -22,7 +22,7 @@ public class SaleProdAddController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int pnum = Integer.parseInt(req.getParameter("pnum"));
 		String name = req.getParameter("name");
-		
+
 		String startDateStr = req.getParameter("startDate");
 		String endDateStr = req.getParameter("endDate");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -36,15 +36,15 @@ public class SaleProdAddController extends HttpServlet {
 		}
 		java.sql.Date startDate = new java.sql.Date(tempStartDate.getTime());
 		java.sql.Date endDate = new java.sql.Date(tempEndDate.getTime());
-		
+
 		int percent = Integer.parseInt(req.getParameter("percent"));
-		
+
 		SaleDao dao = SaleDao.getInstance();
-		int n = dao.insSaleProd(new SaleDto(-1,pnum,name,percent,startDate,endDate,"N"));
-		
+		int n = dao.insSaleProd(new SaleDto(-1, pnum, name, percent, startDate, endDate, "N"));
+
 		JSONObject json = new JSONObject();
 		json.put("n", n);
-		
+
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
 		pw.print(json);
