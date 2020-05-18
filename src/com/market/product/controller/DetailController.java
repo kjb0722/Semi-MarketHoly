@@ -27,6 +27,7 @@ public class DetailController extends HttpServlet {
 			}
 			ProductDao dao=new ProductDao();
 			ProductDto dto=dao.getDetail(pnum);
+
 			req.setAttribute("dto",dto);
 		
 		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp").forward(req, resp);

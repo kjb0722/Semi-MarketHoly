@@ -82,7 +82,7 @@ CREATE TABLE orders
 	-- 5:���� �Ϸ�
 	-- 6:�ֹ� ���
 	status number,
-	-- 1:�̰���
+	-- 1:����
 	-- 2:����
 	pay_yn number,
 	reg_date date,
@@ -146,7 +146,7 @@ CREATE TABLE qna
 (
 	pnum number NOT NULL,
 	num number NOT NULL,
-	rnum number,
+	qnum number primary key,
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
