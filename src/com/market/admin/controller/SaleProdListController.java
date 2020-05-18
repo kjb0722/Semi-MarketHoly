@@ -17,7 +17,7 @@ import com.market.admin.dao.SaleDao;
 import com.market.admin.dto.SaleProdListDto;
 
 @WebServlet("/admin/saleProdList.do")
-public class SaleProdList extends HttpServlet {
+public class SaleProdListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int catNum = Integer.parseInt(req.getParameter("catNum"));
@@ -25,9 +25,6 @@ public class SaleProdList extends HttpServlet {
 		
 		SaleDao dao = SaleDao.getInstance();
 		ArrayList<SaleProdListDto> prodList = dao.selProdList(catNum, catTypeNum);
-//		ProductDao dao = new ProductDao();
-//		int endRow = dao.getCount(catNum, catTypeNum);
-//		ArrayList<ProductDto> prodList = dao.getList(0, endRow, null, catNum, catTypeNum);
 		
 		JSONArray jarr = new JSONArray();
 		for (SaleProdListDto dto : prodList) {
@@ -40,7 +37,7 @@ public class SaleProdList extends HttpServlet {
 			json.put("stock", dto.getStock());
 			json.put("type", dto.getType());
 			json.put("thumb_save", dto.getThumb_save());
-			json.put("onSaleName", dto.getOnSaleName());
+			json.put("onSaleName", dto.getOnSaleName()+"");
 			jarr.put(json);
 		}
 
