@@ -26,15 +26,15 @@
 
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td>딸기</td>
-				<td>2box</td>
-				<td>12000원</td>
+				<td>${cart.getName}</td>
+				<td>${cart.getEA}</td>
+				<td>${cart.getPrice}</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td>수박</td>
-				<td>1개</td>
-				<td>11500원</td>
+				<td>${cart.name}</td>
+				<td>${cart.EA}</td>
+				<td>${cart.price}</td>
 			</tr>
 		</table>
 		<hr style="border: solid 1px purple;">

@@ -8,11 +8,19 @@ public class CartDto {
 	private int EA;
 	private int price;
 	private int percent;
+	private String thumb_save;
+	
 	
 	public CartDto() {
 		
 	}
-	public CartDto(String id, int pnum, String name, int EA, int price, int percent) {
+	public String getThumb_save() {
+		return thumb_save;
+	}
+	public void setThumb_save(String thumb_save) {
+		this.thumb_save = thumb_save;
+	}
+	public CartDto(String id, int pnum, String name, int EA, int price, int percent,String thumb_save) {
 		super();
 		this.id = id;
 		this.pnum = pnum;
@@ -20,6 +28,7 @@ public class CartDto {
 		this.EA = EA;
 		this.price = price;
 		this.percent = percent;
+		this.thumb_save = thumb_save;
 	}
 	public String getId() {
 		return id;
