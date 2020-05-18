@@ -42,7 +42,7 @@
 					<td>${vo.regdate }</td>
 				</tr>
 				<tr id='${vo.rnum }' style='display:none;'>
-					<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }" width="200px" height="200px"></p>${vo.content }</td>
+					<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }" width="400px" height="500px"></p>${vo.content }</td>
 <!-- 					<td>${vo.content }</td> -->
 				</tr>	
 			</tbody>	

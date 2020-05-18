@@ -81,7 +81,8 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="http://www.ekolping.co.kr"><b class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a>
+						<a href="${cp }/qna/qnaList.do"><b class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a>
+						<!--  "http://www.ekolping.co.kr" -->
 					</li>
 					<li>
 						<a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a>
