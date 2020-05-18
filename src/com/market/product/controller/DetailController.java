@@ -28,6 +28,7 @@ public class DetailController extends HttpServlet {
 			}
 			ProductDao dao=new ProductDao();
 			ProductDto dto=dao.getDetail(pnum);
+
 			req.setAttribute("dto",dto);
 		
 			

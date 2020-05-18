@@ -18,6 +18,7 @@ public class ListReviewController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String spageNum=req.getParameter("pageNum");
 	
+		
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
@@ -25,12 +26,7 @@ public class ListReviewController extends HttpServlet {
 		int startRow=(pageNum-1)*5+1;
 		int endRow=startRow+4;
 		ReviewDao dao = ReviewDao.getInstance();
-		dao.listReview(startRow,endRow);
-		
-		
-		
-		ReviewDao reviewDao = ReviewDao.getInstance();
-		ArrayList<ReviewDto> list = reviewDao.listReview(startRow,endRow);
+		ArrayList<ReviewDto> list = dao.listReview(startRow,endRow);
 		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
 		int startPageNum=((pageNum-1)/4)*4+1;
 		int endPageNum=startPageNum+3;

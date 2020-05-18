@@ -42,13 +42,17 @@
 					<td>${vo.regdate }</td>
 				</tr>
 				<tr id='${vo.rnum }' style='display:none;'>
-					<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }"></p>${vo.content }</td>
+					<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }" width="200px" height="200px"></p>${vo.content }</td>
 <!-- 					<td>${vo.content }</td> -->
 				</tr>	
 			</tbody>	
 		</c:forEach>	
 	</table>
 </div>
+		<input type="button" value = "후기쓰기" style="float:right" onclick="location.href='${cp }/review/writeReview.jsp'">
+		<br><br>
+
+
 <!-- 페이징처리 -->
 <div>
 <c:choose>
