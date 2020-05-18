@@ -82,7 +82,10 @@ input[type="checkbox"] {
 	</div>
 	<div class="row form-group">
 		<div class="col-md-2">
-			<input type="button" class="btn btn-primary form-control " id="btnSale" value="할인 적용">
+			<input type="button" class="btn btn-primary form-control" id="btnSale" value="할인 적용">
+		</div>
+		<div class="col-md-2">
+			<input type="button" class="btn btn-danger form-control" id="btnSaleRemove" value="할인 해제">
 		</div>
 	</div>
 	<div class="row">
@@ -113,6 +116,12 @@ input[type="checkbox"] {
 		$("#sale-cat").click();		
 		$("#cat").change();
 	});
+	
+	//할인 해제
+	$("#btnSaleRemove").click(function() {
+		
+	});
+	//할인 해제
 	
 	//할인 적용
 	$("#btnSale").click(function(){
@@ -179,6 +188,7 @@ input[type="checkbox"] {
 		}
 	}
 	function prodSaleAdd(sale){
+		let addCnt = 0;
 		$("#table-prod>tbody>tr").each(function(i, tr) {
 			if($(this).find("td").eq(0).children().prop("checked") == true){
 				let pnum = $(this).find("td").eq(1).text();
@@ -192,11 +202,21 @@ input[type="checkbox"] {
 						endDate:sale.endDate,
 						percent:sale.percent},
 					success:function(data){
-						alert("aa");
+						if(data.n > 0){
+							addCnt++;
+						}
 					}
 				});
 			}
 		});
+		
+		if(addCnt > 0){
+			alert(addCnt+"건 적용 완료");
+			prodListLoad();
+			inputInit();
+		}else{
+			location = `${cp}/error.do`;
+		}
 	}
 	function catSaleAdd(sale){
 		jQuery.ajax({
@@ -212,6 +232,7 @@ input[type="checkbox"] {
 			success:function(data){
 				if(data.n>0){
 					alert(data.n+"건 할인 적용 완료");	
+					prodListLoad();
 					inputInit();
 				}else{
 					location = `${cp}/error.do`;
@@ -270,10 +291,14 @@ input[type="checkbox"] {
 	});
 	//세일 방법 라디오버튼 이벤트
 	
-	
 	//상품 체크박스 전체 선택 이벤트
 	$("#chkbox-all").click(function(){
-		$("#table-prod tbody tr input[type=checkbox]").prop("checked",$(this).prop("checked"));
+		let chk = $(this).prop("checked");
+		$("#table-prod>tbody>tr").each(function(i, tr) {
+			if($(this).find("td").eq(6).text() == ""){
+				$(this).find("td").eq(0).children().prop("checked",chk);
+			}
+		});
 	});
 	//상품 체크박스 전체 선택 이벤트
 

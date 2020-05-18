@@ -80,7 +80,7 @@ public class SaleDao {
 		}
 	}
 
-	public int insSaleProd(int pnum) {
+	public int insSaleProd(SaleDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {

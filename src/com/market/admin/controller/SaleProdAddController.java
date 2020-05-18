@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.market.admin.dao.SaleDao;
+import com.market.admin.dto.SaleDto;
 
 @WebServlet("/admin/saleProdAdd.do")
 public class SaleProdAddController extends HttpServlet {
@@ -39,7 +40,7 @@ public class SaleProdAddController extends HttpServlet {
 		int percent = Integer.parseInt(req.getParameter("percent"));
 		
 		SaleDao dao = SaleDao.getInstance();
-		int n = dao.insSaleProd(pnum);
+		int n = dao.insSaleProd(new SaleDto(-1,pnum,name,percent,startDate,endDate,"N"));
 		
 		JSONObject json = new JSONObject();
 		json.put("n", n);
