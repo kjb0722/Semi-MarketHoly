@@ -17,20 +17,23 @@
 		<table class="table table-hover">
 			<tr>
 				<th><input type="checkbox" id="allchecked" onchange="allcheck()"> 전체선택</th>
+				<th> </th>
 				<th>상품정보</th>
 				<th>수량</th>
 				<th>상품금액</th>
 				<!-- 장바구니에 담겨있는 리스트 얻어오기 -->
 			</tr>
 
-
+			
+			<c:forEach var="cart" items="${requestScope.cart }">
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck"></td>
+				<td><img src="${cp }/img/${cart.thumb_save}" width="100px" height="100px">
 				<td>${cart.name}</td>
 				<td>${cart.EA}</td>
 				<td>${cart.price}</td>
 			</tr>
-	
+			</c:forEach>
 		</table>
 		<hr style="border: solid 1px purple;">
 		<button type="submit" class="btn btn-info">선택삭제</button>
@@ -45,9 +48,10 @@
  .b{float:left;}
 </style>
 	<div id="outbox" class="container" style="padding-left: 110px;padding-top: 100px" >
+		<c:forEach var="cart1" items="${requestScope.cart1 }">
 		<div id="box1" class="a b">
 			<span>상품금액</span><br>
-			<span id="s">${cart.price}원</span>
+			<span id="s">${cart1.price}원</span>
 		</div>
 				<div class="mini b">
 				<span id="minimini">-</span>
@@ -55,7 +59,7 @@
 		
 		<div id="box2" class="a b">
 			<span>상품할인금액 </span><br>
-			<span id="s">${cart.price*0.2}원</span><!-- cart.percent -->
+			<span id="s">${cart1.price*cart1.pp}원</span><!-- cart.percent -->
 		</div>
 				<div class="mini b">
 				<span id="minimini">+</span>
@@ -72,8 +76,9 @@
 	
 		<div id="box3" class="a b">
 			<span>상품금액</span><br>
-			<span id="s">${cart.price-(cart.price*0.2)}원</span>
+			<span id="s">${cart1.price-(cart1.price*cart1.pp)}원</span>
 		</div>
+			</c:forEach>
 	</div>	
 
 <script>
