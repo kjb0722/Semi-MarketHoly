@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class StartMypageController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=mypage/mypage.jsp");
+		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=/mypage/mypage.jsp");
 		
 		//resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/login.jsp");
 		

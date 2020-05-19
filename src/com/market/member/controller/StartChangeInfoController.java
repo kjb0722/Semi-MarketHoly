@@ -16,6 +16,9 @@ public class StartChangeInfoController extends HttpServlet {
 		String contextPath = req.getContextPath();
 		ServletContext application = req.getServletContext();
 		application.setAttribute("cp", contextPath);
-		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/recheckPwd.jsp");
+		
+		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=mypage/mypage.jsp&mypage=member/recheckPwd.jsp");
+
+		
 	}
 }

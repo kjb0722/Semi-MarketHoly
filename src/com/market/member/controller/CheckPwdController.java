@@ -26,7 +26,7 @@ public class CheckPwdController extends HttpServlet{
 	
 		if(dto.getId() != null) {
 			req.setAttribute("dto", dto);	
-			req.getRequestDispatcher("/index.jsp?page=/member/changeInfo.jsp").forward(req,resp);	
+			req.getRequestDispatcher("/index.jsp?page=mypage/mypage.jsp&mypage=member/changeInfo.jsp").forward(req,resp);	
 			
 		
 		}else if(dto.getId() == null){
