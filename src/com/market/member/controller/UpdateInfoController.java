@@ -16,6 +16,7 @@ import com.market.member.dto.MemberDto;
 public class UpdateInfoController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		String id = req.getParameter("id");
 		String curPwd = req.getParameter("curPwd");
 		String nextPwd = req.getParameter("nextPwd");
@@ -33,7 +34,7 @@ public class UpdateInfoController extends HttpServlet {
 	
 			MemberDto dto = dao.getDto(id);
 			HttpSession session = req.getSession();
-			session.setAttribute("dto", dto);
+			session.setAttribute("memberDto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
 			
 				
@@ -41,7 +42,7 @@ public class UpdateInfoController extends HttpServlet {
 			dao.updateInfo(id,curPwd,nextPwd,checkPwd,name,email,phone);
 			MemberDto dto = dao.getDto(id);
 			HttpSession session = req.getSession();
-			session.setAttribute("dto", dto);
+			session.setAttribute("memberDto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
 		}
 		

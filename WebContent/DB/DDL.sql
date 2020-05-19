@@ -56,15 +56,15 @@ CREATE TABLE member
 	email varchar2(40),
 	birth varchar2(30),
 	phone varchar2(30),
-	-- 1:³²ÀÚ
-	-- 2:¿©ÀÚ
+	-- 1:ë‚¨ì
+	-- 2:ì—¬ì
 	gender number,
 	addr varchar2(100),
 	reg_date date,
 	point number,
-	-- y:»èÁ¦
-	-- n:¹Ì»èÁ¦
 	del_yn varchar2(2),
+	-- y:ì‚­ì œ
+	-- n:ë¯¸ì‚­ì œ
 	del_date date,
 	PRIMARY KEY (num)
 );
@@ -75,15 +75,15 @@ CREATE TABLE orders
 	onum number NOT NULL,
 	num number NOT NULL,
 	opnum number,
-	-- 1:»óÇ° ÁØºñ
-	-- 2:¹è¼Û ÁØºñ
-	-- 3:¹è¼Û Áß
-	-- 4:¹è¼Û ¿Ï·á
-	-- 5:±¸¸Å ¿Ï·á
-	-- 6:ÁÖ¹® Ãë¼Ò
+	-- 1:ìƒí’ˆ ì¤€ë¹„
+	-- 2:ë°°ì†¡ ì¤€ë¹„
+	-- 3:ë°°ì†¡ ì¤‘
+	-- 4:ë°°ì†¡ ì™„ë£Œ
+	-- 5:êµ¬ë§¤ ì™„ë£Œ
+	-- 6:ì£¼ë¬¸ ì·¨ì†Œ
 	status number,
-	-- 1:¹Ì°áÁ¦
-	-- 2:°áÁ¦
+	-- 1:ë¯¸ê²°ì œ
+	-- 2:ê²°ì œ
 	pay_yn number,
 	reg_date date,
 	end_date date,
@@ -91,8 +91,8 @@ CREATE TABLE orders
 	price number,
 	use_point number,
 	sale_price number,
-	-- Ä«µå °áÁ¦
-	-- ¹«ÅëÀå
+	-- ì¹´ë“œ ê²°ì œ
+	-- ë¬´í†µì¥
 	pay_way number,
 	addr varchar2(100),
 	PRIMARY KEY (onum)
@@ -284,24 +284,19 @@ ALTER TABLE sale
 	REFERENCES product (pnum)
 ;
 
-
-
 /* Comments */
 
-COMMENT ON COLUMN member.gender IS '1:³²ÀÚ
-2:¿©ÀÚ';
-COMMENT ON COLUMN member.del_yn IS 'y:»èÁ¦
-n:¹Ì»èÁ¦';
-COMMENT ON COLUMN orders.status IS '1:»óÇ° ÁØºñ
-2:¹è¼Û ÁØºñ
-3:¹è¼Û Áß
-4:¹è¼Û ¿Ï·á
-5:±¸¸Å ¿Ï·á
-6:ÁÖ¹® Ãë¼Ò';
-COMMENT ON COLUMN orders.pay_yn IS '1:¹Ì°áÁ¦
-2:°áÁ¦';
-COMMENT ON COLUMN orders.pay_way IS 'Ä«µå °áÁ¦
-¹«ÅëÀå';
-
-
-
+COMMENT ON COLUMN member.gender IS '1:ë‚¨ì
+2:ì—¬ì';
+COMMENT ON COLUMN member.del_yn IS 'y:ì‚­ì œ
+n:ë¯¸ì‚­ì œ';
+COMMENT ON COLUMN orders.status IS '1:ìƒí’ˆ ì¤€ë¹„
+2:ë°°ì†¡ ì¤€ë¹„
+3:ë°°ì†¡ ì¤‘
+4:ë°°ì†¡ ì™„ë£Œ
+5:êµ¬ë§¤ ì™„ë£Œ
+6:ì£¼ë¬¸ ì·¨ì†Œ';
+COMMENT ON COLUMN orders.pay_yn IS '1:ë¯¸ê²°ì œ
+2:ê²°ì œ';
+COMMENT ON COLUMN orders.pay_way IS 'ì¹´ë“œ ê²°ì œ
+ë¬´í†µì¥';
