@@ -27,6 +27,3 @@ CREATE SEQUENCE seq_product_pnum;
 
 DROP SEQUENCE seq_sale_snum;
 CREATE SEQUENCE seq_sale_snum;
-
-DROP SEQUENCE seq_qna_qnum;
-CREATE SEQUENCE seq_qna_qnum;

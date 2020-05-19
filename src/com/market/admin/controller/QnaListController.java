@@ -21,8 +21,17 @@ import com.market.admin.dto.QnaAdminDto;
 public class QnaListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String kind = req.getParameter("kind");
+		if (kind == null) {
+			kind = "";
+		}
+		String word = req.getParameter("word");
+		if (word == null) {
+			word = "";
+		}
+
 		QnaAdminDao dao = QnaAdminDao.getInstance();
-		ArrayList<QnaAdminDto> qnaList = dao.selQnaList();
+		ArrayList<QnaAdminDto> qnaList = dao.selQnaList(kind, word);
 
 		JSONArray jarr = new JSONArray();
 		for (QnaAdminDto dto : qnaList) {
