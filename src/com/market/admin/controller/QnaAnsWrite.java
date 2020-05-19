@@ -2,7 +2,6 @@ package com.market.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,7 @@ import org.json.JSONObject;
 
 import com.market.admin.dao.QnaAdminDao;
 import com.market.member.dto.MemberDto;
-import com.market.qna.dao.QnaDao;
+import com.market.qna.dto.QnaDto;
 
 @WebServlet("/admin/qnaAnsWrite.do")
 public class QnaAnsWrite extends HttpServlet {
@@ -35,7 +34,7 @@ public class QnaAnsWrite extends HttpServlet {
 		String content = req.getParameter("content");
 		int ref = qnum;
 		
-		int n = dao.insAns(new QnaDto(pnum, num, qnum, id, name, title, content, ref, null, "n"));
+		int n = dao.insAns(new QnaDto(pnum, num, qnum, id, name, title, content, ref, null, "N", "N"));
 
 		JSONObject json = new JSONObject();
 		json.put("n", n);

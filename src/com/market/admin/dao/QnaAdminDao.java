@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.market.admin.dto.QnaAdminDto;
 import com.market.db.JDBCUtil;
+import com.market.qna.dto.QnaDto;
 
 public class QnaAdminDao {
 	public static QnaAdminDao instance = new QnaAdminDao();
@@ -63,14 +64,25 @@ public class QnaAdminDao {
 		}
 	}
 
-	public int insAns(String title, String content) {
+	public int insAns(QnaDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into qna values()";
+			String sql = "insert into qna(?,?,?,?,?,?,?,?,sysdate,'N','N')";
 			pstmt = con.prepareStatement(sql);
-			
+//			public QnaDto(int pnum, int num, int qnum, String id, String name, String title, String content, int ref,
+//					Date reg_date, String del_yn, String locker) {
+			pstmt.setInt(1, dto.getPnum());
+			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, dto.getQnum());
+			pstmt.setString(4, dto.getId());
+			pstmt.setString(5, dto.getName());
+			pstmt.setString(6, dto.getTitle());
+			pstmt.setString(7, dto.getContent());
+			pstmt.setInt(8, dto.getRef());
+			pstmt.setString(9, x);
+			pstmt.setString(10, x);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
