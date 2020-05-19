@@ -4,6 +4,16 @@
 table, th, td {
 	text-align: center;
 }
+
+nav {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+.cursor-pointer{
+	cursor:pointer;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -123,12 +133,13 @@ table, th, td {
 			</div>
 		</div>
 	</div>
+	<div id="page-div" class="row"></div>
 </div>
 
 <script>
 	//페이지 로드시에 리스트 불러오기
 	$(document).ready(function() {
-		getMemList("","");		
+		getMemList("","",1);		
 	});
 
 	//검색 버튼 이벤트
@@ -152,28 +163,29 @@ table, th, td {
 		}
 		let type = $("select[name=type]").val();
 		
-		getMemList(word, type);
+		getMemList(word, type, 1);
 	}
 	
 	//전체 검색 버튼 이벤트
 	$("#btnAllSearch").on("click", function(){
-		getMemList("","");
+		getMemList("","",1);
 	});
 	
 	//ajax JSON으로 목록 불러오기
 	let xhr;
-	function getMemList(word, type) {
+	function getMemList(word, type, pageNum) {
 		xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = getMemListOk;
-		xhr.open("get", `${cp}/admin/memList.do?word=${'${word}'}&type=${'${type}'}`, true);
+		xhr.open("get", `${cp}/admin/memList.do?word=${'${word}'}&type=${'${type}'}&pageNum=${'${pageNum}'}`, true);
 		xhr.send();
 	}
 	
 	function getMemListOk() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			removeList();
+			let tbody = $("tbody");
 			let json = JSON.parse(xhr.responseText);
-			for(let j of json){
+			for(let j of json[0]){
 				let row = "<tr>";
 				row += "<td>"+j.num+"</td>";
 				row += "<td>"+j.id+"</td>";
@@ -202,13 +214,49 @@ table, th, td {
 				row += "</td>";
 				row += "<td><button class='btn btn-xs btn-danger glyphicon glyphicon-trash' name='btnDelete'></button></td>";
 				row += "</tr>";
-				$("tbody").append(row);
+				tbody.append(row);
 				
 				//탈퇴 회원이면 색상
 				if(j.del_yn == "Y"){
 					$("tbody tr").last().css("background-color", "#F08080");
 				}
 			}
+			
+			pageDiv = $("#page-div");
+			pageDiv.empty();
+			
+			let startPageNum = json[1];
+			let endPageNum = json[2];
+			let pageNum = json[3];
+			let pageCount = json[4];
+			
+			let row = "<nav>";
+			row += "<ul class='pagination'>";
+			
+			if(startPageNum != 1){
+				row += "<li>";
+				row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+				row += "<span aria-hidden='true'>&laquo</span>";
+				row += "</a>";
+				row += "</li>";
+			}
+			
+			for(let i=startPageNum;i<=endPageNum;i++){
+				row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
+			}
+			console.log(pageCount);
+			console.log(endPageNum);
+			if(pageCount > endPageNum){
+				row += "<li>";
+				row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+				row += "<span aria-hidden='true'>&raquo;</span>";
+				row += "</a>";
+				row += "</li>";
+			}
+			
+			row += "</ul>";
+			row += "</nav>";
+			pageDiv.append(row);
 			
 			//삭제 이벤트
 			$("button[name=btnDelete]").click(function() {
@@ -245,6 +293,10 @@ table, th, td {
 		}
 	}
 	
+	function pageMove(page){
+		getMemList("","",page);
+	}
+	
 	//탈퇴//
 	function memDelete(num){
 		let result = confirm("선택하신 회원을 삭제하시겠습니까?");
@@ -257,7 +309,7 @@ table, th, td {
 		           success : function(data) {
 		        	   if(data.n > 0){
 		        		   alert("탈퇴 처리 완료");
-		        		   getMemList("","");
+		        		   getMemList("","",1);
 		        	   }else{
 		        		   location = `${cp}/error.do`;
 		        	   }

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import com.market.member.dao.MemberDao;
 import com.market.member.dto.MemberDto;
+import com.market.qna.dao.QnaDao;
 
 @WebServlet("/admin/memList.do")
 public class MemListController extends HttpServlet{
@@ -35,10 +36,15 @@ public class MemListController extends HttpServlet{
 		String type = req.getParameter("type");
 		MemberDao dao = MemberDao.getInstance();
 		ArrayList<MemberDto> memList = dao.selSearchList(startRow, endRow, word, type);
+
+		int pageCount = (int) Math.ceil(dao.selMemCount() / PAGE_BLOCK);
+		int startPageNum = (int) (Math.floor((pageNum - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1);
+		int endPageNum = (int) (startPageNum + (PAGE_BLOCK - 1));
+		if (pageCount < endPageNum) {
+			endPageNum = pageCount;
+		}
 		
-		
-		
-		req.setAttribute("memList", memList);
+		JSONArray jsonArr = new JSONArray();
 		JSONArray jarr = new JSONArray();
 		for(MemberDto dto : memList) {
 			JSONObject json = new JSONObject();
@@ -58,8 +64,14 @@ public class MemListController extends HttpServlet{
 			json.put("del_date",dto.getDel_date());
 			jarr.put(json);
 		}
+		
+		jsonArr.put(jarr);
+		jsonArr.put(startPageNum);
+		jsonArr.put(endPageNum);
+		jsonArr.put(pageNum);
+		jsonArr.put(pageCount);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(jarr);
+		pw.print(jsonArr);
 	}
 }

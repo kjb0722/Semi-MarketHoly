@@ -457,9 +457,9 @@ public class MemberDao {
 			con = JDBCUtil.getConn();
 			String sql = "";
 			if (word.equals("")) {
-				sql = "select * from member";
+				sql = "select * from (select a.*,rownum rnum from(select * from member order by num desc)a) where rnum >= "+startRow+" and rnum <= "+endRow;
 			} else {
-				sql = "select * from member where " + type + " like '%" + word + "%'";
+				sql = "select * from (select a.*,rownum rnum from(select * from member where "+ type +" like '%"+word+"%' order by num desc)a) where rnum >= "+startRow+" and rnum <= "+endRow;
 			}
 			
 			pstmt = con.prepareStatement(sql);
@@ -527,6 +527,24 @@ public class MemberDao {
 			return -1;
 		}finally {
 			JDBCUtil.close(null, pstmt, con);
+		}
+	}
+	public int selMemCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select nvl(count(*),0) cnt from member";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
 }
