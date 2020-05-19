@@ -132,7 +132,19 @@ table, th, td {
 	});
 
 	//검색 버튼 이벤트
-	$("#btnSearch").on("click", function() {
+	$("#btnSearch").click(function() {
+		memSearch();
+	});
+
+	//검색명 엔터 이벤트
+	$("#word").keydown(function(e) {
+		if(e.keyCode == 13){
+			memSearch();
+		}
+	});
+	
+	//검색
+	function memSearch(){
 		let word = $("#word").val();
 		if(word == ""){
 			alert("검색명을 입력하세요.");
@@ -141,7 +153,7 @@ table, th, td {
 		let type = $("select[name=type]").val();
 		
 		getMemList(word, type);
-	});
+	}
 	
 	//전체 검색 버튼 이벤트
 	$("#btnAllSearch").on("click", function(){

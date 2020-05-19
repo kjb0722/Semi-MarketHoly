@@ -448,7 +448,7 @@ public class MemberDao {
 		}
 	}
 	
-	public ArrayList<MemberDto> selSearchList(String word, String type) {
+	public ArrayList<MemberDto> selSearchList(int startRow, int endRow, String word, String type) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

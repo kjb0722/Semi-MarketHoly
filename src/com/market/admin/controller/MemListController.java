@@ -21,10 +21,23 @@ import com.market.member.dto.MemberDto;
 public class MemListController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		final int PAGE_CNT = 10; // 글 목록 개수
+		final double PAGE_BLOCK = 10.0; // 페이지 블록
+		String spageNum = req.getParameter("pageNum");
+		int pageNum = 1;
+		if (spageNum != null) {
+			pageNum = Integer.parseInt(spageNum);
+		}
+		int startRow = (pageNum - 1) * PAGE_CNT + 1;
+		int endRow = (startRow + PAGE_CNT) - 1;
+		
 		String word = req.getParameter("word");
 		String type = req.getParameter("type");
 		MemberDao dao = MemberDao.getInstance();
-		ArrayList<MemberDto> memList = dao.selSearchList(word, type);
+		ArrayList<MemberDto> memList = dao.selSearchList(startRow, endRow, word, type);
+		
+		
+		
 		req.setAttribute("memList", memList);
 		JSONArray jarr = new JSONArray();
 		for(MemberDto dto : memList) {
