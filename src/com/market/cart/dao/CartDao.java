@@ -11,10 +11,6 @@ import com.market.db.JDBCUtil;
 
 public class CartDao {
 	private static CartDao instance = new CartDao();
-
-	private CartDao() {
-	}
-
 	public static CartDao getInstance() {
 		return instance;
 	}
@@ -49,7 +45,7 @@ public class CartDao {
 			con = JDBCUtil.getConn();
 			pstmt = con.prepareStatement(
 					"select id,c.pnum,name,EA,price,thumb_save,"
-					+ "(select sale.percent  from sale where p.pnum=pnum) pp"
+					+ "(select sale.percent from sale where p.pnum=pnum) pp,cartnum"
 					+ " from cart c , product p where c.pnum=p.pnum and id=?"
 					
 					);
@@ -64,8 +60,9 @@ public class CartDao {
 					int price = rs.getInt("price");
 					int pp = rs.getInt("pp");
 					String thumb_save=rs.getString("thumb_save");
+					int cartnum = rs.getInt("cartnum");
 					
-					list.add(new CartDto(id,pnum,name,EA,price,pp,thumb_save));
+					list.add(new CartDto(id,pnum,name,EA,price,pp,thumb_save,cartnum));
 			}
 			return list;
 			
@@ -77,6 +74,29 @@ public class CartDao {
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
+	}
+	
+		public int deletecart(int cartnum) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			int n=0;
+			String sql="delete from cart where cartnum=?";
+			try {
+				
+				con = JDBCUtil.getConn();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1,cartnum);
+				n=pstmt.executeUpdate();
+				
+				return n;
+			}catch (SQLException e) {
+				// TODO: handle exception
+				return -1;
+			}finally {
+				JDBCUtil.close(null, pstmt, con);
+			}
+		
+		
 	}
 
 }

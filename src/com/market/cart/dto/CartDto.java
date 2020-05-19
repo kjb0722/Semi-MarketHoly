@@ -9,8 +9,15 @@ public class CartDto {
 	private int price;
 	private int percent;
 	private String thumb_save;
+	private int cartnum;
 	
 	
+	public int getCartnum() {
+		return cartnum;
+	}
+	public void setCartnum(int cartnum) {
+		this.cartnum = cartnum;
+	}
 	public CartDto() {
 		
 	}
@@ -20,7 +27,7 @@ public class CartDto {
 	public void setThumb_save(String thumb_save) {
 		this.thumb_save = thumb_save;
 	}
-	public CartDto(String id, int pnum, String name, int EA, int price, int percent,String thumb_save) {
+	public CartDto(String id, int pnum, String name, int EA, int price, int percent,String thumb_save,int cartnum) {
 		super();
 		this.id = id;
 		this.pnum = pnum;
@@ -29,6 +36,7 @@ public class CartDto {
 		this.price = price;
 		this.percent = percent;
 		this.thumb_save = thumb_save;
+		this.cartnum=cartnum;
 	}
 	public String getId() {
 		return id;
@@ -65,6 +73,11 @@ public class CartDto {
 	}
 	public void setPercent(int percent) {
 		this.percent = percent;
+	}
+	@Override
+	public String toString() {
+		return "CartDto [id=" + id + ", pnum=" + pnum + ", name=" + name + ", EA=" + EA + ", price=" + price
+				+ ", percent=" + percent + ", thumb_save=" + thumb_save + ", cartnum=" + cartnum + "]";
 	}
 	
 	

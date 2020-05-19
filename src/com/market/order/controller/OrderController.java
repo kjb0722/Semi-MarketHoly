@@ -17,6 +17,8 @@ public class OrderController extends HttpServlet{
 //주소,이름,휴대폰,이메일,적립금,       상품정보 리스트(장바구니에 담긴)
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			System.out.println("11");
+			System.out.println(req.getParameter("test"));
 			String id=req.getParameter("id");
 
 			 
@@ -26,7 +28,7 @@ public class OrderController extends HttpServlet{
 
 			CartDao cdao=CartDao.getInstance();
 			ArrayList<CartDto> cart=cdao.getcart(id);
-	
+			
 		
 			//상품정보 리스트(장바구니에 담긴)거도 가져와야합니다.
 			req.setAttribute("cart", cart);

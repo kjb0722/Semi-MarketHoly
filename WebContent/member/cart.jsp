@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<link rel="stylesheet"href="/Semi-MarketHoly/bootstrap/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="/Semi-MarketHoly/bootstrap/js/bootstrap.min.js"></script>
 <div class="container" style='width: 1000px; text-align: center;'>
 
 	<hr style="border: solid 1px purple;">
@@ -25,18 +22,18 @@
 			</tr>
 
 			
-			<c:forEach var="cart" items="${requestScope.cart }">
+			<c:forEach var="cart1" items="${requestScope.cart }">
 			<tr>
-				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td><img src="${cp }/img/${cart.thumb_save}" width="100px" height="100px">
-				<td>${cart.name}</td>
-				<td>${cart.EA}</td>
-				<td>${cart.price}</td>
+				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}"></td>
+				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px" height="100px">
+				<td>${cart1.name}</td>
+				<td>${cart1.EA}</td>
+				<td>${cart1.price}</td>
 			</tr>
 			</c:forEach>
 		</table>
 		<hr style="border: solid 1px purple;">
-		<button type="submit" class="btn btn-info">선택삭제</button>
+		<button type="submit" class="btn btn-info" id="selectdel" >선택삭제</button>
 		<button type="submit" class="btn btn-info">전체삭제</button>
 		<hr style="border: solid 1px purple;">
 	</div>
@@ -47,8 +44,10 @@
  .a{border: solid 1px gray;width: 200px;height: 200px;text-align: center;}
  .b{float:left;}
 </style>
+<form action="${cp}/order.do" method="get">
 	<div id="outbox" class="container" style="padding-left: 110px;padding-top: 100px" >
-		<c:forEach var="cart1" items="${requestScope.cart1 }">
+		<c:forEach var="cart1" items="${requestScope.cart }">
+			<input type="text" name="test" value="${cart1.price }">
 		<div id="box1" class="a b">
 			<span>상품금액</span><br>
 			<span id="s">${cart1.price}원</span>
@@ -59,7 +58,7 @@
 		
 		<div id="box2" class="a b">
 			<span>상품할인금액 </span><br>
-			<span id="s">${cart1.price*cart1.pp}원</span><!-- cart.percent -->
+			<span id="s">원</span><!-- cart.percent -->
 		</div>
 				<div class="mini b">
 				<span id="minimini">+</span>
@@ -76,20 +75,58 @@
 	
 		<div id="box3" class="a b">
 			<span>상품금액</span><br>
-			<span id="s">${cart1.price-(cart1.price*cart1.pp)}원</span>
 		</div>
 			</c:forEach>
+		
+		<button type="submit" class="btn btn-info"></button>
 	</div>	
+</form>
 
 <script>
 	function allcheck() {
 		var allchecked = document.getElementById("allchecked");
 		var undercheck = document.getElementsByName("undercheck");
-	
+
 		for (var i = 0; i < undercheck.length; i++) {
 			undercheck[i].checked = allchecked.checked;
+		}
+	
 	}
-}
 
+	var selectdel=document.getElementById("selectdel");
+	selectdel.onclick=function(e){
+		e.preventDefault();
+		var undercheck = document.getElementsByName("undercheck");
+		var param="";
+		var cnt=0;
+		for (var i = 0; i < undercheck.length; i++) {
+			if(undercheck[i].checked==true && cnt==0)
+			   param +="undercheck="+ undercheck[i].value ;
+			   
+			else if(undercheck[i].checked==true  && cnt!=0){
+				param +="&undercheck="+ undercheck[i].value ;
+			}
+			if(undercheck[i].checked==true)cnt++;
+	     }
+   
+		alert(param)
+		xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4 && xhr.status==200){
+				let json = JSON.parse(xhr.responseText);
+				if(json.n > 0){
+					alert("삭제성공");
+					location ='${cp}/cart.jsp';
+				}else{
+					//location = `${cp}/error.do`;
+				}
+			}
+		};
+
+	xhr.open('get','${cp}/cartdel.do?'+ param,true);
+	xhr.send();
+}	
+
+	
 
 </script>
