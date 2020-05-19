@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.market.cart.dto.CartDto;
 import com.market.db.JDBCUtil;
 
@@ -37,12 +39,12 @@ public class CartDao {
 		}
 	}
 
-	public CartDto getcart(String id) {
+	public ArrayList<CartDto> getcart(String id) {
 		// 회원 아이디,상품번호,상품이름(name),개수,상품금액,상품 할인률,상품사진
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		CartDto dto=null;
+		ArrayList<CartDto> list=new ArrayList<CartDto>();
 		try {
 			con = JDBCUtil.getConn();
 			pstmt = con.prepareStatement(
@@ -54,16 +56,18 @@ public class CartDao {
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				dto = new CartDto(
-					rs.getString("id"),
-					rs.getInt("pnum"),
-					rs.getString("name"),
-					rs.getInt("EA"),
-					rs.getInt("price"), 
-					rs.getInt("pp"),
-					rs.getString("thumb_save"));
+					
+					id=rs.getString("id");
+					int pnum=rs.getInt("pnum");
+					String name=rs.getString("name");
+					int EA = rs.getInt("EA");
+					int price = rs.getInt("price");
+					int pp = rs.getInt("pp");
+					String thumb_save=rs.getString("thumb_save");
+					
+					list.add(new CartDto(id,pnum,name,EA,price,pp,thumb_save));
 			}
-			return dto;
+			return list;
 			
 
 		} catch (SQLException se) {

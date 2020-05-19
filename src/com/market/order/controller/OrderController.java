@@ -25,7 +25,7 @@ public class OrderController extends HttpServlet{
 		
 
 			CartDao cdao=CartDao.getInstance();
-			CartDto cart=cdao.getcart(id);
+			ArrayList<CartDto> cart=cdao.getcart(id);
 	
 		
 			//상품정보 리스트(장바구니에 담긴)거도 가져와야합니다.
