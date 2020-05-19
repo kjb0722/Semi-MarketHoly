@@ -11,7 +11,9 @@
 		<jsp:include page="/mypage/header.jsp"/>
 	</div>
 	<div id ="footer">
-		<jsp:include page="/mypage/header.jsp"/>
+		<jsp:include page=#/>
+		<!-- resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/findPwd.jsp");  -->
+		
 	</div>
 </body>
 </html>
