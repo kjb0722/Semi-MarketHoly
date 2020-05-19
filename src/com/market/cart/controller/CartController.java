@@ -25,7 +25,7 @@ public class CartController extends HttpServlet{
 			CartDao dao=CartDao.getInstance();
 			//회원정보 보낸거.
 			ArrayList<CartDto> cart=dao.getcart(id);
-		
+			
 			System.out.println(cart);
 			req.setAttribute("cart", cart);
 			req.getRequestDispatcher("/index.jsp?page=member/cart.jsp").forward(req, resp);

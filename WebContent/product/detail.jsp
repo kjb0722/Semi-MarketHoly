@@ -44,7 +44,7 @@
 				alert("장바구니 담기 성공");
 				location =`${cp}/cart.do`;
 			}else{
-				//location = `${cp}/error.do`;
+				location = `${cp}/error.do`;
 			}
 		}
 	};

@@ -6,8 +6,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	//로그인한 아이디도 세션에있는거 가져오기(로그인 안되어있을때 장바구니에 담으면....?)
-//재고수량 0인 상품 품절 표시
-//장바구니 버튼 누르면 cart.do로 이동해서 pnum,수량,세션에 있는 아이디 넘겨주기(로그인 안되어있으면 login.do로)
+	//재고수량 0인 상품 품절 표시
+	//장바구니 버튼 누르면 cart.do로 이동해서 pnum,수량,세션에 있는 아이디 넘겨주기(로그인 안되어있으면 login.do로)
 %>
 <style>
 .pagination {
@@ -46,22 +46,20 @@
 		<ul>
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
-					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-						<div style="position: relative;">
-							<img src="${cp }/img/${pro.thumb_save}" width="300px"
-								height="400px">
-							<div style="position: absolute; top: 340px; left: 210px">
-								
-								<a href="${cp }/member/cartAdd.do?pnum=${pro.pnum}&id=${id}&EA=1">
-								<button type="button" id="incart">
-									<img src="../img/btn-cart.png" alt="담기" width="50px"
-										height="50px">
-								</button>
-								</a>
-								
-							</div>
+					<div style="position: relative;">
+						<img src="${cp }/img/${pro.thumb_save}" width="300px"
+							height="400px">
+						<div style="position: absolute; top: 340px; left: 210px">
+							<button data-toggle="modal" data-target="#cartmodal"
+								data-name="${pro.name}" data-price="${pro.price }"
+								class="btn btn-danger">
+								<img src="../img/btn-cart.png" alt="담기" width="50px"
+									height="50px">
+							</button>
 						</div>
+					</div>
 
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
 						<div>
 							<h3>${pro.name}<br>
 							</h3>
@@ -82,12 +80,11 @@
 <div>
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><c:if test="${pageNum>1}">
-				<li class="page-item">
-				<a
+				<li class="page-item"><a
 					href="${cp }/product/list.do?pageNum=${pageNum-1}&cnum=${cnum }&type=${type }">
-					&laquo; </a>
+						&laquo; </a>
 			</c:if></li>
-			
+
 		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 			<c:choose>
 				<c:when test="${i==pageNum }">
@@ -104,16 +101,65 @@
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		
+
 		<c:if test="${pageCount>endPageNum}">
-				<li class="page-item">
-			<a
-					href="${cp }/product/list.do?pageNum=${pageNum+1}&cnum=${cnum }&type=${type }">
-					&raquo;</a>
-					</li>
+			<li class="page-item"><a
+				href="${cp }/product/list.do?pageNum=${pageNum+1}&cnum=${cnum }&type=${type }">
+					&raquo;</a></li>
 		</c:if>
 	</ul>
 </div>
 
+<!-- 팝업창 -->
+<div class="modal fade" id="cartmodal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">상품선택</h4>
+			</div>
+			<div class="modal-body">
+				상품명 ${ name}
+				<hr style="border: solid 1px purple;">
+				가격 ${pro.price }
+
+				<button type="button" class="btn btn-default">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+				<input type="text" id="EA">
+				<button type="button" class="btn btn-default">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+				합계 원 구매시 ㅇㅇㅇ원 적립
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<a href="${cp }/member/cartAdd.do?pnum=${pro.pnum}&id=${id}&EA=1">
+					<button type="button" class="btn btn-primary">장바구니 담기</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 </body>
+<script>
+	// 부모창에서 모달로 데이터넘기기
+	var name="";
+	var price="";
+    $(document).ready(function() {     
+        $('#cartModal').on('show.bs.modal', function(event) {     
+        	console.log("카트");
+        	name = $(event.relatedTarget).data('name');
+            price = $(event.relatedTarget).data('prsice');
+        
+        });
+    });
+
+</script>
+
 </html>
