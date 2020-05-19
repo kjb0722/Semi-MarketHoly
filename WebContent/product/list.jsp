@@ -51,8 +51,7 @@
 							height="400px">
 						<div style="position: absolute; top: 340px; left: 210px">
 							<button data-toggle="modal" data-target="#cartmodal"
-								data-name="${pro.name}" data-price="${pro.price }"
-								class="btn btn-danger">
+								class="btn btn-danger" onclick="getProd('${pro.name}',${pro.price })">
 								<img src="../img/btn-cart.png" alt="담기" width="50px"
 									height="50px">
 							</button>
@@ -123,18 +122,20 @@
 				<h4 class="modal-title" id="myModalLabel">상품선택</h4>
 			</div>
 			<div class="modal-body">
-				상품명 ${ name}
+				<label id="name"></label><br>
 				<hr style="border: solid 1px purple;">
-				가격 ${pro.price }
-
-				<button type="button" class="btn btn-default">
+				<label id="price"></label>원
+				<button type="button" class="btn btn-default" onclick="minus()">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 				</button>
-				<input type="text" id="EA">
-				<button type="button" class="btn btn-default">
+				<label id="EA">1</label>
+				<button type="button" class="btn btn-default" onclick="plus()">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 				</button>
-				합계 원 구매시 ㅇㅇㅇ원 적립
+				<br>
+				합계  <label id="sum"></label>원 
+				 <br>
+				구매시 ㅇㅇㅇ원 적립
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -149,16 +150,28 @@
 </body>
 <script>
 	// 부모창에서 모달로 데이터넘기기
-	var name="";
-	var price="";
-    $(document).ready(function() {     
-        $('#cartModal').on('show.bs.modal', function(event) {     
-        	console.log("카트");
-        	name = $(event.relatedTarget).data('name');
-            price = $(event.relatedTarget).data('prsice');
-        
-        });
-    });
+	function getProd(name,price) {		
+		var pname=document.getElementById("name");
+		var pprice=document.getElementById("price");
+		var sum=document.getElementById("sum");
+		pname.innerHTML = name;
+		pprice.innerHTML = price;
+		sum.innerHTML =price*EA;          
+		
+	}
+	function plus() {
+		var EA=document.getElementById("EA");
+		EA.innerHTML =parseInt(EA.innerHTML)+1;
+	}
+	function minus() {
+		
+		var EA=document.getElementById("EA");
+		if(EA.innerHTML<=0){
+			alert("최소수량입니다");
+		}else{
+		EA.innerHTML =parseInt(EA.innerHTML)-1;
+		}
+	}
 
 </script>
 
