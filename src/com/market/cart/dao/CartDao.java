@@ -60,7 +60,7 @@ public class CartDao {
 					rs.getString("name"),
 					rs.getInt("EA"),
 					rs.getInt("price"), 
-					rs.getInt("percent"),
+					rs.getInt("pp"),
 					rs.getString("thumb_save"));
 			}
 			return dto;
