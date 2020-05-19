@@ -33,7 +33,7 @@
 <script>
 	var incart=document.getElementById("incart");
 	incart.onclick=function(){
-	var id='${sessionScope.dto.id}';
+	var id='${sessionScope.memberDto.id}';
 	var pnum=${param.pnum};
 	var EA=document.getElementById("EA").value;
 	xhr=new XMLHttpRequest();
@@ -44,11 +44,11 @@
 				alert("장바구니 담기 성공");
 				location =`${cp}/cart.do`;
 			}else{
-				location = `${cp}/error.do`;
+				//location = `${cp}/error.do`;
 			}
 		}
 	};
-	
+	console.log(id);
 	xhr.open('get','${cp}/member/cartAdd.do?id='+id+'&pnum='+pnum+'&EA='+EA,true);
 	xhr.send();
 }	

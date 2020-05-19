@@ -104,9 +104,9 @@
 		<h1 style="text-align: center;">결제수단</h1>
 		<hr style="border: solid 1px purple;">
 
-		카드결제<input type="radio" name="chpay" value="card" onclick="">
+		카드결제<input type="radio" name="chpay" value="card" >
 		<br> 
-		무통장<input type="radio" name="chpay" value="nocard" onclick="">
+		무통장<input type="radio" name="chpay" value="nocard" >
 
 
 	</div>
