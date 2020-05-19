@@ -45,9 +45,11 @@ public class AdminFilter implements Filter {
 		HttpSession session = req.getSession();
 		if (session != null) {
 			MemberDto dto = (MemberDto) session.getAttribute("memberDto");
-			int rating = dto.getRating(); 
-			if(rating == 99) {
-				admin = true;
+			if(dto != null) {
+				int rating = dto.getRating(); 
+				if(rating == 99) {
+					admin = true;
+				}				
 			}
 		}
 		if (admin) {

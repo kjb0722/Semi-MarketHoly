@@ -10,7 +10,9 @@ public class QnaAdminDto {
 	private String name;
 	private Date reg_date;
 	private String content;
-	public QnaAdminDto(int qnum, String cname, String pname, String title, String name, Date reg_date, String content) {
+	private int pnum;
+	public QnaAdminDto(int qnum, String cname, String pname, String title, String name, Date reg_date, String content,
+			int pnum) {
 		this.qnum = qnum;
 		this.cname = cname;
 		this.pname = pname;
@@ -18,6 +20,7 @@ public class QnaAdminDto {
 		this.name = name;
 		this.reg_date = reg_date;
 		this.content = content;
+		this.pnum = pnum;
 	}
 	public int getQnum() {
 		return qnum;
@@ -61,5 +64,12 @@ public class QnaAdminDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getPnum() {
+		return pnum;
+	}
+	public void setPnum(int pnum) {
+		this.pnum = pnum;
+	}
+
 
 }

@@ -92,7 +92,7 @@
 				</form>
 			</div>
 		</nav>
-		<c:if test="${sessionScope.dto.rating == 99 }">
+		<c:if test="${sessionScope.memberDto.rating == 99 }">
 			<div class="container">
 				<jsp:include page="/admin/admin.jsp"></jsp:include>
 			</div>

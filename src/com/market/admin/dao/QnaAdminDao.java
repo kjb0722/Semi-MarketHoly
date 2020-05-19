@@ -51,7 +51,8 @@ public class QnaAdminDao {
 				String name = rs.getString("name");
 				Date reg_date = rs.getDate("reg_date");
 				String content = rs.getString("content");
-				list.add(new QnaAdminDto(qnum, cname, pname, title, name, reg_date, content));
+				int pnum = rs.getInt("pnum");
+				list.add(new QnaAdminDto(qnum, cname, pname, title, name, reg_date, content, pnum));
 			}
 			return list;
 		} catch (SQLException e) {
@@ -76,6 +77,25 @@ public class QnaAdminDao {
 			return -1;
 		} finally {
 			JDBCUtil.close(null, pstmt, con);
+		}
+	}
+
+	public int getMaxNum() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select nvl(max(qnum),0) maxnum from qna";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("maxnum");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
 }

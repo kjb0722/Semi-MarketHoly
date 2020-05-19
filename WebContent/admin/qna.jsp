@@ -4,6 +4,9 @@
 table, th, td {
 	text-align: center;
 }
+.hidden{
+	display: none;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -36,7 +39,8 @@ table, th, td {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
-						<th style="display: none;">내용</th>
+						<th class="hidden">내용</th>
+						<th class="hidden">상품 번호</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,6 +59,7 @@ table, th, td {
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-12 form-group">
+							<input type="hidden" id="quePnum">
 							<label class="label label-success">질문 내용</label>
 							<textarea id="queContent" class="form-control" rows="10" cols="100" style="resize: none;" disabled="disabled"></textarea>
 						</div>
@@ -86,14 +91,16 @@ table, th, td {
 		ansWrite();
 	});
 	function ansWrite(){
-		let title = $("ansTitle").val();
-		let content = $("ansContent").val();
+		let title = $("#ansTitle").val();
+		let content = $("#ansContent").val();
+		let pnum = $("#quePnum").val();
 		jQuery.ajax({
 			dataType:"JSON",
 			url:`${cp}/admin/qnaAnsWrite.do`,
 			method:"get",
 			data:{title:title,
-				content:content},
+				content:content,
+				pnum:pnum},
 			success:function(data){
 				if(data.n > 0){
 					alert("답변 등록 완료");	
@@ -140,7 +147,8 @@ table, th, td {
 					row += "<td>"+dto.title+"</td>";
 					row += "<td>"+dto.writer+"</td>";
 					row += "<td>"+dto.reg_date+"</td>";
-					row += "<td style='display: none;'>"+dto.content+"</td>";
+					row += "<td class='hidden'>"+dto.content+"</td>";
+					row += "<td class='hidden'>"+dto.pnum+"</td>";
 					row += "</tr>";
 					tbody.append(row);
 				}
@@ -148,6 +156,7 @@ table, th, td {
 				//글 선택 이벤트//
 				$("#qna-table>tbody>tr").click(function() {
 					$("#queContent").val($(this).children().eq(6).text());
+					$("#quePnum").val($(this).children().eq(7).text());
 					$("#ansTitle").val("");
 					$("#ansContent").val("");
 				});

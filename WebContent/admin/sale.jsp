@@ -113,8 +113,7 @@ input[type="checkbox"] {
 <script type="text/javascript">
 	$(document).ready(function(){
 		//최초 페이지 이동시 이벤트 실행
-		$("#sale-cat").click();		
-		$("#cat").change();
+		$("#sale-cat").click();
 	});
 	
 	//할인 해제
@@ -430,11 +429,6 @@ input[type="checkbox"] {
 				table.empty();
 				for(let dto of data){
 					let row = "<tr class='align-middle'>";
-					/* if(dto.onSaleName == -1){						
-						row += "<td><input type='checkbox' name='prod-chk'></td>";
-					}else{
-						row += "<td><input type='checkbox' name='prod-chk' disabled='disabled'></td>";
-					} */
 					row += "<td><input type='checkbox' name='prod-chk'></td>";
 					row += "<td>"+dto.pnum+"</td>";
 					row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
@@ -448,13 +442,20 @@ input[type="checkbox"] {
 					}
 					row += "</tr>";
 					table.append(row);
+					
+					if($("#table-prod>tbody>tr:last").children().eq(6).text() != ""){
+						$("#table-prod>tbody>tr:last").css("background-color","rgb(255,204,153)");
+					}
 				}
 				
+				//세로 중앙 정렬
 				$("#table-prod>tbody>tr>td").css("vertical-align","middle");
 				
+				//썸네일 크기 고정
 				$("#table-prod>tbody>tr>td>img").css("width","200px");
 				$("#table-prod>tbody>tr>td>img").css("height","200px");
 				
+				//'카테고리별 적용', '세부 카테고리별 적용' 체크시 상품 선택 못하도록
 				let saleCat = $("#sale-cat").prop("checked");
 				let saleCatType = $("#sale-catType").prop("checked");
 				if(saleCat == true || saleCatType == true){
