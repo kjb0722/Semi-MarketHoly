@@ -34,10 +34,24 @@
 					<td>${dto.qnum }</td>
 					<c:choose>
 						<c:when test="${dto.locker == 'Y'}">
-							<td>${dto.title } <img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px"></td>
+							<td>	
+								<c:if test="${dto.ref>0 }">
+									<c:forEach var="i" begin="1" end="${dto.ref }">
+									&nbsp;&nbsp;
+									</c:forEach>
+									[re]
+								</c:if>
+							${dto.title } <img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px"></td>
 						</c:when>
 						<c:otherwise>
-							<td>${dto.title } </td>
+							<td>
+							<c:if test="${dto.ref>0 }">
+								<c:forEach var="i" begin="1" end="${dto.ref }">
+								&nbsp;&nbsp;
+								</c:forEach>
+								[re]
+							</c:if>
+							${dto.title } </td>
 						</c:otherwise>
 					</c:choose>
 					<td>${dto.id }</td>

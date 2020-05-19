@@ -78,6 +78,9 @@
 					<li>
 						<a href="#">알뜰쇼핑</a>
 					</li>
+					<li>
+						<a href="${cp }/qna/qnaList.do">인표연습용</a>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
