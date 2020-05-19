@@ -51,7 +51,7 @@
 		<nav class="navbar navbar-default">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="droupdown">
+					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<c:forEach var="cat" items="${applicationScope.catList }">
@@ -80,10 +80,6 @@
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="${cp }/qna/qnaList.do"><b class="glyphicon glyphicon-link"></b>&nbsp;사이트로가기</a>
-						<!--  "http://www.ekolping.co.kr" -->
-					</li>
 					<li>
 						<a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a>
 					</li>

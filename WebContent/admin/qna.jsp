@@ -36,6 +36,7 @@ table, th, td {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
+						<th style="display: none;">내용</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,11 +45,65 @@ table, th, td {
 			</table>
 		</div>
 	</div>
+
+	<div class="modal fade" id="qnaAnswer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title">질문글 답변</h2>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12 form-group">
+							<label class="label label-success">질문 내용</label>
+							<textarea id="queContent" class="form-control" rows="10" cols="100" style="resize: none;" disabled="disabled"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 form-group">
+							<label class="label label-success">제목</label>
+							<input id="ansTitle" type="text" class="form-control" placeholder="제목을 입력하세요" maxlength="30">
+							<label class="label label-success">답변</label>
+							<textarea id="ansContent" class="form-control" rows="10" cols="100" style="resize: none;"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="btnWrite">답변 등록</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
 	$(document).ready(function() {
 		qnaListLoad("","");
 	});
+	
+	//답변 등록//
+	$("#btnWrite").click(function() {
+		ansWrite();
+	});
+	function ansWrite(){
+		let title = $("ansTitle").val();
+		let content = $("ansContent").val();
+		jQuery.ajax({
+			dataType:"JSON",
+			url:`${cp}/admin/qnaAnsWrite.do`,
+			method:"get",
+			data:{title:title,
+				content:content},
+			success:function(data){
+				if(data.n > 0){
+					alert("답변 등록 완료");	
+				}else{
+					location = `${cp}/error.do`;
+				}
+			}
+		});
+	}
+	//답변 등록//
 	
 	//검색 input text 엔터키 이벤트//
 	$("#txtWord").keydown(function(e) {
@@ -78,16 +133,24 @@ table, th, td {
 				tbody = $("#qna-table>tbody");
 				tbody.empty();
 				for(let dto of data){
-					let row = "<tr>";
+					let row = "<tr data-toggle='modal' data-target='#qnaAnswer'>";
 					row += "<td>"+dto.qnum+"</td>";
 					row += "<td>"+dto.cname+"</td>";
 					row += "<td>"+dto.pname+"</td>";
 					row += "<td>"+dto.title+"</td>";
 					row += "<td>"+dto.writer+"</td>";
 					row += "<td>"+dto.reg_date+"</td>";
+					row += "<td style='display: none;'>"+dto.content+"</td>";
 					row += "</tr>";
 					tbody.append(row);
 				}
+				
+				//글 선택 이벤트//
+				$("#qna-table>tbody>tr").click(function() {
+					$("#queContent").val($(this).children().eq(6).text());
+					$("#ansTitle").val("");
+					$("#ansContent").val("");
+				});
 			}
 		});
 	}

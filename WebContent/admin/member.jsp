@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	table, th, td {
-		text-align: center;
-	}
+table, th, td {
+	text-align: center;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -15,10 +14,10 @@
 			<c:forEach var="dto" items="${comList }">
 				<option value="${dto.val }">${dto.name }</option>
 			</c:forEach>
-		</select> <input type="text" class="form-control" id="word"
-			placeholder="검색명을 입력하세요." name="word"> <input type="button"
-			class="btn btn-primary" id="btnSearch" value="검색"> <input
-			type="button" class="btn btn-success" id="btnAllSearch" value="전체 검색">
+		</select>
+		<input type="text" class="form-control" id="word" placeholder="검색명을 입력하세요." name="word">
+		<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
+		<input type="button" class="btn btn-success" id="btnAllSearch" value="전체 검색">
 	</div>
 
 	<div>
@@ -48,8 +47,7 @@
 		</table>
 	</div>
 
-	<div class="modal fade" id="memModify" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="memModify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -61,15 +59,13 @@
 							<h4>
 								<label class="label label-success">회원 번호</label>
 							</h4>
-							<input type="text" class="form-control" id="mNum"
-								disabled="disabled">
+							<input type="text" class="form-control" id="mNum" disabled="disabled">
 						</div>
 						<div class="col-md-4">
 							<h4>
 								<label class="label label-success">아이디</label>
 							</h4>
-							<input type="text" class="form-control" id="mId"
-								disabled="disabled">
+							<input type="text" class="form-control" id="mId" disabled="disabled">
 						</div>
 					</div>
 					<div class="row form-group">
@@ -105,9 +101,9 @@
 							<h4>
 								<label class="label label-success">성별</label>
 							</h4>
-							<input type="radio" id="men" name="gender" value="1"> <label
-								class="form-check-label" for="men">남자</label> <input
-								type="radio" id="women" name="gender" value="2" checked>
+							<input type="radio" id="men" name="gender" value="1">
+							<label class="form-check-label" for="men">남자</label>
+							<input type="radio" id="women" name="gender" value="2" checked>
 							<label class="form-check-label" for="women">여자</label>
 						</div>
 					</div>
