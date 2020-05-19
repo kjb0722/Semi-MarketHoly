@@ -42,6 +42,7 @@ public class CartDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		CartDto dto=null;
 		try {
 			con = JDBCUtil.getConn();
 			pstmt = con.prepareStatement(
@@ -52,7 +53,8 @@ public class CartDao {
 					);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			CartDto dto = new CartDto(
+			while(rs.next()) {
+				dto = new CartDto(
 					rs.getString("id"),
 					rs.getInt("pnum"),
 					rs.getString("name"),
@@ -60,8 +62,9 @@ public class CartDao {
 					rs.getInt("price"), 
 					rs.getInt("percent"),
 					rs.getString("thumb_save"));
-
+			}
 			return dto;
+			
 
 		} catch (SQLException se) {
 			se.printStackTrace();
