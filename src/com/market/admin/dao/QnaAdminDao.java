@@ -66,30 +66,41 @@ public class QnaAdminDao {
 
 	public int insAns(QnaDto dto) {
 		Connection con = null;
+		PreparedStatement pstmt2 = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into qna(?,?,?,?,?,?,?,?,sysdate,'N','N')";
-			pstmt = con.prepareStatement(sql);
-//			public QnaDto(int pnum, int num, int qnum, String id, String name, String title, String content, int ref,
-//					Date reg_date, String del_yn, String locker) {
-			pstmt.setInt(1, dto.getPnum());
-			pstmt.setInt(2, dto.getNum());
-			pstmt.setInt(3, dto.getQnum());
-			pstmt.setString(4, dto.getId());
-			pstmt.setString(5, dto.getName());
-			pstmt.setString(6, dto.getTitle());
-			pstmt.setString(7, dto.getContent());
-			pstmt.setInt(8, dto.getRef());
-			pstmt.setString(9, x);
-			pstmt.setString(10, x);
-			return pstmt.executeUpdate();
+			con.setAutoCommit(false);
+			String sql2 = "update qna set qnum=qnum+1 where qnum > ?";
+			pstmt2 = con.prepareStatement(sql2);
+			pstmt2.setInt(1, dto.getQnum());
+			int n = pstmt2.executeUpdate();			
+			if (n > 0) {
+				String sql = "insert into qna values(?,?,?,?,?,?,?,?,sysdate,'N','N')";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, dto.getPnum());
+				pstmt.setInt(2, dto.getNum());
+				pstmt.setInt(3, dto.getQnum());
+				pstmt.setString(4, dto.getId());
+				pstmt.setString(5, dto.getName());
+				pstmt.setString(6, dto.getTitle());
+				pstmt.setString(7, dto.getContent());
+				pstmt.setInt(8, dto.getRef());
+				return pstmt.executeUpdate();
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
 			return -1;
 		} finally {
+			JDBCUtil.close(pstmt2);
 			JDBCUtil.close(null, pstmt, con);
 		}
+		return 0;
 	}
 
 	public int getMaxNum() {

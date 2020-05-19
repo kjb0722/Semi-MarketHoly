@@ -43,7 +43,7 @@ nav {
 					<th>전화번호</th>
 					<th style="width: 5%">성별</th>
 					<th>주소</th>
-					<th style="width: 13%">가입날짜</th>
+					<!-- <th style="width: 13%">가입날짜</th> -->
 					<th>포인트</th>
 					<th style="width: 5%">탈퇴</th>
 					<th>탈퇴 날짜</th>
@@ -200,7 +200,7 @@ nav {
 					row += "<td>여</td>";
 				}
 				row += "<td>"+j.addr+"</td>";
-				row += "<td>"+j.reg_date+"</td>";
+				/* row += "<td>"+j.reg_date+"</td>"; */
 				row += "<td>"+j.point+"</td>";
 				row += "<td>"+j.del_yn+"</td>";
 				if(j.del_date == null){

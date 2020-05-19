@@ -21,12 +21,12 @@ public class MainController extends HttpServlet {
 		String cp = req.getContextPath();
 		app.setAttribute("cp", cp);
 		
-		//"전체 카테고리" 카테고리
+		//"전체 카테고리"
 		CategoryDao dao = CategoryDao.getInstance();
 		ArrayList<CategoryDto> catList = dao.selList();
 		app.setAttribute("catList", catList);
 
-		//"전체 카테고리" 카테고리
+		//"세부 카테고리"
 		ArrayList<CategoryDto> catTypeList = dao.selTypeList();
 		app.setAttribute("catTypeList", catTypeList);
 		

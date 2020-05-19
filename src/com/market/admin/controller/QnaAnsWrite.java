@@ -27,7 +27,7 @@ public class QnaAnsWrite extends HttpServlet {
 
 		int pnum = Integer.parseInt(req.getParameter("pnum"));
 		int num = memberDto.getNum();
-		int qnum = dao.getMaxNum();
+		int qnum = Integer.parseInt(req.getParameter("qnum"));
 		String id = memberDto.getId();
 		String name = memberDto.getName();
 		String title = req.getParameter("title");

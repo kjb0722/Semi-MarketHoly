@@ -60,6 +60,7 @@ table, th, td {
 					<div class="row">
 						<div class="col-md-12 form-group">
 							<input type="hidden" id="quePnum">
+							<input type="hidden" id="queQnum">
 							<label class="label label-success">질문 내용</label>
 							<textarea id="queContent" class="form-control" rows="10" cols="100" style="resize: none;" disabled="disabled"></textarea>
 						</div>
@@ -91,6 +92,7 @@ table, th, td {
 		ansWrite();
 	});
 	function ansWrite(){
+		let qnum = $("#queQnum").val();
 		let title = $("#ansTitle").val();
 		let content = $("#ansContent").val();
 		let pnum = $("#quePnum").val();
@@ -98,7 +100,8 @@ table, th, td {
 			dataType:"JSON",
 			url:`${cp}/admin/qnaAnsWrite.do`,
 			method:"get",
-			data:{title:title,
+			data:{qnum:qnum,
+				title:title,
 				content:content,
 				pnum:pnum},
 			success:function(data){
@@ -155,6 +158,7 @@ table, th, td {
 				
 				//글 선택 이벤트//
 				$("#qna-table>tbody>tr").click(function() {
+					$("#queQnum").val($(this).children().eq(0).text());
 					$("#queContent").val($(this).children().eq(6).text());
 					$("#quePnum").val($(this).children().eq(7).text());
 					$("#ansTitle").val("");

@@ -402,11 +402,11 @@ input[type="checkbox"] {
 	//상품 리스트 로드//
 	function prodListLoad(){
 		let num;
-		let catNum;
-		let catTypeNum;
+		let catNum = -1;
+		let catTypeNum = -1;
 		if($("#sale-cat").prop("checked") == true){
 			catNum = $("#cat").val();
-			catTypeNum = -1;
+			//catTypeNum = -1;
 		}else{
 			num = $("#catType").val();
 			if(num == null){
@@ -418,48 +418,50 @@ input[type="checkbox"] {
 			}
 		}
 		
-		jQuery.ajax({
-			dataType:"JSON",
-			url: `${cp}/admin/saleProdList.do`,
-			method:"get",
-			data:{catNum:catNum,
-				catTypeNum:catTypeNum},
-			success:function(data){
-				let table = $("#table-prod>tbody");
-				table.empty();
-				for(let dto of data){
-					let row = "<tr class='align-middle'>";
-					row += "<td><input type='checkbox' name='prod-chk'></td>";
-					row += "<td>"+dto.pnum+"</td>";
-					row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
-					row += "<td>"+dto.name+"</td>";
-					row += "<td>"+dto.price+"</td>";
-					row += "<td>"+dto.stock+"</td>";
-					if(dto.onSaleName == -1){
-						row += "<td></td>";						
-					}else{
-						row += "<td>"+dto.onSaleName+"</td>";											
+		if(catNum != -1){
+			jQuery.ajax({
+				dataType:"JSON",
+				url: `${cp}/admin/saleProdList.do`,
+				method:"get",
+				data:{catNum:catNum,
+					catTypeNum:catTypeNum},
+				success:function(data){
+					let table = $("#table-prod>tbody");
+					table.empty();
+					for(let dto of data){
+						let row = "<tr class='align-middle'>";
+						row += "<td><input type='checkbox' name='prod-chk'></td>";
+						row += "<td>"+dto.pnum+"</td>";
+						row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
+						row += "<td>"+dto.name+"</td>";
+						row += "<td>"+dto.price+"</td>";
+						row += "<td>"+dto.stock+"</td>";
+						if(dto.onSaleName == -1){
+							row += "<td></td>";						
+						}else{
+							row += "<td>"+dto.onSaleName+"</td>";											
+						}
+						row += "</tr>";
+						table.append(row);
+						
+						if($("#table-prod>tbody>tr:last").children().eq(6).text() != ""){
+							$("#table-prod>tbody>tr:last").css("background-color","rgb(255,204,153)");
+						}
 					}
-					row += "</tr>";
-					table.append(row);
 					
-					if($("#table-prod>tbody>tr:last").children().eq(6).text() != ""){
-						$("#table-prod>tbody>tr:last").css("background-color","rgb(255,204,153)");
+					//세로 중앙 정렬
+					$("#table-prod>tbody>tr>td").css("vertical-align","middle");
+					
+					//썸네일 크기 고정
+					$("#table-prod>tbody>tr>td>img").css("width","200px");
+					$("#table-prod>tbody>tr>td>img").css("height","200px");
+					
+					//'카테고리별 적용', '세부 카테고리별 적용' 체크시 상품 선택 못하도록
+					let saleCat = $("#sale-cat").prop("checked");
+					let saleCatType = $("#sale-catType").prop("checked");
+					if(saleCat == true || saleCatType == true){
+						$("input[name='prod-chk']").prop("disabled",true);
 					}
-				}
-				
-				//세로 중앙 정렬
-				$("#table-prod>tbody>tr>td").css("vertical-align","middle");
-				
-				//썸네일 크기 고정
-				$("#table-prod>tbody>tr>td>img").css("width","200px");
-				$("#table-prod>tbody>tr>td>img").css("height","200px");
-				
-				//'카테고리별 적용', '세부 카테고리별 적용' 체크시 상품 선택 못하도록
-				let saleCat = $("#sale-cat").prop("checked");
-				let saleCatType = $("#sale-catType").prop("checked");
-				if(saleCat == true || saleCatType == true){
-					$("input[name='prod-chk']").prop("disabled",true);
 				}
 			}
 		});
