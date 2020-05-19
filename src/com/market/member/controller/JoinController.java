@@ -20,6 +20,7 @@ public class JoinController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
+		req.setCharacterEncoding("utf-8");
 		String id = req.getParameter("id");
 		String pwd = req.getParameter("pwd");
 		String name = req.getParameter("name");
@@ -40,7 +41,6 @@ public class JoinController extends HttpServlet{
 		MemberDao dao = MemberDao.getInstance();
 		int n = dao.join(dto);
 		String code = "success";
-		System.out.println(n);
 		
 		if(n==-1) {
 			code="fail1";

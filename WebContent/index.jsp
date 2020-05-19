@@ -35,7 +35,7 @@
 							<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
 							<ul class="dropdown-menu">							
-								<li class="dropdown-item"><a href="${cp }/mypage/mypage.jsp">마이페이지</a></li>
+								<li class="dropdown-item"><a href="${cp }/mypage/startMypage.do">마이페이지</a></li>
 								<li class="dropdown-item"><a href=#>로그아웃</a></li>
 							</ul>
 						</li>
