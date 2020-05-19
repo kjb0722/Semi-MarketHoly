@@ -51,7 +51,7 @@
 							height="400px">
 						<div style="position: absolute; top: 340px; left: 210px">
 							<button data-toggle="modal" data-target="#cartmodal"
-								class="btn btn-danger" onclick="getProd('${pro.name}',${pro.price })">
+								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price })">
 								<img src="../img/btn-cart.png" alt="담기" width="50px"
 									height="50px">
 							</button>
@@ -112,36 +112,37 @@
 <!-- 팝업창 -->
 <div class="modal fade" id="cartmodal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-sm" style="max-width: 100%; width: 420px; display: table;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true">x</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">상품선택</h4>
+				<h1 class="modal-title" id="myModalLabel">상품선택</h1>
 			</div>
 			<div class="modal-body">
 				<label id="name"></label><br>
 				<hr style="border: solid 1px purple;">
+				<label id="opname"></label><br>
 				<label id="price"></label>원
+				<div class="pull-right">
 				<button type="button" class="btn btn-default" onclick="minus()">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 				</button>
-				<label id="EA">1</label>
+				&nbsp<label id="EA">1</label>&nbsp
 				<button type="button" class="btn btn-default" onclick="plus()">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 				</button>
-				<br>
-				합계  <label id="sum"></label>원 
-				 <br>
-				구매시 ㅇㅇㅇ원 적립
+				</div>  
+				
+				
 			</div>
 			<div class="modal-footer">
+				<div class="pull-left">합계</div>  <label id="sum"></label> &nbsp원<br>
+				구매시 0.1% 적립<br>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<a href="${cp }/member/cartAdd.do?pnum=${pro.pnum}&id=${id}&EA=1">
-					<button type="button" class="btn btn-primary">장바구니 담기</button>
-				</a>
+				<button type="button" class="btn btn-primary" onclick="incart()">장바구니 담기</button>
 			</div>
 		</div>
 	</div>
@@ -153,24 +154,42 @@
 	function getProd(name,price) {		
 		var pname=document.getElementById("name");
 		var pprice=document.getElementById("price");
+		var opname=document.getElementById("opname");
 		var sum=document.getElementById("sum");
+		var EA=document.getElementById("EA");
+		EA=parseInt(EA.innerHTML);
 		pname.innerHTML = name;
+		opname.innerHTML = name;
 		pprice.innerHTML = price;
-		sum.innerHTML =price*EA;          
+		sum.innerHTML =price*EA;    
 		
 	}
 	function plus() {
 		var EA=document.getElementById("EA");
-		EA.innerHTML =parseInt(EA.innerHTML)+1;
+		var price=document.getElementById("price");
+		var sum=document.getElementById("sum");
+		EA.innerHTML=parseInt(EA.innerHTML)+1;
+		sum.innerHTML =parseInt(price.innerHTML)*parseInt(EA.innerHTML); 
 	}
 	function minus() {
-		
 		var EA=document.getElementById("EA");
+		var price=document.getElementById("price");
+		var sum=document.getElementById("sum");
+		
 		if(EA.innerHTML<=0){
 			alert("최소수량입니다");
+			sum.innerHTML=0;
 		}else{
 		EA.innerHTML =parseInt(EA.innerHTML)-1;
+		sum.innerHTML =parseInt(price.innerHTML)*parseInt(EA.innerHTML);  
 		}
+	}
+	function incart() {		
+		var pnum=document.getElementById("pnum");
+		var id=document.getElementById("id")
+		var EA=document.getElementById("EA");
+		location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+parseInt(EA.innerHTML);
+		
 	}
 
 </script>
