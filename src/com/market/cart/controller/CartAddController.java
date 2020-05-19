@@ -19,6 +19,7 @@ public class CartAddController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//카트에 상품 insert   
 		String id=req.getParameter("id");
+		System.out.println(id);
 		int pnum= Integer.parseInt(req.getParameter("pnum"));
 		int EA= Integer.parseInt(req.getParameter("EA"));
 		CartDao dao=CartDao.getInstance();
