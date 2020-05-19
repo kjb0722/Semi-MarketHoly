@@ -21,7 +21,7 @@ public class LogoutController extends HttpServlet{
 		*/
 		
 		resp.sendRedirect(req.getContextPath()+"/index.jsp?page=review/listReview.do");
-		///member/listReview.do
+		
 		
 	}
 	

@@ -11,16 +11,14 @@ public class QnaDto {
 	private String title;
 	private String content;
 	private int ref;
-	private int lev;
-	private int step;
-	private Date regdate;
+	private Date reg_date;
 	private String del_yn;
-	private String pwd;
+	private String locker;
 	
 	public QnaDto() {}
 
-	public QnaDto(int pnum, int num, int qnum, String id, String name, String title, String content, int ref, int lev,
-			int step, Date regdate, String del_yn, String pwd) {
+	public QnaDto(int pnum, int num, int qnum, String id, String name, String title, String content, int ref,
+			Date reg_date, String del_yn, String locker) {
 		super();
 		this.pnum = pnum;
 		this.num = num;
@@ -30,11 +28,9 @@ public class QnaDto {
 		this.title = title;
 		this.content = content;
 		this.ref = ref;
-		this.lev = lev;
-		this.step = step;
-		this.regdate = regdate;
+		this.reg_date = reg_date;
 		this.del_yn = del_yn;
-		this.pwd = pwd;
+		this.locker = locker;
 	}
 
 	public int getPnum() {
@@ -101,28 +97,12 @@ public class QnaDto {
 		this.ref = ref;
 	}
 
-	public int getLev() {
-		return lev;
+	public Date getReg_date() {
+		return reg_date;
 	}
 
-	public void setLev(int lev) {
-		this.lev = lev;
-	}
-
-	public int getStep() {
-		return step;
-	}
-
-	public void setStep(int step) {
-		this.step = step;
-	}
-
-	public Date getRegdate() {
-		return regdate;
-	}
-
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
 	}
 
 	public String getDel_yn() {
@@ -133,15 +113,15 @@ public class QnaDto {
 		this.del_yn = del_yn;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getLocker() {
+		return locker;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setLocker(String locker) {
+		this.locker = locker;
 	}
 
-	
+
 	
 	
 }

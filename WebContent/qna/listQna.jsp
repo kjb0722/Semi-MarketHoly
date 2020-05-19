@@ -30,10 +30,10 @@
 		</thead>
 		<c:forEach var='dto' items='${list }'>
 			<tbody>
-				<tr onclick="showHidden(${dto.qnum},'${dto.id }','${dto.pwd }')">					
+				<tr onclick="showHidden(${dto.qnum},'${dto.id }','${dto.locker }')">					
 					<td>${dto.qnum }</td>
 					<c:choose>
-						<c:when test="${dto.pwd == 'Y'}">
+						<c:when test="${dto.locker == 'Y'}">
 							<td>${dto.title } <img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px"></td>
 						</c:when>
 						<c:otherwise>
@@ -41,7 +41,7 @@
 						</c:otherwise>
 					</c:choose>
 					<td>${dto.id }</td>
-					<td>${dto.regdate }</td>
+					<td>${dto.reg_date }</td>
 				</tr>
 				<tr id='${dto.qnum }' style='display:none;'>					
  					<td>${dto.content }</td>
@@ -51,7 +51,7 @@
 		</c:forEach>	
 	</table>
 </div>
-		<input type="button" value = "후기쓰기" style="float:right" onclick="location.href='${cp }/review/writeReview.jsp'">
+		<input type="button" value = "후기쓰기" style="float:right" onclick="location.href='${cp }/qna/writeQna.jsp'">
 		<br><br>
 <!-- 페이징처리 -->
 
@@ -62,10 +62,10 @@
 </body>
 
 <script>
-	function showHidden(dtoQnum,dtoId,dtoPwd) {
+	function showHidden(dtoQnum,dtoId,dtoLocker) {
 		var id =document.getElementById(dtoQnum);
 					
-		if(dtoId == '${sessionScope.memberDto.id}' || dtoPwd=='N' ){
+		if(dtoId == '${sessionScope.memberDto.id}' || dtoLocker=='N' ){
 			if(id.style.display == 'none'){ 
 				id.style.display = 'block' ;
 			}else{ 

@@ -7,7 +7,7 @@
 <title>qna/writeQna.jsp</title>
 </head>
 <body>
-	<h1>상품 후기 작성하기</h1>
+	<h1>QnA 작성하기</h1>
 <form method="post" action="${pageContext.request.contextPath }/qna/qnaWrite.do">    
      <input type="hidden" name="qnum" value="${param.qnum }">
 	<input type="hidden" name="ref" value="${param.ref }">
@@ -20,12 +20,13 @@
 	id<input type="text" name="id" ><br>
 	작성자 <br>
 	<input type="text" name="name"><br>
-	비밀번호<br>
-	<input type="password" name="pwd"><br>
 	제목 <br>
 	<input type="text" name="title"><br>
 	내용 <br>
 	<textarea cols="50" rows="5" name="content"></textarea><br>
+	비밀글<br>
+	<input type="radio" name="locker" value="Y" ><br>
+	
 	<input type="submit" value="등록"><br>
 </form>
 

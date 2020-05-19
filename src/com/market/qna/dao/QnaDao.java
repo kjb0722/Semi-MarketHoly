@@ -26,7 +26,7 @@ public class QnaDao {
 		ResultSet rs=null;
 		try {
 			con=JDBCUtil.getConn();
-			String sql="select NVL(max(num),0) maxnum from qna";
+			String sql="select NVL(max(qnum),0) maxnum from qna";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
@@ -53,21 +53,22 @@ public class QnaDao {
 			int boardNum=getMaxNum()+1;//등록할 글번호 구하기
 			int qnum= dto.getPnum();
 			int ref= dto.getRef();
-			int lev= dto.getLev();
-			int step= dto.getStep();
 			if(qnum==0) { //새글인 경우
 				ref=boardNum;
-			}else { //답글인 경우
+			}
+			
+			/*
+			else { //답글인 경우
 				String sql1=
-						"update qna set step=step+1 where ref=? and step>?";
+						"update qna set ref=1 where ref=?";
 				pstmt1=con.prepareStatement(sql1);
 				pstmt1.setInt(1,ref);
-				pstmt1.setInt(2,step);
 				pstmt1.executeUpdate();	
-				lev += 1;
-				step += 1;
-			}		
-			String sql2="insert into qna values(?,?,?,?,?,?,?,?,?,?,sysdate,'N',?)";	
+			}
+			*/
+			
+			
+			String sql2="insert into qna values(?,?,?,?,?,?,?,-1,sysdate,'N',?)";	
 			pstmt2=con.prepareStatement(sql2);
 			pstmt2.setInt(1, dto.getPnum());
 			pstmt2.setInt(2, dto.getNum());
@@ -76,10 +77,7 @@ public class QnaDao {
 			pstmt2.setString(5,dto.getName());
 			pstmt2.setString(6,dto.getTitle());
 			pstmt2.setString(7, dto.getContent());
-			pstmt2.setInt(8,ref);
-			pstmt2.setInt(9,lev);
-			pstmt2.setInt(10,step);
-			pstmt2.setString(11, dto.getPwd());
+			pstmt2.setString(8, dto.getLocker());
 			pstmt2.executeUpdate();
 			return 1;
 		}catch(SQLException se) {
@@ -99,7 +97,7 @@ public class QnaDao {
 		ResultSet rs=null;
 		try {
 			con=JDBCUtil.getConn();
-			String sql="select NVL(count(num),0) cnt from qna";
+			String sql="select NVL(count(qnum),0) cnt from qna";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
@@ -115,14 +113,10 @@ public class QnaDao {
 		}
 	}	
 	public ArrayList<QnaDto> list(int startRow,int endRow){
-		String sql="select * from " + 
-				"(" + 
-				"  select aa.*,rownum rnum from " + 
-				"  ( " + 
-				"	select * from qna order by ref desc,step asc " + 
-				"  )aa " + 
-				") " + 
-				"where rnum>=? and rnum<=?";
+		String sql="select * from"
+				+ "(select aa.*,rownum rnums from "
+				+ "(select * from qna order by num desc)aa) "
+				+ "where rnums>=? and rnums<=?";
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -143,13 +137,10 @@ public class QnaDao {
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				int ref=rs.getInt("ref");
-				int lev=rs.getInt("lev");
-				int step=rs.getInt("step");
-				Date regdate = rs.getDate("regdate");
+				Date reg_date = rs.getDate("reg_date");
 				String del_yn = rs.getString("del_yn");
-				String pwd = rs.getString("pwd");
-				
-				QnaDto dto = new QnaDto(pnum, num, qnum, id, name, title, content, ref, lev, step, regdate, del_yn, pwd);	
+				String locker = rs.getString("locker");
+				QnaDto dto = new QnaDto(pnum, num, qnum, id, name, title, content, ref, reg_date, del_yn, locker);	
 				list.add(dto);
 			}
 			return list;

@@ -16,6 +16,8 @@ import com.market.qna.dto.QnaDto;
 public class QnaListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
 		String spageNum=req.getParameter("pageNum");
 		int pageNum=1;
 		if(spageNum!=null) {
@@ -28,6 +30,8 @@ public class QnaListController extends HttpServlet {
 		
 		//페이지에 해당하는 글목록 가져오기
 		ArrayList<QnaDto> list=dao.list(startRow, endRow);
+		//System.out.println(list);
+
 		//전체 페이지갯수 구하기
 		int pageCount=(int)Math.ceil(dao.getCount()/10.0);
 		int startPageNum=((pageNum-1)/10)*10+1;
@@ -40,6 +44,8 @@ public class QnaListController extends HttpServlet {
 		req.setAttribute("startPageNum",startPageNum);
 		req.setAttribute("endPageNum",endPageNum);
 		req.setAttribute("pageNum",pageNum);
+		
 		req.getRequestDispatcher("/index.jsp?page=/qna/listQna.jsp").forward(req, resp);
+		
 	}
 }

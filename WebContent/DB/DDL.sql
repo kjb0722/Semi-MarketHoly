@@ -154,6 +154,7 @@ CREATE TABLE qna
 	ref number,
 	reg_date date,
 	del_yn varchar2(2),
+	locker varchar2(2),
 	UNIQUE (pnum, num)
 );
 
