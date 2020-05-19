@@ -30,8 +30,7 @@
 		</thead>
 		<c:forEach var='dto' items='${list }'>
 			<tbody>
-				
-				<tr onclick="showHidden(${dto.qnum},${dto.id })">					
+				<tr onclick="showHidden(${dto.qnum},'${dto.id }','${dto.pwd }')">					
 					<td>${dto.qnum }</td>
 					<c:choose>
 						<c:when test="${dto.pwd == 'Y'}">
@@ -58,19 +57,23 @@
 
 
 
+
+
 </body>
 
 <script>
-	function showHidden(qNum,ids) {
-		var id =document.getElementById(qNum);
-		
-		if(ids == ${memberDto.id}){
-			id.style.display = 'block' ;
-			
+	function showHidden(dtoQnum,dtoId,dtoPwd) {
+		var id =document.getElementById(dtoQnum);
+					
+		if(dtoId == '${sessionScope.memberDto.id}' || dtoPwd=='N' ){
+			if(id.style.display == 'none'){ 
+				id.style.display = 'block' ;
+			}else{ 
+				id.style.display = 'none' ;
+			}
 		}else{
-			id.style.display = 'none' ;
+			alert("비밀글입니다.");
 		}
-			
 	}
 	
 </script>

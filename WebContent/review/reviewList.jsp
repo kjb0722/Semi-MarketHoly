@@ -88,8 +88,11 @@
 	function showHidden(rNum) {
 		var id =document.getElementById(rNum);
 		
-		if(id.style.display == 'none') id.style.display = 'block' ;
-		else id.style.display = 'none' ;
+		if(id.style.display == 'none'){	
+			id.style.display = 'block' ;
+		}else{ 
+			id.style.display = 'none' ;
+		}
 	}
 	
 </script>
