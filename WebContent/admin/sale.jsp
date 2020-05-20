@@ -463,8 +463,8 @@ input[type="checkbox"] {
 						$("input[name='prod-chk']").prop("disabled",true);
 					}
 				}
-			}
-		});
+			});
+		}
 	}
 	//상품 리스트 로드//
 	

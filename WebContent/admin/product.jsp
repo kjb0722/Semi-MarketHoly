@@ -64,7 +64,7 @@
 					<span class="label label-success">썸네일</span>
 					<label class="file-upload btn btn-warning">
 						파일을 선택해주세요.
-						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" />
+						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" id="thumb"/>
 					</label>
 				</div>
 			</div>
@@ -73,7 +73,7 @@
 					<span class="label label-success">상품 상세 설명 이미지</span>
 					<label class="file-upload btn btn-warning">
 						파일을 선택해주세요.
-						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" />
+						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" id="detail"/>
 					</label>
 				</div>
 			</div>
@@ -125,10 +125,23 @@
 		}
 		
 		let name = document.getElementsByName("name")[0];
-
 		if (name.value == "") {
 			alert("상품명을 입력하세요.");
 			name.focus();
+			return false;
+		}
+		
+		let thumb = $("#thumb");
+		if(thumb.val() == ""){
+			alert("썸네일 파일을 선택하세요.");
+			thumb.focus();
+			return false;
+		}
+		
+		let detail = $("#detail");
+		if(detail.val() == ""){
+			alert("상품 상세 설명 이미지를 선택하세요.");
+			detail.focus();
 			return false;
 		}
 
