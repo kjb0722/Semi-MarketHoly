@@ -6,10 +6,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<style>
+.info {
+  float: left;
+ }
+ .container{
+  clear: both
+ }
+ #img {margin:"50px"}
+</style>
+<div class="info" id="img">
 <img src="${pageContext.request.contextPath }/img/${dto.thumb_save}"
 	width="300px" height="400px">
-<div class="pull-right">
+</div>
+<div class="info">
 <h1>${dto.name}</h1>
 <h4>${dto.description}</h4>
 <h2>${dto.price}</h2>
@@ -33,7 +43,8 @@
 		<li role="presentation" class="active"><a href="#discript"
 			id="discript-tab" role="tab" data-toggle="tab"
 			aria-controls="discript" aria-expanded="false"> 상품설명</a></li>
-		<li role="presentation" class=""><a href="#review" role="tab"
+		<li role="presentation" class="">
+		<a href="${cp }/qna/qnaList.do" role="tab"
 			id="review-tab" data-toggle="tab" aria-controls="review"
 			aria-expanded="true">상품후기</a></li>
 		<li role="presentation" class=""><a href="#qna" role="tab"
@@ -83,6 +94,10 @@ function incart() {
 	location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+parseInt(EA.innerHTML);
 	
 }
+$('#myTab').click(function (e) {
+	e.preventDefault()
+	$(this).tab('show')
+})
 	
 
 	
