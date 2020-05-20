@@ -181,8 +181,10 @@ public class QnaAdminDao {
 		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from(select aa.*, rownum rnum from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N') aa) where rnum>=1 and rnum<=10";
+			String sql = "select * from(select aa.*, rownum rnum from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' order by qnum desc) aa) where rnum>=? and rnum<=?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int qnum = rs.getInt("qnum");
@@ -208,7 +210,6 @@ public class QnaAdminDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "select nvl(count(*),0) cnt from qna a where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N'";
