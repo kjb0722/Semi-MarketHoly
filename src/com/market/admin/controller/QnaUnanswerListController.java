@@ -34,13 +34,12 @@ public class QnaUnanswerListController extends HttpServlet {
 		QnaAdminDao qnaDao = QnaAdminDao.getInstance();
 		ArrayList<QnaAdminDto> qnaList = qnaDao.selUnanswerList(startRow, endRow);
 
-		int pageCount = (int) Math.ceil(qnaDao.selQnaCount("", "") / PAGE_BLOCK);
+		int pageCount = (int) Math.ceil(qnaDao.selUnanswerCount() / PAGE_BLOCK);
 		int startPageNum = (int) (Math.floor((pageNum - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1);
 		int endPageNum = (int) (startPageNum + (PAGE_BLOCK - 1));
 		if (pageCount < endPageNum) {
 			endPageNum = pageCount;
 		}
-		
 		JSONArray jsonArr = new JSONArray();
 		JSONArray jarr = new JSONArray();
 		for (QnaAdminDto dto : qnaList) {

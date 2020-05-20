@@ -118,7 +118,40 @@ nav {
 				tbodyRowAdd(data[0]);
 				
 				//페이징//
-				pagination(data);
+				pageDiv = $("#page-div");
+				pageDiv.empty();
+				
+				let startPageNum = data[1];
+				let endPageNum = data[2];
+				let pageNum = data[3];
+				let pageCount = data[4];
+				
+				let row = "<nav>";
+				row += "<ul class='pagination'>";
+				
+				if(startPageNum != 1){
+					row += "<li>";
+					row += "<a onclick='unansPageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<span aria-hidden='true'>&laquo</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				for(let i=startPageNum;i<=endPageNum;i++){
+					row += "<li><a onclick='unansPageMove("+(i)+")' class='cursor-pointer'>"+i+"</a></li>";
+				}
+				
+				if(pageCount > endPageNum){
+					row += "<li>";
+					row += "<a onclick='unansPageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<span aria-hidden='true'>&raquo;</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				row += "</ul>";
+				row += "</nav>";
+				pageDiv.append(row);
 				//페이징//
 				
 				//글 선택 모달 이벤트//
@@ -220,12 +253,46 @@ nav {
 				tbodyRowAdd(data[0]);
 				
 				//페이징//
-				pagination(data);
+				pageDiv = $("#page-div");
+				pageDiv.empty();
+				
+				let startPageNum = data[1];
+				let endPageNum = data[2];
+				let pageNum = data[3];
+				let pageCount = data[4];
+				
+				let row = "<nav>";
+				row += "<ul class='pagination'>";
+				
+				if(startPageNum != 1){
+					row += "<li>";
+					row += "<a onclick='qnaPageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<span aria-hidden='true'>&laquo</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				for(let i=startPageNum;i<=endPageNum;i++){
+					row += "<li><a onclick='qnaPageMove("+(i)+")' class='cursor-pointer'>"+i+"</a></li>";
+				}
+				
+				if(pageCount > endPageNum){
+					row += "<li>";
+					row += "<a onclick='qnaPageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<span aria-hidden='true'>&raquo;</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				row += "</ul>";
+				row += "</nav>";
+				pageDiv.append(row);
 				//페이징//
 				
 				//글 선택 모달 이벤트//
 				setAnswerModalVal();
 				//글 선택 모달 이벤트//
+				
 			}
 		});
 	}
@@ -241,44 +308,15 @@ nav {
 		});
 	}
 	
-	function pagination(data){
-		pageDiv = $("#page-div");
-		pageDiv.empty();
+	function pagination(data, funcName){
 		
-		let startPageNum = data[1];
-		let endPageNum = data[2];
-		let pageNum = data[3];
-		let pageCount = data[4];
-		
-		let row = "<nav>";
-		row += "<ul class='pagination'>";
-		
-		if(startPageNum != 1){
-			row += "<li>";
-			row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
-			row += "<span aria-hidden='true'>&laquo</span>";
-			row += "</a>";
-			row += "</li>";
-		}
-		
-		for(let i=startPageNum;i<=endPageNum;i++){
-			row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
-		}
-		
-		if(pageCount > endPageNum){
-			row += "<li>";
-			row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
-			row += "<span aria-hidden='true'>&raquo;</span>";
-			row += "</a>";
-			row += "</li>";
-		}
-		
-		row += "</ul>";
-		row += "</nav>";
-		pageDiv.append(row);
 	}
 	
-	function pageMove(page){
+	function qnaPageMove(page){
 		qnaListLoad("","",page);
+	}
+	
+	function unansPageMove(page){
+		unanswerLoad();
 	}
 </script>
