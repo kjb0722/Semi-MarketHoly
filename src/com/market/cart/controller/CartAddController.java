@@ -23,13 +23,11 @@ public class CartAddController extends HttpServlet {
 		int EA= Integer.parseInt(req.getParameter("EA"));
 		CartDao dao=CartDao.getInstance();
 		int n = dao.inCart(pnum, id, EA);
-	
-		JSONObject json = new JSONObject();
-		json.put("n", n);
-		resp.setContentType("text/plain;charset=utf-8");
-		PrintWriter pw = resp.getWriter();
-		pw.print(json);
-		
+		if (n > 0) {
+			resp.sendRedirect(req.getContextPath() + "/cart.do");
+		} else {
+			resp.sendRedirect(req.getContextPath() + "/error.do");	
+
+		}
 	}
-	
 }

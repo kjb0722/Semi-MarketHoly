@@ -51,7 +51,7 @@
 							height="400px">
 						<div style="position: absolute; top: 340px; left: 210px">
 							<button data-toggle="modal" data-target="#cartmodal"
-								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price })">
+								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price },${pro.pnum })">
 								<img src="../img/btn-cart.png" alt="담기" width="50px"
 									height="50px">
 							</button>
@@ -126,6 +126,7 @@
 				<hr style="border: solid 1px purple;">
 				<label id="opname"></label><br>
 				<label id="price"></label>원
+				<input type="hidden" id="pnum"> 
 				<div class="pull-right">
 				<button type="button" class="btn btn-default" onclick="minus()">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -142,7 +143,7 @@
 				<div class="pull-left">합계</div>  <label id="sum"></label> &nbsp원<br>
 				구매시 0.1% 적립<br>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" onclick="incart()">장바구니 담기</button>
+				<button type="button" class="btn btn-primary" onclick="incart('${id}','${pro.pnum}')">장바구니 담기</button>
 			</div>
 		</div>
 	</div>
@@ -151,12 +152,14 @@
 </body>
 <script>
 	// 부모창에서 모달로 데이터넘기기
-	function getProd(name,price) {		
+	function getProd(name,price,pnum) {		
 		var pname=document.getElementById("name");
 		var pprice=document.getElementById("price");
 		var opname=document.getElementById("opname");
 		var sum=document.getElementById("sum");
 		var EA=document.getElementById("EA");
+		var ppnum=document.getElementById("pnum");
+		ppnum.value=pnum;
 		EA=parseInt(EA.innerHTML);
 		pname.innerHTML = name;
 		opname.innerHTML = name;
@@ -184,13 +187,13 @@
 		sum.innerHTML =parseInt(price.innerHTML)*parseInt(EA.innerHTML);  
 		}
 	}
-	function incart() {		
-		var pnum=document.getElementById("pnum");
-		var id=document.getElementById("id")
+	function incart(id,pnum) {		
+		var pnum=document.getElementById("pnum").value;
 		var EA=document.getElementById("EA");
 		location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+parseInt(EA.innerHTML);
 		
 	}
+
 
 </script>
 

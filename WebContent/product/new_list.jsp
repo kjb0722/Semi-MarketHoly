@@ -23,20 +23,21 @@
 							<img src="${cp }/img/${pro.thumb_save}" width="300px"
 								height="400px">
 							<div style="position: absolute; top: 340px; left: 210px">
-								<button type="button" id="incart">
+								<button data-toggle="modal" data-target="#cartmodal"
+									class="btn btn-link"
+									onclick="getProd('${pro.name}',${pro.price })">
 									<img src="../img/btn-cart.png" alt="´ã±â" width="50px"
 										height="50px">
 								</button>
 							</div>
-						</div>
-
-						<div>
-							<h3>${pro.name}<br>
-							</h3>
-						</div>
-						<div>${pro.price }</div>
-						<div>${pro.description }</div> <c:set var="cp"
-							value="${pageContext.request.contextPath }" />
+						</div> <a href="${cp }/product/detail.do?pnum=${pro.pnum}">
+							<div>
+								<h3>${pro.name}<br>
+								</h3>
+							</div>
+							<div>${pro.price }</div>
+							<div>${pro.description }</div> <c:set var="cp"
+								value="${pageContext.request.contextPath }" />
 					</a>
 				</div>
 			</c:forEach>
@@ -71,9 +72,10 @@
 			</c:choose>
 		</c:forEach>
 		<c:if test="${pageCount>endPageNum}">
-			<li class="page-item"><li class="page-item"><a
-				href="${cp }/product/new.do?pageNum=${endPageNum+1}">></a>
-		</li></c:if>
+			<li class="page-item">
+			<li class="page-item"><a
+				href="${cp }/product/new.do?pageNum=${endPageNum+1}">></a></li>
+		</c:if>
 
 
 	</ul>

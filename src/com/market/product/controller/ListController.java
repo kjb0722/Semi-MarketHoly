@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import com.market.admin.dao.CategoryDao;
 import com.market.admin.dto.CategoryDto;
+import com.market.member.dto.MemberDto;
 import com.market.product.dao.ProductDao;
 import com.market.product.dto.ProductDto;
 
@@ -22,8 +23,9 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		HttpSession session=req.getSession();
-		String id=(String)session.getAttribute("id");
+		HttpSession session = req.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("memberDto");
+		String id =memberDto.getId();
 		// 카테고리
 		String sCnum = req.getParameter("cnum");
 		String list_filter = req.getParameter("list_filter");
@@ -36,7 +38,7 @@ public class ListController extends HttpServlet {
 		if (sType != null) {
 			type = Integer.parseInt(sType);
 		}
-
+		
 		// 페이징
 		String spageNum = req.getParameter("pageNum");
 		int pageNum = 1;
