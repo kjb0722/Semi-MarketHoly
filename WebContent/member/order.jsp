@@ -45,12 +45,12 @@
 		
 		<c:forEach var="mem" items="${requestScope.member}">
 		</c:forEach>
-		<input type="text" id="sender" value="${member.name}" disabled="disabled"><br>
+		<input type="text" id="sender" value="${mem.name}" disabled="disabled"><br>
 		<p>휴대폰*</p>
-		<input type="text" name="phone" value="${member.phone}" disabled="disabled">
+		<input type="text" name="phone" value="${mem.phone}" disabled="disabled">
 		<br>
 		<p>이메일*</p>
-		<input type="text" id="email" value="${member.email}" disabled="disabled">
+		<input type="text" id="email" value="${mem.email}" disabled="disabled">
 
 	</div>
 	<div id="4" class="container" style='width: 1000px;'>
