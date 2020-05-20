@@ -40,10 +40,11 @@ CREATE TABLE category
 
 CREATE TABLE common
 (
-	type varchar2(40) UNIQUE,
-	conum number,
+	type varchar2(40),
+	conum number NOT NULL,
 	name varchar2(50),
-	val varchar2(30)
+	val varchar2(30),
+	PRIMARY KEY (conum)
 );
 
 
