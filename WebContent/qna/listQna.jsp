@@ -50,12 +50,17 @@
 							</c:otherwise>
 						</c:choose> --%>
 
-						<td><c:forEach var="i" begin="1" end="${dto.level - 1 }">
-									[re]&nbsp;&nbsp;
-									</c:forEach> ${dto.title } <c:if test="${dto.level > 1 }">
+						<td>
+							<c:if test="${dto.level > 1 }">
+								<c:forEach var="i" begin="1" end="${dto.level - 1 }">
+									[re]&nbsp;
+								</c:forEach> 
+							</c:if>
+							${dto.title } 
+							<c:if test="${dto.locker == 'Y' }">
 								<img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px">
-							</c:if></td>
-
+							</c:if>
+						</td>
 						<td>${dto.id }</td>
 						<td>${dto.reg_date }</td>
 					</tr>
