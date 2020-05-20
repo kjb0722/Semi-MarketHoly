@@ -18,7 +18,7 @@
 	<div class="contaainer-fluid">
 		<form class="form-inline" role="form" action="${cp }/admin/prodAdd.do" method="post" onsubmit="return prodChk()" enctype="multipart/form-data">
 			<div class="row">
-				<div class="col-md-5 form-group">
+				<div class="col-md-8 form-group">
 					<div class="form-group">
 						<span class="label label-success">카테고리</span>
 						<select name="cat" class="form-control" onchange="catChange(this)">
