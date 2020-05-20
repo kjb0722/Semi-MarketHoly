@@ -38,7 +38,7 @@ nav {
 			</select>
 			<input type="text" class="form-control" placeholder="검색어를 입력하세요" maxlength="30" id="txtWord">
 			<input type="button" class="btn btn-lg btn-primary" value="검색" id="btnSearch">
-			<input type="button" class="btn btn-lg btn-info" value="미답변 목록">
+			<input type="button" class="btn btn-lg btn-info" value="미답변 목록" id="btnUnanswer">
 		</div>
 		<div class="col-md-5 form-inline">
 			<input type="button" class="btn btn-lg btn-warning pull-right" value="답변 완료 목록">
@@ -105,6 +105,53 @@ nav {
 		qnaListLoad("","");
 	});
 	
+	//미답변 목록 로드//
+	$("#btnUnanswer").click(function() {
+		unanswerLoad();
+	});
+	function unanswerLoad(){
+		jQuery.ajax({
+			dataType:"JSON",
+			url: `${cp}/admin/qnaUnanswerList.do`,
+			method:"get",
+			success:function(data){
+				tbodyRowAdd(data);
+			}
+		});
+	}
+	//미답변 목록 로드//
+	
+	function tbodyRowAdd(data){
+		let tbody = $("#qna-table>tbody");
+		tbody.empty();
+		for(let dto of data){
+			let replyIcon = "";
+			let row = "";
+			if(dto.level >= 2){
+				replyIcon = "<span class='glyphicon glyphicon-check'></span>";
+				row += "<tr>";
+			}else{
+				replyIcon = "<span class='glyphicon glyphicon-question-sign'></span>";
+				row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
+			}
+			row += "<td>"+dto.qnum+"</td>";
+			row += "<td>"+dto.cname+"</td>";
+			row += "<td>"+dto.pname+"</td>";
+			row += "<td class='align-left'>"+replyIcon+dto.title+"</td>";
+			row += "<td>"+dto.writer+"</td>";
+			row += "<td>"+dto.reg_date+"</td>";
+			row += "<td class='hidden'>"+dto.content+"</td>";
+			row += "<td class='hidden'>"+dto.pnum+"</td>";
+			row += "<td class='hidden'>"+dto.level+"</td>";
+			row += "</tr>";
+			tbody.append(row);
+			
+			if(dto.level>=2){
+				tbody.find("tr").last().css("color","blue");					
+			}
+		}
+	}
+	
 	//답변 등록//
 	$("#btnWrite").click(function() {
 		ansWrite();
@@ -161,35 +208,7 @@ nav {
 				kind:kind,
 				pageNum:pageNum},
 			success:function(data){
-				tbody = $("#qna-table>tbody");
-				tbody.empty();
-				for(let dto of data[0]){
-					let replyIcon = "";
-					let row = "";
-					if(dto.level >= 2){
-						replyIcon = "<span class='glyphicon glyphicon-check'></span>";
-						row += "<tr>";
-					}else{
-						replyIcon = "<span class='glyphicon glyphicon-question-sign'></span>";
-						row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
-					}
-					//row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
-					row += "<td>"+dto.qnum+"</td>";
-					row += "<td>"+dto.cname+"</td>";
-					row += "<td>"+dto.pname+"</td>";
-					row += "<td class='align-left'>"+replyIcon+dto.title+"</td>";
-					row += "<td>"+dto.writer+"</td>";
-					row += "<td>"+dto.reg_date+"</td>";
-					row += "<td class='hidden'>"+dto.content+"</td>";
-					row += "<td class='hidden'>"+dto.pnum+"</td>";
-					row += "<td class='hidden'>"+dto.level+"</td>";
-					row += "</tr>";
-					tbody.append(row);
-					
-					if(dto.level>=2){
-						tbody.find("tr").last().css("color","blue");					
-					}
-				}
+				tbodyRowAdd(data[0]);
 				
 				//페이징//
 				pageDiv = $("#page-div");

@@ -99,16 +99,15 @@ public class QnaAdminDao {
 			pstmt2.setInt(1, dto.getQnum());
 			int n = pstmt2.executeUpdate();
 			if (n > 0) {
-				String sql = "insert into qna values(?,?,?,?,?,?,?,?,sysdate,'N','N')";
+				String sql = "insert into qna values(?,?,?,?,'관리자',?,?,?,sysdate,'N','N')";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, dto.getPnum());
 				pstmt.setInt(2, dto.getNum());
 				pstmt.setInt(3, dto.getQnum());
 				pstmt.setString(4, dto.getId());
-				pstmt.setString(5, dto.getName());
-				pstmt.setString(6, dto.getTitle());
-				pstmt.setString(7, dto.getContent());
-				pstmt.setInt(8, dto.getRef() + 1);
+				pstmt.setString(5, dto.getTitle());
+				pstmt.setString(6, dto.getContent());
+				pstmt.setInt(7, dto.getRef() + 1);
 				return pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -170,6 +169,36 @@ public class QnaAdminDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public ArrayList<QnaAdminDto> selUnanswerList() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N'";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int qnum = rs.getInt("qnum");
+				String cname = rs.getString("cname");
+				String pname = rs.getString("pname");
+				String title = rs.getString("title");
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				String content = rs.getString("content");
+				int pnum = rs.getInt("pnum");
+				list.add(new QnaAdminDto(qnum, cname, pname, title, name, reg_date, content, pnum, -1));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
