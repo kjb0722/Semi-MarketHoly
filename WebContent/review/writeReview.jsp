@@ -18,8 +18,6 @@
 	id<input type="text" name="id" ><br>
 	작성자 <br>
 	<input type="text" name="name"><br>
-	비밀번호<br>
-	<input type="password" name="pwd"><br>
 	제목 <br>
 	<input type="text" name="title"><br>
 	내용 <br>

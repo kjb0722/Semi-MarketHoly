@@ -146,7 +146,7 @@ CREATE TABLE qna
 (
 	pnum number NOT NULL,
 	num number NOT NULL,
-	qnum number,
+	rnum number,
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
@@ -172,7 +172,7 @@ CREATE TABLE review
 	onum number NOT NULL,
 	pnum number NOT NULL,
 	num number NOT NULL,
-	qnum number,
+	rnum number,
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),

@@ -19,7 +19,7 @@ public class ReviewDao {
 		return instance;
 	}
 	
-	
+	/*
 	public ReviewDto mypageReview(MemberDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -42,12 +42,12 @@ public class ReviewDao {
 			String name = rs.getString("name");
 			String title = rs.getString("title");
 			String content = rs.getString("content");
-			Date regdate =  rs.getDate("regdate");
+			Date regdate =  rs.getDate("reg_date");
 			String orgfilename = rs.getString("orgfilename");
 			String savefilename = rs.getString("savefilename");
 			String del_yn = rs.getString("del_yn");
 			
-			ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn, pwd);
+			ReviewDto dto2 = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn);
 			
 		}
 			
@@ -62,7 +62,7 @@ public class ReviewDao {
 		
 	}
 	
-	
+	*/
 	
 	
 	
@@ -72,7 +72,7 @@ public class ReviewDao {
 		
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into review values(?,?,?,seq_review_num.nextval,?,?,?,?,sysdate,?,?,'N',?)";
+			String sql = "insert into review values(?,?,?,seq_review_num.nextval,?,?,?,?,sysdate,?,?,'N')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getOnum());
 			pstmt.setInt(2, dto.getPnum());
@@ -83,7 +83,6 @@ public class ReviewDao {
 			pstmt.setString(7, dto.getContent());
 			pstmt.setString(8, dto.getOrgfilename());
 			pstmt.setString(9, dto.getSavefilename());
-			pstmt.setString(10, dto.getPwd());
 			
 			int n =pstmt.executeUpdate();
 			return n;
@@ -150,12 +149,11 @@ public class ReviewDao {
 				String name = rs.getString("name");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
-				Date regdate = rs.getDate("regdate");
+				Date regdate = rs.getDate("reg_date");
 				String orgfilename = rs.getString("orgfilename");
 				String savefilename = rs.getString("savefilename");
 				String del_yn = rs.getString("del_yn");
-				String pwd = rs.getString("pwd");
-				ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn, pwd);
+				ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn);
 				
 				list.add(dto);
 			}

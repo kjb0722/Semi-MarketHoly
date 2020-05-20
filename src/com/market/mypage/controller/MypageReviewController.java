@@ -22,7 +22,7 @@ public class MypageReviewController extends HttpServlet{
 		
 		
 		ReviewDao dao = ReviewDao.getInstance();
-		//dao.mypageReview(dto);
+		dao.mypageReview(dto);
 		
 		
 	}

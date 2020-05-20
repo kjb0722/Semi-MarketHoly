@@ -45,10 +45,10 @@ public class ReviewWriteController extends HttpServlet {
 		String content = mr.getParameter("content");
 		String orgfilename = mr.getOriginalFileName("file1");   //전송된 파일명
 		String savefilename = mr.getFilesystemName("file1");  //저장된 파일명	
-		String pwd= mr.getParameter("pwd");
+
 		File file1 = mr.getFile("file1");
 		ReviewDao dao = ReviewDao.getInstance();
-		ReviewDto dto = new ReviewDto(onum, pnum, num, 0, id, name, title, content, null, orgfilename, savefilename, null, pwd);		
+		ReviewDto dto = new ReviewDto(onum, pnum, num, 0, id, name, title, content, null, orgfilename, savefilename, null);		
 		
 		int n = dao.writeReview(dto);
 		
