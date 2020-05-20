@@ -23,22 +23,34 @@ public class MypageDao {
 		Connection con= null;
 		PreparedStatement pstmt = null;
 		ResultSet rs= null;
-		
 		try {
 			con = JDBCUtil.getConn();
-			//String sql = "";
-			
-			
-			
+			String sql ="select o.opnum,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
+					"from orders o,product p,order_product op "+ 
+					" where o.onum=op.onum and op.pnum=p.pnum and id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			rs = pstmt.executeQuery();
+			ArrayList<OrderListDto> list = new ArrayList<OrderListDto>();
+			while(rs.next()) {
+				int opnum = rs.getInt("opnum");
+				Date end_date = rs.getDate("end_date");
+				String thum_save = rs.getString("thumb_save");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				int price= rs.getInt("price");
+				int ea = rs.getInt("ea");
+				OrderListDto dto = new OrderListDto(opnum, end_date, thum_save, name, description, price, ea);
+				list.add(dto);
+			}			
+			return list;
+
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
+			return null;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
-		
-		
-		
-		
 	}
 	
 	

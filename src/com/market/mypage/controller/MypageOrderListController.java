@@ -1,6 +1,7 @@
 package com.market.mypage.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.market.member.dto.MemberDto;
 import com.market.mypage.dao.MypageDao;
+import com.market.review.dto.OrderListDto;
 
 
 @WebServlet("/mypage/mypageOrderList.do")
@@ -20,7 +22,10 @@ public class MypageOrderListController extends HttpServlet {
 		HttpSession session = req.getSession();
 		MemberDto dto = (MemberDto)session.getAttribute("memberDto");
 		MypageDao dao = MypageDao.getInstance();
-		dao.orderList(dto.getId());
-				
+		ArrayList<OrderListDto> list = dao.orderList(dto.getId());
+		
+		req.setAttribute("list", list);
+		req.getRequestDispatcher("/index.jsp?page=mypage/mypage.jsp&mypage=mypage/orderList.jsp").forward(req, resp);
+		
 	}
 }
