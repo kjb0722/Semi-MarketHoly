@@ -80,7 +80,7 @@ public class ReviewDao {
 	
 	
 	
-	public ArrayList<ReviewDto> listReview(int startRow,int endRow){ 
+	public ArrayList<ReviewDto> listReview(int startRow,int endRow,int pnums){ 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,12 +91,14 @@ public class ReviewDao {
 			String sql ="select * from"
 					+ "(select aa.*,rownum rnums from "
 					+ "(select * from review order by num desc)aa) "
-					+ "where rnums>=? and rnums<=?";
+					+ "where rnums>=? and rnums<=? and pnum=?";
 			
 			pstmt =con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+			pstmt.setInt(3, pnums);
 			rs = pstmt.executeQuery();
+			
 			
 			
 			ArrayList<ReviewDto> list = new ArrayList<ReviewDto>();

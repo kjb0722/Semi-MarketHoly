@@ -16,7 +16,7 @@ import com.market.review.dto.ReviewDto;
 public class ListReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		int pnum = Integer.parseInt(req.getParameter("pnum"));
 		
 		String spageNum=req.getParameter("pageNum");
 	
@@ -27,7 +27,7 @@ public class ListReviewController extends HttpServlet {
 		int startRow=(pageNum-1)*5+1;
 		int endRow=startRow+4;
 		ReviewDao dao = ReviewDao.getInstance();
-		ArrayList<ReviewDto> list = dao.listReview(startRow,endRow);
+		ArrayList<ReviewDto> list = dao.listReview(startRow,endRow,pnum);
 		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
 		int startPageNum=((pageNum-1)/4)*4+1;
 		int endPageNum=startPageNum+3;
