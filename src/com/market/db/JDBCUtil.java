@@ -11,8 +11,8 @@ public class JDBCUtil {
 		Connection con = null;
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			//String url = "jdbc:oracle:thin:@192.168.0.13:1521:xe";
+			//String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String url = "jdbc:oracle:thin:@192.168.0.2:1521:xe";
 			con=DriverManager.getConnection(url,"scott","tiger");
 			return con;
 		}catch (ClassNotFoundException ce) {

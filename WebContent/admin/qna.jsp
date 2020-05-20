@@ -12,6 +12,10 @@ table, th, td {
 .align-left {
 	text-align: left;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -87,6 +91,7 @@ table, th, td {
 			</div>
 		</div>
 	</div>
+	<div id="page-div" class="row"></div>
 </div>
 <script>
 	$(document).ready(function() {
@@ -124,7 +129,7 @@ table, th, td {
 	//답변 등록//
 	
 	//검색 input text 엔터키 이벤트//
-	$("#txtWord").keydown(function(e) {
+ 	$("#txtWord").keydown(function(e) {
 		if(e.keyCode == 13){
 			$("#btnSearch").click();	
 		}
@@ -140,17 +145,18 @@ table, th, td {
 	//검색 버튼 이벤트//
 	
 	//qna 목록 로드//
-	function qnaListLoad(kind,word){
+	function qnaListLoad(kind,word,pageNum){
 		jQuery.ajax({
 			dataType:"JSON",
 			url:`${cp}/admin/qnaList.do`,
 			method:"get",
 			data:{word:word,
-				kind:kind},
+				kind:kind,
+				pageNum:pageNum},
 			success:function(data){
 				tbody = $("#qna-table>tbody");
 				tbody.empty();
-				for(let dto of data){
+				for(let dto of data[0]){
 					let replyIcon = "";
 					let row = "";
 					if(dto.level >= 2){
@@ -178,6 +184,43 @@ table, th, td {
 					}
 				}
 				
+				//페이징//
+				pageDiv = $("#page-div");
+				pageDiv.empty();
+				
+				let startPageNum = data[1];
+				let endPageNum = data[2];
+				let pageNum = data[3];
+				let pageCount = data[4];
+				
+				let row = "<nav>";
+				row += "<ul class='pagination'>";
+				
+				if(startPageNum != 1){
+					row += "<li>";
+					row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<span aria-hidden='true'>&laquo</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				for(let i=startPageNum;i<=endPageNum;i++){
+					row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
+				}
+				
+				if(pageCount > endPageNum){
+					row += "<li>";
+					row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<span aria-hidden='true'>&raquo;</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				row += "</ul>";
+				row += "</nav>";
+				pageDiv.append(row);
+				//페이징//
+				
 				//글 선택 이벤트//
 				$("#qna-table>tbody>tr").click(function() {
 					$("#queQnum").val($(this).children().eq(0).text());
@@ -190,4 +233,8 @@ table, th, td {
 		});
 	}
 	//qna 목록 로드//
+	
+	function pageMove(page){
+		qnaListLoad("","",page);
+	}
 </script>

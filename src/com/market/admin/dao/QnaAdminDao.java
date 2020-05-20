@@ -22,7 +22,7 @@ public class QnaAdminDao {
 
 	}
 
-	public ArrayList<QnaAdminDto> selQnaList(String kind, String word) {
+	public ArrayList<QnaAdminDto> selQnaList(int startRow,int endRow,String kind, String word) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -42,21 +42,34 @@ public class QnaAdminDao {
 //						+ kind + " like '%" + word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
 //			}
 			if (kind.equals("")) {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
+				sql = "select * from("
+						+ "select aa.*,rownum rnum "
+						+ "from(select a.*,"
+						+ "			(select name "
+						+ "			from category "
+						+ "			where cnum in(b.cnum) "
+						+ "			and type in(b.type)) cname,"
+						+ "			b.name pname,level"
+						+ "			from qna a inner join product b"
+						+ "			on a.pnum = b.pnum"
+						+ "			where a.del_yn = 'N'"
+						+ "			and b.del_yn = 'N' "
+						+ "			start with ref is null "
+						+ "			connect by prior a.qnum = ref "
+						+ "			ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 			} else if (kind.equals("pname")) {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
-						+ word
-						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
+				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where b.name like '%"+word+"%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 			} else if (kind.equals("cname")) {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' and b.type in(select type from category where name like '%"
-						+ word
-						+ "%') start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
+				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' and b.type in(select type from category where name like '%"+word+"%') start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
+			} else if (kind.equals("title")){
+				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.name like '%"+word+"%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 			} else {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.name like '%"
-						+ word
-						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
+				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.name like '%"+word+"%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 			}
+			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
 			while (rs.next()) {
@@ -132,6 +145,34 @@ public class QnaAdminDao {
 			return rs.getInt("maxnum");
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	
+	public int selQnaCount(String kind, String word) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "";
+			if (kind.equals("")) {
+				sql = "select nvl(count(*),0) cnt from qna";
+			} else if (kind.equals("pname")) {
+				sql = "select nvl(count(*),0) cnt from qna a inner join product b on a.pnum = b.pnum where b.name like '%"+word+"%'";
+			} else if (kind.equals("cname")) {
+				sql = "select nvl(count(*),0) cnt from qna a inner join product b on a.pnum = b.pnum where b.type in(select type from category where name like '%"+word+"%')";
+			} else {
+				sql = "select nvl(count(*),0) cnt from qna where name like '%"+word+"%'";
+			}
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			return -1;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
