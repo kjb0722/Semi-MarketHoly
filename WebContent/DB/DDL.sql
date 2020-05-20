@@ -42,7 +42,8 @@ CREATE TABLE common
 (
 	type varchar2(40) UNIQUE,
 	conum number,
-	name varchar2(50)
+	name varchar2(50),
+	val varchar2(30)
 );
 
 
