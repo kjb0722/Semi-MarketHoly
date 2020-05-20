@@ -25,7 +25,10 @@ public class ListController extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		MemberDto memberDto = (MemberDto) session.getAttribute("memberDto");
-		String id =memberDto.getId();
+		String id="";
+		if (memberDto != null) {
+			id=memberDto.getId();
+		}
 		// 카테고리
 		String sCnum = req.getParameter("cnum");
 		String list_filter = req.getParameter("list_filter");

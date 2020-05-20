@@ -179,9 +179,8 @@
 		var price=document.getElementById("price");
 		var sum=document.getElementById("sum");
 		
-		if(EA.innerHTML<=0){
-			alert("최소수량입니다");
-			sum.innerHTML=0;
+		if(EA.innerHTML<=1){
+			alert("최소수량입니다");  
 		}else{
 		EA.innerHTML =parseInt(EA.innerHTML)-1;
 		sum.innerHTML =parseInt(price.innerHTML)*parseInt(EA.innerHTML);  
