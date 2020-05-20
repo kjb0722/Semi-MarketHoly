@@ -45,7 +45,7 @@ public class SaleDao {
 		}
 	}
 
-	public ArrayList<SaleProdListDto> selProdList(int pCnum, int pType) {
+	public ArrayList<SaleProdListDto> selProdList(int startRow, int endRow, int pCnum, int pType) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -54,13 +54,23 @@ public class SaleDao {
 			con = JDBCUtil.getConn();
 			String sql = "";
 			if (pType == -1) {
-				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.type = "
-						+ pCnum + " and del_yn = 'N'";
+//				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.type = "
+//						+ pCnum + " and del_yn = 'N'";
+				sql = "select * from (select aa.*,rownum rnum from (select a.*"
+						+ " ,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName "
+						+ " from product a " + "where a.type = " + pCnum + " and del_yn = 'N') aa) where rnum >= ? "
+						+ " and rnum <= ?";
 			} else {
-				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.cnum = "
-						+ pCnum + " and type = " + pType + " and del_yn = 'N'";
+//				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.cnum = "
+//						+ pCnum + " and type = " + pType + " and del_yn = 'N'";
+				sql = "select * from select aa.*,rownum rnum from (select a.*"
+						+ " ,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName "
+						+ " from product a where a.cnum = " + pCnum + " and type = " + pType + " and del_yn = 'N') aa)"
+						+ " where rnum >= ? and rnum <= ?";
 			}
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int pnum = rs.getInt("pnum");
@@ -142,6 +152,25 @@ public class SaleDao {
 			return -1;
 		} finally {
 			JDBCUtil.close(null, pstmt, con);
+		}
+	}
+
+	public double selProdCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select nvl(count(*),0) cnt from product where del_yn = 'N'";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
 }

@@ -20,6 +20,10 @@ input[type="checkbox"] {
 	cursor: pointer;
 	zoom: 1.8;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -108,6 +112,7 @@ input[type="checkbox"] {
 			</table>
 		</div>
 	</div>
+	<div id="page-div" class="row"></div>
 </div>
 
 <script type="text/javascript">
@@ -356,13 +361,6 @@ input[type="checkbox"] {
 	
 	//상품 체크박스 전체 선택 이벤트
 	$("#chkbox-all").click(function(){
-		/* let chk = $(this).prop("checked");
-		$("#table-prod>tbody>tr").each(function(i, tr) {
-			if($(this).find("td").eq(6).text() == ""){
-				$(this).find("td").eq(0).children().prop("checked",chk);
-			}
-		}); */
-		
 		$("#table-prod>tbody>tr").each(function(i, tr) {
 			$(this).find("td").eq(0).children().prop("checked",$("#chkbox-all").prop("checked"));
 		});
@@ -400,7 +398,7 @@ input[type="checkbox"] {
 	//카테고리 변경시 세부 카테고리 로드//
 	
 	//상품 리스트 로드//
-	function prodListLoad(){
+	function prodListLoad(pageNum){
 		let num;
 		let catNum = -1;
 		let catTypeNum = -1;
@@ -424,11 +422,12 @@ input[type="checkbox"] {
 				url: `${cp}/admin/saleProdList.do`,
 				method:"get",
 				data:{catNum:catNum,
-					catTypeNum:catTypeNum},
+					catTypeNum:catTypeNum,
+					pageNum:pageNum},
 				success:function(data){
 					let table = $("#table-prod>tbody");
 					table.empty();
-					for(let dto of data){
+					for(let dto of data[0]){
 						let row = "<tr class='align-middle'>";
 						row += "<td><input type='checkbox' name='prod-chk'></td>";
 						row += "<td>"+dto.pnum+"</td>";
@@ -449,6 +448,43 @@ input[type="checkbox"] {
 						}
 					}
 					
+					//페이징//
+					pageDiv = $("#page-div");
+					pageDiv.empty();
+					
+					let startPageNum = data[1];
+					let endPageNum = data[2];
+					let pageNum = data[3];
+					let pageCount = data[4];
+					
+					let row = "<nav>";
+					row += "<ul class='pagination'>";
+					
+					if(startPageNum != 1){
+						row += "<li>";
+						row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+						row += "<span aria-hidden='true'>&laquo</span>";
+						row += "</a>";
+						row += "</li>";
+					}
+					
+					for(let i=startPageNum;i<=endPageNum;i++){
+						row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
+					}
+					
+					if(pageCount > endPageNum){
+						row += "<li>";
+						row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+						row += "<span aria-hidden='true'>&raquo;</span>";
+						row += "</a>";
+						row += "</li>";
+					}
+					
+					row += "</ul>";
+					row += "</nav>";
+					pageDiv.append(row);
+					//페이징//
+					
 					//세로 중앙 정렬
 					$("#table-prod>tbody>tr>td").css("vertical-align","middle");
 					
@@ -467,6 +503,10 @@ input[type="checkbox"] {
 		}
 	}
 	//상품 리스트 로드//
+	
+	function pageMove(page){
+		prodListLoad(page);
+	}
 	
 	//세부 카테고리 이벤트
 	$("#catType").change(function(){

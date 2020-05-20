@@ -11,8 +11,9 @@ nav {
 	padding: 0;
 	text-align: center;
 }
-.cursor-pointer{
-	cursor:pointer;
+
+.cursor-pointer {
+	cursor: pointer;
 }
 </style>
 <div class="container">
@@ -222,6 +223,7 @@ nav {
 				}
 			}
 			
+			//페이징//
 			pageDiv = $("#page-div");
 			pageDiv.empty();
 			
@@ -244,8 +246,7 @@ nav {
 			for(let i=startPageNum;i<=endPageNum;i++){
 				row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
 			}
-			console.log(pageCount);
-			console.log(endPageNum);
+			
 			if(pageCount > endPageNum){
 				row += "<li>";
 				row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
@@ -257,6 +258,7 @@ nav {
 			row += "</ul>";
 			row += "</nav>";
 			pageDiv.append(row);
+			//페이징//
 			
 			//삭제 이벤트
 			$("button[name=btnDelete]").click(function() {

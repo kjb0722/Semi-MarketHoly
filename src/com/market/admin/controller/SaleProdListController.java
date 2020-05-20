@@ -20,12 +20,30 @@ import com.market.admin.dto.SaleProdListDto;
 public class SaleProdListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		final int PAGE_CNT = 10; // 글 목록 개수
+		final double PAGE_BLOCK = 10.0; // 페이지 블록
+		String spageNum = req.getParameter("pageNum");
+		int pageNum = 1;
+		if (spageNum != null) {
+			pageNum = Integer.parseInt(spageNum);
+		}
+		int startRow = (pageNum - 1) * PAGE_CNT + 1;
+		int endRow = (startRow + PAGE_CNT) - 1;
+		
 		int catNum = Integer.parseInt(req.getParameter("catNum"));
 		int catTypeNum = Integer.parseInt(req.getParameter("catTypeNum"));
 		
 		SaleDao dao = SaleDao.getInstance();
-		ArrayList<SaleProdListDto> prodList = dao.selProdList(catNum, catTypeNum);
+		ArrayList<SaleProdListDto> prodList = dao.selProdList(startRow, endRow, catNum, catTypeNum);
 		
+		int pageCount = (int) Math.ceil(dao.selProdCount() / PAGE_BLOCK);
+		int startPageNum = (int) (Math.floor((pageNum - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1);
+		int endPageNum = (int) (startPageNum + (PAGE_BLOCK - 1));
+		if (pageCount < endPageNum) {
+			endPageNum = pageCount;
+		}
+		
+		JSONArray jsonArr = new JSONArray();
 		JSONArray jarr = new JSONArray();
 		for (SaleProdListDto dto : prodList) {
 			JSONObject json = new JSONObject();
@@ -41,8 +59,13 @@ public class SaleProdListController extends HttpServlet {
 			jarr.put(json);
 		}
 
+		jsonArr.put(jarr);
+		jsonArr.put(startPageNum);
+		jsonArr.put(endPageNum);
+		jsonArr.put(pageNum);
+		jsonArr.put(pageCount);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw = resp.getWriter();
-		pw.print(jarr);
+		pw.print(jsonArr);
 	}
 }
