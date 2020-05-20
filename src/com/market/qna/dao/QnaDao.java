@@ -68,7 +68,7 @@ public class QnaDao {
 			*/
 			
 			
-			String sql2="insert into qna values(?,?,?,?,?,?,?,-1,sysdate,'N',?)";	
+			String sql2="insert into qna values(?,?,?,?,?,?,?,null,sysdate,'N',?)";	
 			pstmt2=con.prepareStatement(sql2);
 			pstmt2.setInt(1, dto.getPnum());
 			pstmt2.setInt(2, dto.getNum());
