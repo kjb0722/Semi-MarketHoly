@@ -9,68 +9,81 @@
 
 <img src="${pageContext.request.contextPath }/img/${dto.thumb_save}"
 	width="300px" height="400px">
+<div class="pull-right">
 <h1>${dto.name}</h1>
 <h4>${dto.description}</h4>
 <h2>${dto.price}</h2>
 구매수량
-<br>
+<button type="button" class="btn btn-default" onclick="minus()">
+		<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+	</button>
+	&nbsp<label id="EA">1</label>&nbsp
+	<button type="button" class="btn btn-default" onclick="plus()">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	</button><br>
+	<input type="hidden" id="price" value="${dto.price }">
+	총 상품금액 : <label id="sum">${dto.price }</label> 원<br>
+	<input type="button" value="장바구니 담기" onclick="incart()">
+</div>
 
-<button type="button" class="btn btn-default">
-	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-</button>
-<input type="text" id="EA">
-<button type="button" class="btn btn-default">
-	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-</button>
 
-총 상품금액 : ${dto.price } 원
-<br>
 
-<input type="button" value="장바구니 담기" onclick="incart()">
-<br>
+<div class="container">
+	<ul id="myTab" class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#discript"
+			id="discript-tab" role="tab" data-toggle="tab"
+			aria-controls="discript" aria-expanded="false"> 상품설명</a></li>
+		<li role="presentation" class=""><a href="#review" role="tab"
+			id="review-tab" data-toggle="tab" aria-controls="review"
+			aria-expanded="true">상품후기</a></li>
+		<li role="presentation" class=""><a href="#qna" role="tab"
+			id="qna-tab" data-toggle="tab" aria-controls="qna"
+			aria-expanded="true">상품문의</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div role="tabpanel" class="tab-pane fade" id="discript"
+			aria-labelledby="discript-tab">
+			<p>상품설명</p>
+		</div>
+		<div role="tabpanel" class="tab-pane fade active in" id="review"
+			aria-labelledby="review-tab">
+			<p>상품후기</p>
+		</div>
+		<div role="tabpanel" class="tab-pane fade active in" id="qna"
+			aria-labelledby="qna-tab">
+			<p>상품문의</p>
+		</div>
+	</div>
+</div>
+
 <script>
-
+function plus() {
+	var EA=document.getElementById("EA");
+	var price=document.getElementById("price").value;
+	var sum=document.getElementById("sum");
+	EA.innerHTML=parseInt(EA.innerHTML)+1;
+	sum.innerHTML =price*parseInt(EA.innerHTML); 
+}
+function minus() {
+	var EA=document.getElementById("EA");
+	var price=document.getElementById("price").value;
+	var sum=document.getElementById("sum");
+	
+	if(EA.innerHTML<=1){
+		alert("최소수량입니다");  
+	}else{
+	EA.innerHTML =parseInt(EA.innerHTML)-1;
+	sum.innerHTML =price*parseInt(EA.innerHTML);  
+	}
+}
 function incart() {		
 	var id='${sessionScope.memberDto.id}';
 	var pnum=${param.pnum};
-	var EA=document.getElementById("EA").value;
-	location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+EA;
+	var EA=document.getElementById("EA");
+	location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+parseInt(EA.innerHTML);
 	
 }
 	
 
 	
 </script>
-------------------하단 탭 (상품설명/상품이미지/고객후기/상품문의 )
-
-<div class="container">
-
-  <h2>탭</h2>
-
-  <ul id="myTab" class="nav nav-tabs" role="tablist">
-    <li role="presentation" class=""><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Home</a></li>
-    <li role="presentation" class="active"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a></li>
-    <li role="presentation" class="dropdown">
-      <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents">Dropdown <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-        <li><a href="#dropdown1" tabindex="-1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-        <li><a href="#dropdown2" tabindex="-1" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-      </ul>
-    </li>
-  </ul>
-  <div id="myTabContent" class="tab-content">
-    <div role="tabpanel" class="tab-pane fade" id="home" aria-labelledby="home-tab">
-      <p>Home content</p>
-    </div>
-    <div role="tabpanel" class="tab-pane fade active in" id="profile" aria-labelledby="profile-tab">
-      <p>Profile content</p>
-    </div>
-    <div role="tabpanel" class="tab-pane fade" id="dropdown1" aria-labelledby="dropdown1-tab">
-      <p>@fat content</p>
-    </div>
-    <div role="tabpanel" class="tab-pane fade" id="dropdown2" aria-labelledby="dropdown2-tab">
-      <p>@mdo content</p>
-    </div>
-  </div>
-
-</div>
