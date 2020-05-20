@@ -22,7 +22,7 @@
 		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 	</button><br>
 	<input type="hidden" id="price" value="${dto.price }">
-	총 상품금액 : <label id="sum"></label> 원<br>
+	총 상품금액 : <label id="sum">${dto.price }</label> 원<br>
 	<input type="button" value="장바구니 담기" onclick="incart()">
 </div>
 
@@ -59,28 +59,28 @@
 <script>
 function plus() {
 	var EA=document.getElementById("EA");
-	var price=document.getElementById("price");
+	var price=document.getElementById("price").value;
 	var sum=document.getElementById("sum");
 	EA.innerHTML=parseInt(EA.innerHTML)+1;
-	sum.innerHTML =parseInt(price.innerHTML)*parseInt(EA.innerHTML); 
+	sum.innerHTML =price*parseInt(EA.innerHTML); 
 }
 function minus() {
 	var EA=document.getElementById("EA");
-	var price=document.getElementById("price");
+	var price=document.getElementById("price").value;
 	var sum=document.getElementById("sum");
 	
 	if(EA.innerHTML<=1){
 		alert("최소수량입니다");  
 	}else{
 	EA.innerHTML =parseInt(EA.innerHTML)-1;
-	sum.innerHTML =parseInt(price.innerHTML)*parseInt(EA.innerHTML);  
+	sum.innerHTML =price*parseInt(EA.innerHTML);  
 	}
 }
 function incart() {		
 	var id='${sessionScope.memberDto.id}';
 	var pnum=${param.pnum};
-	var EA=document.getElementById("EA").value;
-	location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+EA;
+	var EA=document.getElementById("EA");
+	location = "${cp }/member/cartAdd.do?pnum="+pnum+"&id="+id+"&EA="+parseInt(EA.innerHTML);
 	
 }
 	
