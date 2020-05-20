@@ -16,9 +16,10 @@ import com.market.review.dto.ReviewDto;
 public class ListReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
 		String spageNum=req.getParameter("pageNum");
 	
-		
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);

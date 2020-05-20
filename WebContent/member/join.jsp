@@ -68,7 +68,7 @@
 		<input type="radio" name="gender" value="2" >여자<br>
 		
 			
-		<label for="exampleInputEmail1">생년월일* </label>	
+		<label for="exampleInputEmail1">생년월일 </label>	
 		<div class="input input-group mb-3"> 	
 		  <input type="text" name="birth" class="form-control" placeholder="YYYY/MM/DD" aria-label="Recipient's username" aria-describedby="button-addon2">	
 		</div>	
