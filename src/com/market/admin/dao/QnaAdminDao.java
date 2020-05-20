@@ -42,13 +42,8 @@ public class QnaAdminDao {
 //						+ kind + " like '%" + word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
 //			}
 			if (kind.equals("")) {
-				sql = "select * from(" + "select aa.*,rownum rnum " + "from(select a.*," + "			(select name "
-						+ "			from category " + "			where cnum in(b.cnum) "
-						+ "			and type in(b.type)) cname," + "			b.name pname,level"
-						+ "			from qna a inner join product b" + "			on a.pnum = b.pnum"
-						+ "			where a.del_yn = 'N'" + "			and b.del_yn = 'N' "
-						+ "			start with ref is null " + "			connect by prior a.qnum = ref "
-						+ "			ORDER SIBLINGS BY a.qnum desc) aa) " + "where rnum >= ? and rnum <= ?";
+				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname, b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) "
+						+ "where rnum >= ? and rnum <= ?";
 			} else if (kind.equals("pname")) {
 				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
 						+ word
@@ -66,7 +61,6 @@ public class QnaAdminDao {
 						+ word
 						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 			}
-			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
