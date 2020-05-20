@@ -26,7 +26,7 @@ public class MypageDao {
 		
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "";
+			//String sql = "";
 			
 			
 			
