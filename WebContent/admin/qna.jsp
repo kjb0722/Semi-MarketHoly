@@ -4,8 +4,13 @@
 table, th, td {
 	text-align: center;
 }
-.hidden{
+
+.hidden {
 	display: none;
+}
+
+.align-left {
+	text-align: left;
 }
 </style>
 <div class="container">
@@ -33,14 +38,15 @@ table, th, td {
 			<table class="table table-bordered" id="qna-table">
 				<thead>
 					<tr>
-						<th>번호</th>
-						<th>카테고리</th>
-						<th>상품명</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
+						<th style="width: 5%">번호</th>
+						<th style="width: 13%">카테고리</th>
+						<th style="width: 27%">상품명</th>
+						<th style="width: 34%">제목</th>
+						<th style="width: 8%">작성자</th>
+						<th style="width: 13%">작성일</th>
 						<th class="hidden">내용</th>
 						<th class="hidden">상품 번호</th>
+						<th class="hidden">level</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -106,7 +112,9 @@ table, th, td {
 				pnum:pnum},
 			success:function(data){
 				if(data.n > 0){
-					alert("답변 등록 완료");	
+					alert("답변 등록 완료");
+					$("#qnaAnswer").modal("hide");
+					qnaListLoad("","");
 				}else{
 					location = `${cp}/error.do`;
 				}
@@ -143,17 +151,31 @@ table, th, td {
 				tbody = $("#qna-table>tbody");
 				tbody.empty();
 				for(let dto of data){
-					let row = "<tr data-toggle='modal' data-target='#qnaAnswer'>";
+					let replyIcon = "";
+					let row = "";
+					if(dto.level >= 2){
+						replyIcon = "<span class='glyphicon glyphicon-check'></span>";
+						row += "<tr>";
+					}else{
+						replyIcon = "<span class='glyphicon glyphicon-question-sign'></span>";
+						row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
+					}
+					//row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
 					row += "<td>"+dto.qnum+"</td>";
 					row += "<td>"+dto.cname+"</td>";
 					row += "<td>"+dto.pname+"</td>";
-					row += "<td>"+dto.title+"</td>";
+					row += "<td class='align-left'>"+replyIcon+dto.title+"</td>";
 					row += "<td>"+dto.writer+"</td>";
 					row += "<td>"+dto.reg_date+"</td>";
 					row += "<td class='hidden'>"+dto.content+"</td>";
 					row += "<td class='hidden'>"+dto.pnum+"</td>";
+					row += "<td class='hidden'>"+dto.level+"</td>";
 					row += "</tr>";
 					tbody.append(row);
+					
+					if(dto.level>=2){
+						tbody.find("tr").last().css("color","blue");					
+					}
 				}
 				
 				//글 선택 이벤트//
@@ -162,7 +184,7 @@ table, th, td {
 					$("#queContent").val($(this).children().eq(6).text());
 					$("#quePnum").val($(this).children().eq(7).text());
 					$("#ansTitle").val("");
-					$("#ansContent").val("");
+					$("#ansContent").val("");	
 				});
 			}
 		});

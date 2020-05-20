@@ -29,17 +29,32 @@ public class QnaAdminDao {
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "";
+//			if (kind.equals("")) {
+//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//			} else if (kind.equals("pname")) {
+//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
+//						+ word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//			} else if (kind.equals("cname")) {
+//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where type in(select type from category where name like '%"
+//						+ word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//			} else {
+//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where "
+//						+ kind + " like '%" + word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//			}
 			if (kind.equals("")) {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
 			} else if (kind.equals("pname")) {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
-						+ word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
+						+ word
+						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
 			} else if (kind.equals("cname")) {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where type in(select type from category where name like '%"
-						+ word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' and b.type in(select type from category where name like '%"
+						+ word
+						+ "%') start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
 			} else {
-				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where "
-						+ kind + " like '%" + word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.name like '%"
+						+ word
+						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc";
 			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -53,7 +68,8 @@ public class QnaAdminDao {
 				Date reg_date = rs.getDate("reg_date");
 				String content = rs.getString("content");
 				int pnum = rs.getInt("pnum");
-				list.add(new QnaAdminDto(qnum, cname, pname, title, name, reg_date, content, pnum));
+				int level = rs.getInt("level");
+				list.add(new QnaAdminDto(qnum, cname, pname, title, name, reg_date, content, pnum, level));
 			}
 			return list;
 		} catch (SQLException e) {
@@ -71,10 +87,10 @@ public class QnaAdminDao {
 		try {
 			con = JDBCUtil.getConn();
 			con.setAutoCommit(false);
-			String sql2 = "update qna set qnum=qnum+1 where qnum > ?";
+			String sql2 = "update qna set qnum=qnum+1,ref=ref+1 where qnum >= ?";
 			pstmt2 = con.prepareStatement(sql2);
 			pstmt2.setInt(1, dto.getQnum());
-			int n = pstmt2.executeUpdate();			
+			int n = pstmt2.executeUpdate();
 			if (n > 0) {
 				String sql = "insert into qna values(?,?,?,?,?,?,?,?,sysdate,'N','N')";
 				pstmt = con.prepareStatement(sql);
@@ -85,7 +101,7 @@ public class QnaAdminDao {
 				pstmt.setString(5, dto.getName());
 				pstmt.setString(6, dto.getTitle());
 				pstmt.setString(7, dto.getContent());
-				pstmt.setInt(8, dto.getRef());
+				pstmt.setInt(8, dto.getRef() + 1);
 				return pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
