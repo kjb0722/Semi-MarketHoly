@@ -14,11 +14,14 @@ public class QnaDto {
 	private Date reg_date;
 	private String del_yn;
 	private String locker;
+	private int level;
 	
 	public QnaDto() {}
 
+
+
 	public QnaDto(int pnum, int num, int qnum, String id, String name, String title, String content, int ref,
-			Date reg_date, String del_yn, String locker) {
+			Date reg_date, String del_yn, String locker, int level) {
 		super();
 		this.pnum = pnum;
 		this.num = num;
@@ -31,6 +34,17 @@ public class QnaDto {
 		this.reg_date = reg_date;
 		this.del_yn = del_yn;
 		this.locker = locker;
+		this.level = level;
+	}
+
+
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	public int getPnum() {

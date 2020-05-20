@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -10,64 +9,68 @@
 </head>
 <body>
 
-<div class="container">
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>qna번호</th>
-				<th>제목</th>
-				<th>아이디</th>
-				<th>등록일</th>
-			</tr>
-			<tr style='display:none'>
-				<th></th>
-				<th></th>
-				<th>내용</th>
-				<th></th>
-			</tr>
-			
-			
-		</thead>
-		<c:forEach var='dto' items='${list }'>
-			<tbody>
-				<tr onclick="showHidden(${dto.qnum},'${dto.id }','${dto.locker }')">					
-					<td>${dto.qnum }</td>
-					<c:choose>
-						<c:when test="${dto.locker == 'Y'}">
-							<td>	
-								<c:if test="${dto.ref>0 }">
-									<c:forEach var="i" begin="1" end="${dto.ref }">
+	<div class="container">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>qna번호</th>
+					<th>제목</th>
+					<th>아이디</th>
+					<th>등록일</th>
+				</tr>
+				<tr style='display: none'>
+					<th></th>
+					<th></th>
+					<th>내용</th>
+					<th></th>
+				</tr>
+
+
+			</thead>
+			<c:forEach var='dto' items='${list }'>
+				<tbody>
+					<tr onclick="showHidden(${dto.qnum},'${dto.id }','${dto.locker }')">
+						<td>${dto.qnum }</td>
+						<%-- <c:choose>
+							<c:when test="${dto.locker == 'Y'}">
+								<td><c:if test="${dto.ref>0 }">
+										<c:forEach var="i" begin="1" end="${dto.ref }">
 									&nbsp;&nbsp;
 									</c:forEach>
 									[re]
-								</c:if>
-							${dto.title } <img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px"></td>
-						</c:when>
-						<c:otherwise>
-							<td>
-							<c:if test="${dto.ref>0 }">
-								<c:forEach var="i" begin="1" end="${dto.ref }">
+								</c:if> ${dto.title } <img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px"></td>
+							</c:when>
+							<c:otherwise>
+								<td><c:if test="${dto.ref>0 }">
+										<c:forEach var="i" begin="1" end="${dto.ref }">
 								&nbsp;&nbsp;
 								</c:forEach>
 								[re]
-							</c:if>
-							${dto.title } </td>
-						</c:otherwise>
-					</c:choose>
-					<td>${dto.id }</td>
-					<td>${dto.reg_date }</td>
-				</tr>
-				<tr id='${dto.qnum }' style='display:none;'>					
- 					<td>${dto.content }</td>
-				</tr>	
-				
-			</tbody>	
-		</c:forEach>	
-	</table>
-</div>
-		<input type="button" value = "후기쓰기" style="float:right" onclick="location.href='${cp }/qna/writeQna.jsp'">
-		<br><br>
-<!-- 페이징처리 -->
+							</c:if> ${dto.title }</td>
+							</c:otherwise>
+						</c:choose> --%>
+
+						<td><c:forEach var="i" begin="1" end="${dto.level - 1 }">
+									[re]&nbsp;&nbsp;
+									</c:forEach> ${dto.title } <c:if test="${dto.level > 1 }">
+								<img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px">
+							</c:if></td>
+
+						<td>${dto.id }</td>
+						<td>${dto.reg_date }</td>
+					</tr>
+					<tr id='${dto.qnum }' style='display: none;'>
+						<td>${dto.content }</td>
+					</tr>
+
+				</tbody>
+			</c:forEach>
+		</table>
+	</div>
+	<input type="button" value="후기쓰기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp'">
+	<br>
+	<br>
+	<!-- 페이징처리 -->
 
 
 
