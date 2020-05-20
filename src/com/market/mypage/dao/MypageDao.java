@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.market.db.JDBCUtil;
 import com.market.mypage.dto.MypageReviewDto;
 import com.market.review.dao.ReviewDao;
+import com.market.review.dto.OrderListDto;
 
 public class MypageDao {
 	private static MypageDao instance = new MypageDao();
@@ -18,7 +19,27 @@ public class MypageDao {
 		return instance;
 	}
 	
-	
+	public ArrayList<OrderListDto> orderList(String ids){
+		Connection con= null;
+		PreparedStatement pstmt = null;
+		ResultSet rs= null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "";
+			
+			
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+		
+		
+	}
 	
 	
 	

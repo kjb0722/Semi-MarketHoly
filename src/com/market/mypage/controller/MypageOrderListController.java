@@ -20,7 +20,7 @@ public class MypageOrderListController extends HttpServlet {
 		HttpSession session = req.getSession();
 		MemberDto dto = (MemberDto)session.getAttribute("memberDto");
 		MypageDao dao = MypageDao.getInstance();
-		//dao.orderList(dto.getId());
+		dao.orderList(dto.getId());
 				
 	}
 }
