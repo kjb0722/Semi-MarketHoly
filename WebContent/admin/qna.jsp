@@ -115,7 +115,15 @@ nav {
 			url: `${cp}/admin/qnaUnanswerList.do`,
 			method:"get",
 			success:function(data){
-				tbodyRowAdd(data);
+				tbodyRowAdd(data[0]);
+				
+				//페이징//
+				pagination(data);
+				//페이징//
+				
+				//글 선택 모달 이벤트//
+				setAnswerModalVal();
+				//글 선택 모달 이벤트//
 			}
 		});
 	}
@@ -208,57 +216,67 @@ nav {
 				kind:kind,
 				pageNum:pageNum},
 			success:function(data){
+				//테이블 row 추가
 				tbodyRowAdd(data[0]);
 				
 				//페이징//
-				pageDiv = $("#page-div");
-				pageDiv.empty();
-				
-				let startPageNum = data[1];
-				let endPageNum = data[2];
-				let pageNum = data[3];
-				let pageCount = data[4];
-				
-				let row = "<nav>";
-				row += "<ul class='pagination'>";
-				
-				if(startPageNum != 1){
-					row += "<li>";
-					row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
-					row += "<span aria-hidden='true'>&laquo</span>";
-					row += "</a>";
-					row += "</li>";
-				}
-				
-				for(let i=startPageNum;i<=endPageNum;i++){
-					row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
-				}
-				
-				if(pageCount > endPageNum){
-					row += "<li>";
-					row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
-					row += "<span aria-hidden='true'>&raquo;</span>";
-					row += "</a>";
-					row += "</li>";
-				}
-				
-				row += "</ul>";
-				row += "</nav>";
-				pageDiv.append(row);
+				pagination(data);
 				//페이징//
 				
-				//글 선택 이벤트//
-				$("#qna-table>tbody>tr").click(function() {
-					$("#queQnum").val($(this).children().eq(0).text());
-					$("#queContent").val($(this).children().eq(6).text());
-					$("#quePnum").val($(this).children().eq(7).text());
-					$("#ansTitle").val("");
-					$("#ansContent").val("");	
-				});
+				//글 선택 모달 이벤트//
+				setAnswerModalVal();
+				//글 선택 모달 이벤트//
 			}
 		});
 	}
 	//qna 목록 로드//
+	
+	function setAnswerModalVal(){
+		$("#qna-table>tbody>tr").click(function() {
+			$("#queQnum").val($(this).children().eq(0).text());
+			$("#queContent").val($(this).children().eq(6).text());
+			$("#quePnum").val($(this).children().eq(7).text());
+			$("#ansTitle").val("");
+			$("#ansContent").val("");	
+		});
+	}
+	
+	function pagination(data){
+		pageDiv = $("#page-div");
+		pageDiv.empty();
+		
+		let startPageNum = data[1];
+		let endPageNum = data[2];
+		let pageNum = data[3];
+		let pageCount = data[4];
+		
+		let row = "<nav>";
+		row += "<ul class='pagination'>";
+		
+		if(startPageNum != 1){
+			row += "<li>";
+			row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+			row += "<span aria-hidden='true'>&laquo</span>";
+			row += "</a>";
+			row += "</li>";
+		}
+		
+		for(let i=startPageNum;i<=endPageNum;i++){
+			row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
+		}
+		
+		if(pageCount > endPageNum){
+			row += "<li>";
+			row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+			row += "<span aria-hidden='true'>&raquo;</span>";
+			row += "</a>";
+			row += "</li>";
+		}
+		
+		row += "</ul>";
+		row += "</nav>";
+		pageDiv.append(row);
+	}
 	
 	function pageMove(page){
 		qnaListLoad("","",page);

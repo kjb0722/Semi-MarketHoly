@@ -174,14 +174,14 @@ public class QnaAdminDao {
 		}
 	}
 
-	public ArrayList<QnaAdminDto> selUnanswerList() {
+	public ArrayList<QnaAdminDto> selUnanswerList(int startRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N'";
+			String sql = "select * from(select aa.*, rownum rnum from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N') aa) where rnum>=1 and rnum<=10";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -199,6 +199,26 @@ public class QnaAdminDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public int selUnanswerCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select nvl(count(*),0) cnt from qna a where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N'";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
