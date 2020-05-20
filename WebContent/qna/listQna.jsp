@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>/qna/listQna.jsp</title>
-</head>
-<body>
-
 	<div class="container">
 		<table class="table table-striped">
 			<thead>
@@ -79,10 +71,6 @@
 
 
 
-
-
-</body>
-
 <script>
 	function showHidden(dtoQnum,dtoId,dtoLocker) {
 		var id =document.getElementById(dtoQnum);
@@ -99,6 +87,3 @@
 	}
 	
 </script>
-
-
-</html>
