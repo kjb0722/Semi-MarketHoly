@@ -24,11 +24,11 @@
 			
 			<c:forEach var="cart1" items="${requestScope.cart }">
 			<tr>
-				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}"></td>
+				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}" onchange="showBox()"></td>
 				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px" height="100px">
 				<td>${cart1.name}</td>
 				<td>${cart1.EA}</td>
-				<td>${cart1.price}</td>
+				<td><input type="hidden" name="cart-price" value='${cart1.price}'>${cart1.price}</td>
 			</tr>
 			</c:forEach>
 		</table>
@@ -46,11 +46,10 @@
 </style>
 <form action="${cp}/order.do" method="get">
 	<div id="outbox" class="container" style="padding-left: 110px;padding-top: 100px" >
-		<c:forEach var="cart1" items="${requestScope.cart }">
-			<input type="text" name="test" value="${cart1.price }">
 		<div id="box1" class="a b">
 			<span>상품금액</span><br>
-			<span id="s">${cart1.price}원</span>
+			<span id="s">0</span>
+			
 		</div>
 				<div class="mini b">
 				<span id="minimini">-</span>
@@ -58,7 +57,7 @@
 		
 		<div id="box2" class="a b">
 			<span>상품할인금액 </span><br>
-			<span id="s">원</span><!-- cart.percent -->
+			<span id="s"></span><!-- cart.percent -->
 		</div>
 				<div class="mini b">
 				<span id="minimini">+</span>
@@ -74,23 +73,41 @@
 				</div>
 	
 		<div id="box3" class="a b">
-			<span>상품금액</span><br>
+			<span>결제금액</span><br>
+			<span id="s">${cart1.price+2500}원</span>
 		</div>
-			</c:forEach>
 		
-		<button type="submit" class="btn btn-info"></button>
 	</div>	
+		<br><button type="submit" class="btn btn-info"></button>
 </form>
 
 <script>
 	function allcheck() {
 		var allchecked = document.getElementById("allchecked");
 		var undercheck = document.getElementsByName("undercheck");
-
 		for (var i = 0; i < undercheck.length; i++) {
 			undercheck[i].checked = allchecked.checked;
+			var price = parseInt(s.innerHTML);
+			price += parseInt(cartPrice[i].value); 
+			s.innerHTML = price;	
 		}
 	
+	}
+	
+	function showBox() {
+		var undercheck = document.getElementsByName("undercheck");
+		var cartPrice = document.getElementsByName("cart-price");
+		var s = document.getElementById("s");
+		s.innerHTML = 0;
+		for(var i=0;i<undercheck.length;i++){
+			if (undercheck[i].checked==true) {
+				var price = parseInt(s.innerHTML);
+				price += parseInt(cartPrice[i].value); 
+				s.innerHTML = price;	
+			}
+			
+		}
+		
 	}
 
 	var selectdel=document.getElementById("selectdel");
