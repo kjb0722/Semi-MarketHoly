@@ -22,13 +22,21 @@
 			</tr>
 
 			
-			<c:forEach var="cart1" items="${requestScope.cart }">
+			<c:forEach var="cart1" items="${requestScope.cart }" varStatus="status" >
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}" onchange="showBox()"></td>
 				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px" height="100px">
 				<td>${cart1.name}</td>
-				<td>${cart1.EA}</td>
-				<td><input type="hidden" name="cart-price" value='${cart1.price}'>${cart1.price}</td>
+				<td><button type="button" class="btn btn-default" onclick="minus(${status.index})">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+				&nbsp<label class="EA">${cart1.EA}</label>&nbsp
+				<button type="button" class="btn btn-default" onclick="plus(${status.index})">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button></td>
+				<td><input type="hidden" name="cart-price" value='${cart1.price}'>
+				<label class="sum">${cart1.price*cart1.EA}</label>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
@@ -87,9 +95,8 @@
 		var undercheck = document.getElementsByName("undercheck");
 		for (var i = 0; i < undercheck.length; i++) {
 			undercheck[i].checked = allchecked.checked;
-			var price = parseInt(s.innerHTML);
-			price += parseInt(cartPrice[i].value); 
-			s.innerHTML = price;	
+			showBox();
+			
 		}
 	
 	}
@@ -107,7 +114,29 @@
 			}
 			
 		}
+	
+	}
+	function plus(index) {
+		//var EA=document.getElementById("EA");
+		var EA = document.querySelectorAll(".EA");
+		var sum = document.querySelectorAll(".sum");
+		var cartPrice = document.getElementsByName("cart-price");
 		
+		EA[index].innerHTML=parseInt(EA[index].innerHTML)+1;
+		sum[index].innerHTML = cartPrice[index].value * parseInt(EA[index].innerHTML);  
+	}
+	function minus(index) {
+		var EA = document.querySelectorAll(".EA");	
+		var sum = document.querySelectorAll(".sum");
+		var cartPrice = document.getElementsByName("cart-price");
+
+			if(EA[index].innerHTML<=1){
+				alert("최소수량입니다");
+			}else{
+			
+			EA[index].innerHTML =parseInt(EA[index].innerHTML)-1; 
+			sum[index].innerHTML = cartPrice[index].value * parseInt(EA[index].innerHTML);  
+		}
 	}
 
 	var selectdel=document.getElementById("selectdel");
