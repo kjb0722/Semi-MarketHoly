@@ -496,7 +496,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "update member set del_yn = 'Y' where num = ?";
+			String sql = "update member set del_yn = 'Y',del_date=sysdate where num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			return pstmt.executeUpdate();
