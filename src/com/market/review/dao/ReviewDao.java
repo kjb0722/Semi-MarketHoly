@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.market.db.JDBCUtil;
+import com.market.member.dto.MemberDto;
 import com.market.review.dto.ReviewDto;
 
 
@@ -17,6 +18,53 @@ public class ReviewDao {
 	public static ReviewDao getInstance() {
 		return instance;
 	}
+	
+	
+	public ReviewDto mypageReview(MemberDto dto) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs= null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select * from review where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getId());
+			rs =pstmt.executeQuery();
+		
+		ArrayList<ReviewDto> list = new ArrayList<ReviewDto>();	
+		while(rs.next()) {
+			int onum = rs.getInt("onum");
+			int pnum = rs.getInt("pnum");
+			int num = rs.getInt("num");
+			int rnum = rs.getInt("rnum");
+			String id = rs.getString("id");
+			String name = rs.getString("name");
+			String title = rs.getString("title");
+			String content = rs.getString("content");
+			Date regdate =  rs.getDate("regdate");
+			String orgfilename = rs.getString("orgfilename");
+			String savefilename = rs.getString("savefilename");
+			String del_yn = rs.getString("del_yn");
+			
+			ReviewDto dto = new ReviewDto(onum, pnum, num, rnum, id, name, title, content, regdate, orgfilename, savefilename, del_yn, pwd);
+			
+		}
+			
+			
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+	}
+	
+	
+	
+	
 	
 	public int writeReview(ReviewDto dto) {
 		Connection con = null;

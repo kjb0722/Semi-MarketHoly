@@ -178,8 +178,9 @@ CREATE TABLE review
 	title varchar2(50),
 	content varchar2(100),
 	reg_date date,
+	orgfilename varchar2(150),
+	savefilename varchar2(150),
 	del_yn varchar2(2),
-	pwd varchar2(40),
 	UNIQUE (onum, pnum, num)
 );
 
