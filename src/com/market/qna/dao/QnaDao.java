@@ -107,7 +107,7 @@ public class QnaDao {
 		}
 	}
 
-	public ArrayList<QnaDto> list(int startRow, int endRow) {
+	public ArrayList<QnaDto> list(int startRow, int endRow, int pnums) {
 //		String sql="select * from"
 //				+ "(select aa.*,rownum rnums from "
 //				+ "(select * from qna order by num desc)aa) "
@@ -122,6 +122,7 @@ public class QnaDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+			pstmt.setInt(3, pnums);
 			rs = pstmt.executeQuery();
 			ArrayList<QnaDto> list = new ArrayList<QnaDto>();
 			while (rs.next()) {

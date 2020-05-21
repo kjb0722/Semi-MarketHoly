@@ -103,7 +103,7 @@ h1, h2, h3 {
 
 	<!-- qna탭 -->
 	<div class="tab-pane" id="qna">
-		<a href="${cp }/qna/qnaList.do?pnum=${dto.pnum }"> 질문글보기</a>
+		<a href="${cp }/qna/qnaList.do"> 질문글보기</a>
 	</div>
 </div>
 

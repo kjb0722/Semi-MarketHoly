@@ -19,9 +19,9 @@
 
 
 			</thead>
-			<c:forEach var='dto' items='${list }'>
+			<c:forEach var='vo' items='${list }'>
 				<tbody>
-					<tr onclick="showHidden(${dto.qnum},'${dto.id }','${dto.locker }')">
+					<tr onclick="showHidden(${vo.qnum},'${vo.id }','${vo.locker }')">
 						<td>${dto.qnum }</td>
 						<%-- <c:choose>
 							<c:when test="${dto.locker == 'Y'}">
@@ -53,7 +53,7 @@
 								<img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px">
 							</c:if>
 						</td>
-						<td>${dto.id }</td>
+						<td>${id }</td>
 						<td>${dto.reg_date }</td>
 					</tr>
 					<tr id='${dto.qnum }' style='display: none;'>
@@ -64,7 +64,7 @@
 			</c:forEach>
 		</table>
 	</div>
-	<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp?pnum=${dto.pnum }&id=${dto.id }&num=${dto.num }'">
+	<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp?pnum=${vo.pnum }&id=${vo.id }&num=${vo.num }'">
 	<br>
 	<br>
 	<!-- 페이징처리 -->

@@ -20,6 +20,12 @@ public class QnaListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String sPnum=req.getParameter("pnum");
+		int pnum=1;
+			if(sPnum!=null) {
+				pnum=Integer.parseInt(req.getParameter("pnum"));
+			}
+		
 		
 		String spageNum=req.getParameter("pageNum");
 		int pageNum=1;
@@ -33,7 +39,7 @@ public class QnaListController extends HttpServlet {
 		
 		//페이지에 해당하는 글목록 가져오기
 
-		ArrayList<QnaDto> list=dao.list(startRow, endRow);
+		ArrayList<QnaDto> list=dao.list(startRow, endRow, pnum);
 		//System.out.println(list);
 
 		//전체 페이지갯수 구하기
@@ -48,11 +54,7 @@ public class QnaListController extends HttpServlet {
 		String id=(String)session.getAttribute("id");
 		
 	
-		String sPnum=req.getParameter("pnum");
-		int pnum=1;
-			if(sPnum!=null) {
-				pnum=Integer.parseInt(req.getParameter("pnum"));
-			}
+		
 		
 		
 		ProductDao pdao=new ProductDao();
