@@ -25,22 +25,28 @@ public class OrderController extends HttpServlet{
 			CartDao cdao=CartDao.getInstance();
 			ArrayList<CartDto> cart=cdao.getcart(id);
 			//하나하나의 바뀐가격도 가져오고 갯수도 가져와야함.
-			int total=Integer.parseInt(req.getParameter("total"));//총 상품금액
-			int EA=Integer.parseInt(req.getParameter("EA"));
-			int finalprice=Integer.parseInt(req.getParameter("finalprice"));
+			String []cartnum=req.getParameterValues("undercheck");
+			String []total=req.getParameterValues("total");
+			int finalprice=Integer.parseInt(req.getParameter("finalprice"));//총 상품금액
+			String []EA=req.getParameterValues("undercheck");
+			String []DCprice=req.getParameterValues("DCprice");
+			String []sum=req.getParameterValues("sum");
 			int shipping=Integer.parseInt(req.getParameter("shipping"));
-			int DCprice=Integer.parseInt(req.getParameter("DCprice"));
-			int changeEA=Integer.parseInt(req.getParameter("changeEA"));
-			int sum=Integer.parseInt(req.getParameter("sum"));//하나하나의 바뀐가격
 			
+//			for (int i=0;i<cartnum.length;i++) {
+//			Integer.parseInt(cartnum[i]);
+//			Integer.parseInt(EA[i]);
+//			Integer.parseInt(DCprice[i]);
+//			Integer.parseInt(sum[i]);
+//			
 		
 			//상품정보 리스트(장바구니에 담긴)거도 가져와야합니다.
+			req.setAttribute("cartnum", cartnum);
 			req.setAttribute("total", total);
 			req.setAttribute("EA", EA);
 			req.setAttribute("finalprice", finalprice);
 			req.setAttribute("shipping", shipping);
 			req.setAttribute("DCprice", DCprice);
-			req.setAttribute("changeEA", changeEA);
 			req.setAttribute("sum", sum);
 			req.setAttribute("cart", cart);
 			req.setAttribute("member", member);

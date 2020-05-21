@@ -51,14 +51,13 @@
 
 		<c:forEach var="cart1" items="${requestScope.cart }" varStatus="status">
 			<tr>
-				<td><input type="checkbox" size="5" name="undercheck"
-					value="${cart1.cartnum}" onchange="showBox()"></td>
+				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}" onchange="showBox()"></td>
 				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px"
 					height="100px">
 				<td>${cart1.name}</td>
 				<td><button type="button" class="btn btn-default" onclick="minus(${status.index})">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					</button>&nbsp <label class="EA" id="changeEA">${cart1.EA}</label>&nbsp
+					</button>&nbsp <input type="text" name="EA" class="EA" value="${cart1.EA}" readonly style="border:0 ;text-align: center;">&nbsp
 					<button type="button" class="btn btn-default" onclick="plus(${status.index})">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 					</button></td>
@@ -76,8 +75,9 @@
 
 	<div id="outbox" class="container" style="padding-left: 110px; padding-top: 100px">
 		<div id="box1" class="a b">
-			<span>상품금액</span><br>
-			<input type="text" name="total" id="total" style="border:0 ;text-align: center;">
+			<h3>상품금액</h3>
+			<br>
+			<input type="text" name="total" id="total" readonly style="border:0 ;text-align: center;">
 
 		</div>
 		<div class="mini b">
@@ -85,8 +85,10 @@
 		</div>
 
 		<div id="box2" class="a b">
-			<span>상품할인금액 </span><br><br> 
-			<input type="text" name="DCprice" id="DCprice" style="border:0 ;text-align: center;">
+			<h3>상품할인금액 </h3>
+			<br>
+			<input type="text" name="DCprice" id="DCprice" readonly style="border:0 ;text-align: center;">
+			<br>
 			<input type="hidden" name="DCprice" value='${cart1.pp}'> 
 			
 			<!-- cart.percent -->
@@ -96,8 +98,8 @@
 		</div>
 
 		<div id="box3" class="a b">
-			<span>배송비</span><br><br> 
-			<input type="text" value="2500" name="shipping" id="shipping" style="border:0 ;text-align: center;">
+			<h3>배송비</h3><br>
+			<input type="text" value="2500" name="shipping" id="shipping" readonly style="border:0 ;text-align: center;">
 		</div>
 
 		<div class="mini b">
@@ -105,15 +107,15 @@
 		</div>
 
 		<div id="box3" class="a b">
-			<span>결제금액</span><br><br>  
-			<input type="text" value="finalprice" name="finalprice" id="finalprice" style="border:0 ;text-align: center;">
+			<h3>결제금액</h3><br>
+			<input type="text" value="" name="finalprice" id="finalprice" readonly style="border:0 ;text-align: center;">
 			
 
 		</div>
 	</div>
 	<div class="container" style='width: 1000px;' align="center">
 	<hr style="border: solid 1px purple;">
-		<button type="submit" class="btn btn-lg" style="background-color: purple;color:white">주문하기</button>
+		<button type="submit" class="btn btn-lg" style="background-color: purple;color:white" >주문하기</button>
 		
 	</div>
 </form>
@@ -137,19 +139,29 @@
 		var sum = document.querySelectorAll(".sum");
 		var cartPrice = document.getElementsByName("cart-price");
 		var total = document.getElementById("total");
-		var DCprice = document.getElementById("DCprice")
+		var DCprice = document.getElementById("DCprice");
+		var finalprice=document.getElementById("finalprice")
+		var shipping=document.getElementById("shipping")
 		total.value = 0;
 		for(var i=0;i<undercheck.length;i++){
 			if (undercheck[i].checked==true) {
-				var price = parseInt(total.value);
+				/* var price = parseInt(total.value);
 				price += parseInt(sum[i].innerHTML); 
-				total.value = price;	
-				DCprice += parseInt(total.value*DCprice.value);
+				total.value = price; */
+				total.value = parseInt(total.value) + parseInt(sum[i].innerHTML);
+				console.log(total.value);
+				console.log(parseInt(shipping.value));
+				console.log(parseInt(total.value)+parseInt(shipping.value));
+				//DCprice += parseInt(total.value*DCprice.value);
+				finalprice.value = parseInt(total.value)+parseInt(shipping.value);
+			}else{
+				finalprice.value=0;
+				
+				}
 			}
 			
 		}
 	
-	}
 	function plus(index) {
 		//var EA=document.getElementById("EA");
 		var EA = document.querySelectorAll(".EA");
@@ -158,14 +170,22 @@
 		var total = document.getElementById("total");
 		var shipping = document.getElementById("shipping").value;
 		
-		EA[index].innerHTML=parseInt(EA[index].innerHTML)+1;
-		sum[index].value = cartPrice[index].value * (parseInt(EA[index].innerHTML));
+		EA[index].value=parseInt(EA[index].value)+1;
+		sum[index].value = cartPrice[index].value * (parseInt(EA[index].value));
 		var undercheck = document.getElementsByName("undercheck");
 		if(undercheck[index].checked == true){
 			total.value =  parseInt(total.value) + parseInt(cartPrice[index].value);
 			finalprice.value =  parseInt(total.value)+parseInt(shipping);
 		}
 	}
+		function salenull() {
+		var DCprice=document.getElementsByName("DCprice");
+		for (var i = 0; i < DCprice.length; i++) {
+			if(DCprice[i].value==null){
+				DCprice[i].value = 1;
+				}
+			}
+		}
 	
 	function minus(index) {
 		var EA = document.querySelectorAll(".EA");	
@@ -173,12 +193,12 @@
 		var cartPrice = document.getElementsByName("cart-price");
 		var total = document.getElementById("total");
 		var shipping=parseInt(2500);
-			if(EA[index].innerHTML<=1){
+			if(EA[index].value<=1){
 				alert("최소수량입니다");
 			}else{
 			
-			EA[index].innerHTML =parseInt(EA[index].innerHTML)-1; 
-			sum[index].innerHTML = cartPrice[index].value * (parseInt(EA[index].innerHTML));  
+			EA[index].value =parseInt(EA[index].value)-1; 
+			sum[index].innerHTML = cartPrice[index].value * (parseInt(EA[index].value));  
 			var undercheck = document.getElementsByName("undercheck");
 			if(undercheck[index].checked == true){
 				total.value =  parseInt(total.value) - parseInt(cartPrice[index].value);
@@ -207,11 +227,10 @@
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){
 				let json = JSON.parse(xhr.responseText);
-				if(json.n > 0){
+				//location.href = location.href;
+				if(json.code == 'success'){
 					alert("삭제성공");
-					location ='${cp}/cart.jsp';
-					//location.href = location.href;
-				
+					location ='${cp}/cart.do';
 				}else{
 					location = `${cp}/error.do`;
 				}
