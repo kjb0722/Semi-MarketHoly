@@ -59,7 +59,6 @@
 					<li><a href="#">베스트</a></li>
 					<li><a href="#">알뜰쇼핑</a></li>
 					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
-					<li><a href="${cp }/qna/qnaList.do">인표연습용2</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
