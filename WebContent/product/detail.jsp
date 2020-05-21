@@ -48,7 +48,7 @@ h1, h2, h3 {
 		<h1>${dto.name}</h1>
 		<h4 class='text-muted'>${dto.description}</h4>
 		<h1>${dto.price}</h1>원
-		<hr style="border: solid 1px purple;">
+		<hr style="border: solid 1px RebeccaPurple;">
 		<h4>
 			구매수량&nbsp&nbsp
 			<button type="button" class="btn btn-default" onclick="minus()">
@@ -68,14 +68,14 @@ h1, h2, h3 {
 		유통기한 농산물로 별도 유통기한은 없으나 가급적 빨리 드시기 바랍니다. <br>
 		안내사항 -상품특성상 3%내외의 중량차이가 발생할 수 있습니다. <br>
 		</p>
-		<hr style="border: solid 1px purple;">
+		<hr style="border: solid 1px RebeccaPurple;">
 		<div id="total">
 			<label id="sum"><h3>총 상품금액 :</h3>
 				<h1>${dto.price }</label>
 			</h1>
 			원<br> 
 			<button type="button" class="btn-lg pull-right" id="incart" 
-			style="background-color: purple;color:white" onclick="incart()">장바구니 담기</button>
+			style="background-color: RebeccaPurple;color:white" onclick="incart()">장바구니 담기</button>
 		</div>
 
 	
@@ -84,9 +84,9 @@ h1, h2, h3 {
 
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">
-	<li><a href="#discript" data-toggle="tab">상품설명</a></li>
-	<li><a href="#review" data-toggle="tab">상품후기</a></li>
-	<li><a href="#qna" data-toggle="tab">상품문의</a></li>
+	<li><a href="#discript" data-toggle="tab" tabindex="1">상품설명</a></li>
+	<li><a href="#review" data-toggle="tab" tabindex="2">상품후기</a></li>
+	<li><a href="#qna" data-toggle="tab" tabindex="3">상품문의</a></li>
 </ul>
 
 
@@ -146,9 +146,16 @@ h1, h2, h3 {
 				+ "&EA=" + parseInt(EA.innerHTML);
 
 	}
-	$(document).ready(function() {
-	    $('a[data-toggle="tab"]').on('hidden.bs.tab', function(e){
-		alert("이벤트 실행됨");
+	$(document).ready(function(e) {
+	    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+	    	var index=$(e.target).prop("tabindex");
+	    	if(index==2){
+	    		location = "${cp }/member/listReview.do?pnum="+${dto.pnum };
+	    		
+	    	}else if(index==3){
+	    		location = "${cp }/qna/qnaList.do?pnum="+${dto.pnum };
+	    	}
+	    
 	    });
 	});
 </script>
