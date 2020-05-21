@@ -8,25 +8,38 @@ body {
 	font-size: 20px;
 }
 
-footer{
+.nav>li>a:focus, .nav>li>a:hover {
+	background-color: #cc00cc;
+	border-radius: 25%;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+	background-color: #5f0080;
+}
+
+footer {
 	margin-top: 0px;
 }
-button,input[type=button],input[type=submit]{
+
+button, input[type=button], input[type=submit], button:not (.glyphicon ),
+	input[type=button]:not (.glyphicon ), input[type=submit]:not (.glyphicon
+	) {
 	background-color: RebeccaPurple;
 }
-.footer-hr{
+
+.footer-hr {
 	border-top: solid 1px #999;
 }
 
-.navbar>ul>li>a{
+.navbar>ul>li>a {
 	color: black;
 }
 
-.bg-violet{
-	background-color: #5f0080;	
+.bg-violet {
+	background-color: #5f0080;
 }
 
-.navbar>div>ul>li>a{
+.navbar>div>ul>li>a {
 	color: white;
 }
 
