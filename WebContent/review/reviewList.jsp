@@ -57,7 +57,7 @@
 <div>
 <c:choose>
 	<c:when test ="${startPage>4 }">
-		<a href="${pageContext.request.contextPath }/member/listReview.do?pageNum=${startPage-1}">[이전]</a>
+		<a href="${pageContext.request.contextPath }/review/listReview.do?pageNum=${startPage-1}&pnum=${pnum}">[이전]</a>
 	</c:when>
 	<c:otherwise>
 		이전
@@ -66,18 +66,18 @@
 <c:forEach var="i" begin="${startPage }" end="${endPage }">
 	<c:choose>
 		<c:when test="${i==pageNum }">
-			<a href="${pageContext.request.contextPath }/member/listReview.do?pageNum=${i}">
+			<a href="${pageContext.request.contextPath }/review/listReview.do?pageNum=${i}&pnum=${pnum}">
 			<span style='color:blue'>[${i }]</span></a>
 		</c:when>		
 		<c:otherwise>
-			<a href = "${pageContext.request.contextPath }/member/listReview.do?pageNum=${i}">
+			<a href = "${pageContext.request.contextPath }/review/listReview.do?pageNum=${i}&pnum=${pnum}">
 			<span style='color:#999'>[${i }]</span></a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
 <c:choose>
 	<c:when test ="${endPage<pageCount }">
-		<a href="${pageContext.request.contextPath }/member/listReview.do?pageNum=${endPage+1}">[다음]</a>
+		<a href="${pageContext.request.contextPath }/review/listReview.do?pageNum=${endPage+1}&pnum=${pnum}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		다음
