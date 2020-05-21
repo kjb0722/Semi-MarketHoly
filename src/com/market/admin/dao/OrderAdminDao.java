@@ -1,6 +1,7 @@
 package com.market.admin.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,12 +26,26 @@ public class OrderAdminDao {
 		ArrayList<OrderAdminDto> list = new ArrayList<OrderAdminDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "";
+			String sql = "select * from(select aa.*,rownum rnum from (select a.*,(select name from common where type='주문상태' and val=status) statusName,select name from common where type='결제 방법' and val=pay_way) pay_wayName from orders a where status not in(5,6) order by reg_date desc) aa) where rnum >= ? and rnum <= ?";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int cnum = rs.getInt("cnum");
-				
+				int onum = rs.getInt("onum");
+				String id = rs.getString("id");
+				String statusName = rs.getString("statusName");
+				String statusName = rs.getString("statusName");
+				String statusName = rs.getString("statusName");
+				int price = rs.getInt("");       
+				private String onum;
+				private String id;
+				private String statusName;
+				private String prodName;
+				private String pay_yn;
+				private int price;
+				private String addr;
+				private String pay_wayName;
+				private int use_point;
+				private Date reg_date;
 			}
 			return list;
 		} catch (SQLException e) {

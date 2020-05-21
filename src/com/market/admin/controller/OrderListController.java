@@ -53,17 +53,9 @@ public class OrderListController extends HttpServlet {
 		
 		JSONArray jsonArr = new JSONArray();
 		JSONArray jarr = new JSONArray();
-		for (QnaAdminDto dto : ordList) {
+		for (OrderAdminDto dto : ordList) {
 			JSONObject json = new JSONObject();
 			json.put("qnum", dto.getQnum());
-			json.put("cname", dto.getCname());
-			json.put("pname", dto.getPname());
-			json.put("title", dto.getTitle());
-			json.put("writer", dto.getName());
-			json.put("reg_date", dto.getReg_date());
-			json.put("content", dto.getContent());
-			json.put("pnum", dto.getPnum());
-			json.put("level", dto.getLevel());
 			jarr.put(json);
 		}
 
