@@ -98,7 +98,7 @@ h1, h2, h3 {
 
 	<!-- 리뷰탭 -->
 	<div class="tab-pane" id="review">
-		<a href="${cp }/member/listReview.do?pnum=${dto.pnum }"> 리뷰글보기</a>
+		<a href="${cp }/review/listReview.do?pnum=${dto.pnum }"> 리뷰글보기</a>
 	</div>
 
 	<!-- qna탭 -->
