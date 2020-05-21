@@ -143,24 +143,18 @@
 		var finalprice=document.getElementById("finalprice")
 		var shipping=document.getElementById("shipping")
 		total.value = 0;
+		var price = 0;
 		for(var i=0;i<undercheck.length;i++){
 			if (undercheck[i].checked==true) {
-				/* var price = parseInt(total.value);
-				price += parseInt(sum[i].innerHTML); 
-				total.value = price; */
-				total.value = parseInt(total.value) + parseInt(sum[i].innerHTML);
-				console.log(total.value);
-				console.log(parseInt(shipping.value));
-				console.log(parseInt(total.value)+parseInt(shipping.value));
-				//DCprice += parseInt(total.value*DCprice.value);
-				finalprice.value = parseInt(total.value)+parseInt(shipping.value);
-			}else{
-				finalprice.value=0;
-				
-				}
+				sum[i].innerHTML = parseInt(EA[i].value) * parseInt(cartPrice[i].value);
+				price += parseInt(total.value) + parseInt(sum[i].innerHTML);
 			}
-			
 		}
+		total.value = price;
+		price += parseInt(shipping.value);
+		finalprice.value = price;
+	}
+	
 	
 	function plus(index) {
 		//var EA=document.getElementById("EA");
@@ -171,7 +165,7 @@
 		var shipping = document.getElementById("shipping").value;
 		
 		EA[index].value=parseInt(EA[index].value)+1;
-		sum[index].value = cartPrice[index].value * (parseInt(EA[index].value));
+		sum[index].innerHTML = cartPrice[index].value * (parseInt(EA[index].value));
 		var undercheck = document.getElementsByName("undercheck");
 		if(undercheck[index].checked == true){
 			total.value =  parseInt(total.value) + parseInt(cartPrice[index].value);
