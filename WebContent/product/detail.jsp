@@ -52,7 +52,7 @@ h1, h2, h3 {
 			<button type="button" class="btn btn-default" onclick="minus()">
 				<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 			</button>
-			&nbsp<label id="EA">1</label>&nbsp
+			<label id="EA">1</label>
 			<button type="button" class="btn btn-default" onclick="plus()">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			</button>

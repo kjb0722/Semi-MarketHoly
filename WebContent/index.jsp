@@ -15,6 +15,7 @@
 <title>마켓홀리</title>
 </head>
 <body>
+<hr style="border: solid 10px purple;">
 	<header class="container">
 		<div class="navbar">
 			<ul class="nav navbar-nav pull-right">
@@ -33,11 +34,11 @@
 					</c:otherwise>
 				</c:choose>
 			</ul>
+
 			<div id="wrap-logo">
 				<a href="${cp }/main.do"><img src="${cp }/img/logo_0518.jpg" alt="Logo" id="logo"></a>
 			</div>
 		</div>
-
 		<nav class="navbar navbar-expand-sm">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
@@ -77,7 +78,6 @@
 			</div>
 		</c:if>
 	</header>
-
 	<section class="container">
 		<c:choose>
 			<c:when test="${param.page == null }">
@@ -108,20 +108,24 @@
 			</c:otherwise>
 		</c:choose>
 	</section>
+	
 	<footer class="container">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<h3 class="panel-title">마켓 홀리</h3>
-			</div>
-			<div class="panel-body">
+		<div class="pull-left">
+				<h1 class="panel-title">고객행복센터</h1>
+				<h1>1111-1111</h1>
 				<h3>제작자</h3>
 				<ul>
-					<li>권준범</li>
-					<li>임다은</li>
-					<li>전인표</li>
-					<li>전효진</li>
+					<li>권준범 | 임다은 | 전인표 | 전효진</li>
 				</ul>
 			</div>
+			<div class="pull-right">
+				<h5>법인명(상호) : 주식회사 마켓홀리|사업자등록번호 : 아직 사업자 등록을 못했습니다</h5>
+				<h5>통신판매업 : 제 2020-서울종로-0000호| 개인정보보호책임자:전효진</h5>
+				<h5>주소 : 서울시 종로구 디아망 4층 중앙hta | 대표이사 : 권준범</h5>
+				<h5>입점문의 : 입점문의하기 | 제휴문의 :nonono@holy.com </h5>
+				<h5>채용문의 : recruit@holy.com </h5>
+			</div>
+			
 		</div>
 	</footer>
 </body>

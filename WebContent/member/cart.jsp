@@ -34,7 +34,7 @@
 				<td><button type="button" class="btn btn-default"
 						onclick="minus(${status.index})">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					</button> &nbsp<label class="EA">${cart1.EA}</label>&nbsp
+					</button> <label class="EA">${cart1.EA}</label>&nbsp
 					<button type="button" class="btn btn-default"
 						onclick="plus(${status.index})">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
