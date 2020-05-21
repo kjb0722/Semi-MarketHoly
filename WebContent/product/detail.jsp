@@ -98,7 +98,7 @@ h1, h2, h3 {
 
 	<!-- 리뷰탭 -->
 	<div class="tab-pane" id="review">
-		<a href="${cp }/review/listReview.do?pnum=${dto.pnum }"> 리뷰글보기</a>
+		<a href="${cp }/member/listReview.do?pnum=${dto.pnum }"> 리뷰글보기</a>
 	</div>
 
 	<!-- qna탭 -->
@@ -146,4 +146,9 @@ h1, h2, h3 {
 				+ "&EA=" + parseInt(EA.innerHTML);
 
 	}
+	$(document).ready(function() {
+	    $('a[data-toggle="tab"]').on('hidden.bs.tab', function(e){
+		alert("이벤트 실행됨");
+	    });
+	});
 </script>
