@@ -8,6 +8,14 @@ body {
 	font-size: 20px;
 }
 
+.navbar-nav>li>.dropdown-menu, .dropdown-submenu>.dropdown-menu {
+	background-color: #5f0080;
+}
+
+.dropdown-menu>li>a {
+	color: white;
+}
+
 .nav>li>a:focus, .nav>li>a:hover {
 	background-color: #cc00cc;
 	border-radius: 25%;
@@ -21,12 +29,125 @@ footer {
 	margin-top: 0px;
 }
 
-button, input[type=button], input[type=submit], button:not (.glyphicon ),
-	input[type=button]:not (.glyphicon ), input[type=submit]:not (.glyphicon
-	) {
-	background-color: RebeccaPurple;
-}
+button
+,
+input
 
+
+
+
+[
+type
+=
+button
+]
+,
+input
+
+
+
+
+[
+type
+=
+submit
+]
+,
+button
+
+
+
+
+:not
+
+
+ 
+
+
+(
+.glyphicon
+
+
+ 
+
+
+),
+input
+
+
+
+
+[
+type
+=
+button
+]
+
+
+
+
+:not
+
+
+ 
+
+
+(
+.glyphicon
+
+
+ 
+
+
+),
+input
+
+
+
+
+[
+type
+=
+submit
+]
+
+
+
+
+:not
+
+
+ 
+
+
+(
+.glyphicon
+
+
+
+	
+
+
+)
+{
+background-color
+
+
+
+
+:
+
+
+ 
+
+
+RebeccaPurple
+
+
+
+
+;
+}
 .footer-hr {
 	border-top: solid 1px #999;
 }
