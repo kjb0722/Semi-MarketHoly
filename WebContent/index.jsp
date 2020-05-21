@@ -13,9 +13,6 @@
 
 <link rel="stylesheet" type="text/css" href="${cp }/css/index.css" />
 <title>마켓홀리</title>
-<style type="text/css">
-
-</style>
 </head>
 <body>
 	<header class="container">
@@ -23,74 +20,47 @@
 			<ul class="nav navbar-nav pull-right">
 				<c:choose>
 					<c:when test="${sessionScope.memberDto == null }">
-						<li>
-							<a href="${cp }/member/startJoin.do">회원가입</a>
-						</li>
-						<li>
-							<a href="${cp }/member/loginstart.do">로그인</a>
-						</li>
+						<li><a href="${cp }/member/startJoin.do">회원가입</a></li>
+						<li><a href="${cp }/member/loginstart.do">로그인</a></li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
-							<ul class="dropdown-menu">							
+						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
+							<ul class="dropdown-menu">
 								<li class="dropdown-item"><a href="${cp }/mypage/startMypage.do">마이페이지</a></li>
 								<li class="dropdown-item"><a href="${cp }/member/logout.do">로그아웃</a></li>
-							</ul>
-						</li>
+							</ul></li>
 					</c:otherwise>
 				</c:choose>
-				<%-- <c:if test="${sessionScope.rating == 99 }">
-					<li><a href="/admin/admin.do">관리자</a></li>				
-				</c:if> --%>
-				<li>
-					<a href="${cp }/admin/admin.do">관리자</a>
-				</li>
 			</ul>
 			<div id="wrap-logo">
-				<a href="${cp }/main.do"><img src="${cp }/img/logo_0518.jpg" alt="Logo"></a>
+				<a href="${cp }/main.do"><img src="${cp }/img/logo_0518.jpg" alt="Logo" id="logo"></a>
 			</div>
 		</div>
 
 		<nav class="navbar navbar-default">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<c:forEach var="cat" items="${applicationScope.catList }">
-								<li class="dropdown-submenu">
-									<a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
+								<li class="dropdown-submenu"><a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
 									<ul class="dropdown-menu">
 										<c:forEach var="type" items="${applicationScope.catTypeList }">
 											<c:if test="${cat.cnum == type.type }">
-												<li>
-													<a class="cat-submenu" href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a>
-												</li>
+												<li><a class="cat-submenu" href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
 											</c:if>
 										</c:forEach>
-									</ul>
-								</li>
+									</ul></li>
 							</c:forEach>
 						</ul>
-					<li>
-						<a href="${cp }/product/new.do">신상품</a>
-					</li>
-					<li>
-						<a href="#">베스트</a>
-					</li>
-					<li>
-						<a href="#">알뜰쇼핑</a>
-					</li>
-					<li>
-						<a href="${cp }/qna/qnaList.do">인표연습용</a>
-					</li>
+					<li><a href="${cp }/product/new.do">신상품</a></li>
+					<li><a href="#">베스트</a></li>
+					<li><a href="#">알뜰쇼핑</a></li>
+					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a>
-					</li>
+					<li><a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
 				</ul>
 				<form class="navbar-form pull-right">
 					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

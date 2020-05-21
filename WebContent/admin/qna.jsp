@@ -38,7 +38,7 @@ nav {
 			</select>
 			<input type="text" class="form-control" placeholder="검색어를 입력하세요" maxlength="30" id="txtWord">
 			<input type="button" class="btn btn-lg btn-primary" value="검색" id="btnSearch">
-			<input type="button" class="btn btn-lg btn-info" value="미답변 목록">
+			<input type="button" class="btn btn-lg btn-info" value="미답변 목록" id="btnUnanswer">
 		</div>
 		<div class="col-md-5 form-inline">
 			<input type="button" class="btn btn-lg btn-warning pull-right" value="답변 완료 목록">
@@ -105,6 +105,94 @@ nav {
 		qnaListLoad("","");
 	});
 	
+	//미답변 목록 로드//
+	$("#btnUnanswer").click(function() {
+		unanswerLoad();
+	});
+	function unanswerLoad(){
+		jQuery.ajax({
+			dataType:"JSON",
+			url: `${cp}/admin/qnaUnanswerList.do`,
+			method:"get",
+			success:function(data){
+				tbodyRowAdd(data[0]);
+				
+				//페이징//
+				pageDiv = $("#page-div");
+				pageDiv.empty();
+				
+				let startPageNum = data[1];
+				let endPageNum = data[2];
+				let pageNum = data[3];
+				let pageCount = data[4];
+				
+				let row = "<nav>";
+				row += "<ul class='pagination'>";
+				
+				if(startPageNum != 1){
+					row += "<li>";
+					row += "<a onclick='unansPageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<span aria-hidden='true'>&laquo</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				for(let i=startPageNum;i<=endPageNum;i++){
+					row += "<li><a onclick='unansPageMove("+(i)+")' class='cursor-pointer'>"+i+"</a></li>";
+				}
+				
+				if(pageCount > endPageNum){
+					row += "<li>";
+					row += "<a onclick='unansPageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<span aria-hidden='true'>&raquo;</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				row += "</ul>";
+				row += "</nav>";
+				pageDiv.append(row);
+				//페이징//
+				
+				//글 선택 모달 이벤트//
+				setAnswerModalVal();
+				//글 선택 모달 이벤트//
+			}
+		});
+	}
+	//미답변 목록 로드//
+	
+	function tbodyRowAdd(data){
+		let tbody = $("#qna-table>tbody");
+		tbody.empty();
+		for(let dto of data){
+			let replyIcon = "";
+			let row = "";
+			if(dto.level >= 2){
+				replyIcon = "<span class='glyphicon glyphicon-check'></span>";
+				row += "<tr>";
+			}else{
+				replyIcon = "<span class='glyphicon glyphicon-question-sign'></span>";
+				row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
+			}
+			row += "<td>"+dto.qnum+"</td>";
+			row += "<td>"+dto.cname+"</td>";
+			row += "<td>"+dto.pname+"</td>";
+			row += "<td class='align-left'>"+replyIcon+dto.title+"</td>";
+			row += "<td>"+dto.writer+"</td>";
+			row += "<td>"+dto.reg_date+"</td>";
+			row += "<td class='hidden'>"+dto.content+"</td>";
+			row += "<td class='hidden'>"+dto.pnum+"</td>";
+			row += "<td class='hidden'>"+dto.level+"</td>";
+			row += "</tr>";
+			tbody.append(row);
+			
+			if(dto.level>=2){
+				tbody.find("tr").last().css("color","blue");					
+			}
+		}
+	}
+	
 	//답변 등록//
 	$("#btnWrite").click(function() {
 		ansWrite();
@@ -161,35 +249,8 @@ nav {
 				kind:kind,
 				pageNum:pageNum},
 			success:function(data){
-				tbody = $("#qna-table>tbody");
-				tbody.empty();
-				for(let dto of data[0]){
-					let replyIcon = "";
-					let row = "";
-					if(dto.level >= 2){
-						replyIcon = "<span class='glyphicon glyphicon-check'></span>";
-						row += "<tr>";
-					}else{
-						replyIcon = "<span class='glyphicon glyphicon-question-sign'></span>";
-						row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
-					}
-					//row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
-					row += "<td>"+dto.qnum+"</td>";
-					row += "<td>"+dto.cname+"</td>";
-					row += "<td>"+dto.pname+"</td>";
-					row += "<td class='align-left'>"+replyIcon+dto.title+"</td>";
-					row += "<td>"+dto.writer+"</td>";
-					row += "<td>"+dto.reg_date+"</td>";
-					row += "<td class='hidden'>"+dto.content+"</td>";
-					row += "<td class='hidden'>"+dto.pnum+"</td>";
-					row += "<td class='hidden'>"+dto.level+"</td>";
-					row += "</tr>";
-					tbody.append(row);
-					
-					if(dto.level>=2){
-						tbody.find("tr").last().css("color","blue");					
-					}
-				}
+				//테이블 row 추가
+				tbodyRowAdd(data[0]);
 				
 				//페이징//
 				pageDiv = $("#page-div");
@@ -205,19 +266,19 @@ nav {
 				
 				if(startPageNum != 1){
 					row += "<li>";
-					row += "<a onclick='pageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<a onclick='qnaPageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
 					row += "<span aria-hidden='true'>&laquo</span>";
 					row += "</a>";
 					row += "</li>";
 				}
 				
 				for(let i=startPageNum;i<=endPageNum;i++){
-					row += "<li><a onclick='pageMove("+i+")' class='cursor-pointer'>"+i+"</a></li>";
+					row += "<li><a onclick='qnaPageMove("+(i)+")' class='cursor-pointer'>"+i+"</a></li>";
 				}
 				
 				if(pageCount > endPageNum){
 					row += "<li>";
-					row += "<a onclick='pageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<a onclick='qnaPageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
 					row += "<span aria-hidden='true'>&raquo;</span>";
 					row += "</a>";
 					row += "</li>";
@@ -228,20 +289,34 @@ nav {
 				pageDiv.append(row);
 				//페이징//
 				
-				//글 선택 이벤트//
-				$("#qna-table>tbody>tr").click(function() {
-					$("#queQnum").val($(this).children().eq(0).text());
-					$("#queContent").val($(this).children().eq(6).text());
-					$("#quePnum").val($(this).children().eq(7).text());
-					$("#ansTitle").val("");
-					$("#ansContent").val("");	
-				});
+				//글 선택 모달 이벤트//
+				setAnswerModalVal();
+				//글 선택 모달 이벤트//
+				
 			}
 		});
 	}
 	//qna 목록 로드//
 	
-	function pageMove(page){
+	function setAnswerModalVal(){
+		$("#qna-table>tbody>tr").click(function() {
+			$("#queQnum").val($(this).children().eq(0).text());
+			$("#queContent").val($(this).children().eq(6).text());
+			$("#quePnum").val($(this).children().eq(7).text());
+			$("#ansTitle").val("");
+			$("#ansContent").val("");	
+		});
+	}
+	
+	function pagination(data, funcName){
+		
+	}
+	
+	function qnaPageMove(page){
 		qnaListLoad("","",page);
+	}
+	
+	function unansPageMove(page){
+		unanswerLoad();
 	}
 </script>
