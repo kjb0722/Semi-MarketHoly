@@ -84,9 +84,9 @@ CREATE TABLE orders
 	-- 5:구매 완료
 	-- 6:주문 취소
 	status number,
-	-- 1:미결제
-	-- 2:결제
-	pay_yn number,
+	-- N:미결제
+	-- Y:결제
+	pay_yn varchar2(2),
 	reg_date date,
 	end_date date,
 	id varchar2(25),
@@ -300,8 +300,8 @@ COMMENT ON COLUMN orders.status IS '1:상품 준비
 4:배송 완료
 5:구매 완료
 6:주문 취소';
-COMMENT ON COLUMN orders.pay_yn IS '1:미결제
-2:결제';
+COMMENT ON COLUMN orders.pay_yn IS 'N:미결제
+Y:결제';
 COMMENT ON COLUMN orders.pay_way IS '카드 결제
 무통장';
 
