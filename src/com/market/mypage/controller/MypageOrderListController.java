@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.market.member.dto.MemberDto;
 import com.market.mypage.dao.MypageDao;
-import com.market.review.dto.OrderListDto;
+import com.market.mypage.dto.OrderListDto;
 
 
 @WebServlet("/mypage/mypageOrderList.do")

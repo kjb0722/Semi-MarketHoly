@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import com.market.db.JDBCUtil;
 import com.market.mypage.dto.MypageReviewDto;
+import com.market.mypage.dto.OrderListDto;
 import com.market.review.dao.ReviewDao;
-import com.market.review.dto.OrderListDto;
 
 public class MypageDao {
 	private static MypageDao instance = new MypageDao();
@@ -25,7 +25,7 @@ public class MypageDao {
 		ResultSet rs= null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql ="select o.opnum,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
+			String sql ="select o.status,o.pay_yn,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
 					"from orders o,product p,order_product op "+ 
 					" where o.onum=op.onum and op.pnum=p.pnum and id=?";
 			pstmt = con.prepareStatement(sql);
@@ -33,14 +33,15 @@ public class MypageDao {
 			rs = pstmt.executeQuery();
 			ArrayList<OrderListDto> list = new ArrayList<OrderListDto>();
 			while(rs.next()) {
-				int opnum = rs.getInt("opnum");
+				int status = rs.getInt("status");
+				int pay_yn = rs.getInt("pay_yn");
 				Date end_date = rs.getDate("end_date");
 				String thum_save = rs.getString("thumb_save");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				int price= rs.getInt("price");
 				int ea = rs.getInt("ea");
-				OrderListDto dto = new OrderListDto(opnum, end_date, thum_save, name, description, price, ea);
+				OrderListDto dto = new OrderListDto(status,pay_yn,end_date, thum_save, name, description, price, ea);
 				list.add(dto);
 			}			
 			return list;
