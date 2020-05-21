@@ -1,11 +1,17 @@
 @charset "UTF-8";
 
-@import
-	url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+/* @import
+	url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap'); */
 
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
 body {
-	font-family: 'Do Hyeon', sans-serif;
+	/* font-family: 'Do Hyeon', sans-serif; */
+	font-family: 'Single Day', cursive;
 	font-size: 20px;
+}
+
+.label-success{
+	background-color: #9e5d9e;
 }
 
 .navbar-nav>li>.dropdown-menu, .dropdown-submenu>.dropdown-menu {
@@ -29,125 +35,12 @@ footer {
 	margin-top: 0px;
 }
 
-button
-,
-input
-
-
-
-
-[
-type
-=
-button
-]
-,
-input
-
-
-
-
-[
-type
-=
-submit
-]
-,
-button
-
-
-
-
-:not
-
-
- 
-
-
-(
-.glyphicon
-
-
- 
-
-
-),
-input
-
-
-
-
-[
-type
-=
-button
-]
-
-
-
-
-:not
-
-
- 
-
-
-(
-.glyphicon
-
-
- 
-
-
-),
-input
-
-
-
-
-[
-type
-=
-submit
-]
-
-
-
-
-:not
-
-
- 
-
-
-(
-.glyphicon
-
-
-
-	
-
-
-)
-{
-background-color
-
-
-
-
-:
-
-
- 
-
-
-RebeccaPurple
-
-
-
-
-;
+button, input[type=button], input[type=submit], button:not(.glyphicon), input[type=button]:not(.glyphicon), input[type=submit]:not(.glyphicon) {
+	background-color: RebeccaPurple;
+	border-color: #542384;
+	color: white;
 }
+
 .footer-hr {
 	border-top: solid 1px #999;
 }
