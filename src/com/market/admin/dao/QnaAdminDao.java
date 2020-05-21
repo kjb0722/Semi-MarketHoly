@@ -224,4 +224,57 @@ public class QnaAdminDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+
+	public ArrayList<QnaAdminDto> selQnaAnsComList(int startRow, int endRow) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
+		try {
+			con = JDBCUtil.getConn();
+			//String sql = "select * from(select aa.*,rownum rnum from (select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref minus select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref) aa) where rnum >= ? and rnum <= ? order by qnum desc";
+			String sql = "select * from(select aa.*,rownum rnum from (with tmp_minus as(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref minus select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref)select * from tmp_minus order by qnum desc) aa) where rnum >= ? and rnum <= ? order by qnum desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int qnum = rs.getInt("qnum");
+				String cname = rs.getString("cname");
+				String pname = rs.getString("pname");
+				String title = rs.getString("title");
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				String content = rs.getString("content");
+				int pnum = rs.getInt("pnum");
+				int level = rs.getInt("level");
+				list.add(new QnaAdminDto(qnum, cname, pname, title, name, reg_date, content, pnum, level));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public double selQnaAnsComCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select nvl(count(*),0) cnt from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' minus select * from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' order by qnum desc))";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
 }

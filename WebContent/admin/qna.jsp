@@ -41,7 +41,7 @@ nav {
 			<input type="button" class="btn btn-lg btn-info" value="미답변 목록" id="btnUnanswer">
 		</div>
 		<div class="col-md-5 form-inline">
-			<input type="button" class="btn btn-lg btn-warning pull-right" value="답변 완료 목록">
+			<input type="button" class="btn btn-lg btn-warning pull-right" value="답변 완료 목록" id="btnAnsComplete">
 		</div>
 	</div>
 	<div class="row">
@@ -104,6 +104,68 @@ nav {
 	$(document).ready(function() {
 		qnaListLoad("","");
 	});
+	
+	//답변 완료 목록 로드//
+	$("#btnAnsComplete").click(function(){
+		ansComplete();
+	});
+	function ansComplete(pageNum){
+		jQuery.ajax({
+			dataType:"JSON",
+			url:`${cp}/admin/ansComplete.do`,
+			method:"get",
+			data:{pageNum:pageNum},
+			success:function(data){
+				tbodyRowAdd(data[0]);
+				
+				//페이징//
+				pageDiv = $("#page-div");
+				pageDiv.empty();
+				
+				let startPageNum = data[1];
+				let endPageNum = data[2];
+				let pageNum = data[3];
+				let pageCount = data[4];
+				
+				let row = "<nav>";
+				row += "<ul class='pagination'>";
+				
+				if(startPageNum != 1){
+					row += "<li>";
+					row += "<a onclick='ansComPageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<span aria-hidden='true'>&laquo</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				for(let i=startPageNum;i<=endPageNum;i++){
+					row += "<li><a onclick='ansComPageMove("+(i)+")' class='cursor-pointer'>"+i+"</a></li>";
+				}
+				
+				if(pageCount > endPageNum){
+					row += "<li>";
+					row += "<a onclick='ansComPageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<span aria-hidden='true'>&raquo;</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				row += "</ul>";
+				row += "</nav>";
+				pageDiv.append(row);
+				//페이징//
+				
+				//글 선택 모달 이벤트//
+				setAnswerModalVal();
+				//글 선택 모달 이벤트//
+			}
+		});
+	}
+	
+	function ansComPageMove(page){
+		ansComplete(page);
+	}
+	//답변 완료 목록 로드//
 	
 	//미답변 목록 로드//
 	$("#btnUnanswer").click(function() {
