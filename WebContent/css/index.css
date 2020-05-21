@@ -8,6 +8,26 @@ body {
 	font-size: 20px;
 }
 
+footer{
+	margin-top: 0px;
+}
+
+.footer-hr{
+	border-top: solid 1px #999;
+}
+
+.navbar>ul>li>a{
+	color: black;
+}
+
+.bg-violet{
+	background-color: #5f0080;	
+}
+
+.navbar>div>ul>li>a{
+	color: white;
+}
+
 .carousel-inner>.item>img {
 	margin: 0 auto;
 	height: 500px;
@@ -22,14 +42,17 @@ body {
 	text-align: center;
 }
 
-footer {
-	margin-top: 100px;
-}
-
 .navbar-nav>li>a {
 	line-height: 30px;
 }
 
+.header-hr {
+	border: solid 10px #5f0080;
+}
+
+.text-black {
+	color: black;
+}
 
 .cat-submenu {
 	font-size: 25px;

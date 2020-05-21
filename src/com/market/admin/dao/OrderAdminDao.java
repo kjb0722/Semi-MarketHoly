@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.market.admin.dto.CategoryListDto;
 import com.market.admin.dto.OrderAdminDto;
 import com.market.db.JDBCUtil;
 
@@ -19,7 +18,7 @@ public class OrderAdminDao {
 	private OrderAdminDao() {
 		
 	}
-	public static ArrayList<OrderAdminDto> selOrdList(int startRow, int endRow, String kind, String word) {
+	public ArrayList<OrderAdminDto> selOrdList(int startRow, int endRow, String kind, String word) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -33,19 +32,14 @@ public class OrderAdminDao {
 				int onum = rs.getInt("onum");
 				String id = rs.getString("id");
 				String statusName = rs.getString("statusName");
-				String statusName = rs.getString("statusName");
-				String statusName = rs.getString("statusName");
-				int price = rs.getInt("");       
-				private String onum;
-				private String id;
-				private String statusName;
-				private String prodName;
-				private String pay_yn;
-				private int price;
-				private String addr;
-				private String pay_wayName;
-				private int use_point;
-				private Date reg_date;
+				String prodName = rs.getString("prodName");
+				String pay_yn = rs.getString("pay_yn");
+				int price = rs.getInt("price");
+				String addr = rs.getString("addr");
+				String pay_wayName = rs.getString("pay_wayName");
+				int use_point = rs.getInt("use_point");
+				Date reg_date = rs.getDate("reg_date");
+				list.add(new OrderAdminDto(onum,id,statusName,prodName,pay_yn,price,addr,pay_wayName,use_point,reg_date));
 			}
 			return list;
 		} catch (SQLException e) {
@@ -55,8 +49,22 @@ public class OrderAdminDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	public static double selOrdCnt(String kind, String word) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selOrdCnt(String kind, String word) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select nvl(count(*),0) cnt from orders a where status not in(5,6)";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
 	}
 }

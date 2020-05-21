@@ -15,10 +15,10 @@
 <title>마켓홀리</title>
 </head>
 <body>
-<hr style="border: solid 10px purple;">
+	<hr class="header-hr">
 	<header class="container">
 		<div class="navbar">
-			<ul class="nav navbar-nav pull-right">
+			<ul class="nav navbar-nav pull-right" id="nav-menu">
 				<c:choose>
 					<c:when test="${sessionScope.memberDto == null }">
 						<li><a href="${cp }/member/startJoin.do">회원가입</a></li>
@@ -39,7 +39,7 @@
 				<a href="${cp }/main.do"><img src="${cp }/img/logo_0518.jpg" alt="Logo" id="logo"></a>
 			</div>
 		</div>
-		<nav class="navbar navbar-expand-sm">
+		<nav class="navbar navbar-expand-sm bg-violet text-white">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
@@ -64,8 +64,8 @@
 					<li><a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
 				</ul>
 				<form class="navbar-form pull-right">
-					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-					<button type="submit" class="btn">
+					<input class="form-control input-lg" type="text" placeholder="Search" aria-label="Search">
+					<button type="submit" class="btn btn-lg">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
 				</form>
@@ -108,9 +108,10 @@
 			</c:otherwise>
 		</c:choose>
 	</section>
-	
+	<hr class="footer-hr">
 	<footer class="container">
-		<div class="pull-left">
+		<div class="row footer-border">
+			<div class="col-md-6 pull-left">
 				<h1 class="panel-title">고객행복센터</h1>
 				<h1>1111-1111</h1>
 				<h3>제작자</h3>
@@ -118,14 +119,13 @@
 					<li>권준범 | 임다은 | 전인표 | 전효진</li>
 				</ul>
 			</div>
-			<div class="pull-right">
+			<div class="col-md-6 pull-right">
 				<h5>법인명(상호) : 주식회사 마켓홀리|사업자등록번호 : 아직 사업자 등록을 못했습니다</h5>
 				<h5>통신판매업 : 제 2020-서울종로-0000호| 개인정보보호책임자:전효진</h5>
 				<h5>주소 : 서울시 종로구 디아망 4층 중앙hta | 대표이사 : 권준범</h5>
-				<h5>입점문의 : 입점문의하기 | 제휴문의 :nonono@holy.com </h5>
-				<h5>채용문의 : recruit@holy.com </h5>
+				<h5>입점문의 : 입점문의하기 | 제휴문의 :nonono@holy.com</h5>
+				<h5>채용문의 : recruit@holy.com</h5>
 			</div>
-			
 		</div>
 	</footer>
 </body>

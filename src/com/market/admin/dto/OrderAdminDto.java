@@ -3,7 +3,7 @@ package com.market.admin.dto;
 import java.sql.Date;
 
 public class OrderAdminDto {
-	private String onum;
+	private int onum;
 	private String id;
 	private String statusName;
 	private String prodName;
@@ -13,8 +13,8 @@ public class OrderAdminDto {
 	private String pay_wayName;
 	private int use_point;
 	private Date reg_date;
-	public OrderAdminDto(String onum, String id, String statusName, String prodName, String pay_yn, int price,
-			String addr, String pay_wayName, int use_point, Date reg_date) {
+	public OrderAdminDto(int onum, String id, String statusName, String prodName, String pay_yn, int price, String addr,
+			String pay_wayName, int use_point, Date reg_date) {
 		this.onum = onum;
 		this.id = id;
 		this.statusName = statusName;
@@ -26,10 +26,10 @@ public class OrderAdminDto {
 		this.use_point = use_point;
 		this.reg_date = reg_date;
 	}
-	public String getOnum() {
+	public int getOnum() {
 		return onum;
 	}
-	public void setOnum(String onum) {
+	public void setOnum(int onum) {
 		this.onum = onum;
 	}
 	public String getId() {
@@ -86,5 +86,5 @@ public class OrderAdminDto {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	
+
 }
