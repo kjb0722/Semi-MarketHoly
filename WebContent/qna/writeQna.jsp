@@ -14,8 +14,8 @@
    
     <!-- 답글인 경우 부모글에 대한 정보 보내기 -->
 	pnum<input type="text" name="pnum" value="${param.pnum }"><br> <!-- request를 오는걸 hidden -->
-	num<input type="text" name="num" ><br>	
-	id<input type="text" name="id" ><br>
+	num<input type="text" name="num" value="${param.num }"><br>	
+	id<input type="text" name="id" value="${param.id }"><br>
 	작성자 <br>
 	<input type="text" name="name"><br>
 	제목 <br>
