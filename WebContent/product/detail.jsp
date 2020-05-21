@@ -9,7 +9,7 @@
 <style>
 .info {
 	float: left;
-	width:50%;
+	width: 50%;
 }
 
 .container {
@@ -21,64 +21,60 @@
 }
 
 #img {
-	width:300px;
-	height:200px;
-
+	width: 300px;
+	height: 200px;
 }
-#imgwrap{
-	width:50%;	
-	float: left;
-	text-align:center;
-	
 
+#imgwrap {
+	width: 50%;
+	float: left;
+	text-align: center;
 }
 
 h1, h2, h3 {
 	display: inline
 }
-
 </style>
 <div id="imgwrap">
 	<div class="info" id="img">
 		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}">
 	</div>
 </div>
-	<div class="info">
+<div class="info">
 
-		<h1>${dto.name}</h1>
-		<h4 class='text-muted'>${dto.description}</h4>
-		<h1>${dto.price}</h1>원
-		<hr style="border: solid 1px RebeccaPurple;">
-		<h4>
-			구매수량&nbsp&nbsp
-			<button type="button" class="btn btn-default" onclick="minus()">
-				<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-			</button>
-			<label id="EA">1</label>
-			<button type="button" class="btn btn-default" onclick="plus()">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			</button>
-		</h4>
-		<br> <input type="hidden" id="price" value="${dto.price }">
-		<p class='text-muted' style = "font-size:0.9em;">
-		판매단위 1팩 <br>
-		중량 용량 200g <br>
-		원산지 국산 <br>
-		포장타입 냉장/종이포장 <br>
-		유통기한 농산물로 별도 유통기한은 없으나 가급적 빨리 드시기 바랍니다. <br>
-		안내사항 -상품특성상 3%내외의 중량차이가 발생할 수 있습니다. <br>
-		</p>
-		<hr style="border: solid 1px RebeccaPurple;">
-		<div id="total">
-			<label id="sum"><h3>총 상품금액 :</h3>
-				<h1>${dto.price }</label>
-			</h1>
-			원<br> 
-			<button type="button" class="btn-lg pull-right" id="incart" 
-			style="background-color: RebeccaPurple;color:white" onclick="incart()">장바구니 담기</button>
-		</div>
+	<h1>${dto.name}</h1>
+	<h4 class='text-muted'>${dto.description}</h4>
+	<h1>${dto.price}</h1>
+	원
+	<hr style="border: solid 1px RebeccaPurple;">
+	<h4>
+		구매수량&nbsp&nbsp
+		<button type="button" class="btn btn-default" onclick="minus()">
+			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+		</button>
+		<label id="EA">1</label>
+		<button type="button" class="btn btn-default" onclick="plus()">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
+	</h4>
+	<br> <input type="hidden" id="price" value="${dto.price }">
+	<p class='text-muted' style="font-size: 0.9em;">
+		판매단위 1팩 <br> 중량 용량 200g <br> 원산지 국산 <br> 포장타입 냉장/종이포장 <br>
+		유통기한 농산물로 별도 유통기한은 없으나 가급적 빨리 드시기 바랍니다. <br> 안내사항 -상품특성상 3%내외의
+		중량차이가 발생할 수 있습니다. <br>
+	</p>
+	<hr style="border: solid 1px RebeccaPurple;">
+	<div id="total">
+		<label id="sum"><h3>총 상품금액 :</h3>
+			<h1>${dto.price }</label>
+		</h1>
+		원<br>
+		<button type="button" class="btn-lg pull-right" id="incart"
+			style="background-color: RebeccaPurple; color: white"
+			onclick="incart()">장바구니 담기</button>
+	</div>
 
-	
+
 </div>
 
 
@@ -103,7 +99,7 @@ h1, h2, h3 {
 
 	<!-- qna탭 -->
 	<div class="tab-pane" id="qna">
-		<a href="${cp }/qna/qnaList.do"> 질문글보기</a>
+		<a href="${cp }/qna/qnaList.do?pnum=${dto.pnum }"> 질문글보기</a>
 	</div>
 </div>
 
@@ -119,6 +115,10 @@ h1, h2, h3 {
 </section>
 
 <script>
+	$(document).ready(function() {
+		$('#myTab a:first').tab("show");
+	});
+	
 	function plus() {
 		var EA = document.getElementById("EA");
 		var price = document.getElementById("price").value;
@@ -146,16 +146,16 @@ h1, h2, h3 {
 				+ "&EA=" + parseInt(EA.innerHTML);
 
 	}
-	$(document).ready(function(e) {
-	    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-	    	var index=$(e.target).prop("tabindex");
-	    	if(index==2){
-	    		location = "${cp }/review/listReview.do?pnum="+${dto.pnum };
-	    		
-	    	}else if(index==3){
-	    		location = "${cp }/qna/qnaList.do?pnum="+${dto.pnum };
-	    	}
-	    
-	    });
-	});
+	
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+    	var index=$(e.target).prop("tabindex");
+    	if(index==2){
+    		location = "${cp }/review/listReview.do?pnum="+${dto.pnum };
+    		
+    	}else if(index==3){
+    		location = "${cp }/qna/qnaList.do?pnum="+${dto.pnum };
+    	}
+    
+    });
+	
 </script>
