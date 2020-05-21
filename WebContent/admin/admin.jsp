@@ -14,6 +14,7 @@
 		<div class="well col-md-11">
 			<input type="button" class="btn btn-success" value="회원 관리" name="member">
 			<input type="button" class="btn btn-success" value="Q&A" name="qna">
+			<input type="button" class="btn btn-success" value="주문 관리" name="order">
 		</div>
 	</div>
 	<div class="row">

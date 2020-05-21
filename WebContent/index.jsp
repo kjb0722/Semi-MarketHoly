@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-expand-sm">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
@@ -70,6 +70,7 @@
 				</form>
 			</div>
 		</nav>
+
 		<c:if test="${sessionScope.memberDto.rating == 99 }">
 			<div class="container">
 				<jsp:include page="/admin/admin.jsp"></jsp:include>
