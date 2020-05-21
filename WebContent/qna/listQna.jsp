@@ -64,10 +64,47 @@
 			</c:forEach>
 		</table>
 	</div>
-	<input type="button" value="후기쓰기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp'">
+	<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp?pnum=${dto.pnum }&id=${dto.id }&num=${dto.num }'">
 	<br>
 	<br>
 	<!-- 페이징처리 -->
+<div>
+<c:choose>
+	<c:when test ="${startPage>4 }">
+		<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${startPage-1}&pnum=${pnum}">[이전]</a>
+	</c:when>
+	<c:otherwise>
+		이전
+	</c:otherwise>
+</c:choose>
+<c:forEach var="i" begin="${startPage }" end="${endPage }">
+	<c:choose>
+		<c:when test="${i==pageNum }">
+			<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}">
+			<span style='color:blue'>[${i }]</span></a>
+		</c:when>		
+		<c:otherwise>
+			<a href = "${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}">
+			<span style='color:#999'>[${i }]</span></a>
+		</c:otherwise>
+	</c:choose>
+</c:forEach>
+<c:choose>
+	<c:when test ="${endPage<pageCount }">
+		<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${endPage+1}">[다음]</a>
+	</c:when>
+	<c:otherwise>
+		다음
+	</c:otherwise>
+</c:choose>
+</div>
+
+
+
+
+
+
+
 
 
 

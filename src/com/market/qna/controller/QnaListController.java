@@ -26,39 +26,45 @@ public class QnaListController extends HttpServlet {
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
-		int startRow=(pageNum-1)*10+1;
-		int endRow=startRow+9;
+		int startRow=(pageNum-1)*5+1;
+		int endRow=startRow+4;
 		
 		QnaDao dao = QnaDao.getInstance();
 		
 		//페이지에 해당하는 글목록 가져오기
+
 		ArrayList<QnaDto> list=dao.list(startRow, endRow);
 		//System.out.println(list);
 
 		//전체 페이지갯수 구하기
-		int pageCount=(int)Math.ceil(dao.getCount()/10.0);
-		int startPageNum=((pageNum-1)/10)*10+1;
-		int endPageNum=startPageNum+9;
+		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
+		int startPageNum=((pageNum-1)/4)*4+1;
+		int endPageNum=startPageNum+3;
 		if(pageCount<endPageNum) {
 			endPageNum=pageCount;
 		}
 		
 		HttpSession session=req.getSession();
 		String id=(String)session.getAttribute("id");
+		
+	
 		String sPnum=req.getParameter("pnum");
 		int pnum=1;
-		if(sPnum!=null) {
-			pnum=Integer.parseInt(req.getParameter("pnum"));
-		}
+			if(sPnum!=null) {
+				pnum=Integer.parseInt(req.getParameter("pnum"));
+			}
+		
+		
 		ProductDao pdao=new ProductDao();
 		ProductDto dto=pdao.getDetail(pnum);
 
+		req.setAttribute("pnum", pnum);
 		req.setAttribute("dto",dto);
 		req.setAttribute("id",id);
 		req.setAttribute("list",list);
 		req.setAttribute("pageCount",pageCount);
-		req.setAttribute("startPageNum",startPageNum);
-		req.setAttribute("endPageNum",endPageNum);
+		req.setAttribute("startPage",startPageNum);
+		req.setAttribute("endPage",endPageNum);
 		req.setAttribute("pageNum",pageNum);
 		
 		//req.getRequestDispatcher("/product/detail.jsp?page=/qna/listQna.jsp").forward(req, resp);

@@ -244,7 +244,7 @@ public class MemberDao {
 		
 		try {
 			con= JDBCUtil.getConn();
-			String sql = "select * from member where id=? and pwd=?";
+			String sql = "select * from member where id=? and pwd=? and del_yn='N'";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ids);
 			pstmt.setString(2, pwds);

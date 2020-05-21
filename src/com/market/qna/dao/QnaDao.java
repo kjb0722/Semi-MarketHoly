@@ -112,7 +112,8 @@ public class QnaDao {
 //				+ "(select aa.*,rownum rnums from "
 //				+ "(select * from qna order by num desc)aa) "
 //				+ "where rnums>=? and rnums<=?";
-		String sql = "select * from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) where rnum >= ? and rnum <= ?";
+		String sql = "select * from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) "
+				+ "where rnum >= ? and rnum <= ? and pnum=?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
