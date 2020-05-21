@@ -29,7 +29,7 @@ public class OrderListController extends HttpServlet {
 		}
 		int startRow = (pageNum - 1) * PAGE_CNT + 1;
 		int endRow = (startRow + PAGE_CNT) - 1;
-		
+
 		String kind = req.getParameter("kind");
 		if (kind == null) {
 			kind = "";
@@ -38,9 +38,14 @@ public class OrderListController extends HttpServlet {
 		if (word == null) {
 			word = "";
 		}
+		String statusStr = req.getParameter("status");
+		int status = 1;
+		if (statusStr != null) {
+			status = Integer.parseInt(statusStr);
+		}
 
 		OrderAdminDao ordDao = OrderAdminDao.getInstance();
-		ArrayList<OrderAdminDto> ordList = ordDao.selOrdList(startRow, endRow, kind, word);
+		ArrayList<OrderAdminDto> ordList = ordDao.selOrdList(startRow, endRow, kind, word, status);
 
 		int pageCount = (int) Math.ceil(ordDao.selOrdCnt(kind, word) / PAGE_BLOCK);
 		int startPageNum = (int) (Math.floor((pageNum - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1);
@@ -48,7 +53,7 @@ public class OrderListController extends HttpServlet {
 		if (pageCount < endPageNum) {
 			endPageNum = pageCount;
 		}
-		
+
 		JSONArray jsonArr = new JSONArray();
 		JSONArray jarr = new JSONArray();
 		for (OrderAdminDto dto : ordList) {

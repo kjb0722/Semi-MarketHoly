@@ -15,6 +15,7 @@ table, th, td {
 			<select class="form-control" id="kind">
 				<c:forEach var="dto" items="${comList }">
 					<option value="${dto.val }">${dto.name }</option>
+					<h1>${dto.val }</h1>
 				</c:forEach>
 			</select>
 			<input type="text" class="form-control" placeholder="검색어를 입력하세요" maxlength="30" id="txtWord">
@@ -32,11 +33,11 @@ table, th, td {
 		<table class="table table-bordered" id="order-table">
 			<thead>
 				<tr>
-					<th>주문 번호</th>
+					<th style="width: 5%">번호</th>
 					<th>주문자</th>
 					<th>상태</th>
 					<th>주문 상품</th>
-					<th>결제 여부</th>
+					<th>결제</th>
 					<th>가격</th>
 					<th>주소</th>
 					<th>결제 방법</th>
@@ -53,8 +54,29 @@ table, th, td {
 
 <script>
 	$(document).ready(function() {
-		orderListLoad("", "", 1, $("#cboStatus").val());
+		orderListLoad($("#kind").val(), "", 1, $("#cboStatus").val());
 	});
+	
+	//주문 상태 콤보박스 이벤트//
+	$("#cboStatus").change(function() {
+		$("#btnSearch").click();
+	});
+	//주문 상태 콤보박스 이벤트//
+	
+	//검색 text 이벤트//
+	$("#txtWord").keyup(function() {
+		$("#btnSearch").click();
+	});
+	//검색 text 이벤트//
+	
+	//검색 버튼 이벤트//
+	$("#btnSearch").click(function() {
+		let kind = $("#kind").val();
+		let word = $("#txtWord").val();
+		let status = $("#cboStatus").val();
+		orderListLoad(kind,word,1,status);
+	});
+	//검색 버튼 이벤트//
 
 	//주문 목록 로드//
 	function orderListLoad(kind, word, pageNum, status) {
@@ -67,9 +89,29 @@ table, th, td {
 				pageNum:pageNum,
 				status:status},
 			success:function(data){
-				alert(data);
+				tbodyRowAdd(data[0]);
 			}
 		});
 	}
 	//주문 목록 로드//
+	
+	function tbodyRowAdd(data){
+		let tbody = $("#order-table>tbody");
+		tbody.empty();
+		for(let dto of data){
+			let row = "<tr>";
+			row += "<td>"+dto.onum+"</td>";
+			row += "<td>"+dto.id+"</td>";
+			row += "<td>"+dto.statusName+"</td>";
+			row += "<td>"+dto.prodName+"</td>";
+			row += "<td>"+dto.pay_yn+"</td>";
+			row += "<td>"+dto.price+"</td>";
+			row += "<td>"+dto.addr+"</td>";
+			row += "<td>"+dto.pay_wayName+"</td>";
+			row += "<td>"+dto.use_point+"</td>";
+			row += "<td>"+dto.reg_date+"</td>";
+			row += "</tr>";
+			tbody.append(row);
+		}
+	}
 </script>

@@ -10,6 +10,10 @@ body {
 	font-size: 20px;
 }
 
+.dropdown-menu{
+	font-size: 20px;
+}
+
 .label-success{
 	background-color: #9e5d9e;
 }
@@ -29,6 +33,7 @@ body {
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
 	background-color: #5f0080;
+	border-radius: 25%;
 }
 
 footer {

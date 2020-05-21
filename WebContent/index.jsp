@@ -28,8 +28,8 @@
 						<li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
 							<ul class="dropdown-menu">
-								<li class="dropdown-item"><a href="${cp }/mypage/startMypage.do">마이페이지</a></li>
-								<li class="dropdown-item"><a href="${cp }/member/logout.do">로그아웃</a></li>
+								<li class="dropdown-item"><a href="${cp }/mypage/startMypage.do"><span class="glyphicon glyphicon-user"></span>&nbsp;마이페이지</a></li>
+								<li class="dropdown-item"><a href="${cp }/member/logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>
 							</ul></li>
 					</c:otherwise>
 				</c:choose>
@@ -59,9 +59,6 @@
 					<li><a href="#">베스트</a></li>
 					<li><a href="#">알뜰쇼핑</a></li>
 					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="${cp }/member/listReview.do"><b class="glyphicon glyphicon-log-out"></b>&nbsp;로그아웃</a></li>
 				</ul>
 				<form class="navbar-form pull-right">
 					<input class="form-control input-lg" type="text" placeholder="Search" aria-label="Search">
