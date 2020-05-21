@@ -125,8 +125,8 @@ public class QnaDao {
 			pstmt.setInt(3, pnums);
 			rs = pstmt.executeQuery();
 			ArrayList<QnaDto> list = new ArrayList<QnaDto>();
+			
 			while (rs.next()) {
-
 				int pnum = rs.getInt("pnum");
 				int num = rs.getInt("num");
 				int qnum = rs.getInt("qnum");
@@ -143,6 +143,7 @@ public class QnaDao {
 						level);
 				list.add(dto);
 			}
+			
 			return list;
 		} catch (SQLException se) {
 			se.printStackTrace();

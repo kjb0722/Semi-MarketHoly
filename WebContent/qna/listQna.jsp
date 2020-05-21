@@ -22,7 +22,7 @@
 			<c:forEach var='vo' items='${list }'>
 				<tbody>
 					<tr onclick="showHidden(${vo.qnum},'${vo.id }','${vo.locker }')">
-						<td>${dto.qnum }</td>
+						<td>${vo.qnum }</td>
 						<%-- <c:choose>
 							<c:when test="${dto.locker == 'Y'}">
 								<td><c:if test="${dto.ref>0 }">
@@ -43,28 +43,30 @@
 						</c:choose> --%>
 
 						<td>
-							<c:if test="${dto.level > 1 }">
-								<c:forEach var="i" begin="1" end="${dto.level - 1 }">
+							<c:if test="${vo.level > 1 }">
+								<c:forEach var="i" begin="1" end="${vo.level - 1 }">
 									[re]&nbsp;
 								</c:forEach> 
 							</c:if>
-							${dto.title } 
-							<c:if test="${dto.locker == 'Y' }">
+							${vo.title } 
+							<c:if test="${vo.locker == 'Y' }">
 								<img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px">
 							</c:if>
 						</td>
 						<td>${id }</td>
-						<td>${dto.reg_date }</td>
+						<td>${vo.reg_date }</td>
 					</tr>
-					<tr id='${dto.qnum }' style='display: none;'>
-						<td>${dto.content }</td>
+					<tr id='${vo.qnum }' style='display: none;'>
+						<td>${vo.content }</td>
 					</tr>
-
 				</tbody>
+				<c:if test="${}">
+					<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp?pnum=${vo.pnum }&id=${vo.id }&num=${vo.num }'">
+				</c:if>
 			</c:forEach>
 		</table>
 	</div>
-	<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp?pnum=${vo.pnum }&id=${vo.id }&num=${vo.num }'">
+	
 	<br>
 	<br>
 	<!-- 페이징처리 -->

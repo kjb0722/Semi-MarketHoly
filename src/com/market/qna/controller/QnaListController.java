@@ -54,9 +54,6 @@ public class QnaListController extends HttpServlet {
 		String id=(String)session.getAttribute("id");
 		
 	
-		
-		
-		
 		ProductDao pdao=new ProductDao();
 		ProductDto dto=pdao.getDetail(pnum);
 
