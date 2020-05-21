@@ -11,6 +11,7 @@ import com.market.db.JDBCUtil;
 import com.market.member.dto.MemberDto;
 import com.market.mypage.dto.MypageReviewDto;
 import com.market.review.dto.ReviewDto;
+import com.market.review.dto.ReviewNumbersDto;
 
 
 public class ReviewDao {
@@ -20,6 +21,38 @@ public class ReviewDao {
 		return instance;
 	}
 	
+	
+	public ReviewNumbersDto getNumbers(String ids,int pnums) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql ="select o.onum, op.pnum from orders o, order_product op where id=? and status=5 and pnum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			pstmt.setInt(2, pnums);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int onum=rs.getInt("onum");
+				int pnum=rs.getInt("pnum");
+				ReviewNumbersDto dto = new ReviewNumbersDto(onum, pnum);
+				return dto;
+			}
+			return null;		
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+		
+	}
 	
 	
 	

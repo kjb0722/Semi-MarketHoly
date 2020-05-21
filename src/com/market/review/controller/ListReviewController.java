@@ -15,7 +15,7 @@ import com.market.product.dto.ProductDto;
 import com.market.review.dao.ReviewDao;
 import com.market.review.dto.ReviewDto;
 
-@WebServlet("/member/listReview.do")
+@WebServlet("/review/listReview.do")
 public class ListReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,6 +47,7 @@ public class ListReviewController extends HttpServlet {
 		ProductDao pdao=new ProductDao();
 		ProductDto dto=pdao.getDetail(pnum);
 
+		req.setAttribute("pnum", pnum);
 		req.setAttribute("dto",dto);
 		req.setAttribute("id",id);
 		req.setAttribute("list", list);

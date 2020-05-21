@@ -49,7 +49,7 @@
 		</c:forEach>	
 	</table>
 </div>
-		<input type="button" value = "후기쓰기" style="float:right" onclick="location.href='${cp }/review/writeReview.jsp'">
+		<input type="button" value = "후기쓰기" style="float:right" onclick="location.href='${cp }/review/startWriteReview.do?pnum=${pnum }'">
 		<br><br>
 
 

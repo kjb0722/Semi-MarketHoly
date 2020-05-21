@@ -20,8 +20,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 public class ReviewWriteController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
+	
 		String upload = req.getServletContext().getRealPath("/img");
 	
 		
@@ -50,12 +49,17 @@ public class ReviewWriteController extends HttpServlet {
 		ReviewDao dao = ReviewDao.getInstance();
 		ReviewDto dto = new ReviewDto(onum, pnum, num, 0, id, name, title, content, null, orgfilename, savefilename, null);		
 		
+		
+		
 		int n = dao.writeReview(dto);
 		
+		
+		
 		if(n>0) {
-			resp.sendRedirect(req.getContextPath()+"/member/listReview.do");
+			resp.sendRedirect(req.getContextPath()+"/review/listReview.do?pnum="+pnum);  
+			//(req.getContextPath()+"&pnum="+pnum);				
 		}else {
-			resp.sendRedirect(req.getContextPath()+"/member/reviewResult.jsp");
+			resp.sendRedirect(req.getContextPath()+"/review/reviewResult2.jsp");
 		}
 	}
 }

@@ -7,8 +7,8 @@
 <title>reviewResult.jsp</title>
 </head>
 <script>
-	alert("구매한상품이 아닙니다.");
-	history.go(-1);
+	alert("이미 리뷰를 작성하셨습니다.");
+	history.go(-2);
 </script>
 
 <body>
