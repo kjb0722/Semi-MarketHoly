@@ -5,14 +5,14 @@ import java.sql.Date;
 public class OrderListDto {
 	
 	private int status;
-	private int pay_yn;
+	private String pay_yn;
 	private Date end_date;
 	private String thum_save;
 	private String name;
 	private String description;
 	private int price;
 	private int ea;
-	public OrderListDto(int status, int pay_yn, Date end_date, String thum_save, String name, String description,
+	public OrderListDto(int status, String pay_yn, Date end_date, String thum_save, String name, String description,
 			int price, int ea) {
 		super();
 		this.status = status;
@@ -30,10 +30,10 @@ public class OrderListDto {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public int getPay_yn() {
+	public String getPay_yn() {
 		return pay_yn;
 	}
-	public void setPay_yn(int pay_yn) {
+	public void setPay_yn(String pay_yn) {
 		this.pay_yn = pay_yn;
 	}
 	public Date getEnd_date() {

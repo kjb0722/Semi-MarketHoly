@@ -34,7 +34,7 @@ public class MypageDao {
 			ArrayList<OrderListDto> list = new ArrayList<OrderListDto>();
 			while(rs.next()) {
 				int status = rs.getInt("status");
-				int pay_yn = rs.getInt("pay_yn");
+				String pay_yn = rs.getString("pay_yn");
 				Date end_date = rs.getDate("end_date");
 				String thum_save = rs.getString("thumb_save");
 				String name = rs.getString("name");

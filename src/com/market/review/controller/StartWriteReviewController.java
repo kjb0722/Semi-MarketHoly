@@ -24,22 +24,18 @@ public class StartWriteReviewController extends HttpServlet{
 		MemberDto dto = (MemberDto)session.getAttribute("memberDto");
 		if(dto==null) {
 			resp.sendRedirect(req.getContextPath()+"/review/reviewResult.jsp");
-			
+	
+		
 		}else {
 			int num = dto.getNum();
 			String name = dto.getName();
 			String id = dto.getId();
 		
-			
-			
-			
-			
 			req.setAttribute("num", num);
 			req.setAttribute("name", name);
 			req.setAttribute("id", id);
 			
-				
-			
+
 			ReviewDao dao = ReviewDao.getInstance();
 			ReviewNumbersDto numbersDto = dao.getNumbers(dto.getId(),pnum);
 			
@@ -50,9 +46,8 @@ public class StartWriteReviewController extends HttpServlet{
 				//resp.sendRedirect(req.getContextPath()+"/index.jsp?page=mypage/mypage.jsp&mypage=member/recheckPwd.jsp");
 				
 			}else {
-				resp.sendRedirect(req.getContextPath()+"/reviewResult.jsp");
+				resp.sendRedirect(req.getContextPath()+"/review/reviewResult.jsp");
 			}
-		}
-		
+		}	
 	}
 }
