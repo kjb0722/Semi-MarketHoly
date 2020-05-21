@@ -30,8 +30,8 @@
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck"></td>
 				<td>${cart.name}</td>
-				<td>${cart.EA}</td>
-				<td>${cart.price}</td>
+				<td>${change.EA}</td>
+				<td>${total.total}</td>
 			</tr>
 		</table>
 	</div>
@@ -43,8 +43,6 @@
 
 		<p>보내는 사람*</p>
 		
-		<c:forEach var="mem" items="${requestScope.member}">
-		</c:forEach>
 		<input type="text" id="sender" value="${mem.name}" disabled="disabled"><br>
 		<p>휴대폰*</p>
 		<input type="text" name="phone" value="${mem.phone}" disabled="disabled">
@@ -70,6 +68,18 @@
 
 
 		<div id="5-1">
+			<!-- 얻어온 정보가 자동으로 넘어오게  -->
+			주소* :<input type="text" class="form-control" name="tag" id="addr" value="${mem.addr} ">
+			<br>
+			수령인 이름* :<input type="text" class="form-control" name="tag" id="recname" value="${mem.name} ">
+			<br>
+			휴대폰* :<input type="text" class="form-control" name="tag" id="phone" value="${mem.phone} ">
+			<br>
+			<p>배송요청사항</p>
+			<textarea cols="100" rows="5" id="wants"></textarea>
+		</div>
+		
+		<div id="5-2">
 			<!-- 얻어온 정보가 자동으로 넘어오게  -->
 			주소* :<input type="text" class="form-control" name="tag" id="addr" placeholder="주소를 입력해 주세요">
 			<br>
@@ -116,12 +126,12 @@
 		<h1 style="text-align: center;">결제금액</h1>
 		<hr style="border: solid 1px purple;">
 
-		상품금액 :<input type="text" id="price" value="${cart.price}" disabled="disabled"><br>
-		상품할인금액 :500원<br>
+		상품금액 :<span>${total.total}</span><br>
+		상품할인금액 :<span>${DCprice.DCprice}</span><br><br>
 		배송비 :2500원<br>
 		적립금사용 :<input type="text" id="point" value="${member.point}" disabled="disabled"><br> 
 		<br>
-		최종결제금액 :<input type="text" id="total"> <br>
+		최종결제금액 :<input type="text" id="total" value="${finalprice.finalprice}"> <br>
 		
 		<hr style="border: solid 1px purple;">
 		
