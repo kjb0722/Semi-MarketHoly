@@ -150,7 +150,7 @@ h1, h2, h3 {
 	    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
 	    	var index=$(e.target).prop("tabindex");
 	    	if(index==2){
-	    		location = "${cp }/member/listReview.do?pnum="+${dto.pnum };
+	    		location = "${cp }/review/listReview.do?pnum="+${dto.pnum };
 	    		
 	    	}else if(index==3){
 	    		location = "${cp }/qna/qnaList.do?pnum="+${dto.pnum };
