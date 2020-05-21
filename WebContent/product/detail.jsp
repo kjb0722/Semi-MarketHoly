@@ -7,10 +7,9 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-#wrap {width:1100px;}
 .info {
 	float: left;
-	width:40%;
+	width:50%;
 }
 
 .container {
@@ -22,25 +21,28 @@
 }
 
 #img {
+	width:300px;
+	height:200px;
+
+}
+#imgwrap{
+	width:50%;	
 	float: left;
+	text-align:center;
+	
 
 }
 
 h1, h2, h3 {
 	display: inline
 }
-#incart{
 
-}
 </style>
-<div id="wrap">
+<div id="imgwrap">
 	<div class="info" id="img">
-		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}"
-			width="300px" height="400px">
+		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}">
 	</div>
-	<div class="info">	
-	&nbsp&nbsp&nbsp&nbsp
-	</div>
+</div>
 	<div class="info">
 
 		<h1>${dto.name}</h1>
@@ -76,7 +78,7 @@ h1, h2, h3 {
 			style="background-color: purple;color:white" onclick="incart()">장바구니 담기</button>
 		</div>
 
-	</div>
+	
 </div>
 
 
@@ -138,11 +140,7 @@ h1, h2, h3 {
 	}
 	function incart() {
 		var id = '${sessionScope.memberDto.id}';
-		var pnum = $
-		{
-			param.pnum
-		}
-		;
+		var pnum = ${param.pnum};
 		var EA = document.getElementById("EA");
 		location = "${cp }/member/cartAdd.do?pnum=" + pnum + "&id=" + id
 				+ "&EA=" + parseInt(EA.innerHTML);
