@@ -47,8 +47,8 @@
 	</table>
 	<hr style="border: solid 1px purple;">
 	<button type="submit" class="btn" id="selectdel" style="background-color: purple;color:white">선택삭제</button>
-	<button type="submit" class="btn" style="background-color: purple;color:white" >전체삭제</button>
 	<hr style="border: solid 1px purple;">
+	<input type="button" value="확인" onClick="location.href='order.do?';">
 </div>
 <style>
 #s {
@@ -113,6 +113,7 @@
 	<div class="container" style='width: 1000px;' align="center">
 	<hr style="border: solid 1px purple;">
 		<button type="submit" class="btn btn-lg" style="background-color: purple;color:white">주문하기</button>
+		
 	</div>
 </form>
 

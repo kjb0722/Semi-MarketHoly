@@ -8,7 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.market.product.dao.ProductDao;
+import com.market.product.dto.ProductDto;
 import com.market.qna.dao.QnaDao;
 import com.market.qna.dto.QnaDto;
 
@@ -39,6 +42,19 @@ public class QnaListController extends HttpServlet {
 		if(pageCount<endPageNum) {
 			endPageNum=pageCount;
 		}
+		
+		HttpSession session=req.getSession();
+		String id=(String)session.getAttribute("id");
+		String sPnum=req.getParameter("pnum");
+		int pnum=1;
+		if(sPnum!=null) {
+			pnum=Integer.parseInt(req.getParameter("pnum"));
+		}
+		ProductDao pdao=new ProductDao();
+		ProductDto dto=pdao.getDetail(pnum);
+
+		req.setAttribute("dto",dto);
+		req.setAttribute("id",id);
 		req.setAttribute("list",list);
 		req.setAttribute("pageCount",pageCount);
 		req.setAttribute("startPageNum",startPageNum);

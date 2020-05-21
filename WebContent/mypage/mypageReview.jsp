@@ -16,6 +16,7 @@
 	<title>jsp 게시판 웹사이트</title>
 </head>
 <body>
+	<hr style="border: solid 1px purple">
 <div class="container">
 	<table class="table table-striped">
 		<thead>

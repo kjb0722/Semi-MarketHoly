@@ -55,7 +55,8 @@
 <br>
 <br>
 <br>
-<a href="${cp }/qna/qnaList.do"> 질문글보기</a>
+<a href="${cp }/qna/qnaList.do?pnum=${dto.pnum }"> 질문글보기</a>
+<a href="${cp }/member/listReview.do?pnum=${dto.pnum }"> 리뷰글보기</a>
 
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">

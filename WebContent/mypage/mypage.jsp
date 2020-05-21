@@ -11,6 +11,9 @@
 	<div id="header">
 		<jsp:include page="/mypage/header.jsp"/>
 	</div>
+	<br>
+	<br>
+	
 	
 	<c:choose>
 		<c:when test="${param.mypage != null }">
