@@ -24,8 +24,11 @@
 			<c:forEach var='vo' items='${list }'> 
 				<tbody>
 					<tr onclick="showHidden(${vo.rnum2},'${vo.id }','${vo.locker }')">
+						<c:set var="dan" value="${vo.rnum2}"/>
 						
-						<td>${vo.qnum }</td>
+						<td>${15-vo.rnum2}</td>
+						
+
 						
 						<%-- <c:choose>
 							<c:when test="${dto.locker == 'Y'}">

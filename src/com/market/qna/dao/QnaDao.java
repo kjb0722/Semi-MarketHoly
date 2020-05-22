@@ -109,12 +109,7 @@ public class QnaDao {
 	}
 
 	public ArrayList<QnaDto> list(int startRow, int endRow, int pnums) {
-		String sql = "select * from(\r\n" + 
-				"select bb.*,rownum rnum2 from \r\n" + 
-				"(select * \r\n" + 
-				"from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) \r\n" + 
-				"where pnum=?) bb)\r\n" + 
-				"where rnum2>=? and rnum2<=?";
+		String sql = "select * from(select bb.*,rownum rnum2 from (select * from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) where pnum=?) bb)where rnum2>=? and rnum2<=?";
 		//String sql = "select * from(select aa.*,rownum rnum2 from(select level,a.* from qna a where del_yn = 'N' and pnum = ? start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) where rnum2 >= ? and rnum2 <= ?";
 		
 		Connection con = null;
