@@ -362,6 +362,7 @@ nav {
 	$("#sale-prod").click(function() {
 		$("#catType").prop("disabled", false);
 		$("input[name='prod-chk']").prop("disabled", false);
+		$("#cat").change();
 		prodListLoad();
 	});
 	//세일 방법 라디오버튼 이벤트

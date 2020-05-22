@@ -85,7 +85,7 @@ public class SaleDao {
 						"AND    rnum <= ?";
 			} else {
 				sql = "SELECT * \r\n" + 
-						"FROMSELECT aa.*, \r\n" + 
+						"FROM (SELECT aa.*, \r\n" + 
 						"       rownum rnum \r\n" + 
 						"FROM   ( \r\n" + 
 						"              SELECT a.*, \r\n" + 
@@ -94,7 +94,7 @@ public class SaleDao {
 						"                          SELECT NAME \r\n" + 
 						"                          FROM   sale \r\n" + 
 						"                          WHERE  pnum=a.pnum \r\n" + 
-						"                          AND    del_yn='N'),-1) onsalename \"      + \" \r\n" + 
+						"                          AND    del_yn='N'),-1) onsalename \r\n" + 
 						"              FROM   product a \r\n" + 
 						"              WHERE  a.cnum = " + pCnum + " \r\n" + 
 						"              AND    type = " + pType + " \r\n" + 
