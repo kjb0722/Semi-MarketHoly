@@ -58,7 +58,6 @@
 					<li><a href="${cp }/product/new.do">신상품</a></li>
 					<li><a href="#">베스트</a></li>
 					<li><a href="#">알뜰쇼핑</a></li>
-					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
 				</ul>
 				<form class="navbar-form pull-right" action="${cp }/cart.do">
 					<button class="btn btn-lg pull-right">
