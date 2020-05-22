@@ -85,14 +85,15 @@ public class QnaDao {
 		}
 	}
 
-	public int getCount() {// 전체글의 갯수 리턴
+	public int getCount(int pnums) {// 전체글의 갯수 리턴
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select NVL(count(qnum),0) cnt from qna";
+			String sql = "select NVL(count(qnum),0) cnt from qna where pnum=?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pnums);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt("cnt");
@@ -108,21 +109,23 @@ public class QnaDao {
 	}
 
 	public ArrayList<QnaDto> list(int startRow, int endRow, int pnums) {
-//		String sql="select * from"
-//				+ "(select aa.*,rownum rnums from "
-//				+ "(select * from qna order by num desc)aa) "
-//				+ "where rnums>=? and rnums<=?";
-		String sql = "select * from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) "
-				+ "where rnum >= ? and rnum <= ? and pnum=?";
+		String sql = "select * from(\r\n" + 
+				"select bb.*,rownum rnum2 from \r\n" + 
+				"(select * \r\n" + 
+				"from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) \r\n" + 
+				"where pnum=?) bb)\r\n" + 
+				"where rnum2>=? and rnum2<=?";
+		//String sql = "select * from(select aa.*,rownum rnum2 from(select level,a.* from qna a where del_yn = 'N' and pnum = ? start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) where rnum2 >= ? and rnum2 <= ?";
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			pstmt.setInt(3, pnums);
+			pstmt.setInt(1, pnums);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 			ArrayList<QnaDto> list = new ArrayList<QnaDto>();
 			
@@ -139,8 +142,9 @@ public class QnaDao {
 				String del_yn = rs.getString("del_yn");
 				String locker = rs.getString("locker");
 				int level = rs.getInt("level");
+				int rnum2 = rs.getInt("rnum2");
 				QnaDto dto = new QnaDto(pnum, num, qnum, id, name, title, content, ref, reg_date, del_yn, locker,
-						level);
+						level,rnum2);
 				list.add(dto);
 			}
 			

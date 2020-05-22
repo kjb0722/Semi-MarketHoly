@@ -34,7 +34,7 @@ public class QnaAnsWriteController extends HttpServlet {
 		String content = req.getParameter("content");
 		int ref = qnum;
 		
-		int n = dao.insAns(new QnaDto(pnum, num, qnum, id, name, title, content, ref, null, "N", "N", -1));
+		int n = dao.insAns(new QnaDto(pnum, num, qnum, id, name, title, content, ref, null, "N", "N", -1, 0));
 
 		JSONObject json = new JSONObject();
 		json.put("n", n);

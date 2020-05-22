@@ -19,10 +19,14 @@
 
 
 			</thead>
-			<c:forEach var='vo' items='${list }'>
+
+
+			<c:forEach var='vo' items='${list }'> 
 				<tbody>
-					<tr onclick="showHidden(${vo.qnum},'${vo.id }','${vo.locker }')">
+					<tr onclick="showHidden(${vo.rnum2},'${vo.id }','${vo.locker }')">
+						
 						<td>${vo.qnum }</td>
+						
 						<%-- <c:choose>
 							<c:when test="${dto.locker == 'Y'}">
 								<td><c:if test="${dto.ref>0 }">
@@ -53,19 +57,21 @@
 								<img src="${pageContext.request.contextPath }/img/locker.jpg" width="30px" height="30px">
 							</c:if>
 						</td>
-						<td>${id }</td>
+						<td>${vo.id }</td>
 						<td>${vo.reg_date }</td>
 					</tr>
-					<tr id='${vo.qnum }' style='display: none;'>
+					<tr id='${vo.rnum2 }' style='display: none;'>
 						<td>${vo.content }</td>
 					</tr>
 				</tbody>
-				<c:if test="${}">
-					<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/writeQna.jsp?pnum=${vo.pnum }&id=${vo.id }&num=${vo.num }'">
-				</c:if>
+				
 			</c:forEach>
 		</table>
 	</div>
+		
+	<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/startQnaWrite.do?pnum=${pnum }'">
+			
+	
 	
 	<br>
 	<br>
@@ -82,18 +88,18 @@
 <c:forEach var="i" begin="${startPage }" end="${endPage }">
 	<c:choose>
 		<c:when test="${i==pageNum }">
-			<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}">
+			<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}&pnum=${pnum}">
 			<span style='color:blue'>[${i }]</span></a>
 		</c:when>		
 		<c:otherwise>
-			<a href = "${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}">
+			<a href = "${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}&pnum=${pnum}">
 			<span style='color:#999'>[${i }]</span></a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
 <c:choose>
 	<c:when test ="${endPage<pageCount }">
-		<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${endPage+1}">[다음]</a>
+		<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${endPage+1}&pnum=${pnum}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		다음

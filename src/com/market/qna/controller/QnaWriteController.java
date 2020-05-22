@@ -15,6 +15,8 @@ import com.market.qna.dto.QnaDto;
 public class QnaWriteController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		
 		int pnum = Integer.parseInt(req.getParameter("pnum"));
 		int num = Integer.parseInt(req.getParameter("num"));
 		String id = req.getParameter("id");
@@ -36,9 +38,19 @@ public class QnaWriteController extends HttpServlet {
 			ref=Integer.parseInt(req.getParameter("ref"));
 		}
 		
-		QnaDto dto = new QnaDto(pnum, num, qnum, id, name, title, content, ref, null, null, locker, -1);
+		QnaDto dto = new QnaDto(pnum, num, qnum, id, name, title, content, ref, null, null, locker, -1,0);
 		QnaDao dao = QnaDao.getInstance();
-		dao.writeQna(dto);
+		int n =dao.writeQna(dto);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/qna/qnaList.do?pnum="+pnum);
+			//resp.sendRedirect(req.getContextPath()+"/review/listReview.do?pnum="+pnum);  
+		}else {
+			resp.sendRedirect(req.getContextPath()+"");
+			
+		}
+		
+		
 		
 	}
 }

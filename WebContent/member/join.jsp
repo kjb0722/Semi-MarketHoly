@@ -3,14 +3,8 @@
     
 
 
-<style type="text/css">
-	.input { width:500px;  }
-	label{margin-top: 10px;}
-</style>
 
 
-</head>
-<body>
 <div id="wrap">
 	<h1>회원가입</h1>	
 	<form method="post" action="${pageContext.request.contextPath }/member/join.do">
