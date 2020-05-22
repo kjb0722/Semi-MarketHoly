@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 
+
+<style type="text/css">	
+	.input { width:500px;  }
+	label{margin-top: 10px;}
+</style>
 
 
 
@@ -70,7 +74,7 @@
 		<input type="submit" value="가입하기">
 	</form>
 </div>
-</body>
+
 
 <script>
 	var xhr = null;
