@@ -5,12 +5,13 @@
 <style type="text/css">	
 	.input { width:500px;  }
 	label{margin-top: 10px;}
+	#title{text-align: center;}
+	#wrap{position:relative; left:28% }
 </style>
 
 
-
-<div id="wrap">
-	<h1>회원가입</h1>	
+	<h1 id="title">회원가입</h1>	
+<div id="wrap" class="container">
 	<form method="post" action="${pageContext.request.contextPath }/member/join.do">
 		<label for="exampleInputEmail1">아이디*</label>
 		<div class="input input-group mb-3"> 	

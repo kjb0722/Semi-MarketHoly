@@ -21,8 +21,11 @@ public class QnaListController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		
-		
-		int pnum= Integer.parseInt(req.getParameter("pnum"));
+		String sPnum=req.getParameter("pnum");
+		int pnum=1;
+		if(sPnum!=null) {
+			pnum=Integer.parseInt(req.getParameter("pnum"));
+		}
 		
 		
 		
