@@ -6,11 +6,11 @@ public class SaleDto {
 	private int snum;
 	private int pnum;
 	private String name;
-	private int percent;
+	private float percent;
 	private Date startDate;
 	private Date endDate;
 	private String del_yn;
-	public SaleDto(int snum, int pnum, String name, int percent, Date startDate, Date endDate, String del_yn) {
+	public SaleDto(int snum, int pnum, String name, float percent, Date startDate, Date endDate, String del_yn) {
 		this.snum = snum;
 		this.pnum = pnum;
 		this.name = name;
@@ -37,10 +37,10 @@ public class SaleDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getPercent() {
+	public float getPercent() {
 		return percent;
 	}
-	public void setPercent(int percent) {
+	public void setPercent(float percent) {
 		this.percent = percent;
 	}
 	public Date getStartDate() {
@@ -61,5 +61,5 @@ public class SaleDto {
 	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
-	
+
 }

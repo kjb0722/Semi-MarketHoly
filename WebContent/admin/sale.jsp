@@ -238,12 +238,12 @@ nav {
 			percent.focus();
 			return;
 		}
-		
+		let percentDecimal = (percent.val() * 0.01);
 		let sale = {
 				name:name.val(),
 				startDate:startDate.datepicker({dateFormat:"yyyy-mm-dd"}).val(),
 				endDate:endDate.datepicker({dateFormat:"yyyy-mm-dd"}).val(),
-				percent:percent.val()
+				percent:percentDecimal
 		};
 		
 		if($("#sale-cat").prop("checked") == true){

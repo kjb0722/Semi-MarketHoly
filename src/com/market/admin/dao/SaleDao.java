@@ -32,7 +32,7 @@ public class SaleDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPnum());
 			pstmt.setString(2, dto.getName());
-			pstmt.setInt(3, dto.getPercent());
+			pstmt.setFloat(3, dto.getPercent());
 			pstmt.setDate(4, dto.getStartDate());
 			pstmt.setDate(5, dto.getEndDate());
 			pstmt.setInt(6, dto.getPnum());
@@ -102,7 +102,7 @@ public class SaleDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPnum());
 			pstmt.setString(2, dto.getName());
-			pstmt.setInt(3, dto.getPercent());
+			pstmt.setFloat(3, dto.getPercent());
 			pstmt.setDate(4, dto.getStartDate());
 			pstmt.setDate(5, dto.getEndDate());
 			pstmt.setInt(6, dto.getPnum());

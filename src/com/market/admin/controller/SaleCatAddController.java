@@ -41,10 +41,10 @@ public class SaleCatAddController extends HttpServlet {
 		java.sql.Date startDate = new java.sql.Date(tempStartDate.getTime());
 		java.sql.Date endDate = new java.sql.Date(tempEndDate.getTime());
 
-		int percent = Integer.parseInt(req.getParameter("percent"));
-
+		float percent = Float.parseFloat(req.getParameter("percent"));
+		
 		ProductDao dao = new ProductDao();
-		int endRow = dao.getCount(cnum, type);
+		int endRow = dao.getCount(cnum, type, "");
 		ArrayList<ProductDto> list = dao.getList(0, endRow, "", cnum, type);
 		SaleDao saleDao = SaleDao.getInstance();
 		int resultCnt = 0;
