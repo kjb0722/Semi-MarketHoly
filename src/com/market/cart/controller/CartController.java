@@ -18,10 +18,15 @@ public class CartController extends HttpServlet{
 
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-			HttpSession session=req.getSession();
-			MemberDto dto=(MemberDto) session.getAttribute("memberDto");
-			String id=dto.getId();
+			HttpSession session = req.getSession();
+			MemberDto memberDto = (MemberDto) session.getAttribute("memberDto");
+			String id="";
+			if (memberDto != null) {
+				id=memberDto.getId();
+			}else {
+				req.getRequestDispatcher("/index.jsp?page=member/login.jsp").forward(req, resp);
+			}
+			
 			CartDao dao=CartDao.getInstance();
 			//회원정보 보낸거.
 			ArrayList<CartDto> cart=dao.getcart(id);

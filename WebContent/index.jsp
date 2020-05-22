@@ -60,7 +60,7 @@
 					<li><a href="#">알뜰쇼핑</a></li>
 					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
 				</ul>
-				<form class="navbar-form pull-right" action="${cp }/cart.do?id=${memberDto.id}">
+				<form class="navbar-form pull-right" action="${cp }/cart.do">
 					<button class="btn btn-lg pull-right">
 					<span class="glyphicon glyphicon-shopping-cart"></span>
 				</button>
