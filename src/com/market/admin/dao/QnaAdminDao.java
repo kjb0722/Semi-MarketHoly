@@ -365,7 +365,6 @@ public class QnaAdminDao {
 		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
 		try {
 			con = JDBCUtil.getConn();
-			//String sql = "select * from(select aa.*,rownum rnum from (select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref minus select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref) aa) where rnum >= ? and rnum <= ? order by qnum desc";
 			String sql = "SELECT * \r\n" + 
 					"FROM  (SELECT aa.*, \r\n" + 
 					"              ROWNUM rnum \r\n" + 
@@ -475,6 +474,26 @@ public class QnaAdminDao {
 			return -1;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public int updAns(int qnum, String title, String content) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			con.setAutoCommit(false);
+			String sql2 = "update qna set title=?,content=? where qnum = ?";
+			pstmt = con.prepareStatement(sql2);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, qnum);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
 		}
 	}
 }

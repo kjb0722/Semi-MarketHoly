@@ -93,6 +93,7 @@ nav {
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="btnWrite">답변 등록</button>
+					<button type="button" class="btn btn-primary" id="btnModify" disabled="disabled">답변 수정</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -102,8 +103,33 @@ nav {
 </div>
 <script>
 	$(document).ready(function() {
-		qnaListLoad("","");
+		qnaListLoad("","",1);
 	});
+	
+	//답변 수정//
+	$("#btnModify").click(function(){
+		let qnum = $("#queQnum").val();
+		let title = $("#ansTitle").val();
+		let content = $("#ansContent").val();
+		jQuery.ajax({
+			dataType:"JSON",
+			url:`${cp}/admin/qnaModify.do`,
+			method:"post",
+			data:{qnum:qnum,
+				title:title,
+				content:content},
+			success:function(data){
+				if(data.n>0){
+					alert("답변 수정 완료");
+					$("#qnaAnswer").modal("hide");
+					qnaListLoad("","",1);
+				}else{
+					location = `${cp}/error.do`;
+				}
+			}
+		});
+	});
+	//답변 수정//
 	
 	//답변 완료 목록 로드//
 	$("#btnAnsComplete").click(function(){
@@ -232,7 +258,8 @@ nav {
 			let row = "";
 			if(dto.level >= 2){
 				replyIcon = "<span class='glyphicon glyphicon-check'></span>";
-				row += "<tr>";
+				//row += "<tr>";
+				row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
 			}else{
 				replyIcon = "<span class='glyphicon glyphicon-question-sign'></span>";
 				row += "<tr data-toggle='modal' data-target='#qnaAnswer' style='cursor:pointer;'>";
@@ -365,8 +392,17 @@ nav {
 			$("#queQnum").val($(this).children().eq(0).text());
 			$("#queContent").val($(this).children().eq(6).text());
 			$("#quePnum").val($(this).children().eq(7).text());
-			$("#ansTitle").val("");
-			$("#ansContent").val("");	
+			if($(this).children().eq(8).text() == 1){
+				$("#ansTitle").val("");
+				$("#ansContent").val("");
+				$("#btnWrite").prop("disabled", false);
+				$("#btnModify").prop("disabled", true);
+			}else{
+				$("#ansTitle").val($(this).children().eq(3).text());
+				$("#ansContent").val($(this).children().eq(6).text());
+				$("#btnWrite").prop("disabled", true);
+				$("#btnModify").prop("disabled", false);
+			}
 		});
 	}
 	

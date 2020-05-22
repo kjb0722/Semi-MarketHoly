@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import com.market.admin.dao.OrderAdminDao;
-
-@WebServlet("/admin/ordStatUpdate.do")
-public class OrdStatUpdate extends HttpServlet{
+import com.market.admin.dao.QnaAdminDao;
+@WebServlet("/admin/qnaModify.do")
+public class QnaAnsModiController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int status = Integer.parseInt(req.getParameter("status"));
-		String[] onums = req.getParameterValues("onums[]");
+		int qnum = Integer.parseInt(req.getParameter("qnum"));
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
 		
-		OrderAdminDao ordDao = OrderAdminDao.getInstance();
-		int n = ordDao.updStatus(onums, status);
+		QnaAdminDao qnaDao = QnaAdminDao.getInstance();
+		int n = qnaDao.updAns(qnum, title, content);
 		
 		JSONObject json = new JSONObject();
 		json.put("n", n);

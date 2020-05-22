@@ -15,47 +15,56 @@ nav {
 .cursor-pointer {
 	cursor: pointer;
 }
+
+.hidden {
+	display: none;
+}
 </style>
 <div class="container">
 	<div class="row">
 		<h3>회원 관리</h3>
 	</div>
-	<div class="form-inline form-group">
-		<select class="form-control" name="type">
-			<c:forEach var="dto" items="${comList }">
-				<option value="${dto.val }">${dto.name }</option>
-			</c:forEach>
-		</select>
-		<input type="text" class="form-control" id="word" placeholder="검색명을 입력하세요." name="word">
-		<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
-		<input type="button" class="btn btn-success" id="btnAllSearch" value="전체 검색">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-inline form-group">
+				<select class="form-control" name="type">
+					<c:forEach var="dto" items="${comList }">
+						<option value="${dto.val }">${dto.name }</option>
+					</c:forEach>
+				</select>
+				<input type="text" class="form-control" id="word" placeholder="검색명을 입력하세요." name="word">
+				<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
+				<input type="button" class="btn btn-success" id="btnAllSearch" value="전체 검색">
+			</div>
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th style="width: 5%;">번호</th>
+						<th style="width: 10%;">아이디</th>
+						<th style="width: 8%;">이름</th>
+						<th style="width: 7%;">등급</th>
+						<th style="width: 12%;">이메일</th>
+						<th class="hidden">생일</th>
+						<th class="hidden">전화번호</th>
+						<th style="width: 5%">성별</th>
+						<th style="width: 15%;">주소</th>
+						<!-- <th style="width: 13%">가입날짜</th> -->
+						<th style="width: 8%;">포인트</th>
+						<th style="width: 5%">탈퇴</th>
+						<th style="width: 12%;">탈퇴 날짜</th>
+						<th style="width: 5%">수정</th>
+						<th style="width: 5%">탈퇴</th>
+					</tr>
+				</thead>
+				<tbody>
 
-	<div>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th style="width: 5%">번호</th>
-					<th>아이디</th>
-					<th>이름</th>
-					<th style="width: 5%">등급</th>
-					<th>이메일</th>
-					<th>생일</th>
-					<th>전화번호</th>
-					<th style="width: 5%">성별</th>
-					<th>주소</th>
-					<!-- <th style="width: 13%">가입날짜</th> -->
-					<th>포인트</th>
-					<th style="width: 5%">탈퇴</th>
-					<th>탈퇴 날짜</th>
-					<th style="width: 5%">수정</th>
-					<th style="width: 5%">탈퇴</th>
-				</tr>
-			</thead>
-			<tbody>
-
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<div class="modal fade" id="memModify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -193,8 +202,8 @@ nav {
 				row += "<td>"+j.name+"</td>";
 				row += "<td>"+j.rating+"</td>";
 				row += "<td>"+j.email+"</td>";
-				row += "<td>"+j.birth+"</td>";
-				row += "<td>"+j.phone+"</td>";
+				row += "<td class='hidden'>"+j.birth+"</td>";
+				row += "<td class='hidden'>"+j.phone+"</td>";
 				if(j.gender == 1){
 					row += "<td>남</td>";				
 				}else{
@@ -356,7 +365,7 @@ nav {
 				if(data.n>0){
 					alert("회원 정보 수정 완료");
 					$("#memModify").modal("hide");
-					getMemList("","");
+					getMemList("","",1);
 				}else{
 					location = `${cp}/error.jsp`;
 				}
