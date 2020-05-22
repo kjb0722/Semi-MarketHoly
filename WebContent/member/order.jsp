@@ -2,10 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<link rel="stylesheet"
-	href="/Semi-MarketHoly/bootstrap/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="/Semi-MarketHoly/bootstrap/js/bootstrap.min.js"></script>
+
+
 <div class="container" style='width: 1000px; text-align: center;'>
 
 	<h1 class="display-1">주문서</h1>
@@ -25,14 +23,15 @@
 				<th>상품정보</th>
 				<th>수량</th>
 				<th>상품금액</th>
-				<!-- 장바구니에 담겨있는 리스트 얻어오기 -->
 			</tr>
-			<tr>
-				<td><input type="checkbox" size="5" name="undercheck"></td>
-				<td>${cart.name}</td>
-				<td>${change.EA}</td>
-				<td>${total.total}</td>
-			</tr>
+				<c:forEach var="cartnum" items="${cartnum }" varStatus="status">
+					<tr>
+						<td><input type="checkbox" size="5" name="undercheck"></td>
+						<td>${pname[status.index]}</td>
+						<td>${EA[status.index]}</td>
+						<td>${cartPrice[status.index] * EA[status.index]}</td>
+					</tr>
+				</c:forEach>
 		</table>
 	</div>
 
@@ -43,12 +42,12 @@
 
 		<p>보내는 사람*</p>
 		
-		<input type="text" id="sender" value="${mem.name}" disabled="disabled"><br>
+		<input type="text" id="sender" value="${member.name}" disabled="disabled"><br>
 		<p>휴대폰*</p>
-		<input type="text" name="phone" value="${mem.phone}" disabled="disabled">
+		<input type="text" name="phone" value="${member.phone}" disabled="disabled">
 		<br>
 		<p>이메일*</p>
-		<input type="text" id="email" value="${mem.email}" disabled="disabled">
+		<input type="text" id="email" value="${member.email}" disabled="disabled">
 
 	</div>
 	<div id="4" class="container" style='width: 1000px;'>
@@ -57,8 +56,8 @@
 		<hr style="border: solid 1px purple;">
 
 		<h4>배송지 선택</h4>
-		기본배송지<input type="radio" name="chaddr" value="oraddr"onclick="sameget()"> 
-		새로운배송지<input type="radio" name="chaddr" value="newaddr" onclick="clear()"> <br> 
+		기본배송지<input type="radio" name="chaddr" value="oraddr" checked="checked" onclick="clearAddr(true)"> 
+		새로운배송지<input type="radio" name="chaddr" value="newaddr" onclick="clearAddr(false)"> <br> 
 		* 배송 휴무일 <p class="text-danger">- 일요일 및 공휴일 -</p>
 		<hr style="border: solid 1px purple;">
 
@@ -67,30 +66,27 @@
 	<div id="5" class="container" style='width: 1000px;'>
 
 
-		<div id="5-1">
+		<div id="orginfo">
 			<!-- 얻어온 정보가 자동으로 넘어오게  -->
-			주소* :<input type="text" class="form-control" name="tag" id="addr" value="${mem.addr} ">
+			주소* :<input type="text" class="form-control" name="info" id="addr" value="${member.addr} " disabled="disabled">
 			<br>
-			수령인 이름* :<input type="text" class="form-control" name="tag" id="recname" value="${mem.name} ">
+			수령인 이름* :<input type="text" class="form-control" name="info" id="recname" value="${member.name} " disabled="disabled">
 			<br>
-			휴대폰* :<input type="text" class="form-control" name="tag" id="phone" value="${mem.phone} ">
+			휴대폰* :<input type="text" class="form-control" name="info" id="phone" value="${member.phone} " disabled="disabled">
 			<br>
 			<p>배송요청사항</p>
 			<textarea cols="100" rows="5" id="wants"></textarea>
 		</div>
-		
-		<div id="5-2">
-			<!-- 얻어온 정보가 자동으로 넘어오게  -->
-			주소* :<input type="text" class="form-control" name="tag" id="addr" placeholder="주소를 입력해 주세요">
+		<div id="newinfo" style="display: none;">
+			주소* :<input type="text" class="form-control" name="info" id="addr" placeholder="주소를 입력해 주세요">
 			<br>
-			수령인 이름* :<input type="text" class="form-control" name="tag" id="recname" placeholder="이름를 입력해 주세요">
+			수령인 이름* :<input type="text" class="form-control" name="info" id="recname" placeholder="이름를 입력해 주세요">
 			<br>
-			휴대폰* :<input type="text" class="form-control" name="tag" id="phone" placeholder="번호를 입력해 주세요">
+			휴대폰* :<input type="text" class="form-control" name="info" id="phone" placeholder="번호를 입력해 주세요">
 			<br>
 			<p>배송요청사항</p>
 			<textarea cols="100" rows="5" id="wants"></textarea>
 		</div>
-
 
 	</div>
 
@@ -100,10 +96,10 @@
 		<h1 style="text-align: center;">적립금</h1>
 		<hr style="border: solid 1px purple;">
 		적립금 사용:<input type="text" id="usepoint">
-		전액사용<input type="checkbox" id="allpoint" onclick="pointAll()" >
+		전액사용<input type="checkbox" id="allpoint" onclick="pointAllUse()" >
 		<br>
 		<br>
-		<button type="button" class="btn btn-info" id="allpointOk">사용확인</button>
+		<button type="button" class="btn btn-info" id="allpointOk" onclick="overpoint()">사용확인</button>
 		
 
 
@@ -122,20 +118,13 @@
 	</div>
 
 	<div id="8" class="container" style='width: 1000px;'>
-
-		<h1 style="text-align: center;">결제금액</h1>
+ 		<h1 style = 'text-align:center'>결제확인</h1>
+ 		<hr style="border: solid 1px purple;">
+		<h3>할인금액 :${DCprice[0]} </h3>
+		<h3>총 결제금액 :${finalprice[0]} </h3>
+		<span class='text-muted'> 결제 금액을 정확하게 확인 후 결제를 진행하세요 </span>
 		<hr style="border: solid 1px purple;">
-
-		상품금액 :<span>${total.total}</span><br>
-		상품할인금액 :<span>${DCprice.DCprice}</span><br><br>
-		배송비 :2500원<br>
-		적립금사용 :<input type="text" id="point" value="${member.point}" disabled="disabled"><br> 
-		<br>
-		최종결제금액 :<input type="text" id="total" value="${finalprice.finalprice}"> <br>
-		
-		<hr style="border: solid 1px purple;">
-		
-		<button type="submit" class="btn btn-info">결제하기</button>
+		<button type="submit" class="btn btn-info lg">결제하기</button>
 		
 	</div>
 	
@@ -145,37 +134,13 @@
 </form>
 
 <script>
-	var xhrsame = null;
-	function sameget() {
-		var addr = ${member.addr}
-		var rename = ${member.name}
-		var phone = ${member.phone}
-		xhrsame = new XMLHttpRequest();
-		xhrsame.onreadystatechange = samegetOk;
-		xhrsame.open('post', 'list.do', true);
-		xhrsame.setRequestHeader('Content-Type',
-				'application/x-www-form-urlencoded');
-		xhrsame
-				.send('addr=' + addr + '&recname=' + recname + '&phone='
-						+ phone);
-		
-		document.getElementsById("addr").disabled=true;
-	}
 
-	function samegetOk() {
-		if (xhrsame.readyState == 4 && xhrsame.status == 200) {
-			var xml = xhrsame.responseXML;
-		}
-	}
 
-	function clear() {
-		var addr = document.getElementById("addr");
-		addr.innerHTML = "";
-		var recname = document.getElementById("recname");
-		addr.innerHTML = "";
-		var phone = document.getElementById("phone");
-		addr.innerHTML = "";
-	}
+
+function clearAddr(check) {
+	document.getElementById("orginfo").style.display = check == false ? "none" : "block";
+	document.getElementById("newinfo").style.display = check == true ? "none" : "block";
+}
 
 	function allcheck() {
 		var allchecked = document.getElementById("allchecked");
@@ -185,19 +150,31 @@
 			undercheck[i].checked = allchecked.checked;
 		}
 	
-	function pointAll() {
+	}
+	
+	function pointAllUse() {
 		//전액사용 체크 하는 경우에는 포인트 사용금액에 allpoint의 내용이 들어가야하고
 		//입력 사용일 경우에는 usepoint의 값이 들어가야함.
-			
-		var allchecked = document.getElementById("allpoint");
+		var allpoint = document.getElementById("allpoint");	
+		var usepoint = document.getElementById("usepoint");
 		
-		if(allpoint==true){
-			allpoint.value=${mem.getPoint}
-			point=allpoint.value
-			disabled=disabled;		
+		if(allpoint.checked==true){
+			usepoint.value=${member.point}
+			usepoint.disabled=true;		
+		}else{
+			usepoint.value-=${member.point}
+			usepoint.disabled=false;
 		}
-			
 	}
-}
+	
+	function overpoint() {
+		var usepoint = document.getElementById("usepoint");
+		var point=${member.point}
+		if (usepoint.value >= point) {
+		   alert("포인트가 부족합니다");
+		   usepoint.value="0";
+		}
+		
+	}
 	 
 </script>
