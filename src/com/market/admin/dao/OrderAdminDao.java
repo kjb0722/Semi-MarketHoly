@@ -21,7 +21,7 @@ public class OrderAdminDao {
 
 	}
 
-	public ArrayList<OrderAdminDto> selOrdList(int startRow, int endRow, String kind, String word, int status) {
+	public ArrayList<OrderAdminDto> selOrdList(int startRow, int endRow, String kind, String word, String status) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

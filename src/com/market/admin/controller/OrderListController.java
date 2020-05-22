@@ -38,15 +38,16 @@ public class OrderListController extends HttpServlet {
 		if (word == null) {
 			word = "";
 		}
-		String statusStr = req.getParameter("status");
-		int status = 1;
-		if (statusStr != null) {
-			status = Integer.parseInt(statusStr);
+		String status = req.getParameter("status");
+		if(status.equals("1")) {
+			status = "1,2,3,4,5";
+		}else {
+			status = "6";
 		}
 
 		OrderAdminDao ordDao = OrderAdminDao.getInstance();
-		ArrayList<OrderAdminDto> ordList = ordDao.selOrdList(startRow, endRow, kind, word, status);
 
+		ArrayList<OrderAdminDto> ordList = ordDao.selOrdList(startRow, endRow, kind, word, status);
 		int pageCount = (int) Math.ceil(ordDao.selOrdCnt(kind, word) / PAGE_BLOCK);
 		int startPageNum = (int) (Math.floor((pageNum - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1);
 		int endPageNum = (int) (startPageNum + (PAGE_BLOCK - 1));

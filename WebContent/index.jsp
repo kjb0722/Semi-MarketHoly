@@ -60,7 +60,12 @@
 					<li><a href="#">알뜰쇼핑</a></li>
 					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
 				</ul>
-				<form class="navbar-form pull-right" action="${pageContext.request.contextPath }/search.do">
+				<form class="navbar-form pull-right" action="${cp }/cart.do?id=${memberDto.id}">
+					<button class="btn btn-lg pull-right">
+					<span class="glyphicon glyphicon-shopping-cart"></span>
+				</button>
+				</form>
+				<form class="navbar-form pull-right" action="${cp }/search.do">
 					<input class="form-control input-lg" type="text" name="keyword" placeholder="Search" aria-label="Search">
 					<button type="submit" class="btn btn-lg">
 						<span class="glyphicon glyphicon-search"></span>
