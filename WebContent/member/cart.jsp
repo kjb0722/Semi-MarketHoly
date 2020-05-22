@@ -54,7 +54,7 @@
 				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}" onchange="showBox()"></td>
 				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px"
 					height="100px">
-				<td>${cart1.name}</td>
+				<td><input type="text" value="${cart1.name}" name="pname"></td>
 				<td><button type="button" class="btn btn-default" onclick="minus(${status.index})">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 					</button>&nbsp <input type="text" name="EA" class="EA" value="${cart1.EA}" readonly style="border:0 ;text-align: center;">&nbsp
@@ -70,7 +70,6 @@
 	<hr style="border: solid 1px purple;">
 	<button type="submit" class="btn" id="selectdel" style="background-color: purple;color:white">선택삭제</button>
 	<hr style="border: solid 1px purple;">
-	<input type="button" value="확인" onClick="location.href='order.do?';">
 </div>
 
 	<div id="outbox" class="container" style="padding-left: 110px; padding-top: 100px">
@@ -176,7 +175,7 @@
 		var DCprice=document.getElementsByName("DCprice");
 		for (var i = 0; i < DCprice.length; i++) {
 			if(DCprice[i].value==null){
-				DCprice[i].value = 1;
+				DCprice[i].value = "1";
 				}
 			}
 		}
