@@ -19,8 +19,10 @@ public class OrderController extends HttpServlet {
 		CommonDao comDao = CommonDao.getInstance();
 		ArrayList<CommonDto> comList = comDao.selComList("주문관리 combobox");
 		ArrayList<CommonDto> statusList = comDao.selComList("주문관리 상태 combobox");
+		ArrayList<CommonDto> statList = comDao.selComList("주문상태");
 		req.setAttribute("comList", comList);
 		req.setAttribute("statusList", statusList);
+		req.setAttribute("statList", statList);
 		req.getRequestDispatcher("/index.jsp?page=admin/order.jsp").forward(req, resp);
 	}
 }

@@ -48,7 +48,7 @@ public class OrderListController extends HttpServlet {
 		OrderAdminDao ordDao = OrderAdminDao.getInstance();
 
 		ArrayList<OrderAdminDto> ordList = ordDao.selOrdList(startRow, endRow, kind, word, status);
-		int pageCount = (int) Math.ceil(ordDao.selOrdCnt(kind, word) / PAGE_BLOCK);
+		int pageCount = (int) Math.ceil(ordDao.selOrdCnt(kind, word, status) / PAGE_BLOCK);
 		int startPageNum = (int) (Math.floor((pageNum - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1);
 		int endPageNum = (int) (startPageNum + (PAGE_BLOCK - 1));
 		if (pageCount < endPageNum) {

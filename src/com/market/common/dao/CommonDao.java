@@ -28,7 +28,7 @@ public class CommonDao {
 		ArrayList<CommonDto> list = new ArrayList<CommonDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from common where type=?";
+			String sql = "select * from common where type=? order by conum";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, pType);
 			rs = pstmt.executeQuery();

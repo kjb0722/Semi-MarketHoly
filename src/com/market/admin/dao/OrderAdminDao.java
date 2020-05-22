@@ -114,16 +114,16 @@ public class OrderAdminDao {
 		}
 	}
 
-	public int selOrdCnt(String kind, String word) {
+	public int selOrdCnt(String kind, String word, String status) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
 			//String sql = "select nvl(count(*),0) cnt from orders a where status not in(5,6)";
-			String sql = "SELECT Nvl(Count(*), 0) cnt \r\n" + 
-					"FROM   orders a \r\n" + 
-					"WHERE  status NOT IN( 5, 6 ) ";
+			String sql = "SELECT Nvl(Count(*), 0) cnt " + 
+					" FROM   orders a \r\n" + 
+					" WHERE  status NOT IN( "+ status + " ) ";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -133,6 +133,34 @@ public class OrderAdminDao {
 			return -1;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public int updStatus(String[] onums, int status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			con.setAutoCommit(false);
+			int n = 0;
+			for(String onum : onums) {
+				String sql = "update orders set status = ? where onum = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, status);
+				pstmt.setString(2, onum);
+				n += pstmt.executeUpdate();
+			}
+			return n;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
 		}
 	}
 }
