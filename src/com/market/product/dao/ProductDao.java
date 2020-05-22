@@ -45,7 +45,7 @@ public class ProductDao {
 		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
-			sql ="select NVL(count(pnum),0) cnt from product where name=?";
+			sql ="select NVL(count(pnum),0) cnt from product where name like ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%"+keyword+"%");
 			if(type == 0 && cnum == 0) {
@@ -240,7 +240,7 @@ public class ProductDao {
 			con = JDBCUtil.getConn();
 
 			String sql = "select * from(select aa.*,rownum rnum from "
-					+ "(select * from product where name like %?%";
+					+ "(select * from product where name like ?";
 			
 			
 			String sort;
@@ -267,10 +267,9 @@ public class ProductDao {
 			
 			sql += "order by " + sort + ")aa)where rnum>=? and rnum<=? order by " + sort;
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,keyword );
+			pstmt.setString(1,"%"+keyword+"%" );
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
-
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

@@ -39,7 +39,7 @@ public class SearchController extends HttpServlet{
 
 		ProductDao dao = new ProductDao();
 		ArrayList<ProductDto> list = dao.getSearchList(startRow, endRow, list_filter,keyword);
-
+		int result = dao.getCount(0, 0, keyword);
 		int pageCount = (int) Math.ceil(dao.getCount(0, 0, keyword) / 9.0);
 		int startPageNum = ((pageNum - 1) / 5) * 5 + 1;
 		int endPageNum = startPageNum + 4;
@@ -49,6 +49,7 @@ public class SearchController extends HttpServlet{
 		
 		req.setAttribute("id", id);
 		req.setAttribute("list", list);
+		req.setAttribute("result", result);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPageNum", startPageNum);
 		req.setAttribute("endPageNum", endPageNum);

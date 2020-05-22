@@ -60,8 +60,8 @@
 					<li><a href="#">알뜰쇼핑</a></li>
 					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
 				</ul>
-				<form class="navbar-form pull-right">
-					<input class="form-control input-lg" type="text" placeholder="Search" aria-label="Search">
+				<form class="navbar-form pull-right" action="${pageContext.request.contextPath }/search.do">
+					<input class="form-control input-lg" type="text" name="keyword" placeholder="Search" aria-label="Search">
 					<button type="submit" class="btn btn-lg">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
