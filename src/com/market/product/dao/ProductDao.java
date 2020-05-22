@@ -14,7 +14,6 @@ import com.market.product.dto.ProductDto;
 
 public class ProductDao {
 
-	// ����¡���� �޼ҵ� (getMaxNum,getCount)
 	public int getMaxNum() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
