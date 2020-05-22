@@ -18,9 +18,7 @@
 .pagination>li>a {
 	float: none;
 }
-.btn{
-	background-color: transparent;
-}
+
 </style>
 <h3>${ cname}</h3>
 <h3>${ tname}</h3>

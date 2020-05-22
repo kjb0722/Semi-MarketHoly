@@ -89,8 +89,9 @@ h1, h2, h3 {
 <div id="myTabContent" class="tab-content">
 	<!-- 상품상세탭 -->
 	<div class="tab-pane" >
-		<img src="${pageContext.request.contextPath }/img/${dto.detail_save}">
+			<img src="${pageContext.request.contextPath }/img/${dto.detail_save}">
 	</div>
+
 
 	<!-- 리뷰탭 -->
 	<div class="tab-pane" >
@@ -114,13 +115,8 @@ h1, h2, h3 {
 
 <script>
 	$(document).ready(function() {
-		if("${param.tabpage}"==""){
-			$('#discript').tab("shown.bs.tab");
-		}else if("${param.tabpage}"=="review/reviewList.jsp"){
-			$('#review').tab("shown.bs.tab");
-		}else if("${param.tabpage}"=="qna/listQna.jsp"){
-			$('#qna').tab("shown.bs.tab");
-		}
+			$('#myTab a:first').tab("shown.bs.tab");
+		
 	});
 	
 	function plus() {
@@ -154,7 +150,7 @@ h1, h2, h3 {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
     	var index=$(e.target).prop("tabindex");
     	if(index==1){
-    	
+    		$('#myTab a:first').tab("shown.bs.tab");
     	}else if(index==2){
     		location = "${cp }/review/listReview.do?pnum="+${dto.pnum };
     		
