@@ -44,7 +44,7 @@ body {
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-	background-color: white;
+	background-color: #5f0080;
 	border-radius: 25%;
 }
 
@@ -52,7 +52,7 @@ footer {
 	margin-top: 0px;
 }
 
-button, input[type=button], input[type=submit]{
+button[type=button], input[type=button], input[type=submit]{
 	background-color: RebeccaPurple;
 	border-color: #542384;
 	color: white;
