@@ -7,7 +7,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 cdn -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="${cp }/css/index.css" />
 <title>마켓홀리</title>
@@ -56,11 +58,12 @@
 					<li><a href="${cp }/product/new.do">신상품</a></li>
 					<li><a href="#">베스트</a></li>
 					<li><a href="#">알뜰쇼핑</a></li>
+					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
 				</ul>
 				<form class="navbar-form pull-right" action="${cp }/cart.do">
 					<button class="btn btn-lg pull-right">
-						<span class="glyphicon glyphicon-shopping-cart"></span>
-					</button>
+					<span class="glyphicon glyphicon-shopping-cart"></span>
+				</button>
 				</form>
 				<form class="navbar-form pull-right" action="${cp }/search.do">
 					<input class="form-control input-lg" type="text" name="keyword" placeholder="Search" aria-label="Search">
@@ -127,7 +130,5 @@
 			</div>
 		</div>
 	</footer>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>
