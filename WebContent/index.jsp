@@ -8,8 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 cdn -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="${cp }/css/index.css" />
 <title>마켓홀리</title>
@@ -62,8 +60,8 @@
 				</ul>
 				<form class="navbar-form pull-right" action="${cp }/cart.do">
 					<button class="btn btn-lg pull-right">
-					<span class="glyphicon glyphicon-shopping-cart"></span>
-				</button>
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+					</button>
 				</form>
 				<form class="navbar-form pull-right" action="${cp }/search.do">
 					<input class="form-control input-lg" type="text" name="keyword" placeholder="Search" aria-label="Search">
@@ -130,5 +128,7 @@
 			</div>
 		</div>
 	</footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>
