@@ -28,7 +28,19 @@ public class SaleDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into sale select seq_sale_snum.nextval,?,?,?,?,?,'N' from dual where not exists(select pnum from sale where pnum=? and del_yn='N')";
+			String sql = "INSERT INTO sale \r\n" + 
+					"SELECT seq_sale_snum.nextval, \r\n" + 
+					"       ?, \r\n" + 
+					"       ?, \r\n" + 
+					"       ?, \r\n" + 
+					"       ?, \r\n" + 
+					"       ?, \r\n" + 
+					"       'N' \r\n" + 
+					"FROM   dual \r\n" + 
+					"WHERE  NOT EXISTS(SELECT pnum \r\n" + 
+					"                  FROM   sale \r\n" + 
+					"                  WHERE  pnum = ? \r\n" + 
+					"                         AND del_yn = 'N') ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPnum());
 			pstmt.setString(2, dto.getName());
@@ -54,19 +66,41 @@ public class SaleDao {
 			con = JDBCUtil.getConn();
 			String sql = "";
 			if (pType == -1) {
-//				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.type = "
-//						+ pCnum + " and del_yn = 'N'";
-				sql = "select * from (select aa.*,rownum rnum from (select a.*"
-						+ " ,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName "
-						+ " from product a " + "where a.type = " + pCnum + " and del_yn = 'N') aa) where rnum >= ? "
-						+ " and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROM   ( \r\n" + 
+						"              SELECT aa.*, \r\n" + 
+						"                     rownum rnum \r\n" + 
+						"              FROM   ( \r\n" + 
+						"                            SELECT a.*, \r\n" + 
+						"                                   Nvl( \r\n" + 
+						"                                        ( \r\n" + 
+						"                                        SELECT NAME \r\n" + 
+						"                                        FROM   sale \r\n" + 
+						"                                        WHERE  pnum=a.pnum \r\n" + 
+						"                                        AND    del_yn='N'),-1) onsalename \r\n" + 
+						"                            FROM   product a \r\n" + 
+						"                            WHERE  a.type = " + pCnum + " \r\n" + 
+						"                            AND    del_yn = 'N') aa) \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
+						"AND    rnum <= ?";
 			} else {
-//				sql = "select a.*,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName from product a where a.cnum = "
-//						+ pCnum + " and type = " + pType + " and del_yn = 'N'";
-				sql = "select * from select aa.*,rownum rnum from (select a.*"
-						+ " ,nvl((select name from sale where pnum=a.pnum and del_yn='N'),-1) onSaleName "
-						+ " from product a where a.cnum = " + pCnum + " and type = " + pType + " and del_yn = 'N') aa)"
-						+ " where rnum >= ? and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROMSELECT aa.*, \r\n" + 
+						"       rownum rnum \r\n" + 
+						"FROM   ( \r\n" + 
+						"              SELECT a.*, \r\n" + 
+						"                     Nvl( \r\n" + 
+						"                          ( \r\n" + 
+						"                          SELECT NAME \r\n" + 
+						"                          FROM   sale \r\n" + 
+						"                          WHERE  pnum=a.pnum \r\n" + 
+						"                          AND    del_yn='N'),-1) onsalename \"      + \" \r\n" + 
+						"              FROM   product a \r\n" + 
+						"              WHERE  a.cnum = " + pCnum + " \r\n" + 
+						"              AND    type = " + pType + " \r\n" + 
+						"              AND    del_yn = 'N') aa) WHERE rnum >= ? \r\n" + 
+						"AND \r\n" + 
+						"rnum <= ?";
 			}
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);

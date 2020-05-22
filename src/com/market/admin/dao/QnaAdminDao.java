@@ -29,37 +29,137 @@ public class QnaAdminDao {
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "";
-//			if (kind.equals("")) {
-//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//			if (kind.equals("writer")) {
+//				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.name like '%"
+//						+ word
+//						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 //			} else if (kind.equals("pname")) {
-//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
-//						+ word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
+//						+ word
+//						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 //			} else if (kind.equals("cname")) {
-//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where type in(select type from category where name like '%"
-//						+ word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' and b.type in(select type from category where name like '%"
+//						+ word
+//						+ "%') start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
+//			} else if (kind.equals("title")) {
+//				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.title like '%"
+//						+ word
+//						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
 //			} else {
-//				sql = "select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where "
-//						+ kind + " like '%" + word + "%' and a.del_yn = 'N' and b.del_yn = 'N' order by qnum desc";
+//				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname, b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) "
+//						+ "where rnum >= ? and rnum <= ?";
 //			}
 			if (kind.equals("writer")) {
-				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.name like '%"
-						+ word
-						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROM  (SELECT aa.*, \r\n" + 
+						"              ROWNUM rnum \r\n" + 
+						"       FROM  (SELECT a.*, \r\n" + 
+						"                     (SELECT name \r\n" + 
+						"                      FROM   category \r\n" + 
+						"                      WHERE  cnum IN( b.cnum ) \r\n" + 
+						"                             AND TYPE IN( b.TYPE )) cname, \r\n" + 
+						"                     b.name                         pname, \r\n" + 
+						"                     LEVEL \r\n" + 
+						"              FROM   qna a \r\n" + 
+						"                     inner join product b \r\n" + 
+						"                             ON a.pnum = b.pnum \r\n" + 
+						"              WHERE  a.name LIKE '%" + word + "%' \r\n" + 
+						"                     AND a.del_yn = 'N' \r\n" + 
+						"                     AND b.del_yn = 'N' \r\n" + 
+						"              START WITH ref IS NULL \r\n" + 
+						"              CONNECT BY PRIOR a.qnum = ref \r\n" + 
+						"              ORDER  SIBLINGS BY a.qnum DESC) aa) \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
+						"       AND rnum <= ? ";
 			} else if (kind.equals("pname")) {
-				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
-						+ word
-						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROM  (SELECT aa.*, \r\n" + 
+						"              ROWNUM rnum \r\n" + 
+						"       FROM  (SELECT a.*, \r\n" + 
+						"                     (SELECT name \r\n" + 
+						"                      FROM   category \r\n" + 
+						"                      WHERE  cnum IN( b.cnum ) \r\n" + 
+						"                             AND TYPE IN( b.TYPE )) cname, \r\n" + 
+						"                     b.name                         pname, \r\n" + 
+						"                     LEVEL \r\n" + 
+						"              FROM   qna a \r\n" + 
+						"                     inner join product b \r\n" + 
+						"                             ON a.pnum = b.pnum \r\n" + 
+						"              WHERE  b.name LIKE '%" + word + "%' \r\n" + 
+						"                     AND a.del_yn = 'N' \r\n" + 
+						"                     AND b.del_yn = 'N' \r\n" + 
+						"              START WITH ref IS NULL \r\n" + 
+						"              CONNECT BY PRIOR a.qnum = ref \r\n" + 
+						"              ORDER  SIBLINGS BY a.qnum DESC) aa) \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
+						"       AND rnum <= ? ";
 			} else if (kind.equals("cname")) {
-				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' and b.type in(select type from category where name like '%"
-						+ word
-						+ "%') start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROM  (SELECT aa.*, \r\n" + 
+						"              ROWNUM rnum \r\n" + 
+						"       FROM  (SELECT a.*, \r\n" + 
+						"                     (SELECT name \r\n" + 
+						"                      FROM   category \r\n" + 
+						"                      WHERE  cnum IN( b.cnum ) \r\n" + 
+						"                             AND TYPE IN( b.TYPE )) cname, \r\n" + 
+						"                     b.name                         pname, \r\n" + 
+						"                     LEVEL \r\n" + 
+						"              FROM   qna a \r\n" + 
+						"                     inner join product b \r\n" + 
+						"                             ON a.pnum = b.pnum \r\n" + 
+						"              WHERE  a.del_yn = 'N' \r\n" + 
+						"                     AND b.del_yn = 'N' \r\n" + 
+						"                     AND b.TYPE IN(SELECT TYPE \r\n" + 
+						"                                   FROM   category \r\n" + 
+						"                                   WHERE  name LIKE '%" + word + "%') \r\n" + 
+						"              START WITH ref IS NULL \r\n" + 
+						"              CONNECT BY PRIOR a.qnum = ref \r\n" + 
+						"              ORDER  SIBLINGS BY a.qnum DESC) aa) \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
+						"       AND rnum <= ? ";
 			} else if (kind.equals("title")) {
-				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.title like '%"
-						+ word
-						+ "%' and a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) where rnum >= ? and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROM  (SELECT aa.*, \r\n" + 
+						"              ROWNUM rnum \r\n" + 
+						"       FROM  (SELECT a.*, \r\n" + 
+						"                     (SELECT name \r\n" + 
+						"                      FROM   category \r\n" + 
+						"                      WHERE  cnum IN( b.cnum ) \r\n" + 
+						"                             AND TYPE IN( b.TYPE )) cname, \r\n" + 
+						"                     b.name                         pname, \r\n" + 
+						"                     LEVEL \r\n" + 
+						"              FROM   qna a \r\n" + 
+						"                     inner join product b \r\n" + 
+						"                             ON a.pnum = b.pnum \r\n" + 
+						"              WHERE  a.title LIKE '%" + word + "%' \r\n" + 
+						"                     AND a.del_yn = 'N' \r\n" + 
+						"                     AND b.del_yn = 'N' \r\n" + 
+						"              START WITH ref IS NULL \r\n" + 
+						"              CONNECT BY PRIOR a.qnum = ref \r\n" + 
+						"              ORDER  SIBLINGS BY a.qnum DESC) aa) \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
+						"       AND rnum <= ? ";
 			} else {
-				sql = "select * from(select aa.*,rownum rnum from(select a.*,(select name from category where cnum in(b.cnum) and type in(b.type)) cname, b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' and b.del_yn = 'N' start with ref is null connect by prior a.qnum = ref ORDER SIBLINGS BY a.qnum desc) aa) "
-						+ "where rnum >= ? and rnum <= ?";
+				sql = "SELECT * \r\n" + 
+						"FROM  (SELECT aa.*, \r\n" + 
+						"              ROWNUM rnum \r\n" + 
+						"       FROM  (SELECT a.*, \r\n" + 
+						"                     (SELECT name \r\n" + 
+						"                      FROM   category \r\n" + 
+						"                      WHERE  cnum IN( b.cnum ) \r\n" + 
+						"                             AND TYPE IN( b.TYPE )) cname, \r\n" + 
+						"                     b.name                         pname, \r\n" + 
+						"                     LEVEL \r\n" + 
+						"              FROM   qna a \r\n" + 
+						"                     inner join product b \r\n" + 
+						"                             ON a.pnum = b.pnum \r\n" + 
+						"              WHERE  a.del_yn = 'N' \r\n" + 
+						"                     AND b.del_yn = 'N' \r\n" + 
+						"              START WITH ref IS NULL \r\n" + 
+						"              CONNECT BY PRIOR a.qnum = ref \r\n" + 
+						"              ORDER  SIBLINGS BY a.qnum DESC) aa) \" + \" \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
+						"       AND rnum <= ? ";
 			}
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -154,11 +254,19 @@ public class QnaAdminDao {
 			if (kind.equals("")) {
 				sql = "select nvl(count(*),0) cnt from qna";
 			} else if (kind.equals("pname")) {
-				sql = "select nvl(count(*),0) cnt from qna a inner join product b on a.pnum = b.pnum where b.name like '%"
-						+ word + "%'";
+				sql = "SELECT Nvl(Count(*), 0) cnt \r\n" + 
+						"FROM   qna a \r\n" + 
+						"       INNER JOIN product b \r\n" + 
+						"               ON a.pnum = b.pnum \r\n" + 
+						"WHERE  b.NAME LIKE '%" + word + "%' ";
 			} else if (kind.equals("cname")) {
-				sql = "select nvl(count(*),0) cnt from qna a inner join product b on a.pnum = b.pnum where b.type in(select type from category where name like '%"
-						+ word + "%')";
+				sql = "SELECT Nvl(Count(*), 0) cnt \r\n" + 
+						"FROM   qna a \r\n" + 
+						"       INNER JOIN product b \r\n" + 
+						"               ON a.pnum = b.pnum \r\n" + 
+						"WHERE  b.type IN(SELECT type \r\n" + 
+						"                 FROM   category \r\n" + 
+						"                 WHERE  NAME LIKE '%" + word + "%') ";
 			} else {
 				sql = "select nvl(count(*),0) cnt from qna where name like '%" + word + "%'";
 			}
@@ -181,7 +289,26 @@ public class QnaAdminDao {
 		ArrayList<QnaAdminDto> list = new ArrayList<QnaAdminDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from(select aa.*, rownum rnum from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' order by qnum desc) aa) where rnum>=? and rnum<=?";
+			String sql = "SELECT * \r\n" + 
+					"FROM  (SELECT aa.*, \r\n" + 
+					"              rownum rnum \r\n" + 
+					"       FROM  (SELECT a.*, \r\n" + 
+					"                     (SELECT NAME \r\n" + 
+					"                      FROM   category \r\n" + 
+					"                      WHERE  cnum = b.cnum \r\n" + 
+					"                             AND type = b.type) cname, \r\n" + 
+					"                     b.NAME                     pname \r\n" + 
+					"              FROM   qna a \r\n" + 
+					"                     INNER JOIN product b \r\n" + 
+					"                             ON a.pnum = b.pnum \r\n" + 
+					"              WHERE  a.qnum NOT IN(SELECT ref \r\n" + 
+					"                                   FROM   qna \r\n" + 
+					"                                   WHERE  ref IS NOT NULL) \r\n" + 
+					"                     AND a.ref IS NULL \r\n" + 
+					"                     AND a.del_yn = 'N' \r\n" + 
+					"              ORDER  BY qnum DESC) aa) \r\n" + 
+					"WHERE  rnum >=? \r\n" + 
+					"       AND rnum <=? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -212,7 +339,13 @@ public class QnaAdminDao {
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select nvl(count(*),0) cnt from qna a where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N'";
+			String sql = "SELECT Nvl(Count(*), 0) cnt \r\n" + 
+					"FROM   qna a \r\n" + 
+					"WHERE  a.qnum NOT IN(SELECT ref \r\n" + 
+					"                     FROM   qna \r\n" + 
+					"                     WHERE  ref IS NOT NULL) \r\n" + 
+					"       AND a.ref IS NULL \r\n" + 
+					"       AND a.del_yn = 'N' ";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -233,7 +366,47 @@ public class QnaAdminDao {
 		try {
 			con = JDBCUtil.getConn();
 			//String sql = "select * from(select aa.*,rownum rnum from (select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref minus select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref) aa) where rnum >= ? and rnum <= ? order by qnum desc";
-			String sql = "select * from(select aa.*,rownum rnum from (with tmp_minus as(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref minus select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname,level from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' start with ref is null connect by prior a.qnum = a.ref)select * from tmp_minus order by qnum desc) aa) where rnum >= ? and rnum <= ? order by qnum desc";
+			String sql = "SELECT * \r\n" + 
+					"FROM  (SELECT aa.*, \r\n" + 
+					"              ROWNUM rnum \r\n" + 
+					"       FROM   (WITH tmp_minus \r\n" + 
+					"                    AS (SELECT a.*, \r\n" + 
+					"                               (SELECT name \r\n" + 
+					"                                FROM   category \r\n" + 
+					"                                WHERE  cnum = b.cnum \r\n" + 
+					"                                       AND TYPE = b.TYPE) cname, \r\n" + 
+					"                               b.name                     pname, \r\n" + 
+					"                               LEVEL \r\n" + 
+					"                        FROM   qna a \r\n" + 
+					"                               inner join product b \r\n" + 
+					"                                       ON a.pnum = b.pnum \r\n" + 
+					"                        WHERE  a.del_yn = 'N' \r\n" + 
+					"                        START WITH ref IS NULL \r\n" + 
+					"                        CONNECT BY PRIOR a.qnum = a.ref \r\n" + 
+					"                        MINUS \r\n" + 
+					"                        SELECT a.*, \r\n" + 
+					"                               (SELECT name \r\n" + 
+					"                                FROM   category \r\n" + 
+					"                                WHERE  cnum = b.cnum \r\n" + 
+					"                                       AND TYPE = b.TYPE) cname, \r\n" + 
+					"                               b.name                     pname, \r\n" + 
+					"                               LEVEL \r\n" + 
+					"                        FROM   qna a \r\n" + 
+					"                               inner join product b \r\n" + 
+					"                                       ON a.pnum = b.pnum \r\n" + 
+					"                        WHERE  a.qnum NOT IN(SELECT ref \r\n" + 
+					"                                             FROM   qna \r\n" + 
+					"                                             WHERE  ref IS NOT NULL) \r\n" + 
+					"                               AND a.ref IS NULL \r\n" + 
+					"                               AND a.del_yn = 'N' \r\n" + 
+					"                        START WITH ref IS NULL \r\n" + 
+					"                        CONNECT BY PRIOR a.qnum = a.ref) \r\n" + 
+					"               SELECT * \r\n" + 
+					"                FROM   tmp_minus \r\n" + 
+					"                ORDER  BY qnum DESC) aa) \r\n" + 
+					"WHERE  rnum >= ? \r\n" + 
+					"       AND rnum <= ? \r\n" + 
+					"ORDER  BY qnum DESC ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -265,7 +438,34 @@ public class QnaAdminDao {
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select nvl(count(*),0) cnt from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.del_yn = 'N' minus select * from(select a.*,(select name from category where cnum = b.cnum and type = b.type) cname,b.name pname from qna a inner join product b on a.pnum = b.pnum where a.qnum not in(select ref from qna where ref is not null) and a.ref is null and a.del_yn = 'N' order by qnum desc))";
+			String sql = "SELECT nvl(Count(*), 0) cnt \r\n" + 
+					"FROM  (SELECT a.*, \r\n" + 
+					"              (SELECT NAME \r\n" + 
+					"               FROM   category \r\n" + 
+					"               WHERE  cnum = b.cnum \r\n" + 
+					"                      AND type = b.type) cname, \r\n" + 
+					"              b.NAME                     pname \r\n" + 
+					"       FROM   qna a \r\n" + 
+					"              INNER JOIN product b \r\n" + 
+					"                      ON a.pnum = b.pnum \r\n" + 
+					"       WHERE  a.del_yn = 'N' \r\n" + 
+					"       minus \r\n" + 
+					"       SELECT * \r\n" + 
+					"       FROM  (SELECT a.*, \r\n" + 
+					"                     (SELECT NAME \r\n" + 
+					"                      FROM   category \r\n" + 
+					"                      WHERE  cnum = b.cnum \r\n" + 
+					"                             AND type = b.type) cname, \r\n" + 
+					"                     b.NAME                     pname \r\n" + 
+					"              FROM   qna a \r\n" + 
+					"                     INNER JOIN product b \r\n" + 
+					"                             ON a.pnum = b.pnum \r\n" + 
+					"              WHERE  a.qnum NOT IN(SELECT ref \r\n" + 
+					"                                   FROM   qna \r\n" + 
+					"                                   WHERE  ref IS NOT NULL) \r\n" + 
+					"                     AND a.ref IS NULL \r\n" + 
+					"                     AND a.del_yn = 'N' \r\n" + 
+					"              ORDER  BY qnum DESC)) ";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();
