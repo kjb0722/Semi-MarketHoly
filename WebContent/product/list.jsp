@@ -18,6 +18,9 @@
 .pagination>li>a {
 	float: none;
 }
+.btn{
+	background-color: transparent;
+}
 </style>
 <h3>${ cname}</h3>
 <h3>${ tname}</h3>
@@ -52,7 +55,7 @@
 						<div style="position: absolute; top: 340px; left: 210px">
 							<button data-toggle="modal" data-target="#cartmodal"
 								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price },${pro.pnum })">
-								<img src="../img/btn-cart.png" alt="담기" width="50px"
+								<img src="../img/btn-cart.png" id="incart" alt="담기" width="50px"
 									height="50px">
 							</button>
 						</div>

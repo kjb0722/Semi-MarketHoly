@@ -37,7 +37,7 @@ h1, h2, h3 {
 </style>
 <div id="imgwrap">
 	<div class="info" id="img">
-		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}">
+		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}" style="width: 400px;height: 400px">
 	</div>
 </div>
 <div class="info">
@@ -89,17 +89,14 @@ h1, h2, h3 {
 <div id="myTabContent" class="tab-content">
 	<!-- 상품상세탭 -->
 	<div class="tab-pane" id="discript">
-		<img src="${pageContext.request.contextPath }/img/${dto.detail_save }">
 	</div>
 
 	<!-- 리뷰탭 -->
 	<div class="tab-pane" id="review">
-		<a href="${cp }/member/listReview.do?pnum=${dto.pnum }"> 리뷰글보기</a>
 	</div>
 
 	<!-- qna탭 -->
 	<div class="tab-pane" id="qna">
-		<a href="${cp }/qna/qnaList.do?pnum=${dto.pnum }"> 질문글보기</a>
 	</div>
 </div>
 
@@ -149,7 +146,10 @@ h1, h2, h3 {
 	
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
     	var index=$(e.target).prop("tabindex");
-    	if(index==2){
+    	if(index==1){
+    		
+    		
+    	}(index==2){
     		location = "${cp }/review/listReview.do?pnum="+${dto.pnum };
     		
     	}else if(index==3){

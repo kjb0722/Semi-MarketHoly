@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,14 +13,19 @@
 	float: none;
 }
 </style>
-<h1>신상품</h1>
+<!-- 검색한 상품 리스트 : 필터넣기 / 카테고리는 없어도됨 / 아이디 받아야됨 (장바구니) 
+	이름일부만 넣으면 검색 상품명으로-->
+<hr style="border: solid 2px RebeccaPurple;">
+<h1>상품검색</h1>
+<h4>신선한 홀리의 상품을 검색해보세요.</h4>
+<hr style="border: solid 1px RebeccaPurple;">
 <!-- 상품리스트 -->
-
 <div class="container">
 	<div class="row">
 		<ul>
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
+					총 ${pageCount*9 }개의 상품이 검색되었습니다.
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
 						<div style="position: relative;">
 							<img src="${cp }/img/${pro.thumb_save}" width="300px"

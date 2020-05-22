@@ -38,22 +38,25 @@ public class ProductDao {
 
 	}
 
-	public int getCount(int cnum, int type) {
+	public int getCount(int cnum, int type,String keyword) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
-			if (type == -1) {
-				sql = "select NVL(count(pnum),0) cnt from product where type=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cnum);
+			sql ="select NVL(count(pnum),0) cnt from product where name=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			if(type == 0 && cnum == 0) {
+				sql += "";
+			}else if(type == -1) {
+				sql += "and type=?";
+				pstmt.setInt(2, cnum);
 			} else {
-				sql = "select NVL(count(pnum),0) cnt from product where cnum=? and type=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cnum);
-				pstmt.setInt(2, type);
+				sql += "and cnum=? and type=?";
+				pstmt.setInt(2, cnum);
+				pstmt.setInt(3, type);
 			}
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -227,5 +230,72 @@ public class ProductDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	//검색 리스트
+	public ArrayList<ProductDto> getSearchList(int startRow, int endRow, String list_filter, String keyword) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
+		try {
+			con = JDBCUtil.getConn();
+
+			String sql = "select * from(select aa.*,rownum rnum from "
+					+ "(select * from product where name like %?%";
+			
+			
+			String sort;
+			if(list_filter == null) {
+				list_filter = "new";
+			} 
+				
+			switch(list_filter) {
+				case "best":
+					sort = "reg_date";
+					break;
+				case "lowprice":
+					sort = "price";
+					break;
+				case "highprice":
+					sort = "price desc";
+					break;
+				case "new":
+				default:
+					sort = "reg_date desc";
+					break;
+			}
+			
+			
+			sql += "order by " + sort + ")aa)where rnum>=? and rnum<=? order by " + sort;
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,keyword );
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int pnum = rs.getInt("pnum");
+				String name = rs.getString("name");
+				Date reg_date = rs.getDate("reg_date");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				String thumb_org = rs.getString("thumb_org");
+				String thumb_save = rs.getString("thumb_save");
+				String description = rs.getString("description");
+				String del_yn = rs.getString("del_yn");
+				list.add(
+						new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
+
+			}
+			return list;
+
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
 
 }
