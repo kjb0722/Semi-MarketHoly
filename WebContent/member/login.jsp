@@ -5,7 +5,7 @@
     #login-form > div {
         margin: 15px 0;
     }
-    #tags{text-align: right;}
+    #tags{text-align: right; font-size: 16px;}
     
 </style>
 <div class="container">

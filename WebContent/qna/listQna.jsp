@@ -24,10 +24,13 @@
 			<c:forEach var='vo' items='${list }'> 
 				<tbody>
 					<tr onclick="showHidden(${vo.rnum2},'${vo.id }','${vo.locker }')">
-						<c:set var="dan" value="${vo.rnum2}"/>
+						<td>${vo.qnum }	</td>
 						
+						
+						<!--<c:set var="dan" value="${vo.rnum2}"/>
+						수정중 내일할게요!!
 						<td>${15-vo.rnum2}</td>
-						
+						-->
 
 						
 						<%-- <c:choose>
