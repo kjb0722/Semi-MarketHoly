@@ -44,19 +44,23 @@ public class ProductDao {
 		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
-			sql ="select NVL(count(pnum),0) cnt from product where name like ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "%"+keyword+"%");
+			
 			if(type == 0 && cnum == 0) {
-				sql += "";
+				sql="select NVL(count(pnum),0) cnt from product where name like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+				
 			}else if(type == -1) {
-				sql += "and type=?";
-				pstmt.setInt(2, cnum);
+				sql="select NVL(count(pnum),0) cnt from product where type=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, cnum);
 			} else {
-				sql += "and cnum=? and type=?";
-				pstmt.setInt(2, cnum);
-				pstmt.setInt(3, type);
+				sql="select NVL(count(pnum),0) cnt from product where cnum=? and type=? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, cnum);
+				pstmt.setInt(2, type);
 			}
+			
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt("cnt");

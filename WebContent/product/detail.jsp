@@ -115,11 +115,11 @@ h1, h2, h3 {
 <script>
 	$(document).ready(function() {
 		if("${param.tabpage}"==""){
-			$('#discript').tab("show");
+			$('#discript').tab("shown.bs.tab");
 		}else if("${param.tabpage}"=="review/reviewList.jsp"){
-			$('#review').tab("show");
+			$('#review').tab("shown.bs.tab");
 		}else if("${param.tabpage}"=="qna/listQna.jsp"){
-			$('#qna').tab("show");
+			$('#qna').tab("shown.bs.tab");
 		}
 	});
 	
