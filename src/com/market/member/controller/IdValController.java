@@ -18,7 +18,7 @@ public class IdValController extends HttpServlet {
 		String id = req.getParameter("id");
 		boolean msg = false;
 		
-		if(!(id.length()>=4 )){		
+		if(!(id.length()>=4 && id.length()<=12)){		
 			msg = true;
 		}
 		  

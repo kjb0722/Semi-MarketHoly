@@ -22,7 +22,7 @@ public class JoinController extends HttpServlet{
 	
 		req.setCharacterEncoding("utf-8");
 		String id = req.getParameter("id");
-		String pwd = req.getParameter("pwd");
+		String pwd = req.getParameter("pwd1");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		String birth = req.getParameter("birth");
@@ -42,17 +42,18 @@ public class JoinController extends HttpServlet{
 		int n = dao.join(dto);
 		String code = "success";
 		
-		if(n==-1) {
+		if(n==-1) {	// 중복이메일
 			code="fail1";
 			req.setAttribute("code", code);
 			req.getRequestDispatcher("/index.jsp?page=/member/joinResult.jsp").forward(req, resp);
 		
-		}else if(n==0) {
+		}else if(n==0) {	//중복아이디
 			code="fail2";
 			req.setAttribute("code", code);
 			req.getRequestDispatcher("/index.jsp?page=/member/joinResult.jsp").forward(req, resp);
-		}else {
-			resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/login.jsp");
+		}else {	//회원가입 성공
+			resp.sendRedirect(req.getContextPath()+"/member/joinSucess.jsp");
+			//resp.sendRedirect(req.getContextPath()+"/index.jsp?page=member/login.jsp");
 		}
 		
 		
