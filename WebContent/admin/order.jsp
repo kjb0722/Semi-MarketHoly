@@ -8,6 +8,10 @@ table, th, td {
 input[type=checkbox] {
 	zoom: 1.5;
 }
+
+.hidden{
+	display: none;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -45,19 +49,19 @@ input[type=checkbox] {
 		<table class="table table-bordered" id="order-table">
 			<thead>
 				<tr>
-					<th style="width: 5%">
+					<th style="width: 5%;">
 						<input type="checkbox" id="chkAll">
 					</th>
-					<th style="width: 5%">번호</th>
-					<th>주문자</th>
-					<th>상태</th>
-					<th>주문 상품</th>
-					<th>결제</th>
-					<th>가격</th>
-					<th>주소</th>
-					<th>결제 방법</th>
-					<th>사용 포인트</th>
-					<th>등록 날짜</th>
+					<th style="width: 5%;">번호</th>
+					<th style="width: 10%;">주문자</th>
+					<th style="width: 10%;">상태</th>
+					<th style="width: 30%;">주문 상품</th>
+					<th style="width: 8%;">결제</th>
+					<th style="width: 10%;">가격</th>
+					<th class="hidden">주소</th>
+					<th style="width: 10%;">결제 방법</th>
+					<th class="hidden">사용 포인트</th>
+					<th style="width: 12%;">등록 날짜</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -171,12 +175,12 @@ input[type=checkbox] {
 			row += "<td>"+dto.onum+"</td>";
 			row += "<td>"+dto.id+"</td>";
 			row += "<td>"+dto.statusName+"</td>";
-			row += "<td>"+dto.prodName+"</td>";
+			row += "<td><a href='${cp}/admin/'>"+dto.prodName+"</a></td>";
 			row += "<td>"+dto.pay_yn+"</td>";
 			row += "<td>"+dto.price+"</td>";
-			row += "<td>"+dto.addr+"</td>";
+			row += "<td class='hidden'>"+dto.addr+"</td>";
 			row += "<td>"+dto.pay_wayName+"</td>";
-			row += "<td>"+dto.use_point+"</td>";
+			row += "<td class='hidden'>"+dto.use_point+"</td>";
 			row += "<td>"+dto.reg_date+"</td>";			
 			row += "</tr>";
 			tbody.append(row);

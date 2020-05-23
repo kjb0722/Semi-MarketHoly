@@ -40,9 +40,9 @@ public class OrderListController extends HttpServlet {
 		}
 		String status = req.getParameter("status");
 		if(status.equals("1")) {
-			status = "1,2,3,4,5";
+			status = "1,2,3,4";
 		}else {
-			status = "6";
+			status = "5,6";
 		}
 
 		OrderAdminDao ordDao = OrderAdminDao.getInstance();
