@@ -31,6 +31,11 @@ nav {
 .cursor-pointer {
 	cursor: pointer;
 }
+
+#table-prod>tbody>tr>td>img {
+	width: 200px;
+	height: 200px;
+}
 </style>
 <div class="container">
 	<div class="row">
@@ -499,8 +504,8 @@ nav {
 					//$("#table-prod>tbody>tr>td").css("vertical-align","middle");
 					
 					//썸네일 크기 고정
-					$("#table-prod>tbody>tr>td>img").css("width","200px");
-					$("#table-prod>tbody>tr>td>img").css("height","200px");
+					//$("#table-prod>tbody>tr>td>img").css("width","200px");
+					//$("#table-prod>tbody>tr>td>img").css("height","200px");
 					
 					//'카테고리별 적용', '세부 카테고리별 적용' 체크시 상품 선택 못하도록
 					let saleCat = $("#sale-cat").prop("checked");

@@ -53,15 +53,15 @@ input[type=checkbox] {
 						<input type="checkbox" id="chkAll">
 					</th>
 					<th style="width: 5%;">번호</th>
-					<th style="width: 10%;">주문자</th>
+					<th style="width: 8%;">주문자</th>
 					<th style="width: 10%;">상태</th>
-					<th style="width: 30%;">주문 상품</th>
-					<th style="width: 8%;">결제</th>
-					<th style="width: 10%;">가격</th>
+					<th style="width: 33%;">주문 상품</th>
+					<th style="width: 6%;">결제</th>
+					<th style="width: 8%;">가격</th>
 					<th class="hidden">주소</th>
-					<th style="width: 10%;">결제 방법</th>
+					<th style="width: 14%;">결제 방법</th>
 					<th class="hidden">사용 포인트</th>
-					<th style="width: 12%;">등록 날짜</th>
+					<th style="width: 11%;">등록 날짜</th>
 				</tr>
 			</thead>
 			<tbody>

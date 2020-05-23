@@ -9,6 +9,11 @@ table, th, td {
 	.table>thead>tr>td, .table>thead>tr>th {
 	vertical-align: middle;
 }
+
+#order-table>tbody>tr>td>img{
+	width: 200px;
+	height: 200px;
+}
 </style>
 <div class="container">
 	<div class="row">

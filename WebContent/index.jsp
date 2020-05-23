@@ -11,6 +11,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<!-- 차트 cdn -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/billboard.js/1.12.9/billboard.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/billboard.js/1.12.9/billboard.min.css">
+
 <link rel="stylesheet" type="text/css" href="${cp }/css/index.css" />
 <title>마켓홀리</title>
 </head>
@@ -21,16 +26,26 @@
 			<ul class="nav navbar-nav pull-right" id="nav-menu">
 				<c:choose>
 					<c:when test="${sessionScope.memberDto == null }">
-						<li><a href="${cp }/member/startJoin.do">회원가입</a></li>
-						<li><a href="${cp }/member/loginstart.do">로그인</a></li>
+						<li>
+							<a href="${cp }/member/startJoin.do">회원가입</a>
+						</li>
+						<li>
+							<a href="${cp }/member/loginstart.do">로그인</a>
+						</li>
 					</c:when>
 					<c:otherwise>
 						<li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
+						<li class="dropdown">
+							<a class="dropdown-toggle user-menu" data-toggle="dropdown" href="${cp }/member/startChangeInfo.do">${sessionScope.memberDto.id}님</a>
 							<ul class="dropdown-menu">
-								<li class="dropdown-item"><a href="${cp }/mypage/startMypage.do"><span class="glyphicon glyphicon-user"></span>&nbsp;마이페이지</a></li>
-								<li class="dropdown-item"><a href="${cp }/member/logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>
-							</ul></li>
+								<li class="dropdown-item">
+									<a href="${cp }/mypage/startMypage.do"><span class="glyphicon glyphicon-user"></span>&nbsp;마이페이지</a>
+								</li>
+								<li class="dropdown-item">
+									<a href="${cp }/member/logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a>
+								</li>
+							</ul>
+						</li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -42,28 +57,41 @@
 		<nav class="navbar navbar-expand-sm bg-violet text-white">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-list">&nbsp;</b>전체 카테고리<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<c:forEach var="cat" items="${applicationScope.catList }">
-								<li class="dropdown-submenu"><a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
+								<li class="dropdown-submenu">
+									<a href="${cp }/product/list.do?cnum=${cat.cnum }">${cat.name }</a>
 									<ul class="dropdown-menu">
 										<c:forEach var="type" items="${applicationScope.catTypeList }">
 											<c:if test="${cat.cnum == type.type }">
-												<li><a class="cat-submenu" href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a></li>
+												<li>
+													<a class="cat-submenu" href="${cp }/product/list.do?cnum=${type.cnum}&type=${type.type}">${type.name }</a>
+												</li>
 											</c:if>
 										</c:forEach>
-									</ul></li>
+									</ul>
+								</li>
 							</c:forEach>
 						</ul>
-					<li><a href="${cp }/product/new.do">신상품</a></li>
-					<li><a href="#">베스트</a></li>
-					<li><a href="#">알뜰쇼핑</a></li>
-					<li><a href="${cp }/qna/qnaList.do">인표연습용</a></li>
+					<li>
+						<a href="${cp }/product/new.do">신상품</a>
+					</li>
+					<li>
+						<a href="#">베스트</a>
+					</li>
+					<li>
+						<a href="#">알뜰쇼핑</a>
+					</li>
+					<li>
+						<a href="${cp }/qna/qnaList.do">인표연습용</a>
+					</li>
 				</ul>
 				<form class="navbar-form pull-right" action="${cp }/cart.do">
 					<button class="btn btn-lg pull-right">
-					<span class="glyphicon glyphicon-shopping-cart"></span>
-				</button>
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+					</button>
 				</form>
 				<form class="navbar-form pull-right" action="${cp }/search.do">
 					<input class="form-control input-lg" type="text" name="keyword" placeholder="Search" aria-label="Search">
