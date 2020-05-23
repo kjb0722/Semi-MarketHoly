@@ -31,7 +31,7 @@ public class DetailController extends HttpServlet {
 			
 			req.setAttribute("dto",dto);
 			req.setAttribute("id",id);
-		
+			req.setAttribute("plag", 1);
 			
 		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp").forward(req, resp);
 		//여기서 또 값을 넘겨준다.

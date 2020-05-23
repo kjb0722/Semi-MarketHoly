@@ -55,6 +55,8 @@ public class ListReviewController extends HttpServlet {
 		req.setAttribute("startPage", startPageNum);
 		req.setAttribute("endPage", endPageNum);
 		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("plag", 2);
+
 		
 		//System.out.println(list.get(0).getId());
 		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp&tabpage=review/reviewList.jsp").forward(req, resp);

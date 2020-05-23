@@ -4,17 +4,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<!-- 뷰포트 -->
-	<meta name="viewport" content="width=device-width" initial-scale="1">
-	<!-- 스타일시트 참조  -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css"> 
-	<title>jsp 게시판 웹사이트</title>
-</head>
-<body>
 <div class="container">
 	<table class="table table-striped">
 		<thead>
@@ -84,6 +73,7 @@
 	</c:otherwise>
 </c:choose>
 </div>
+
 <script>
 	function showHidden(rNum) {
 		var id =document.getElementById(rNum);
@@ -96,7 +86,4 @@
 	}
 </script>
 
-
-
-</html>
 

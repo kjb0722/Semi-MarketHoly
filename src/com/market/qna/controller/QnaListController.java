@@ -70,6 +70,7 @@ public class QnaListController extends HttpServlet {
 		req.setAttribute("startPage",startPageNum);
 		req.setAttribute("endPage",endPageNum);
 		req.setAttribute("pageNum",pageNum);
+		req.setAttribute("plag", 3);
 		
 		//req.getRequestDispatcher("/product/detail.jsp?page=/qna/listQna.jsp").forward(req, resp);
 		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp&tabpage=qna/listQna.jsp").forward(req, resp);

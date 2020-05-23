@@ -88,8 +88,8 @@ h1, h2, h3 {
 
 <div id="myTabContent" class="tab-content">
 	<!-- 상품상세탭 -->
-	<div class="tab-pane" >
-			<img src="${pageContext.request.contextPath }/img/${dto.detail_save}">
+	<div class="tab-pane_1" >
+			<img src="${pageContext.request.contextPath}/img/${dto.detail_save}">
 	</div>
 
 
@@ -114,10 +114,8 @@ h1, h2, h3 {
 </section>
 
 <script>
-	$(document).ready(function() {
-			$('#myTab a:first').tab("shown.bs.tab");
-		
-	});
+	
+	
 	
 	function plus() {
 		var EA = document.getElementById("EA");
@@ -147,17 +145,34 @@ h1, h2, h3 {
 
 	}
 	
+	
+	
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-    	var index=$(e.target).prop("tabindex");
-    	if(index==1){
-    		$('#myTab a:first').tab("shown.bs.tab");
-    	}else if(index==2){
-    		location = "${cp }/review/listReview.do?pnum="+${dto.pnum };
-    		
-    	}else if(index==3){
-    		location = "${cp }/qna/qnaList.do?pnum="+${dto.pnum };
+    	var index= $(e.target).prop("tabindex");
+    	
+    	if(index === 1 && !index){
+    		$('.tab-pane_1').attr('active');
+    		$('.tab-pane_1').attr('in');
+    	}else if(index === 2){
+    		location = "${cp}/review/listReview.do?pnum="+${dto.pnum };
+    	}else if(index === 3){
+    		location = "${cp}/qna/qnaList.do?pnum="+${dto.pnum};
     	}
     
     });
+    /*
+    $('a[data-toggle="tab"]').on('hide.bs.tab', function(e){
+    	var index= $(e.target).prop("tabindex");
+    	
+    });
+	$(document).ready(function(e) {
+		
+		var num = "${plag}";
+		e.taget
+		e.relatedTarget
+		$('#myTab a[tabindex="'+num+'  "]').tab("show");
+	
+	});
+	*/
 	
 </script>
