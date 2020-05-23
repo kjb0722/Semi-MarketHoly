@@ -17,7 +17,7 @@ import com.market.admin.dto.CategoryDto;
 public class MainController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
+		//req.setCharacterEncoding("utf-8");
 		ServletContext app = req.getServletContext();
 		String cp = req.getContextPath();
 		app.setAttribute("cp", cp);

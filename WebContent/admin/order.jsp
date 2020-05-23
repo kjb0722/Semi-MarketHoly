@@ -175,7 +175,7 @@ input[type=checkbox] {
 			row += "<td>"+dto.onum+"</td>";
 			row += "<td>"+dto.id+"</td>";
 			row += "<td>"+dto.statusName+"</td>";
-			row += "<td><a href='${cp}/admin/'>"+dto.prodName+"</a></td>";
+			row += "<td><a href='${cp}/admin/ordDetail.do?onum="+dto.onum+"'>"+dto.prodName+"</a></td>";
 			row += "<td>"+dto.pay_yn+"</td>";
 			row += "<td>"+dto.price+"</td>";
 			row += "<td class='hidden'>"+dto.addr+"</td>";

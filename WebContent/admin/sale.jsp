@@ -10,11 +10,6 @@ table, th, td {
 	text-align: center;
 }
 
-table>tbody>th>td {
-	background-color: aqua;
-	vertical-align: middle;
-}
-
 input[type="checkbox"] {
 	border: 2px solid #bcbcbc;
 	cursor: pointer;
@@ -26,6 +21,11 @@ nav {
 	margin: 0;
 	padding: 0;
 	text-align: center;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
 }
 
 .cursor-pointer {
@@ -104,7 +104,9 @@ nav {
 			<table id="table-prod" class="table table-bordered">
 				<thead>
 					<tr>
-						<th style="width: 5%"><input type="checkbox" id="chkbox-all" name="prod-chk"></th>
+						<th style="width: 5%">
+							<input type="checkbox" id="chkbox-all" name="prod-chk">
+						</th>
 						<th style="width: 5%">상품 번호</th>
 						<th style="width: 15%">썸네일</th>
 						<th style="width: 35%">상품명</th>
@@ -436,7 +438,7 @@ nav {
 					let table = $("#table-prod>tbody");
 					table.empty();
 					for(let dto of data[0]){
-						let row = "<tr class='align-middle'>";
+						let row = "<tr>";
 						row += "<td><input type='checkbox' name='prod-chk'></td>";
 						row += "<td>"+dto.pnum+"</td>";
 						row += `<td><img src='${cp}/img/${'${dto.thumb_save}'}'></td>`;
@@ -494,7 +496,7 @@ nav {
 					//페이징//
 					
 					//세로 중앙 정렬
-					$("#table-prod>tbody>tr>td").css("vertical-align","middle");
+					//$("#table-prod>tbody>tr>td").css("vertical-align","middle");
 					
 					//썸네일 크기 고정
 					$("#table-prod>tbody>tr>td>img").css("width","200px");

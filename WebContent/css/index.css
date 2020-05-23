@@ -44,7 +44,7 @@ body {
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-	background-color: #5f0080;
+	/* background-color: #5f0080; */
 	border-radius: 25%;
 }
 
