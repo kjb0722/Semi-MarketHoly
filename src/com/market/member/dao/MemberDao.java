@@ -381,6 +381,7 @@ public class MemberDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
 		
 		try {
@@ -396,7 +397,7 @@ public class MemberDao {
 				}	
 			}
 			pstmt1.close();
-			
+				
 			String sql = "insert into member values(seq_member_num.nextval,?,?,?,?,?,?,?,?,?,sysdate,?,?,'')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getId());

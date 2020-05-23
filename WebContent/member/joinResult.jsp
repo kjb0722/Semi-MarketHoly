@@ -12,7 +12,7 @@
 <c:choose> 
 	<c:when test="${code=='fail1' }">
 		<script>
-			alert("필수사항을 입려하세요");
+			alert("중복되는 이메일입니다.");
 			window.history.back();	
 		</script>
 	</c:when>
