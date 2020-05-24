@@ -76,13 +76,13 @@
 							</c:forEach>
 						</ul>
 					<li>
-						<a href="${cp }/product/new.do">신상품</a>
+						<a href="${cp }/product/nbs.do?filter=new">신상품</a>
 					</li>
 					<li>
-						<a href="#">베스트</a>
+						<a href="${cp }/product/nbs.do?filter=best">베스트</a>
 					</li>
 					<li>
-						<a href="#">알뜰쇼핑</a>
+						<a href="${cp }/product/nbs.do?filter=sale">알뜰쇼핑</a>
 					</li>
 					<li>
 						<a href="${cp }/qna/qnaList.do">인표연습용</a>

@@ -58,7 +58,7 @@ a:visited { color: black; text-decoration: none;}
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><c:if test="${pageNum>1}">
 				<li class="page-item"><a
-					href="${cp }/product/new.do?pageNum=${pageNum-1}">
+					href="${cp }/product/nbs.do?pageNum=${pageNum-1}">
 						&laquo; </a>
 			</c:if></li>
 
@@ -66,13 +66,13 @@ a:visited { color: black; text-decoration: none;}
 			<c:choose>
 				<c:when test="${i==pageNum }">
 					<li class="page-item active"><a
-						href="${cp }/product/new.do?pageNum=${i}">
+						href="${cp }/product/nbs.do?pageNum=${i}">
 							<span style='color: white'>${i}</span>
 					</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item"><a
-						href="${cp }/product/new.do?pageNum=${i}">
+						href="${cp }/product/nbs.do?pageNum=${i}">
 							<span style='color: gray'>${i}</span>
 					</a></li>
 				</c:otherwise>
@@ -81,7 +81,7 @@ a:visited { color: black; text-decoration: none;}
 
 		<c:if test="${pageCount>endPageNum}">
 			<li class="page-item"><a
-				href="${cp }/product/new.do?pageNum=${pageNum+1}">
+				href="${cp }/product/nbs.do?pageNum=${pageNum+1}">
 					&raquo;</a></li>
 		</c:if>
 	</ul>

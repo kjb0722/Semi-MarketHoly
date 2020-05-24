@@ -37,34 +37,29 @@ public class ProductDao {
 
 	}
 
-	public int getCount(int cnum, int type,String keyword) {
+	public int getCount(int cnum, int type, String keyword) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
-			
-			if(type == 0 && cnum == 0) {
-				sql="select NVL(count(pnum),0) cnt from product where 1=1";
-				//검색리스트일때
-				if(keyword!="") {					
-					sql+= " and name like ?";
+
+			if (type == 0 && cnum == 0) {
+				sql = "select NVL(count(pnum),0) cnt from product where 1=1";
+				// 검색리스트일때
+				if (keyword != "") {
+					sql += " and name like ?";
 					pstmt = con.prepareStatement(sql);
-					pstmt.setString(1, "%"+keyword+"%");
-				//신상품리스트일때	
-				}else {
-					sql+= " and reg_date between sysdate-7 and sysdate";
-					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, "%" + keyword + "%");
 				}
-				
-				
-			}else if(type == -1) {
-				sql="select NVL(count(pnum),0) cnt from product where type=?";
+
+			} else if (type == -1) {
+				sql = "select NVL(count(pnum),0) cnt from product where type=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, cnum);
 			} else {
-				sql="select NVL(count(pnum),0) cnt from product where cnum=? and type=? ";
+				sql = "select NVL(count(pnum),0) cnt from product where cnum=? and type=? ";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, cnum);
 				pstmt.setInt(2, type);
@@ -83,6 +78,37 @@ public class ProductDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 
+	}
+	//신상품/베스트/할인상품 카운트
+	public int getNBSCount(String filter) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		try {
+			con = JDBCUtil.getConn();
+
+			if (filter == "new") {
+				sql += " and reg_date between sysdate-7 and sysdate";
+				pstmt = con.prepareStatement(sql);
+
+			} else if (filter == "best") {
+
+			} else if (filter == "sale") {
+
+			}
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("cnt");
+			} else {
+				return 0;
+			}
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
 	}
 
 	// 상세페이지
@@ -143,28 +169,28 @@ public class ProductDao {
 				paramList.add(type);
 			}
 			String sort;
-			if(list_filter == null) {
+			if (list_filter == null) {
 				list_filter = "new";
-			} 
-				
-			switch(list_filter) {
-				case "best":
-					sort = "reg_date";
-					break;
-				case "lowprice":
-					sort = "price";
-					break;
-				case "highprice":
-					sort = "price desc";
-					break;
-				case "new":
-				default:
-					sort = "reg_date desc";
-					break;
 			}
-			
+
+			switch (list_filter) {
+			case "best":
+				sort = "reg_date";
+				break;
+			case "lowprice":
+				sort = "price";
+				break;
+			case "highprice":
+				sort = "price desc";
+				break;
+			case "new":
+			default:
+				sort = "reg_date desc";
+				break;
+			}
+
 			sql += "order by " + sort + ")aa)where rnum>=? and rnum<=? order by " + sort;
-			
+
 			paramList.add(startRow);
 			paramList.add(endRow);
 			pstmt = con.prepareStatement(sql);
@@ -202,7 +228,7 @@ public class ProductDao {
 	}
 
 	// 신상품 리스트
-	public ArrayList<ProductDto> getNewList(int startRow, int endRow) {
+	public ArrayList<ProductDto> getNBSList(int startRow, int endRow,String filter) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -242,7 +268,8 @@ public class ProductDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	//검색 리스트
+
+	// 검색 리스트
 	public ArrayList<ProductDto> getSearchList(int startRow, int endRow, String keyword) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -254,7 +281,7 @@ public class ProductDao {
 			String sql = "select * from(select aa.*,rownum rnum from "
 					+ "(select * from product where name like ?) aa)where rnum>=? and rnum<=?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,"%"+keyword+"%" );
+			pstmt.setString(1, "%" + keyword + "%");
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
@@ -282,6 +309,5 @@ public class ProductDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-
 
 }

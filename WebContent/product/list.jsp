@@ -27,7 +27,7 @@ a:visited { color: black; text-decoration: none;}
 <c:forEach var="clist" items="${requestScope.clist }">
 	${clist.name}
 </c:forEach>
-
+<br>
 <!-- 정렬 필터 -->
 <form
 	action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }&type=${type }"
@@ -43,6 +43,7 @@ a:visited { color: black; text-decoration: none;}
 			<c:if test="${list_filter=='highprice' }">selected</c:if>>높은가격순</option>
 	</select> <input type="submit" class="btn btn-light" value="검색">
 </form>
+<br>
 <!-- 상품리스트 -->
 <div class="container">
 	<div class="row">

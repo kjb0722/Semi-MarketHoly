@@ -16,13 +16,18 @@
 	clear: both
 }
 
-#total {
+#t {
 	float: right;
 }
 
 #img {
 	width: 300px;
 	height: 200px;
+}
+
+#discript_img {
+	width: 100%;
+	height: 600px
 }
 
 #imgwrap {
@@ -34,10 +39,23 @@
 h1, h2, h3 {
 	display: inline
 }
+
+.nav-tabs a {
+	text-decoration: none;
+	color: black;
+}
+
+.nav-tabs>li>a {
+	margin-right: 3px;
+	line-height: 1.42857143;
+	border: 1px solid lightgray;
+	border-radius: 6px 6px 0 0;
+}
 </style>
 <div id="imgwrap">
 	<div class="info" id="img">
-		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}" id="img" style="width: 400px;height: 400px">
+		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}"
+			id="img" style="width: 400px; height: 400px">
 	</div>
 </div>
 <div class="info">
@@ -64,23 +82,23 @@ h1, h2, h3 {
 		중량차이가 발생할 수 있습니다. <br>
 	</p>
 	<hr style="border: solid 1px RebeccaPurple;">
-	<div id="total">
-		<label id="sum"><h3>총 상품금액 :</h3>
-			<h1>${dto.price }</label>
-		</h1>
-		원<br>
-		<button type="button" class="btn-lg pull-right" id="incart"
-			style="background-color: RebeccaPurple; color: white"
-			onclick="incart()">장바구니 담기</button>
+	<div id="t">
+		<h3>총 상품금액 :</h3>
+			<h1><label id="sum">${dto.price }</label></h1>
+			원<br>
+	
+	<button type="button" class="btn-lg pull-right" id="incart"
+		style="background-color: RebeccaPurple; color: white"
+		onclick="incart()">장바구니 담기</button>
 	</div>
-
 
 </div>
 
 
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">
-	<li><a href="#discript" data-toggle="tab" tabindex="1" id="discript">상품설명</a></li>
+	<li><a href="#discript" data-toggle="tab" tabindex="1"
+		id="discript">상품설명</a></li>
 	<li><a href="#review" data-toggle="tab" tabindex="2" id="review">상품후기</a></li>
 	<li><a href="#qna" data-toggle="tab" tabindex="3" id="qna">상품문의</a></li>
 </ul>
@@ -89,17 +107,16 @@ h1, h2, h3 {
 <div id="myTabContent" class="tab-content">
 	<!-- 상품상세탭 -->
 	<div class="tab-pane_1 active in">
-			<img src="${pageContext.request.contextPath}/img/${dto.detail_save}">
+		<img src="${pageContext.request.contextPath}/img/${dto.detail_save}"
+			id="discript_img">
 	</div>
 
 
 	<!-- 리뷰탭 -->
-	<div class="tab-pane" >
-	</div>
+	<div class="tab-pane_2"></div>
 
 	<!-- qna탭 -->
-	<div class="tab-pane" >
-	</div>
+	<div class="tab-pane_3"></div>
 </div>
 
 
@@ -146,6 +163,16 @@ h1, h2, h3 {
 	}
 	
 	
+	  
+	$(document).ready(function(e) {
+		
+		var num = "${plag}";
+		if(num!=="1"){
+			$('.tab-pane_1').hide();
+		}		
+
+	
+	});
 	
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
     	var index= $(e.target).prop("tabindex");
@@ -156,20 +183,10 @@ h1, h2, h3 {
     		location = "${cp}/review/listReview.do?pnum="+${dto.pnum };
     	}else if(index === 3){
     		location = "${cp}/qna/qnaList.do?pnum="+${dto.pnum};
+
     	}
     
     });
     
-  
-	$(document).ready(function(e) {
-		
-		var num = "${plag}";
-		if(num!=="1"){
-			$('.tab-pane_1').hide();
-		}		
-		
-	
-	});
-	
-	
+
 </script>
