@@ -47,6 +47,8 @@ public class QnaListController extends HttpServlet {
 		//System.out.println(list);
 
 		//전체 페이지갯수 구하기
+		int count= dao.getCount(pnum);
+		
 		int pageCount=(int)Math.ceil(dao.getCount(pnum)/5.0);
 		
 		int startPageNum=((pageNum-1)/4)*4+1;
@@ -62,6 +64,7 @@ public class QnaListController extends HttpServlet {
 		ProductDao pdao=new ProductDao();
 		ProductDto dto=pdao.getDetail(pnum);
 
+		req.setAttribute("count", count);
 		req.setAttribute("pnum", pnum);
 		req.setAttribute("dto",dto);
 		req.setAttribute("id",id);
