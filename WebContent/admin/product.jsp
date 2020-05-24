@@ -3,22 +3,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js">
 </script>
 <style>
-#name {
-	width: 350px;
-}
-
-#price, #stock {
-	width: 200px;
-}
 </style>
 <div class="container">
 	<div class="row">
 		<h3>상품 추가</h3>
 	</div>
-	<div class="contaainer-fluid">
-		<form class="form-inline" role="form" action="${cp }/admin/prodAdd.do" method="post" onsubmit="return prodChk()" enctype="multipart/form-data">
+	<form class="form-group" role="form" action="${cp }/admin/prodAdd.do" method="post" onsubmit="return prodChk()" enctype="multipart/form-data">
+		<div class="col-md-5">
 			<div class="row">
-				<div class="col-md-8 form-group">
+				<div class="col-md-12 form-group form-inline">
 					<div class="form-group">
 						<span class="label label-success">카테고리</span>
 						<select name="cat" class="form-control" onchange="catChange(this)">
@@ -26,66 +19,102 @@
 								<option value="${dto.cnum }">${dto.name }</option>
 							</c:forEach>
 						</select>
-					</div>
-					<span class="label label-success">세부 카테고리명</span>
-					<select name="catType" class="form-control">
+						<span class="label label-success">세부 카테고리명</span>
+						<select name="catType" class="form-control">
 
-					</select>
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-5 form-group">
+				<div class="col-md-12 form-group form-inline">
 					<span class="label label-success">상품명</span>
-					<br>
 					<input id="name" type="text" class="form-control" placeholder="상품명을 입력하세요." maxlength="30" name="name">
-					<br>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col-md-12 form-group">
 					<span class="label label-success">상품 설명</span>
-					<textarea class="form-control" rows="5" cols="40" name="description"></textarea>
+					<textarea class="form-control" rows="5" cols="41" name="description" style="resize: none;"></textarea>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col-md-12">
 					<span class="label label-success">가격</span>
 					<input id="price" name="price" type="number" class="form-control num-input" placeholder="가격을 입력하세요." min="1" max="999999999999">
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col-md-12 form-group">
 					<span class="label label-success">수량</span>
 					<input id="stock" name="stock" type="number" class="form-control num-input" placeholder="수량을 입력하세요." min="1" max="999999999999">
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col-md-8 form-group">
 					<span class="label label-success">썸네일</span>
 					<label class="file-upload btn btn-warning">
 						파일을 선택해주세요.
-						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" id="thumb"/>
+						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="thumb" id="thumb" />
 					</label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col-md-12 form-group">
 					<span class="label label-success">상품 상세 설명 이미지</span>
 					<label class="file-upload btn btn-warning">
 						파일을 선택해주세요.
-						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" id="detail"/>
+						<input type="file" accept="image/gif,image/jpeg,image/png,image/jpg.image/bmp" name="detail" id="detail" />
 					</label>
 				</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col-md-12 form-group">
 					<input type="submit" class="btn btn-lg btn-primary" value="저장">
 					<input type="reset" class="btn btn-lg btn-default" value="초기화">
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+		<div class="col-md-7">
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-success">판매 단위</span>
+					<input id="unit" type="text" class="form-control" placeholder="판매단위를 입력하세요." maxlength="30" name="name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-success">용량</span>
+					<input id="volume" type="text" class="form-control" placeholder="용량을 입력하세요." maxlength="30" name="name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-success">원산지</span>
+					<input id="origin" type="text" class="form-control" placeholder="원산지를 입력하세요." maxlength="30" name="name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-success">포장 종류</span>
+					<input id="pack-type" type="text" class="form-control" placeholder="포장 종류를 입력하세요." maxlength="30" name="name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-success">유통기한</span>
+					<input id="shelf_life" type="text" class="form-control" placeholder="유통기한을 입력하세요." maxlength="30" name="name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-success">안내사항</span>
+					<input id="guidance" type="text" class="form-control" placeholder="안내사항을 입력하세요." maxlength="30" name="name">
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 
 <script type="text/javascript">

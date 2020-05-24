@@ -86,7 +86,7 @@ h1, h2, h3 {
 	<br>
 	<input type="hidden" id="price" value="${dto.price }">
 	<p class='text-muted' style="font-size: 0.9em;">
-		판매단위 1팩
+		<!-- 판매단위 1팩
 		<br>
 		중량 용량 200g
 		<br>
@@ -97,6 +97,18 @@ h1, h2, h3 {
 		유통기한 농산물로 별도 유통기한은 없으나 가급적 빨리 드시기 바랍니다.
 		<br>
 		안내사항 -상품특성상 3%내외의 중량차이가 발생할 수 있습니다.
+		<br> -->
+		판매단위 ${prodInfo.unit }
+		<br>
+		중량 용량 ${prodInfo.volume }
+		<br>
+		원산지 ${prodInfo.origin }
+		<br>
+		포장타입 ${prodInfo.pack_type }
+		<br>
+		유통기한 ${prodInfo.shelf_life }
+		<br>
+		안내사항 ${prodInfo.guidance }
 		<br>
 	</p>
 	<hr style="border: solid 1px RebeccaPurple;">

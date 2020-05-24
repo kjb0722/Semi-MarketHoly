@@ -3,6 +3,7 @@
 
 DROP TABLE cart CASCADE CONSTRAINTS;
 DROP TABLE order_product CASCADE CONSTRAINTS;
+DROP TABLE Prod_Info CASCADE CONSTRAINTS;
 DROP TABLE qna CASCADE CONSTRAINTS;
 DROP TABLE review CASCADE CONSTRAINTS;
 DROP TABLE sale CASCADE CONSTRAINTS;
@@ -145,6 +146,18 @@ CREATE TABLE product
 );
 
 
+CREATE TABLE Prod_Info
+(
+	pnum number NOT NULL,
+	unit varchar2(20),
+	volume varchar2(30),
+	origin varchar2(30),
+	pack_type varchar2(40),
+	shelf_life varchar2(50),
+	guidance varchar2(50)
+);
+
+
 CREATE TABLE qna
 (
 	pnum number NOT NULL,
@@ -265,6 +278,12 @@ ALTER TABLE cart
 
 
 ALTER TABLE order_product
+	ADD FOREIGN KEY (pnum)
+	REFERENCES product (pnum)
+;
+
+
+ALTER TABLE Prod_Info
 	ADD FOREIGN KEY (pnum)
 	REFERENCES product (pnum)
 ;

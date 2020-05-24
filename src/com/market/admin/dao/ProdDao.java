@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.market.admin.dto.ProdDto;
+import com.market.admin.dto.ProdInfoDto;
 import com.market.db.JDBCUtil;
 
 public class ProdDao {
@@ -18,11 +19,13 @@ public class ProdDao {
 
 	}
 
-	public int insProd(ProdDto dto) {
+	public int insProd(ProdDto dto, ProdInfoDto infoDto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt1 = null;
 		try {
 			con = JDBCUtil.getConn();
+			con.setAutoCommit(false);
 			String sql = "insert into product values(seq_product_pnum.nextval,?,?,?,?,?,?,?,?,?,?,sysdate,'N')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCnum());
@@ -35,11 +38,29 @@ public class ProdDao {
 			pstmt.setString(8, dto.getThumb_save());
 			pstmt.setString(9, dto.getDetail_org());
 			pstmt.setString(10, dto.getDetail_save());
-			return pstmt.executeUpdate();
+			int n = pstmt.executeUpdate();
+			if (n > 0) {
+				String sql1 = "insert into prod_info values(seq_product_pnum.CURRVAL,?,?,?,?,?,?)";
+				pstmt1 = con.prepareStatement(sql1);
+				pstmt1.setString(1, infoDto.getUnit());
+				pstmt1.setString(2, infoDto.getVolume());
+				pstmt1.setString(3, infoDto.getOrigin());
+				pstmt1.setString(4, infoDto.getPack_type());
+				pstmt1.setString(5, infoDto.getShelf_life());
+				pstmt1.setString(6, infoDto.getGuidance());
+				return pstmt1.executeUpdate();
+			}
+			return -1;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
 			return -1;
 		} finally {
+			JDBCUtil.close(pstmt1);
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}

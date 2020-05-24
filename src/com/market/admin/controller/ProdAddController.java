@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.market.admin.dao.ProdDao;
 import com.market.admin.dto.ProdDto;
+import com.market.admin.dto.ProdInfoDto;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -56,7 +57,16 @@ public class ProdAddController extends HttpServlet {
 		dto.setThumb_save(thumb_save);
 		dto.setDetail_org(detail_org);
 		dto.setDetail_save(detail_save);
-		int n = dao.insProd(dto);
+		
+		String unit = mr.getParameter("unit");
+		String volume = mr.getParameter("volume");
+		String origin = mr.getParameter("origin");
+		String pack_type = mr.getParameter("pack_type");
+		String shelf_life = mr.getParameter("shelf_life");
+		String guidance = mr.getParameter("guidance");
+		ProdInfoDto infoDto = new ProdInfoDto(-1, unit, volume, origin, pack_type, shelf_life, guidance);
+		
+		int n = dao.insProd(dto, infoDto);
 		if (n > 0) {
 			resp.sendRedirect(req.getContextPath() + "/admin/product.do");
 		} else {
