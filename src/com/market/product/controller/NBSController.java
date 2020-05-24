@@ -19,16 +19,7 @@ public class NBSController extends HttpServlet{
 		//2.인기상품
 		//3.세일상품
 		String filter=req.getParameter("filter");
-		if(filter=="new") {
-			
-		}else if(filter=="best") {
-			
-			
-		}else if(filter=="sale") {
-			
-		}else {
-			System.out.println("필터 못받아옴");
-		}
+		
 		String spageNum = req.getParameter("pageNum");
 		int pageNum = 1;
 		if (spageNum != null) {
@@ -46,6 +37,7 @@ public class NBSController extends HttpServlet{
 			endPageNum = pageCount;
 		}
 
+		req.setAttribute("filter", filter);
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPageNum", startPageNum);

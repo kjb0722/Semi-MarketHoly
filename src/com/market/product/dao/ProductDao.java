@@ -87,16 +87,20 @@ public class ProductDao {
 		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
+			System.out.println(filter);
+			sql = "select NVL(count(pnum),0) cnt from product where 1=1";
+			if (filter.equals("new")) {
+				sql += " and reg_date between sysdate-7 and sysdate";
+				
 
-			if (filter == "new") {
+			} /*else if (filter == "best") {
 				sql += " and reg_date between sysdate-7 and sysdate";
 				pstmt = con.prepareStatement(sql);
-
-			} else if (filter == "best") {
-
 			} else if (filter == "sale") {
-
-			}
+				sql += " and reg_date between sysdate-7 and sysdate";
+				pstmt = con.prepareStatement(sql);
+			}*/
+			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt("cnt");
@@ -232,13 +236,17 @@ public class ProductDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql="";
 		ArrayList<ProductDto> list = new ArrayList<ProductDto>();
 		try {
 			con = JDBCUtil.getConn();
-
-			String sql = "select * from(select aa.*,rownum rnum from "
-					+ "(select * from product where reg_date between sysdate-7 and sysdate " + "order by reg_date desc)"
-					+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+			if(filter.equals("new")) {
+				sql = "select * from(select aa.*,rownum rnum from "
+						+ "(select * from product where reg_date between sysdate-7 and sysdate " + "order by reg_date desc)"
+						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+			}
+			
+		
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);

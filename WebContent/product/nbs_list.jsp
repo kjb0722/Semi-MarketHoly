@@ -15,7 +15,7 @@ a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 #price{color: rebeccapurple;}
 </style>
-<h1>신상품</h1>
+<h1>${filter }</h1>
 <!-- 상품리스트 -->
 
 <div class="container">
@@ -58,7 +58,7 @@ a:visited { color: black; text-decoration: none;}
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><c:if test="${pageNum>1}">
 				<li class="page-item"><a
-					href="${cp }/product/nbs.do?pageNum=${pageNum-1}">
+					href="${cp }/product/nbs.do?pageNum=${pageNum-1}&filter=${filter}">
 						&laquo; </a>
 			</c:if></li>
 
@@ -66,13 +66,13 @@ a:visited { color: black; text-decoration: none;}
 			<c:choose>
 				<c:when test="${i==pageNum }">
 					<li class="page-item active"><a
-						href="${cp }/product/nbs.do?pageNum=${i}">
+						href="${cp }/product/nbs.do?pageNum=${i}&filter=${filter}">
 							<span style='color: white'>${i}</span>
 					</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item"><a
-						href="${cp }/product/nbs.do?pageNum=${i}">
+						href="${cp }/product/nbs.do?pageNum=${i}&filter=${filter}">
 							<span style='color: gray'>${i}</span>
 					</a></li>
 				</c:otherwise>
@@ -81,7 +81,7 @@ a:visited { color: black; text-decoration: none;}
 
 		<c:if test="${pageCount>endPageNum}">
 			<li class="page-item"><a
-				href="${cp }/product/nbs.do?pageNum=${pageNum+1}">
+				href="${cp }/product/nbs.do?pageNum=${pageNum+1}&filter=${filter}">
 					&raquo;</a></li>
 		</c:if>
 	</ul>
