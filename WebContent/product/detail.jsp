@@ -88,7 +88,7 @@ h1, h2, h3 {
 
 <div id="myTabContent" class="tab-content">
 	<!-- 상품상세탭 -->
-	<div class="tab-pane_1" >
+	<div class="tab-pane_1 active in">
 			<img src="${pageContext.request.contextPath}/img/${dto.detail_save}">
 	</div>
 
@@ -150,9 +150,8 @@ h1, h2, h3 {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
     	var index= $(e.target).prop("tabindex");
     	
-    	if(index === 1 && !index){
-    		$('.tab-pane_1').attr('active');
-    		$('.tab-pane_1').attr('in');
+    	if(index === 1){
+    		location = "${cp}/product/detail.do?pnum="+${dto.pnum };
     	}else if(index === 2){
     		location = "${cp}/review/listReview.do?pnum="+${dto.pnum };
     	}else if(index === 3){
@@ -160,19 +159,17 @@ h1, h2, h3 {
     	}
     
     });
-    /*
-    $('a[data-toggle="tab"]').on('hide.bs.tab', function(e){
-    	var index= $(e.target).prop("tabindex");
-    	
-    });
+    
+  
 	$(document).ready(function(e) {
 		
 		var num = "${plag}";
-		e.taget
-		e.relatedTarget
-		$('#myTab a[tabindex="'+num+'  "]').tab("show");
+		if(num!=="1"){
+			$('.tab-pane_1').hide();
+		}		
+		
 	
 	});
-	*/
+	
 	
 </script>
