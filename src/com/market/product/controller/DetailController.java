@@ -26,6 +26,11 @@ public class DetailController extends HttpServlet {
 			if(sPnum!=null) {
 				pnum=Integer.parseInt(req.getParameter("pnum"));
 			}
+			String sCnum=req.getParameter("cnum");
+			int cnum=1;
+			if(sCnum!=null) {
+				cnum=Integer.parseInt(sCnum);
+			}
 			ProductDao dao=new ProductDao();
 			ProductDto dto=dao.getDetail(pnum);
 			
@@ -34,6 +39,7 @@ public class DetailController extends HttpServlet {
 			req.setAttribute("dto",dto);
 			req.setAttribute("id",id);
 			req.setAttribute("plag", 1);
+			req.setAttribute("cnum", cnum);
 			
 		req.getRequestDispatcher("/index.jsp?page=product/detail.jsp").forward(req, resp);
 		//여기서 또 값을 넘겨준다.

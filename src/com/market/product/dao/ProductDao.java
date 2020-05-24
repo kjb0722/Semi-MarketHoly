@@ -87,7 +87,6 @@ public class ProductDao {
 		String sql = null;
 		try {
 			con = JDBCUtil.getConn();
-			System.out.println(filter);
 			sql="select NVL(count(p.pnum),0) cnt from product p";
 			if (filter.equals("new")) {
 				sql += " where reg_date between sysdate-7 and sysdate";
@@ -321,6 +320,23 @@ public class ProductDao {
 			return null;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	public int delProd(int pnum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "delete from product where pnum = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pnum);
+			return pstmt.executeUpdate();
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(null, pstmt, con);
 		}
 	}
 
