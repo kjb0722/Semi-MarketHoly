@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- 차트 cdn -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/billboard.js/1.12.9/billboard.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/billboard.js/1.12.9/billboard.min.css">
+
 <style>
 .stat-nav>li>a:focus, .stat-nav>li>a:hover {
 	background-color: white;
@@ -19,7 +24,7 @@
 			<a href="#daySell" data-toggle="tab">일별 매출</a>
 		</li>
 		<li>
-			<a href="#genderStat" data-toggle="tab">성별 통계</a>
+			<a href="#genderStat" data-toggle="tab">성별 구매 건수</a>
 		</li>
 	</ul>
 
@@ -228,6 +233,12 @@
 						type : "bar",
 						types : {
 							"주문 건수" : "line"
+						},
+					},
+					"axis" : {
+						x : {
+							type : "category",
+							categories : ["1일","2일","3일","4일","5일","6일","7일","8일","9일","10일","11일","12일","13일","14일","15일","16일","17일","18일","19일","20일","21일","22일","23일","24일","25일","26일","27일","28일","29일","30일","31일"]
 						},
 					},
 					bindto : "#daySellChart"
