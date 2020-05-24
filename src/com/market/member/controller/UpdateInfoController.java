@@ -31,8 +31,8 @@ public class UpdateInfoController extends HttpServlet {
 		
 		if(curPwd.equals("") || nextPwd.equals("") || checkPwd.equals("")) {
 			int n= dao.updateInfo2(id,name,email,phone);	
-	
 			MemberDto dto = dao.getDto(id);
+			
 			HttpSession session = req.getSession();
 			session.setAttribute("memberDto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");
@@ -41,6 +41,7 @@ public class UpdateInfoController extends HttpServlet {
 		}else {
 			dao.updateInfo(id,curPwd,nextPwd,checkPwd,name,email,phone);
 			MemberDto dto = dao.getDto(id);
+			
 			HttpSession session = req.getSession();
 			session.setAttribute("memberDto", dto);
 			resp.sendRedirect(req.getContextPath()+"/main.do");

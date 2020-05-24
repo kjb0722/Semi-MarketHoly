@@ -41,7 +41,7 @@ public class StartWriteReviewController extends HttpServlet{
 			
 			if(numbersDto!=null) {
 				req.setAttribute("numbersDto", numbersDto);
-				req.getRequestDispatcher("/index.jsp?page=product/detail.jsp&tabpage=review/writeReview.jsp").forward(req, resp);
+				req.getRequestDispatcher("/index.jsp?page=review/writeReview.jsp").forward(req, resp);
 			
 				//resp.sendRedirect(req.getContextPath()+"/index.jsp?page=mypage/mypage.jsp&mypage=member/recheckPwd.jsp");
 				

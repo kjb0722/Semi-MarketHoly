@@ -25,7 +25,7 @@
                     
                     <div>
                     	현재비밀번호
-                        <input type="password" class="form-control" name="curPwd" id="curpwd" >
+                        <input type="password" class="form-control" name="curPwd" id="curPwd" >
                     </div>
                     <div>
                     	새 비밀번호
@@ -71,20 +71,28 @@
 <script>
 	
 	function validate(){
+		var curPwd = document.getElementById("curPwd");
+		var nextPwd = document.getElementById("nextPwd");
+		var checkPwd = document.getElementById("checkPwd");
+		
+		
 		var pwCheck = /^[a-zA-Z0-9]{6,12}$/;
 		
-		if(!pwCheck.test(pwd1.value)){
-	        alert("비밀번호는 6~12자리로 특수기호 없이 입력해주세요.");
-	        return false;
-	    }
-
-		
-		
-		if(!(nextPwd.value == checkPwd.value)){
-			alert("비밀번호가 다릅니다.");
+		if(curPwd.value==""){
+			if(!pwCheck.test(nextPwd.value)){
+	        	alert("비밀번호는 6~12자리로 특수기호 없이 입력해주세요.");
+	        	return false;
+	    	}	
+			if(!(nextPwd.value == checkPwd.value)){
+				alert("비밀번호가 다릅니다.");
+				return false;
+			}
+			alert("현재 사용중인 비밀번호를 입력해주세요.");
 			return false;
 		}
 		
+		
+		return true;
 	}
 		
 
