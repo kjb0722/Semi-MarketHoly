@@ -15,7 +15,7 @@ import com.market.admin.dto.CategoryDto;
 import com.market.member.dto.MemberDto;
 import com.market.product.dao.ProductDao;
 import com.market.product.dto.ProductDto;
-@WebServlet("/search.do")
+@WebServlet("/product/search.do")
 public class SearchController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,8 +26,6 @@ public class SearchController extends HttpServlet{
 			id=memberDto.getId();
 		}
 		String keyword=req.getParameter("keyword");
-		
-		String list_filter = req.getParameter("list_filter");
 		// 페이징
 		String spageNum = req.getParameter("pageNum");
 		int pageNum = 1;
@@ -38,7 +36,7 @@ public class SearchController extends HttpServlet{
 		int endRow = startRow + 8;
 
 		ProductDao dao = new ProductDao();
-		ArrayList<ProductDto> list = dao.getSearchList(startRow, endRow, list_filter,keyword);
+		ArrayList<ProductDto> list = dao.getSearchList(startRow, endRow, keyword);
 		int result = dao.getCount(0, 0, keyword);
 		int pageCount = (int) Math.ceil(dao.getCount(0, 0, keyword) / 9.0);
 		int startPageNum = ((pageNum - 1) / 5) * 5 + 1;
@@ -54,7 +52,6 @@ public class SearchController extends HttpServlet{
 		req.setAttribute("startPageNum", startPageNum);
 		req.setAttribute("endPageNum", endPageNum);
 		req.setAttribute("pageNum", pageNum);
-		req.setAttribute("list_filter", list_filter);
 		
 		req.getRequestDispatcher("/index.jsp?page=product/search_list.jsp").forward(req, resp);
 	}

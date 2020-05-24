@@ -93,7 +93,7 @@
 						<span class="glyphicon glyphicon-shopping-cart"></span>
 					</button>
 				</form>
-				<form class="navbar-form pull-right" action="${cp }/search.do">
+				<form class="navbar-form pull-right" action="${cp }/product/search.do">
 					<input class="form-control input-lg" type="text" name="keyword" placeholder="Search" aria-label="Search">
 					<button type="submit" class="btn btn-lg">
 						<span class="glyphicon glyphicon-search"></span>

@@ -59,7 +59,7 @@
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><c:if test="${pageNum>1}">
 				<li class="page-item"><a
-					href="${cp }/product/search.do?pageNum=${pageNum-1}">
+					href="${cp }/product/search.do?pageNum=${pageNum-1}&keyword=${keyword}">
 						&laquo; </a>
 			</c:if></li>
 
@@ -82,7 +82,7 @@
 
 		<c:if test="${pageCount>endPageNum}">
 			<li class="page-item"><a
-				href="${cp }/product/search.do?pageNum=${pageNum+1}">
+				href="${cp }/product/search.do?pageNum=${pageNum+1}&keyword=${keyword}">
 					&raquo;</a></li>
 		</c:if>
 	</ul>

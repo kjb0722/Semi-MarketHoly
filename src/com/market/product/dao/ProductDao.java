@@ -46,9 +46,18 @@ public class ProductDao {
 			con = JDBCUtil.getConn();
 			
 			if(type == 0 && cnum == 0) {
-				sql="select NVL(count(pnum),0) cnt from product where name like ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, "%"+keyword+"%");
+				sql="select NVL(count(pnum),0) cnt from product where 1=1";
+				//검색리스트일때
+				if(keyword!="") {					
+					sql+= " and name like ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, "%"+keyword+"%");
+				//신상품리스트일때	
+				}else {
+					sql+= " and reg_date between sysdate-7 and sysdate";
+					pstmt = con.prepareStatement(sql);
+				}
+				
 				
 			}else if(type == -1) {
 				sql="select NVL(count(pnum),0) cnt from product where type=?";
@@ -234,7 +243,7 @@ public class ProductDao {
 		}
 	}
 	//검색 리스트
-	public ArrayList<ProductDto> getSearchList(int startRow, int endRow, String list_filter, String keyword) {
+	public ArrayList<ProductDto> getSearchList(int startRow, int endRow, String keyword) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -243,32 +252,7 @@ public class ProductDao {
 			con = JDBCUtil.getConn();
 
 			String sql = "select * from(select aa.*,rownum rnum from "
-					+ "(select * from product where name like ?";
-			
-			
-			String sort;
-			if(list_filter == null) {
-				list_filter = "new";
-			} 
-				
-			switch(list_filter) {
-				case "best":
-					sort = "reg_date";
-					break;
-				case "lowprice":
-					sort = "price";
-					break;
-				case "highprice":
-					sort = "price desc";
-					break;
-				case "new":
-				default:
-					sort = "reg_date desc";
-					break;
-			}
-			
-			
-			sql += "order by " + sort + ")aa)where rnum>=? and rnum<=? order by " + sort;
+					+ "(select * from product where name like ?) aa)where rnum>=? and rnum<=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,"%"+keyword+"%" );
 			pstmt.setInt(2, startRow);

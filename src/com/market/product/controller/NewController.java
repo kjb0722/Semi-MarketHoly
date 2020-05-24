@@ -32,7 +32,7 @@ public class NewController extends HttpServlet{
 		if (pageCount < endPageNum) {
 			endPageNum = pageCount;
 		}
-	
+
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPageNum", startPageNum);
