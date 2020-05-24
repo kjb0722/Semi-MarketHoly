@@ -10,6 +10,10 @@
 .pagination>li>a {
 	float: none;
 }
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+#price{color: rebeccapurple;}
 </style>
 <h1>신상품</h1>
 <!-- 상품리스트 -->
@@ -19,26 +23,30 @@
 		<ul>
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
-						<div style="position: relative;">
-							<img src="${cp }/img/${pro.thumb_save}" width="300px"
-								height="400px">
-							<div style="position: absolute; top: 340px; left: 210px">
-								<button data-toggle="modal" data-target="#cartmodal"
+				<div style="position: relative;">
+				<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
+						<img src="${cp }/img/${pro.thumb_save}" width="300px"
+							height="400px">
+					</a>
+						<div style="position: absolute; top: 330px; left: 220px">
+							<button data-toggle="modal" data-target="#cartmodal"
 								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price },${pro.pnum })">
 								<img src="../img/btn-cart.png" id="incart" alt="담기" width="50px"
 									height="50px">
 							</button>
-							</div>
-						</div> <a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-							<div>
-								<h3>${pro.name}<br>
-								</h3>
-							</div>
-							<div>${pro.price }</div>
-							<div>${pro.description }</div> <c:set var="cp"
-								value="${pageContext.request.contextPath }" />
+						</div>
+					</div>
+
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
+						<div id="name">
+							<h2>${pro.name}<br>
+							</h2>
+						</div>
+						<div id="price"><b>${pro.price }원</b></div>
+						<div><h4>${pro.description }</h4></div> <c:set var="cp"
+							value="${pageContext.request.contextPath }" />
 					</a>
-				</div>
+					</div>
 			</c:forEach>
 		</ul>
 	</div>
@@ -46,39 +54,39 @@
 <br>
 <br>
 
-<!-- 페이징 -->
-<div>
+<!-- 페이징 --><div>
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><c:if test="${pageNum>1}">
 				<li class="page-item"><a
-					href="${cp }/product/new.do?pageNum=${pageNum-1}&cnum=${cnum }&type=${type }">
+					href="${cp }/product/new.do?pageNum=${pageNum-1}">
 						&laquo; </a>
 			</c:if></li>
+
 		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 			<c:choose>
 				<c:when test="${i==pageNum }">
 					<li class="page-item active"><a
-						href="${cp }/product/new.do?pageNum=${i}&cnum=${cnum }&type=${type }">
+						href="${cp }/product/new.do?pageNum=${i}">
 							<span style='color: white'>${i}</span>
 					</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item"><a
-						href="${cp }/product/new.do?pageNum=${i}&cnum=${cnum }&type=${type }">
+						href="${cp }/product/new.do?pageNum=${i}">
 							<span style='color: gray'>${i}</span>
 					</a></li>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
+
 		<c:if test="${pageCount>endPageNum}">
-			<li class="page-item">
 			<li class="page-item"><a
-				href="${cp }/product/new.do?pageNum=${endPageNum+1}">></a></li>
+				href="${cp }/product/new.do?pageNum=${pageNum+1}">
+					&raquo;</a></li>
 		</c:if>
-
-
 	</ul>
 </div>
+
 
 <!-- 팝업창 -->
 <div class="modal fade" id="cartmodal" tabindex="-1" role="dialog"

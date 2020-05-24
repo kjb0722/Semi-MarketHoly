@@ -46,7 +46,7 @@ public class SearchController extends HttpServlet{
 		if (pageCount < endPageNum) {
 			endPageNum = pageCount;
 		}
-		
+		req.setAttribute("keyword", keyword);
 		req.setAttribute("id", id);
 		req.setAttribute("list", list);
 		req.setAttribute("result", result);

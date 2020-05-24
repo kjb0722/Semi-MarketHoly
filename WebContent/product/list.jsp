@@ -18,7 +18,9 @@
 .pagination>li>a {
 	float: none;
 }
-
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+#price{color: rebeccapurple;}
 </style>
 <h3>${ cname}</h3>
 <h3>${ tname}</h3>
@@ -30,7 +32,7 @@
 <form
 	action="${pageContext.request.contextPath }/product/list.do?cnum=${cnum }&type=${type }"
 	method="post">
-	<select name="list_filter" size="1">
+	<select name="list_filter" size="1" class="btn btn-default dropdown-toggle" >
 		<option value="new"
 			<c:if test="${list_filter=='new' }">selected</c:if>>신상품순</option>
 		<option value="best"
@@ -39,7 +41,7 @@
 			<c:if test="${list_filter=='lowprice' }">selected</c:if>>낮은가격순</option>
 		<option value="highprice"
 			<c:if test="${list_filter=='highprice' }">selected</c:if>>높은가격순</option>
-	</select> <input type="submit" value="검색">
+	</select> <input type="submit" class="btn btn-light" value="검색">
 </form>
 <!-- 상품리스트 -->
 <div class="container">
@@ -48,9 +50,11 @@
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
 					<div style="position: relative;">
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
 						<img src="${cp }/img/${pro.thumb_save}" width="300px"
 							height="400px">
-						<div style="position: absolute; top: 340px; left: 210px">
+					</a>
+						<div style="position: absolute; top: 330px; left: 220px">
 							<button data-toggle="modal" data-target="#cartmodal"
 								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price },${pro.pnum })">
 								<img src="../img/btn-cart.png" id="incart" alt="담기" width="50px"
@@ -60,12 +64,12 @@
 					</div>
 
 					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-						<div>
-							<h3>${pro.name}<br>
-							</h3>
+						<div id="name">
+							<h2>${pro.name}<br>
+							</h2>
 						</div>
-						<div>${pro.price }</div>
-						<div>${pro.description }</div> <c:set var="cp"
+						<div id="price"><b>${pro.price }원</b></div>
+						<div><h4>${pro.description }</h4></div> <c:set var="cp"
 							value="${pageContext.request.contextPath }" />
 					</a>
 				</div>
