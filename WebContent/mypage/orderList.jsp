@@ -25,6 +25,7 @@
 	
 	<table class="table table-bordered">
 		<tr>
+			<th>주문번호</th>
 			<th>주문일자</th>
 			<th>주문상품정보</th>
 			<th>상품금액(수량)</th>
@@ -34,8 +35,9 @@
 		</tr>
 		<c:forEach var='vo' items='${list }'>
 			<tr>
+				<td>${vo.onum }</td>
 				<td>${vo.end_date}</td>
-				<td><a href="${cp }/product/detail.do">${vo.name}</a></td>
+				<td><a href="${cp }/product/detail.do?pnum=${vo.pnum}">${vo.name}</a></td>
 				<td>${vo.price} (${vo.ea }개)</td>
 				<td>${vo.price*vo.ea}원</td>
 			<c:choose>		

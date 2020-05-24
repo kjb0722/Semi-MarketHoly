@@ -182,8 +182,7 @@ CREATE TABLE review
 	reg_date date,
 	orgfilename varchar2(150),
 	savefilename varchar2(150),
-	del_yn varchar2(2),
-	UNIQUE (onum, pnum, num)
+	del_yn varchar2(2)
 );
 
 

@@ -26,7 +26,7 @@ public class MypageDao {
 		ResultSet rs= null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql ="select o.status,o.pay_yn,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
+			String sql ="select p.pnum,o.onum,op.opnum,o.status,o.pay_yn,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
 					"from orders o,product p,order_product op "+ 
 					" where o.onum=op.onum and op.pnum=p.pnum and id=?";
 			pstmt = con.prepareStatement(sql);
@@ -34,6 +34,9 @@ public class MypageDao {
 			rs = pstmt.executeQuery();
 			ArrayList<OrderListDto> list = new ArrayList<OrderListDto>();
 			while(rs.next()) {
+				int pnum = rs.getInt("pnum");
+				int onum = rs.getInt("onum");
+				int opnum = rs.getInt("opnum");
 				int status = rs.getInt("status");
 				String pay_yn = rs.getString("pay_yn");
 				Date end_date = rs.getDate("end_date");
@@ -42,7 +45,7 @@ public class MypageDao {
 				String description = rs.getString("description");
 				int price= rs.getInt("price");
 				int ea = rs.getInt("ea");
-				OrderListDto dto = new OrderListDto(status,pay_yn,end_date, thum_save, name, description, price, ea);
+				OrderListDto dto = new OrderListDto(pnum,onum,opnum,status,pay_yn,end_date, thum_save, name, description, price, ea);
 				list.add(dto);
 			}			
 			return list;

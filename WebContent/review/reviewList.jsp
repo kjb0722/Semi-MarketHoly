@@ -9,11 +9,9 @@
 		<thead>
 			<tr>
 				<th>리뷰번호</th>
-				<th>이름</th>
 				<th>제목</th>
-				<!-- <th>내용</th> -->
+				<th>이름</th>
 				<th>등록일</th>
-				<!-- <th>이미지</th> -->
 			</tr>
 			<tr style='display:none'>
 				<th>내용</th>
@@ -26,13 +24,29 @@
 			<tbody>
 				<tr onclick="showHidden(${vo.rnum})">	
 					<td>${vo.rnum}</td>
+					<c:choose>
+						<c:when test="${vo.savefilename  == null }">
+							<td>${vo.title }</td>
+						</c:when>
+						<c:otherwise>
+							<td>${vo.title }
+								<img src="${pageContext.request.contextPath }/img/clip.jpg" width="30px" height="30px">
+							</td>
+						</c:otherwise>
+					</c:choose>
 					<td>${vo.name }</td>
-					<td>${vo.title }</td>
 					<td>${vo.regdate }</td>
 				</tr>
 				<tr id='${vo.rnum }' style='display:none;'>
-					<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }" width="400px" height="500px"></p>${vo.content }</td>
-<!-- 					<td>${vo.content }</td> -->
+					<c:choose>
+						<c:when test="${vo.savefilename  == null }">
+							<td>${vo.content }</td>							
+						</c:when>
+						<c:otherwise>
+							<td><p><img src="${pageContext.request.contextPath }/img/${vo.savefilename }" width="400px" height="500px"></p>${vo.content }</td>
+						</c:otherwise>
+					</c:choose>
+				
 				</tr>	
 			</tbody>	
 		</c:forEach>	

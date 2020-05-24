@@ -4,6 +4,9 @@ import java.sql.Date;
 
 public class OrderListDto {
 	
+	private int pnum;
+	private int onum;
+	private int opnum;
 	private int status;
 	private String pay_yn;
 	private Date end_date;
@@ -12,9 +15,12 @@ public class OrderListDto {
 	private String description;
 	private int price;
 	private int ea;
-	public OrderListDto(int status, String pay_yn, Date end_date, String thum_save, String name, String description,
+	public OrderListDto(int pnum,int onum, int opnum, int status, String pay_yn, Date end_date, String thum_save, String name, String description,
 			int price, int ea) {
 		super();
+		this.pnum = pnum;
+		this.onum = onum;
+		this.opnum = opnum;
 		this.status = status;
 		this.pay_yn = pay_yn;
 		this.end_date = end_date;
@@ -23,6 +29,24 @@ public class OrderListDto {
 		this.description = description;
 		this.price = price;
 		this.ea = ea;
+	}
+	public int getPnum() {
+		return pnum;
+	}
+	public void setPnum(int pnum) {
+		this.pnum = pnum;
+	}
+	public int getOnum() {
+		return onum;
+	}
+	public void setOnum(int onum) {
+		this.onum = onum;
+	}
+	public int getOpnum() {
+		return opnum;
+	}
+	public void setOpnum(int opnum) {
+		this.opnum = opnum;
 	}
 	public int getStatus() {
 		return status;
