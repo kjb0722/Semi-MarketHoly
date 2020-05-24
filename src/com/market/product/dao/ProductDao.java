@@ -88,18 +88,17 @@ public class ProductDao {
 		try {
 			con = JDBCUtil.getConn();
 			System.out.println(filter);
-			sql = "select NVL(count(pnum),0) cnt from product where 1=1";
+			sql="select NVL(count(p.pnum),0) cnt from product p";
 			if (filter.equals("new")) {
-				sql += " and reg_date between sysdate-7 and sysdate";
+				sql += " where reg_date between sysdate-7 and sysdate";
 				
 
-			} /*else if (filter == "best") {
-				sql += " and reg_date between sysdate-7 and sysdate";
-				pstmt = con.prepareStatement(sql);
+			}else if (filter == "best") {
+				sql +=",order_product op where p.pnum=op.pnum";
+			
 			} else if (filter == "sale") {
-				sql += " and reg_date between sysdate-7 and sysdate";
-				pstmt = con.prepareStatement(sql);
-			}*/
+				sql += ",sale s where p.pnum=s.pnum";
+			}
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -244,9 +243,16 @@ public class ProductDao {
 				sql = "select * from(select aa.*,rownum rnum from "
 						+ "(select * from product where reg_date between sysdate-7 and sysdate " + "order by reg_date desc)"
 						+ "aa)where rnum>=? and rnum<=? order by reg_date desc";
+			}else if(filter.equals("best")){
+				
+				
+			}else if(filter.equals("sale")){
+				/*sql ="select * from(select aa.*,rownum rnum from "
+						+ "(select * from product p,sale s where p.pnum=s.pnum )aa)"
+						+ "where rnum>=? and rnum<=? "
+						+ "order by reg_date desc";
+				*/
 			}
-			
-		
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
