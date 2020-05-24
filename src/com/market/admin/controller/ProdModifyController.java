@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.market.admin.dao.ProdDao;
+import com.market.admin.dto.ProdInfoDto;
 
 @WebServlet("/admin/prodModify.do")
 public class ProdModifyController extends HttpServlet {
@@ -21,9 +22,17 @@ public class ProdModifyController extends HttpServlet {
 		String name = req.getParameter("name");
 		String description = req.getParameter("desc");
 		int price = Integer.parseInt(req.getParameter("price"));
-
+		int stock = Integer.parseInt(req.getParameter("stock"));
+		String unit = req.getParameter("unit");
+		String volume = req.getParameter("volume");
+		String origin = req.getParameter("origin");
+		String pack_type = req.getParameter("pack_type");
+		String shelf_life = req.getParameter("shelf_life");
+		String guidance = req.getParameter("guidance");
+		ProdInfoDto prodInfo = new ProdInfoDto(pnum, unit, volume, origin, pack_type, shelf_life, guidance);
+		
 		ProdDao prodDao = ProdDao.getInstance();
-		int n = prodDao.updProd(pnum, name, description, price);
+		int n = prodDao.updProd(pnum, name, description, price, stock, prodInfo);
 
 		JSONObject json = new JSONObject();
 		json.put("n", n);

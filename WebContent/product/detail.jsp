@@ -173,21 +173,55 @@ h1, h2, h3 {
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-12 form-group">
+					<div class="col-md-5 form-group">
 						<label class="label label-success">상품명</label>
-						<input id="txtName" type="text" class="form-control" placeholder="상품명을 입력하세요" maxlength="30">
+						<input id="txtName" type="text" class="form-control" value="${dto.name }" placeholder="상품명을 입력하세요" maxlength="30">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label class="label label-success">상품 설명</label>
-						<textarea id="txtDesc" class="form-control" rows="5" cols="50" style="resize: none;"></textarea>
+						<textarea id="txtDesc" class="form-control" rows="3" cols="50" style="resize: none;">${dto.description }</textarea>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12 form-group">
+					<div class="col-md-6 form-group">
 						<label class="label label-success">가격</label>
-						<input id="txtPrice" type="text" class="form-control" placeholder="가격을 입력하세요" maxlength="30">
+						<input id="txtPrice" type="text" class="form-control" value="${dto.price }" placeholder="가격을 입력하세요" maxlength="30">
+					</div>
+					<div class="col-md-6 form-group">
+						<label class="label label-success">재고</label>
+						<input id="txtStock" type="text" class="form-control" value="${dto.stock }" placeholder="가격을 입력하세요" maxlength="30">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label class="label label-success">판매 단위</label>
+						<input id="txtUnit" type="text" class="form-control" value="${prodInfo.unit }" placeholder="판매 단위를 입력하세요" maxlength="30">
+					</div>
+					<div class="col-md-6 form-group">
+						<label class="label label-success">용량</label>
+						<input id="txtVolume" type="text" class="form-control" value="${prodInfo.volume }" placeholder="용량을 입력하세요" maxlength="30">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label class="label label-success">원산지</label>
+						<input id="txtOrigin" type="text" class="form-control" value="${prodInfo.origin }" placeholder="원산지를 입력하세요" maxlength="30">
+					</div>
+					<div class="col-md-6 form-group">
+						<label class="label label-success">포장 종류</label>
+						<input id="txtPackType" type="text" class="form-control" value="${prodInfo.pack_type }" placeholder="포장 종류를 입력하세요" maxlength="30">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label class="label label-success">유통 기한</label>
+						<input id="txtShelfLife" type="text" class="form-control" value="${prodInfo.shelf_life }" placeholder="유통 기한을 입력하세요" maxlength="30">
+					</div>
+					<div class="col-md-6 form-group">
+						<label class="label label-success">안내사항</label>
+						<input id="txtGuidance" type="text" class="form-control" value="${prodInfo.guidance }" placeholder="안내사항을 입력하세요" maxlength="30">
 					</div>
 				</div>
 			</div>
@@ -275,13 +309,6 @@ h1, h2, h3 {
 		}
 	});
 	
-	//상품 수정 버튼 이벤트
-	$("#btnModify").click(function() {
-		$("#txtName").val("${dto.name}");
-		$("#txtDesc").val("${dto.description}");
-		$("#txtPrice").val("${dto.price}");
-	});
-	
 	//상품 수정 모달 버튼 이벤트
 	$("#btnModifyOk").click(function() {
 		let name = $("#txtName").val();
@@ -299,6 +326,14 @@ h1, h2, h3 {
 			alert("가격을 입력하세요.");
 			return;
 		}
+		
+		let stock = $("#txtStock").val();
+		let unit = $("#txtUnit").val();
+		let volume = $("#txtVolume").val();
+		let origin = $("#txtOrigin").val();
+		let pack_type = $("#txtPackType").val();
+		let shelf_life = $("#txtShelfLife").val();
+		let guidance = $("#txtGuidance").val();
 
 		jQuery.ajax({
 			dataType: "JSON",
@@ -307,7 +342,14 @@ h1, h2, h3 {
 			data:{pnum:${dto.pnum},
 				name:name,
 				desc:desc,
-				price:price},
+				price:price,
+				stock:stock,
+				unit:unit,
+				volume:volume,
+				origin:origin,
+				pack_type:pack_type,
+				shelf_life:shelf_life,
+				guidance:guidance},
 			success:function(data){
 				if(data.n > 0){
 					alert("상품 수정 완료");

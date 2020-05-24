@@ -80,37 +80,37 @@
 			<div class="row">
 				<div class="col-md-6">
 					<span class="label label-success">판매 단위</span>
-					<input id="unit" type="text" class="form-control" placeholder="판매단위를 입력하세요." maxlength="30" name="name">
+					<input id="unit" type="text" class="form-control" placeholder="판매단위를 입력하세요." maxlength="30" name="unit">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<span class="label label-success">용량</span>
-					<input id="volume" type="text" class="form-control" placeholder="용량을 입력하세요." maxlength="30" name="name">
+					<input id="volume" type="text" class="form-control" placeholder="용량을 입력하세요." maxlength="30" name="volume">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<span class="label label-success">원산지</span>
-					<input id="origin" type="text" class="form-control" placeholder="원산지를 입력하세요." maxlength="30" name="name">
+					<input id="origin" type="text" class="form-control" placeholder="원산지를 입력하세요." maxlength="30" name="origin">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<span class="label label-success">포장 종류</span>
-					<input id="pack-type" type="text" class="form-control" placeholder="포장 종류를 입력하세요." maxlength="30" name="name">
+					<input id="pack-type" type="text" class="form-control" placeholder="포장 종류를 입력하세요." maxlength="30" name="pack_type">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<span class="label label-success">유통기한</span>
-					<input id="shelf_life" type="text" class="form-control" placeholder="유통기한을 입력하세요." maxlength="30" name="name">
+					<input id="shelf_life" type="text" class="form-control" placeholder="유통기한을 입력하세요." maxlength="30" name="shelf_life">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<span class="label label-success">안내사항</span>
-					<input id="guidance" type="text" class="form-control" placeholder="안내사항을 입력하세요." maxlength="30" name="name">
+					<input id="guidance" type="text" class="form-control" placeholder="안내사항을 입력하세요." maxlength="30" name="guidance">
 				</div>
 			</div>
 		</div>
