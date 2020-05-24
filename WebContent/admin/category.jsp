@@ -246,7 +246,7 @@ table, th {
 				let catNum = $(this).parent().parent().children().eq(4).text();
 				
 				if(result){
-					catDel(catNum);
+					catTypeDel(catNum);
 				}
 			});
 		}
@@ -284,6 +284,23 @@ table, th {
 	function catDel(catNum){
 		jQuery.ajax({
 			url:`${cp}/admin/catDel.do`,
+			mothod:"get",
+			data:{catNum:catNum},
+			dataType:"JSON",
+			success:function(data){
+				if(data.n>0){
+					alert("삭제 완료");
+					catListLoad();					
+				}else{
+					location = `${cp}/error.do`;
+				}
+			}
+		});
+	}
+	
+	function catTypeDel(catNum){
+		jQuery.ajax({
+			url:`${cp}/admin/catTypeDel.do`,
 			mothod:"get",
 			data:{catNum:catNum},
 			dataType:"JSON",

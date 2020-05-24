@@ -35,7 +35,7 @@ public class CategoryDao {
 						" FROM   category a \r\n" + 
 						"       inner join category b \r\n" + 
 						"               ON a.cnum = b.TYPE(+) \r\n" + 
-						" WHERE  a.TYPE = -1 \r\n" + 
+						" WHERE  a.TYPE = -1 and a.del_yn = 'N' and b.del_yn='N' \r\n" + 
 						" ORDER  BY a.cnum, \r\n" + 
 						"          b.cnum ";
 			pstmt = con.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class CategoryDao {
 		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from category where type=-1 order by cnum";
+			String sql = "select * from category where type=-1 and del_yn='N' order by cnum";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -90,7 +90,7 @@ public class CategoryDao {
 		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from category where type!=-1 order by cnum desc";
+			String sql = "select * from category where type!=-1 and del_yn='N' order by cnum desc";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -114,7 +114,7 @@ public class CategoryDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into category values(seq_category_cnum_type.nextval,-1,?)";
+			String sql = "insert into category values(seq_category_cnum_type.nextval,-1,?,'N')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, catName);
 			return pstmt.executeUpdate();
@@ -132,7 +132,7 @@ public class CategoryDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "insert into category values(seq_category_cnum_type.nextval,?,?)";
+			String sql = "insert into category values(seq_category_cnum_type.nextval,?,?,'N')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getType());
 			pstmt.setString(2, dto.getName());
@@ -151,7 +151,7 @@ public class CategoryDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "update category set name=? where cnum=?";
+			String sql = "update category set name=? where cnum=? and del_yn='N'";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
 			pstmt.setInt(2, dto.getCnum());
@@ -169,19 +169,25 @@ public class CategoryDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
 		try {
 			con = JDBCUtil.getConn();
 			con.setAutoCommit(false);
-			String sql = "delete from category where cnum=?";
+			String sql2 = "update product set del_yn = 'Y' where type = ?";
+			pstmt2 = con.prepareStatement(sql2);
+			pstmt2.setInt(1, catNum);
+			pstmt2.executeUpdate();
+			
+			String sql1 = "update category set del_yn = 'Y' where type = ?";
+			pstmt1 = con.prepareStatement(sql1);
+			pstmt1.setInt(1, catNum);
+			pstmt1.executeUpdate();
+			
+			String sql = "update category set del_yn = 'Y' where cnum=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, catNum);
 			int n = pstmt.executeUpdate();
-			if (n > 0) {
-				String sql1 = "delete from category where type = ?";
-				pstmt1 = con.prepareStatement(sql1);
-				pstmt1.setInt(1, catNum);
-				pstmt1.executeUpdate();
-			}
+
 			return n;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -192,6 +198,8 @@ public class CategoryDao {
 			}
 			return -1;
 		} finally {
+			JDBCUtil.close(pstmt2);
+			JDBCUtil.close(pstmt1);
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
@@ -204,7 +212,7 @@ public class CategoryDao {
 		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from category where type=? order by cnum desc";
+			String sql = "select * from category where type=? and del_yn='N' order by cnum desc";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pType);
 			rs = pstmt.executeQuery();
@@ -231,7 +239,7 @@ public class CategoryDao {
 		ArrayList<CategoryDto> list = new ArrayList<CategoryDto>();
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select * from category where type=?";
+			String sql = "select * from category where type=? and del_yn='N'";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, cnum);
 			rs = pstmt.executeQuery();
@@ -258,7 +266,7 @@ public class CategoryDao {
 		String name = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "select name from category where cnum=?";
+			String sql = "select name from category where cnum=? and del_yn='N'";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, cnum);
 			rs = pstmt.executeQuery();
@@ -271,6 +279,38 @@ public class CategoryDao {
 			return null;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+
+	//세부 카테고리 삭제
+	public int delCatType(int catNum) {
+		Connection con = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		try {
+			con = JDBCUtil.getConn();
+			con.setAutoCommit(false);
+			String sql2 = "update product set del_yn = 'Y' where cnum = ?";
+			pstmt2 = con.prepareStatement(sql2);
+			pstmt2.setInt(1, catNum);
+			pstmt2.executeUpdate();
+			
+			String sql1 = "update category set del_yn = 'Y' where cnum = ?";
+			pstmt1 = con.prepareStatement(sql1);
+			pstmt1.setInt(1, catNum);
+			int n = pstmt1.executeUpdate();
+			return n;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
+			return -1;
+		} finally {
+			JDBCUtil.close(pstmt2);
+			JDBCUtil.close(null, pstmt1, con);
 		}
 	}
 }
