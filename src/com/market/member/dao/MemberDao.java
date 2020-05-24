@@ -18,17 +18,18 @@ public class MemberDao {
 		return instance;
 	}
 	
-	public int delAccount(String id, String curpwd) {
+	public int delAccount(String ids) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "update ";
-			
-			
-			
-			return 1;
+			String sql = "update member set del_yn='Y',del_date=sysdate where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			int n =pstmt.executeUpdate();
+				
+			return n;
 		}catch(SQLException se){
 			System.out.println(se.getMessage());
 			return -1;

@@ -29,9 +29,8 @@ public class StartQnaWriteController extends HttpServlet {
 		
 			req.setAttribute("memDto", dto);
 			req.setAttribute("pnum", pnum);
-			
-			
-			req.getRequestDispatcher("/index.jsp?page=product/detail.jsp&tabpage=qna/writeQna.jsp").forward(req, resp);	
+						
+			req.getRequestDispatcher("/index.jsp?page=qna/writeQna.jsp").forward(req, resp);	
 		}
 		
 		

@@ -9,17 +9,17 @@
 
 
 <div class="container">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-success">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" >
+        <div class="panel panel-info class">
             <div class="panel-heading">
                 <div class="panel-title"><h1>개인정보수정</h1></div>
                 	기본정보
             </div>
             <div class="panel-body">
-                <form id="login-form" method="post" action="${cp }/member/updateInfo.do">	
+                <form id="login-form" method="post" action="${cp }/member/updateInfo.do" onsubmit="return validate();">	
                     <div>
                     	아이디
-                        <input type="text" class="form-control" name="id" id="id" value=${sessionScope.memberDto.id} readonly="readonly">
+                        <input type="text" class="form-control" name="id" id="id" value="${sessionScope.memberDto.id}" readonly="readonly">
                     </div>
                     
                     
@@ -69,6 +69,25 @@
 </body>
 
 <script>
+	
+	function validate(){
+		var pwCheck = /^[a-zA-Z0-9]{6,12}$/;
+		
+		if(!pwCheck.test(pwd1.value)){
+	        alert("비밀번호는 6~12자리로 특수기호 없이 입력해주세요.");
+	        return false;
+	    }
+
+		
+		
+		if(!(nextPwd.value == checkPwd.value)){
+			alert("비밀번호가 다릅니다.");
+			return false;
+		}
+		
+	}
+		
+
 	function checkPwd1(){
 		var curpwd = document.getElementById("curpwd").value;
 		var nextPwd = document.getElementById("nextPwd").value;

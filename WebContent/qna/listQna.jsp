@@ -75,7 +75,8 @@
 		</table>
 	</div>
 		
-	<input type="button" value="QnA작성하기" style="float: right" onclick="location.href='${cp }/qna/startQnaWrite.do?pnum=${pnum }'">
+	<input type="button" value="QnA작성하기" style="float: right"
+	 onclick="location.href='${cp }/qna/startQnaWrite.do?pnum=${pnum }'">
 			
 	
 	

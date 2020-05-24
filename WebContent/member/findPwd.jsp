@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-success">
+        <div class="panel panel-info class">
             <div class="panel-heading">
                 <div class="panel-title"><h1>비밀번호찾기</h1></div>
             </div>
