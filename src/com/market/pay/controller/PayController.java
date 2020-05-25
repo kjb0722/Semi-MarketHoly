@@ -49,10 +49,10 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			PayDao paydao = new PayDao();
 			int n = paydao.insertorders(odto,opdto,id);
 			if (n>0) {
-				
 				req.getRequestDispatcher("/index.jsp?page=member/pay.jsp").forward(req, resp);
+			}else {
+				resp.sendRedirect(req.getContextPath()+"/error.do");
 			}
-			resp.sendRedirect(req.getContextPath()+"/error.do");
 			
 	}
 }

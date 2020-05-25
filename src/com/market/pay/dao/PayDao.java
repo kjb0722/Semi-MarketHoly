@@ -19,31 +19,31 @@ public class PayDao {
 
 		try {
 			con = JDBCUtil.getConn();
-			pstmt2 = con.prepareStatement("insert into orders values(seq_orders_onum.nextval,?,?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt2 = con.prepareStatement("insert into orders values(seq_orders_onum.nextval,?,?,?,?,sysdate,null,?,?,?,?,?,?)");
 			pstmt2.setInt(1, dDto.getNum());
 			pstmt2.setInt(2, dDto.getOpnum());
 			pstmt2.setInt(3, dDto.getStatus());
 			pstmt2.setString(4, dDto.getPay_yn());
-			pstmt2.setDate(5, dDto.getReg_date());
-			pstmt2.setDate(6, dDto.getEnd_date());
-			pstmt2.setString(7, dDto.getId());
-			pstmt2.setInt(8, dDto.getPrice());
-			pstmt2.setInt(9, dDto.getUse_point());
-			pstmt2.setInt(10, dDto.getSale_price());
-			pstmt2.setInt(11, dDto.getPay_way());
-			pstmt2.setString(12, dDto.getAddr());
+			pstmt2.setString(5, dDto.getId());
+			pstmt2.setInt(6, dDto.getPrice());
+			pstmt2.setInt(7, dDto.getUse_point());
+			pstmt2.setInt(8, dDto.getSale_price());
+			pstmt2.setInt(9, dDto.getPay_way());
+			pstmt2.setString(10, dDto.getAddr());
+			int n = pstmt2.executeUpdate();
 
 			pstmt1 = con.prepareStatement("insert into order_product values(seq_order_product_opnum.nextval,seq_orders_onum.currval,?,?,?,?)");
 			pstmt1.setInt(1, opDto.getPnum());
 			pstmt1.setString(2, opDto.getPname());
 			pstmt1.setInt(3, opDto.getEA());
 			pstmt1.setInt(4, opDto.getPrice());
+			pstmt1.executeUpdate();
 
 			String sql = "delete from cart where id=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
-			return pstmt.executeUpdate();
-
+			pstmt.executeUpdate();
+			return n;
 		} catch (SQLException se) {
 			se.printStackTrace();
 			return -1;
