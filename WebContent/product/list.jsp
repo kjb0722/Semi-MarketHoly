@@ -18,9 +18,7 @@
 .pagination>li>a {
 	float: none;
 }
-.prod:link { color: black; text-decoration: none;}
-.prod:visited { color: black; text-decoration: none;}
-#price{color: rebeccapurple;}
+
 </style>
 <h3>${ cname}</h3>
 <h3>${ tname}</h3>
@@ -51,7 +49,7 @@
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
 					<div style="position: relative;">
-					<a href="${cp }/product/detail.do?pnum=${pro.pnum}&cnum=${cnum}" class="prod">
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}&cnum=${cnum}">
 						<img src="${cp }/img/${pro.thumb_save}" width="300px"
 							height="400px">
 					</a>
@@ -64,13 +62,13 @@
 						</div>
 					</div>
 
-					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}" class="prod">
 						<div id="name">
 							<h2>${pro.name}<br>
 							</h2>
 						</div>
 						<div id="price"><b>${pro.price }원</b></div>
-						<div><h4>${pro.description }</h4></div> <c:set var="cp"
+						<div><h5>${pro.description }</h5></div> <c:set var="cp"
 							value="${pageContext.request.contextPath }" />
 					</a>
 				</div>

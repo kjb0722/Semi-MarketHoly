@@ -43,7 +43,7 @@ a:visited { color: black; text-decoration: none;}
 							</h2>
 						</div>
 						<div id="price"><b>${pro.price }원</b></div>
-						<div><h4>${pro.description }</h4></div> <c:set var="cp"
+						<div><h5>${pro.description }</h5></div> <c:set var="cp"
 							value="${pageContext.request.contextPath }" />
 					</a>
 					</div>
