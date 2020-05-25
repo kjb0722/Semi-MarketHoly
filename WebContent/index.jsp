@@ -79,9 +79,6 @@
 					<li>
 						<a href="${cp }/product/nbs.do?filter=sale">알뜰쇼핑</a>
 					</li>
-					<li>
-						<a href="${cp }/qna/qnaList.do">인표연습용</a>
-					</li>
 				</ul>
 				<form class="navbar-form pull-right" action="${cp }/cart.do">
 					<button class="btn btn-lg pull-right">
