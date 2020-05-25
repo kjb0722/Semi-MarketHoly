@@ -117,7 +117,7 @@
 						<ul>
 							<c:forEach var="pro" items="${requestScope.list }">
 								<div class="col-sm-4">
-									<a href="${cp }/product/detail.do?pnum=${pro.pnum}&cnum=${cnum}"> <img src="${cp }/img/${pro.thumb_save}" width="300px" height="400px">
+									<a href="${cp }/product/detail.do?pnum=${pro.pnum}"> <img src="${cp }/img/${pro.thumb_save}" width="300px" height="400px">
 									</a> <a href="${cp }/product/detail.do?pnum=${pro.pnum}">
 										<div id="name">
 											<h2>${pro.name}<br>
