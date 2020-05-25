@@ -156,3 +156,14 @@ button[type=button], input[type=button], input[type=submit]{
 	-moz-border-radius: 6px 0 6px 6px;
 	border-radius: 6px 0 6px 6px;
 }
+#recommend,.rcmd {
+	text-align:center;
+	
+}
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+#price{color: rebeccapurple;}
+.banner{
+	width:100%;
+	text-align:center;
+}

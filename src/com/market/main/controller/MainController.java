@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.market.admin.dao.CategoryDao;
 import com.market.admin.dto.CategoryDto;
+import com.market.product.dao.ProductDao;
+import com.market.product.dto.ProductDto;
 
 @WebServlet("/main.do")
 public class MainController extends HttpServlet {
@@ -30,6 +32,11 @@ public class MainController extends HttpServlet {
 		//"세부 카테고리"
 		ArrayList<CategoryDto> catTypeList = dao.selTypeList();
 		app.setAttribute("catTypeList", catTypeList);
+		
+		//"추천상품"
+		ProductDao pdao = new ProductDao();
+		ArrayList<ProductDto> list = pdao.getList(1, 3, null, 0, 0);
+		req.setAttribute("list", list);
 		
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}

@@ -37,7 +37,7 @@ public class SaleProdAddController extends HttpServlet {
 		java.sql.Date startDate = new java.sql.Date(tempStartDate.getTime());
 		java.sql.Date endDate = new java.sql.Date(tempEndDate.getTime());
 
-		int percent = Integer.parseInt(req.getParameter("percent"));
+		float percent = Float.parseFloat(req.getParameter("percent"));
 
 		SaleDao dao = SaleDao.getInstance();
 		int n = dao.insSaleProd(new SaleDto(-1, pnum, name, percent, startDate, endDate, "N"));

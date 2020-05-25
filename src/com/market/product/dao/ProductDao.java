@@ -230,7 +230,7 @@ public class ProductDao {
 		}
 	}
 
-	// 신상품 리스트
+	// 신상품,베스트,세일상품 리스트
 	public ArrayList<ProductDto> getNBSList(int startRow, int endRow, String filter) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -243,33 +243,50 @@ public class ProductDao {
 				sql = "select * from(select aa.*,rownum rnum from "
 						+ "(select * from product where reg_date between sysdate-7 and sysdate "
 						+ "order by reg_date desc)" + "aa)where rnum>=? and rnum<=? order by reg_date desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					int pnum = rs.getInt("pnum");
+					String name = rs.getString("name");
+					Date reg_date = rs.getDate("reg_date");
+					int price = rs.getInt("price");
+					int stock = rs.getInt("stock");
+					String thumb_org = rs.getString("thumb_org");
+					String thumb_save = rs.getString("thumb_save");
+					String description = rs.getString("description");
+					String del_yn = rs.getString("del_yn");
+					list.add(
+							new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
+				}
 			} else if (filter.equals("best")) {
 
 			} else if (filter.equals("sale")) {
 				sql = "select * from(select aa.*,rownum rnum from"
-						+ "(select p.pnum,p.price,p.description,p.thumb_save,p.stock,p.name pname,s.percent "
-						+ "from product p,sale s where p.pnum=s.pnum and p.del_yn='N' and s.del_yn='N' "
+						+ "(select p.pnum,p.name pname,p.reg_date,p.price,p.stock,p.thumb_save,p.description,s.percent "
+						+ "from product p,sale s where p.pnum=s.pnum and p.del_yn='N'"
 						+ "order by p.reg_date desc)aa) where rnum>=? and rnum<=?";
-			}
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
 
-			rs = pstmt.executeQuery();
+				rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				int pnum = rs.getInt("pnum");
-				String name = rs.getString("name");
-				Date reg_date = rs.getDate("reg_date");
-				int price = rs.getInt("price");
-				int stock = rs.getInt("stock");
-				String thumb_org = rs.getString("thumb_org");
-				String thumb_save = rs.getString("thumb_save");
-				String description = rs.getString("description");
-				String del_yn = rs.getString("del_yn");
-				list.add(
-						new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
-
+				while (rs.next()) {
+					int pnum = rs.getInt("pnum");
+					String name = rs.getString("pname");
+					Date reg_date = rs.getDate("reg_date");
+					int price = rs.getInt("price");
+					int stock = rs.getInt("stock");
+					String thumb_save = rs.getString("thumb_save");
+					String description = rs.getString("description");
+					int percent=rs.getInt("percent");
+					list.add(
+							new ProductDto(pnum, name, reg_date, price, stock, thumb_save, description, percent));
+				}
 			}
 			return list;
 
@@ -326,10 +343,35 @@ public class ProductDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
 		try {
 			con = JDBCUtil.getConn();
 			con.setAutoCommit(false);
-			String sql1 = "delete from prod_info where pnum = ?";
+			
+			String sql5 = "delete from prod_info where pnum = ?";
+			pstmt5 = con.prepareStatement(sql5);
+			pstmt5.setInt(1, pnum);
+			pstmt5.executeUpdate();
+			
+			String sql4 = "delete from cart where pnum = ?";
+			pstmt4 = con.prepareStatement(sql4);
+			pstmt4.setInt(1, pnum);
+			pstmt4.executeUpdate();
+			
+			String sql3 = "delete from order_product where pnum = ?";
+			pstmt3 = con.prepareStatement(sql3);
+			pstmt3.setInt(1, pnum);
+			pstmt3.executeUpdate();
+			
+			String sql2 = "delete from sale where pnum = ?";
+			pstmt2 = con.prepareStatement(sql2);
+			pstmt2.setInt(1, pnum);
+			pstmt2.executeUpdate();
+			
+			String sql1 = "delete from qna where pnum = ?";
 			pstmt1 = con.prepareStatement(sql1);
 			pstmt1.setInt(1, pnum);
 			pstmt1.executeUpdate();
