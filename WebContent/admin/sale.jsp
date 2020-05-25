@@ -367,9 +367,9 @@ nav {
 	});
 	//상품별 적용
 	$("#sale-prod").click(function() {
+		$("#cat").change();
 		$("#catType").prop("disabled", false);
 		$("input[name='prod-chk']").prop("disabled", false);
-		$("#cat").change();
 		prodListLoad();
 	});
 	//세일 방법 라디오버튼 이벤트

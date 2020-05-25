@@ -219,6 +219,11 @@ public class QnaAdminDao {
 			}
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(pstmt2);
 			JDBCUtil.close(null, pstmt, con);
 		}
@@ -493,6 +498,11 @@ public class QnaAdminDao {
 			System.out.println(e.getMessage());
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}

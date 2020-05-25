@@ -30,7 +30,7 @@ public class OrderAdminDao {
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "";
-			if (kind.equals("prodName")) {
+			if(kind.equals("prodName")) {
 				sql = "SELECT * \r\n" + 
 						"FROM   (SELECT aa.*, \r\n" + 
 						"               rownum rnum \r\n" + 
@@ -43,28 +43,23 @@ public class OrderAdminDao {
 						"                        FROM   common \r\n" + 
 						"                        WHERE  type = '결제 방법' \r\n" + 
 						"                               AND val = pay_way) pay_wayName, \r\n" + 
-						"                       (SELECT pname \r\n" + 
-						"                               || Decode(bb.cnt, 1, '', \r\n" + 
-						"                                                 ' 외 ' \r\n" + 
-						"                                                 || bb.cnt \r\n" + 
-						"                                                 || '건') prodName \r\n" + 
-						"                        FROM   order_product aa, \r\n" + 
-						"                               (SELECT onum, \r\n" + 
-						"                                       Count(*) cnt \r\n" + 
+						"                       (SELECT (SELECT pname \r\n" + 
 						"                                FROM   order_product \r\n" + 
-						"                                GROUP  BY onum) bb \r\n" + 
-						"                        WHERE  aa.onum = a.onum \r\n" + 
-						"                               AND aa.onum = bb.onum \r\n" + 
-						"                               AND rownum = 1)    prodName \r\n" + 
+						"                                WHERE  rownum = 1) \r\n" + 
+						"                               || '외 ' \r\n" + 
+						"                               || Count(*) \r\n" + 
+						"                               || '종' \r\n" + 
+						"                        FROM   order_product \r\n" + 
+						"                        GROUP  BY onum)           prodName \r\n" + 
 						"                FROM   orders a \r\n" + 
-						"                WHERE  status IN( 1, 2, 3, 4 ) \r\n" + 
+						"                WHERE  status IN( " + status + " ) \r\n" + 
 						"                       AND onum IN(SELECT onum \r\n" + 
 						"                                   FROM   order_product \r\n" + 
-						"                                   WHERE  pname LIKE '%무%') \r\n" + 
+						"                                   WHERE  pname LIKE '%" + word + "%') \r\n" + 
 						"                ORDER  BY reg_date DESC) aa) \r\n" + 
-						" WHERE  rnum >= ? \r\n" + 
-						"       AND rnum <= ? ";
-			} else {
+						"WHERE  rnum >= ? \r\n" + 
+						"       AND rnum <= ?";
+			}else {
 				sql = "SELECT * \r\n" + 
 						"FROM   (SELECT aa.*, \r\n" + 
 						"               rownum rnum \r\n" + 
@@ -77,24 +72,19 @@ public class OrderAdminDao {
 						"                        FROM   common \r\n" + 
 						"                        WHERE  type = '결제 방법' \r\n" + 
 						"                               AND val = pay_way) pay_wayName, \r\n" + 
-						"                       (SELECT pname \r\n" + 
-						"                               || Decode(bb.cnt, 1, '', \r\n" + 
-						"                                                 ' 외 ' \r\n" + 
-						"                                                 || bb.cnt \r\n" + 
-						"                                                 || '건') prodName \r\n" + 
-						"                        FROM   order_product aa, \r\n" + 
-						"                               (SELECT onum, \r\n" + 
-						"                                       Count(*) cnt \r\n" + 
+						"                       (SELECT (SELECT pname \r\n" + 
 						"                                FROM   order_product \r\n" + 
-						"                                GROUP  BY onum) bb \r\n" + 
-						"                        WHERE  aa.onum = a.onum \r\n" + 
-						"                               AND aa.onum = bb.onum \r\n" + 
-						"                               AND rownum = 1)    prodName \r\n" + 
+						"                                WHERE  rownum = 1) \r\n" + 
+						"                               || '외 ' \r\n" + 
+						"                               || Count(*) \r\n" + 
+						"                               || '종' \r\n" + 
+						"                        FROM   order_product \r\n" + 
+						"                        GROUP  BY onum)           prodName \r\n" + 
 						"                FROM   orders a \r\n" + 
-						"                WHERE  status IN( 1, 2, 3, 4 ) \r\n" + 
-						"                       AND onum LIKE '%%' \r\n" + 
+						"                WHERE  status IN( " + status + " ) \r\n" + 
+						"                       AND " + kind + " LIKE '%" + word +"%' \r\n" + 
 						"                ORDER  BY reg_date DESC) aa) \r\n" + 
-						" WHERE  rnum >= ? \r\n" + 
+						"WHERE  rnum >= ? \r\n" + 
 						"       AND rnum <= ? ";
 			}
 			
@@ -172,6 +162,11 @@ public class OrderAdminDao {
 			}
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}

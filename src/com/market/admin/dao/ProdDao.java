@@ -60,6 +60,11 @@ public class ProdDao {
 			}
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(pstmt1);
 			JDBCUtil.close(null, pstmt, con);
 		}

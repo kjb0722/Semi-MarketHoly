@@ -137,7 +137,8 @@ public class ProductDao {
 				String detail_save = rs.getString("detail_save");
 				String description = rs.getString("description");
 				String del_yn = rs.getString("del_yn");
-				dto = new ProductDto(pnum, 0, name, reg_date, price, stock, 0, thumb_org, thumb_save, description, detail_org, detail_save, del_yn);
+				dto = new ProductDto(pnum, 0, name, reg_date, price, stock, 0, thumb_org, thumb_save, description,
+						detail_org, detail_save, del_yn);
 			}
 			return dto;
 
@@ -215,7 +216,8 @@ public class ProductDao {
 				String thumb_save = rs.getString("thumb_save");
 				String description = rs.getString("description");
 				String del_yn = rs.getString("del_yn");
-				list.add(new ProductDto(pnum, cnum, name, reg_date, price, stock, type, thumb_org, thumb_save, description, null, null, del_yn));
+				list.add(new ProductDto(pnum, cnum, name, reg_date, price, stock, type, thumb_org, thumb_save,
+						description, null, null, del_yn));
 
 			}
 			return list;
@@ -238,7 +240,8 @@ public class ProductDao {
 		try {
 			con = JDBCUtil.getConn();
 			if (filter.equals("new")) {
-				sql = "select * from(select aa.*,rownum rnum from " + "(select * from product where reg_date between sysdate-7 and sysdate "
+				sql = "select * from(select aa.*,rownum rnum from "
+						+ "(select * from product where reg_date between sysdate-7 and sysdate "
 						+ "order by reg_date desc)" + "aa)where rnum>=? and rnum<=? order by reg_date desc";
 			} else if (filter.equals("best")) {
 
@@ -246,7 +249,7 @@ public class ProductDao {
 				sql = "select * from(select aa.*,rownum rnum from"
 						+ "(select p.pnum,p.price,p.description,p.thumb_save,p.stock,p.name pname,s.percent "
 						+ "from product p,sale s where p.pnum=s.pnum and p.del_yn='N' and s.del_yn='N' "
-						+ "order by p.reg_date desc)aa) where rnum>=? and rnum<=?" ;
+						+ "order by p.reg_date desc)aa) where rnum>=? and rnum<=?";
 			}
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -264,7 +267,8 @@ public class ProductDao {
 				String thumb_save = rs.getString("thumb_save");
 				String description = rs.getString("description");
 				String del_yn = rs.getString("del_yn");
-				list.add(new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
+				list.add(
+						new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
 
 			}
 			return list;
@@ -286,7 +290,8 @@ public class ProductDao {
 		try {
 			con = JDBCUtil.getConn();
 
-			String sql = "select * from(select aa.*,rownum rnum from " + "(select * from product where name like ?) aa)where rnum>=? and rnum<=?";
+			String sql = "select * from(select aa.*,rownum rnum from "
+					+ "(select * from product where name like ?) aa)where rnum>=? and rnum<=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%" + keyword + "%");
 			pstmt.setInt(2, startRow);
@@ -303,7 +308,8 @@ public class ProductDao {
 				String thumb_save = rs.getString("thumb_save");
 				String description = rs.getString("description");
 				String del_yn = rs.getString("del_yn");
-				list.add(new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
+				list.add(
+						new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
 
 			}
 			return list;
@@ -323,17 +329,16 @@ public class ProductDao {
 		try {
 			con = JDBCUtil.getConn();
 			con.setAutoCommit(false);
+			String sql1 = "delete from prod_info where pnum = ?";
+			pstmt1 = con.prepareStatement(sql1);
+			pstmt1.setInt(1, pnum);
+			pstmt1.executeUpdate();
+			
 			String sql = "delete from product where pnum = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pnum);
 			int n = pstmt.executeUpdate();
-			if(n > 0) {
-				String sql1 = "delete from prod_info where pnum = ?";
-				pstmt1 = con.prepareStatement(sql1);
-				pstmt1.setInt(1, pnum);
-				pstmt1.executeUpdate();
-				
-			}
+			
 			return n;
 		} catch (SQLException se) {
 			System.out.println(se.getMessage());
@@ -344,6 +349,11 @@ public class ProductDao {
 			}
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}

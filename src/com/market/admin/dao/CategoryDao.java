@@ -202,6 +202,11 @@ public class CategoryDao {
 			}
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(pstmt2);
 			JDBCUtil.close(pstmt1);
 			JDBCUtil.close(null, pstmt, con);
@@ -313,6 +318,11 @@ public class CategoryDao {
 			}
 			return -1;
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 			JDBCUtil.close(pstmt2);
 			JDBCUtil.close(null, pstmt1, con);
 		}
