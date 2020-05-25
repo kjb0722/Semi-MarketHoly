@@ -67,6 +67,8 @@ table>tbody>tr>td>a{
 					<th style="width: 14%;">결제 방법</th>
 					<th class="hidden">사용 포인트</th>
 					<th style="width: 11%;">등록 날짜</th>
+					<th style="width: 11%;" class="hidden">회원 번호</th>
+					<th style="width: 11%;" class="hidden">rating</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -88,13 +90,15 @@ table>tbody>tr>td>a{
 	
 	function orderUpdate(){
 		let status = $("#cboStatus").val();
+		
+		let num = [];
+		let rating = [];
 		let onums = [];
-		/* $("#order-table>tbody>tr>td>input[type='checkbox']:checked").each(function(i, element) {
-			onums.push($("#order-table>tbody>tr>td").eq(1).text());
-		}); */
 		$("#order-table>tbody>tr").each(function(i, element) {
 			if($(this).eq(0).find("input[type='checkbox']").prop("checked") == true){
 				onums.push($(this).find("td").eq(1).text());
+				num.push($(this).find("td").eq(11).text());
+				rating.push($(this).find("td").eq(12).text());
 			}
 		});
 
@@ -104,6 +108,8 @@ table>tbody>tr>td>a{
 				url:`${cp}/admin/ordStatUpdate.do`,
 				method:"post",
 				data:{status:status,
+					num:num,
+					rating:rating,
 					onums:onums},
 				success:function(data){
 					if(data.n>0){
@@ -186,7 +192,9 @@ table>tbody>tr>td>a{
 			row += "<td class='hidden'>"+dto.addr+"</td>";
 			row += "<td>"+dto.pay_wayName+"</td>";
 			row += "<td class='hidden'>"+dto.use_point+"</td>";
-			row += "<td>"+dto.reg_date+"</td>";			
+			row += "<td>"+dto.reg_date+"</td>";		
+			row += "<td class='hidden'>"+dto.num+"</td>";	
+			row += "<td class='hidden'>"+dto.rating+"</td>";	
 			row += "</tr>";
 			tbody.append(row);
 		}

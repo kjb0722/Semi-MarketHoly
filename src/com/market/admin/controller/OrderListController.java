@@ -69,6 +69,10 @@ public class OrderListController extends HttpServlet {
 			json.put("pay_wayName", dto.getPay_wayName());
 			json.put("use_point", dto.getUse_point());
 			json.put("reg_date", dto.getReg_date());
+			
+			json.put("num", dto.getNum());
+			json.put("rating", dto.getRating());
+			
 			jarr.put(json);
 		}
 

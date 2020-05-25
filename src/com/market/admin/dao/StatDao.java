@@ -76,6 +76,7 @@ public class StatDao {
 					"                                                                                 '10월' AS \"10월\", \r\n" + 
 					"                                                                                 '11월' AS \"11월\", \r\n" + 
 					"                                                                                 '12월' AS \"12월\") )";
+			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setDate(1, startDate);
 			pstmt.setDate(2, endDate);
@@ -296,6 +297,7 @@ public class StatDao {
 					"                                                                                  '29일' AS \"29일\", \r\n" + 
 					"                                                                                  '30일' AS \"30일\", \r\n" + 
 					"                                                                                  '31일' AS \"31일\") )";
+			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setDate(1, startDate);
 			pstmt.setDate(2, endDate);

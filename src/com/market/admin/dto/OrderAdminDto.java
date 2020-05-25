@@ -13,8 +13,10 @@ public class OrderAdminDto {
 	private String pay_wayName;
 	private int use_point;
 	private Date reg_date;
+	private int num;
+	private int rating;
 	public OrderAdminDto(int onum, String id, String statusName, String prodName, String pay_yn, int price, String addr,
-			String pay_wayName, int use_point, Date reg_date) {
+			String pay_wayName, int use_point, Date reg_date, int num, int rating) {
 		this.onum = onum;
 		this.id = id;
 		this.statusName = statusName;
@@ -25,6 +27,8 @@ public class OrderAdminDto {
 		this.pay_wayName = pay_wayName;
 		this.use_point = use_point;
 		this.reg_date = reg_date;
+		this.num = num;
+		this.rating = rating;
 	}
 	public int getOnum() {
 		return onum;
@@ -85,6 +89,18 @@ public class OrderAdminDto {
 	}
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 }

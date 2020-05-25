@@ -55,7 +55,7 @@ public class OrderAdminDao {
 						"                                GROUP  BY onum) bb \r\n" + 
 						"                        WHERE  aa.onum = a.onum \r\n" + 
 						"                               AND aa.onum = bb.onum \r\n" + 
-						"                               AND rownum = 1)    prodName \r\n" + 
+						"                               AND rownum = 1)    prodName, (select rating from member where num = a.num and del_yn='N') rating \r\n" +
 						"                FROM   orders a \r\n" + 
 						"                WHERE  status IN( 1, 2, 3, 4 ) \r\n" + 
 						"                       AND onum LIKE '%" + word + "%' \r\n" + 
@@ -75,7 +75,7 @@ public class OrderAdminDao {
 						"                        FROM   common \r\n" + 
 						"                        WHERE  type = '결제 방법' \r\n" + 
 						"                               AND val = pay_way) pay_wayName, \r\n" + 
-						"  (SELECT pname || Decode(bb.cnt, 1, '', ' 외 ' || bb.cnt || '건') prodName  FROM   order_product aa,  (SELECT onum, Count(*) cnt  FROM   order_product  GROUP  BY onum) bb  WHERE  aa.onum = a.onum  AND aa.onum = bb.onum AND rownum = 1)    prodName" +  
+						"  (SELECT pname || Decode(bb.cnt, 1, '', ' 외 ' || bb.cnt || '건') prodName  FROM   order_product aa,  (SELECT onum, Count(*) cnt  FROM   order_product  GROUP  BY onum) bb  WHERE  aa.onum = a.onum  AND aa.onum = bb.onum AND rownum = 1)    prodName,(select rating from member where num = a.num and del_yn='N') rating" +  
 						"                FROM   orders a \r\n" + 
 						"                WHERE  status IN( " + status + " ) \r\n" + 
 						"                       AND " + kind + " LIKE '%" + word +"%' \r\n" + 
@@ -99,8 +99,10 @@ public class OrderAdminDao {
 				String pay_wayName = rs.getString("pay_wayName");
 				int use_point = rs.getInt("use_point");
 				Date reg_date = rs.getDate("reg_date");
+				int num = rs.getInt("num");
+				int rating = rs.getInt("rating");
 				list.add(new OrderAdminDto(onum, id, statusName, prodName, pay_yn, price, addr, pay_wayName, use_point,
-						reg_date));
+						reg_date, num, rating));
 			}
 			return list;
 		} catch (SQLException e) {
@@ -131,9 +133,12 @@ public class OrderAdminDao {
 		}
 	}
 
-	public int updStatus(String[] onums, int status) {
+	public int updStatus(String[] onums, String[] nums, String[] ratings, int status) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
 		try {
 			con = JDBCUtil.getConn();
 			con.setAutoCommit(false);
@@ -142,11 +147,70 @@ public class OrderAdminDao {
 			if (status == 5 || status == 6) {
 				sql = "update orders set status = ?, end_date = sysdate where onum = ?";
 			}
-			for (String onum : onums) {
+			
+			for(int i=0; i<onums.length;i++) {
+				int onum = Integer.parseInt(onums[i]);
+				int num = Integer.parseInt(nums[i]);
+				int rating = Integer.parseInt(ratings[i]);
+				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, status);
-				pstmt.setString(2, onum);
+				pstmt.setInt(2, onum);
 				n += pstmt.executeUpdate();
+				
+				double multip = 0;
+				if(rating == 10) {
+					multip = 0.005;
+				}else if(rating == 20) {
+					multip = 0.01;
+				}else if(rating == 30) {
+					multip = 0.03;
+				}else if(rating == 40) {
+					multip = 0.05;
+				}
+				
+				//포인트 적립
+				String sql1 = "update member set point=point+(select price * ? from orders where onum = ?) where num = ?";
+				pstmt1 = con.prepareStatement(sql1);
+				pstmt1.setDouble(1, multip);
+				pstmt1.setInt(2, onum);
+				pstmt1.setInt(3, num);
+				pstmt1.executeUpdate();
+				
+				//등급 수정
+				String sql2 = "SELECT Sum(price) totalPurchase \r\n" + 
+						"FROM   orders \r\n" + 
+						"WHERE  1 = 1 \r\n" + 
+						"       AND status = 5 \r\n" + 
+						"       AND num = ? ";
+				pstmt2 = con.prepareStatement(sql2);
+				pstmt2.setInt(1, num);
+				ResultSet rs = pstmt2.executeQuery();
+				rs.next();
+				int totalPurchase = rs.getInt("totalPurchase");
+				int afterRating = 0;
+				if(totalPurchase < 100000) {
+					afterRating = 10;
+				}else if(totalPurchase >= 100000 && totalPurchase < 150000) {
+					afterRating = 20;
+				}else if(totalPurchase >= 150000 && totalPurchase < 200000) {
+					afterRating = 30;
+				}else if(totalPurchase >= 200000 && totalPurchase < 250000) {
+					afterRating = 40;
+				}
+				
+				if(rating != afterRating && rating != 99) {
+					String sql3 = "update member rating = ? where num = ?";
+					pstmt3 = con.prepareStatement(sql3);
+					pstmt3.setInt(1, afterRating);
+					pstmt3.setInt(1, num);
+					pstmt3.executeUpdate();
+				}
+				
+//				일반 0.5% 10만원 미만 10
+//				화이트 1% 15만원 미만 20
+//				라벤더 3% 20만원 미만 30
+//				퍼플 5% 25만원 이상 40
 			}
 			return n;
 		} catch (SQLException e) {
@@ -164,6 +228,9 @@ public class OrderAdminDao {
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
+			JDBCUtil.close(pstmt3);
+			JDBCUtil.close(pstmt2);
+			JDBCUtil.close(pstmt1);
 			JDBCUtil.close(null, pstmt, con);
 		}
 	}
@@ -232,7 +299,7 @@ public class OrderAdminDao {
 				int use_point = rs.getInt("use_point");
 				Date reg_date = rs.getDate("reg_date");
 				return new OrderAdminDto(onum, id, statusName, "", pay_yn, price, addr, pay_wayName, use_point,
-						reg_date);
+						reg_date,-1,-1);
 			}
 			return null;
 		} catch (SQLException e) {

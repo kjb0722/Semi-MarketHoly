@@ -36,7 +36,8 @@
 		<div class="tab-pane" id="daySell">
 			<div class="row">
 				<div class="col-md-4 form-inline">
-					<select id="year-daySell" class="form-control"></select> <select id="month-daySell" class="form-control"></select>
+					<select id="year-daySell" class="form-control"></select>
+					<select id="month-daySell" class="form-control"></select>
 				</div>
 			</div>
 			<div class="row">
@@ -153,7 +154,7 @@
 			},
 			success : function(data) {
 				let numSell = [ "주문 건수" ];
-				if(typeof data[0] == undefined){
+				if(typeof data[0] != "undefined"){
 					numSell.push(data[0].day1);
 					numSell.push(data[0].day2);
 					numSell.push(data[0].day3);
@@ -187,7 +188,7 @@
 					numSell.push(data[0].day31);
 				}
 				let amount = [ "매출액(단위:만원)" ];
-				if(typeof amount == undefined){
+				if(typeof data[1] != "undefined"){
 					amount.push(data[1].day1);
 					amount.push(data[1].day2);
 					amount.push(data[1].day3);
@@ -220,6 +221,7 @@
 					amount.push(data[1].day30);
 					amount.push(data[1].day31);
 				}
+
 				var chart = bb.generate({
 					data : {
 						/* columns : [ [ "data1", 30, 200, 100, 400, 150, 250 ],
@@ -261,33 +263,36 @@
 			},
 			success : function(data) {
 				let numSell = [ "주문 건수" ];
-				numSell.push(data[0].jan);
-				numSell.push(data[0].feb);
-				numSell.push(data[0].mar);
-				numSell.push(data[0].apr);
-				numSell.push(data[0].may);
-				numSell.push(data[0].jun);
-				numSell.push(data[0].jul);
-				numSell.push(data[0].aug);
-				numSell.push(data[0].sep);
-				numSell.push(data[0].oct);
-				numSell.push(data[0].nov);
-				numSell.push(data[0].dec);
-
+				if(typeof data[0] != "undefined"){
+					numSell.push(data[0].jan);
+					numSell.push(data[0].feb);
+					numSell.push(data[0].mar);
+					numSell.push(data[0].apr);
+					numSell.push(data[0].may);
+					numSell.push(data[0].jun);
+					numSell.push(data[0].jul);
+					numSell.push(data[0].aug);
+					numSell.push(data[0].sep);
+					numSell.push(data[0].oct);
+					numSell.push(data[0].nov);
+					numSell.push(data[0].dec);
+				}
+				
 				let amount = [ "매출액(단위:만원)" ];
-				amount.push(data[1].jan);
-				amount.push(data[1].feb);
-				amount.push(data[1].mar);
-				amount.push(data[1].apr);
-				amount.push(data[1].may);
-				amount.push(data[1].jun);
-				amount.push(data[1].jul);
-				amount.push(data[1].aug);
-				amount.push(data[1].sep);
-				amount.push(data[1].oct);
-				amount.push(data[1].nov);
-				amount.push(data[1].dec);
-
+				if(typeof data[1] != "undefined"){
+					amount.push(data[1].jan);
+					amount.push(data[1].feb);
+					amount.push(data[1].mar);
+					amount.push(data[1].apr);
+					amount.push(data[1].may);
+					amount.push(data[1].jun);
+					amount.push(data[1].jul);
+					amount.push(data[1].aug);
+					amount.push(data[1].sep);
+					amount.push(data[1].oct);
+					amount.push(data[1].nov);
+					amount.push(data[1].dec);
+				}
 				var chart = bb.generate({
 					"data" : {
 						/* columns : [ [ "data1", 30, 200, 100, 400, 150, 250 ],
