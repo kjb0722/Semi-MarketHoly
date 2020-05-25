@@ -11,11 +11,30 @@
 	float: none;
 }
 
-a:link { color: black; text-decoration: none;}
-a:visited { color: black; text-decoration: none;}
-#price{color: rebeccapurple;}
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+#price {
+	color: rebeccapurple;
+}
+
+#title {
+	text-align: center;
+}
 </style>
-<h1>${filter }</h1>
+<div id="title">
+	<h1>
+		<b>${filter }</b>
+	</h1>
+	<br>
+</div>
 <!-- 상품리스트 -->
 
 <div class="container">
@@ -23,14 +42,14 @@ a:visited { color: black; text-decoration: none;}
 		<ul>
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
-				<div style="position: relative;">
-				<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
-						<img src="${cp }/img/${pro.thumb_save}" width="300px"
-							height="400px">
-					</a>
+					<div style="position: relative;">
+						<a href="${cp }/product/detail.do?pnum=${pro.pnum}"> <img
+							src="${cp }/img/${pro.thumb_save}" width="300px" height="400px">
+						</a>
 						<div style="position: absolute; top: 330px; left: 220px">
 							<button data-toggle="modal" data-target="#cartmodal"
-								class="btn btn-link" onclick="getProd('${pro.name}',${pro.price },${pro.pnum })">
+								class="btn btn-link"
+								onclick="getProd('${pro.name}',${pro.price },${pro.pnum })">
 								<img src="../img/btn-cart.png" id="incart" alt="담기" width="50px"
 									height="50px">
 							</button>
@@ -42,11 +61,23 @@ a:visited { color: black; text-decoration: none;}
 							<h2>${pro.name}<br>
 							</h2>
 						</div>
-						<div id="price"><b>${pro.price }원</b></div>
-						<div><h5>${pro.description }</h5></div> <c:set var="cp"
-							value="${pageContext.request.contextPath }" />
+
+
+						<div id="price">
+							<b> <c:choose>
+									<c:when test=${pro.price!=sale.price }>
+										${pro.price*sale.percent }
+									</c:when>
+									<c:otherwise>${pro.price }</c:otherwise>
+								</c:choose> 원
+							</b>
+						</div>
+
+						<div>
+							<h5>${pro.description }</h5>
+						</div> <c:set var="cp" value="${pageContext.request.contextPath }" />
 					</a>
-					</div>
+				</div>
 			</c:forEach>
 		</ul>
 	</div>
@@ -54,7 +85,8 @@ a:visited { color: black; text-decoration: none;}
 <br>
 <br>
 
-<!-- 페이징 --><div>
+<!-- 페이징 -->
+<div>
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><c:if test="${pageNum>1}">
 				<li class="page-item"><a
@@ -66,14 +98,14 @@ a:visited { color: black; text-decoration: none;}
 			<c:choose>
 				<c:when test="${i==pageNum }">
 					<li class="page-item active"><a
-						href="${cp }/product/nbs.do?pageNum=${i}&filter=${filter}">
-							<span style='color: white'>${i}</span>
+						href="${cp }/product/nbs.do?pageNum=${i}&filter=${filter}"> <span
+							style='color: white'>${i}</span>
 					</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item"><a
-						href="${cp }/product/nbs.do?pageNum=${i}&filter=${filter}">
-							<span style='color: gray'>${i}</span>
+						href="${cp }/product/nbs.do?pageNum=${i}&filter=${filter}"> <span
+							style='color: gray'>${i}</span>
 					</a></li>
 				</c:otherwise>
 			</c:choose>
@@ -91,7 +123,8 @@ a:visited { color: black; text-decoration: none;}
 <!-- 팝업창 -->
 <div class="modal fade" id="cartmodal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm" style="max-width: 100%; width: 420px; display: table;">
+	<div class="modal-dialog modal-sm"
+		style="max-width: 100%; width: 420px; display: table;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
@@ -103,26 +136,26 @@ a:visited { color: black; text-decoration: none;}
 			<div class="modal-body">
 				<label id="name"></label><br>
 				<hr style="border: solid 1px purple;">
-				<label id="opname"></label><br>
-				<label id="price"></label>원
-				<input type="hidden" id="pnum"> 
+				<label id="opname"></label><br> <label id="price"></label>원 <input
+					type="hidden" id="pnum">
 				<div class="pull-right">
-				<button type="button" class="btn btn-default" onclick="minus()">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-				</button>
-				&nbsp<label id="EA">1</label>&nbsp
-				<button type="button" class="btn btn-default" onclick="plus()">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-				</button>
-				</div>  
-				
-				
+					<button type="button" class="btn btn-default" onclick="minus()">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+					&nbsp<label id="EA">1</label>&nbsp
+					<button type="button" class="btn btn-default" onclick="plus()">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+				</div>
+
+
 			</div>
 			<div class="modal-footer">
-				<div class="pull-left">합계</div>  <label id="sum"></label> &nbsp원<br>
-				구매시 0.1% 적립<br>
+				<div class="pull-left">합계</div>
+				<label id="sum"></label> &nbsp원<br> 구매시 0.1% 적립<br>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" onclick="incart('${id}','${pro.pnum}')">장바구니 담기</button>
+				<button type="button" class="btn btn-primary"
+					onclick="incart('${id}','${pro.pnum}')">장바구니 담기</button>
 			</div>
 		</div>
 	</div>

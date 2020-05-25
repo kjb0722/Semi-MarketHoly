@@ -36,7 +36,7 @@ public class NBSController extends HttpServlet{
 		if (pageCount < endPageNum) {
 			endPageNum = pageCount;
 		}
-
+		
 		req.setAttribute("filter", filter);
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
