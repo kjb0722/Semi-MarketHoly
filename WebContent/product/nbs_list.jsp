@@ -65,8 +65,8 @@ a:visited {
 						<div id="price">
 						<c:set var="sprice" value="${pro.price*(1-pro.percent) }"/>
 							<b> <c:choose>
-									<c:when test="">
-									
+									<c:when test="${pro.percent==1}">
+										<fmt:formatNumber value="${pro.price}" type="number"/>
 									</c:when>
 									<c:otherwise>
 									<span class="orp"><del>${pro.price}원</del></span>

@@ -240,9 +240,10 @@ public class ProductDao {
 		try {
 			con = JDBCUtil.getConn();
 			if (filter.equals("new")) {
-				sql = "select * from(select aa.*,rownum rnum from "
-						+ "(select * from product where reg_date between sysdate-7 and sysdate "
-						+ "order by reg_date desc)" + "aa)where rnum>=? and rnum<=? order by reg_date desc";
+				sql = "select * from (select p.*,rownum rnum from (select p.*,nvl(s.percent,1)percent " + 
+						"from product p left outer join sale s on(p.pnum = s.pnum) " + 
+						"where reg_date between sysdate-7 and sysdate " + 
+						"order by reg_date desc)p ) where rnum>=? and rnum<=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
 				pstmt.setInt(2, endRow);
@@ -254,12 +255,11 @@ public class ProductDao {
 					Date reg_date = rs.getDate("reg_date");
 					int price = rs.getInt("price");
 					int stock = rs.getInt("stock");
-					String thumb_org = rs.getString("thumb_org");
 					String thumb_save = rs.getString("thumb_save");
 					String description = rs.getString("description");
-					String del_yn = rs.getString("del_yn");
+					float percent=rs.getFloat("percent");
 					list.add(
-							new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
+							new ProductDto(pnum, name, reg_date, price, stock, thumb_save, description, percent));
 				}
 			}else if(filter.equals("best")) {
 				sql = "select * from(select aa.*,rownum rnum from " + 
@@ -312,7 +312,7 @@ public class ProductDao {
 			return list;
 
 		} catch (SQLException se) {
-			System.out.println(se.getMessage());
+			se.getStackTrace();
 			return null;
 		} finally {
 			JDBCUtil.close(rs, pstmt, con);
