@@ -100,6 +100,7 @@
 		<h1 style="text-align: center;">적립금</h1>
 		<hr style="border: solid 1px purple;">
 		적립금 사용:<input type="text" id="usepoint" name="usepoint">
+		<input type="hidden" name = "point" value="${member.point}">
 		전액사용<input type="checkbox" id="allpoint" onclick="pointAllUse()" >
 		<br>
 		<br>

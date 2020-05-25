@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import com.market.db.JDBCUtil;
 import com.market.pay.dto.PayDto;
+import com.sun.org.apache.regexp.internal.recompile;
 
 import oracle.net.aso.p;
 
@@ -39,7 +40,6 @@ public class PayDao {
 		PreparedStatement pstmt = null;
 		int n = 0;
 		String sql = "delete from cart where id=?";
-	//	String sql1 = "update from member where id=?";
 		try {
 
 			con = JDBCUtil.getConn();
@@ -97,6 +97,26 @@ public class PayDao {
 		} finally {
 			JDBCUtil.close(null, pstmt, con);
 
+		}
+	}
+		public int updatepoint(int use_point, String id) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			try {
+			con = JDBCUtil.getConn();
+			String sql="update member set point=point-? where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, use_point);
+			pstmt.setString(2, id);
+			pstmt.executeUpdate();
+			
+			return 1;
+				
+			}catch (SQLException se) {
+				// TODO: handle exception
+				return -1;
+			}finally {
+				JDBCUtil.close(null, pstmt, con);
 		}
 	}
 }
