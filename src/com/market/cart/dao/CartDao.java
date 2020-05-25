@@ -44,10 +44,8 @@ public class CartDao {
 		try {
 			con = JDBCUtil.getConn();
 			pstmt = con.prepareStatement(
-					"select id,c.pnum,name,EA,price,thumb_save,"
-					+ "(select sale.percent from sale where p.pnum=pnum) pp,cartnum"
-					+ " from cart c , product p where c.pnum=p.pnum and id=?"
-					
+					"select id,c.pnum,name,EA,price,thumb_save,nvl((select sale.percent from sale where p.pnum=pnum),1)percent ,cartnum\r\n" + 
+					"from cart c , product p where c.pnum=p.pnum and id=?"
 					);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -58,11 +56,11 @@ public class CartDao {
 					String name=rs.getString("name");
 					int EA = rs.getInt("EA");
 					int price = rs.getInt("price");
-					int pp = rs.getInt("pp");
+					float percent = rs.getInt("percent");
 					String thumb_save=rs.getString("thumb_save");
 					int cartnum = rs.getInt("cartnum");
 					
-					list.add(new CartDto(id,pnum,name,EA,price,pp,thumb_save,cartnum));
+					list.add(new CartDto(id,pnum,name,EA,price,percent,thumb_save,cartnum));
 			}
 			return list;
 			

@@ -7,7 +7,7 @@ public class CartDto {
 	private String name;
 	private int EA;
 	private int price;
-	private int percent;
+	private float percent;
 	private String thumb_save;
 	private int cartnum;
 	
@@ -27,7 +27,7 @@ public class CartDto {
 	public void setThumb_save(String thumb_save) {
 		this.thumb_save = thumb_save;
 	}
-	public CartDto(String id, int pnum, String name, int EA, int price, int percent,String thumb_save,int cartnum) {
+	public CartDto(String id, int pnum, String name, int EA, int price, float percent,String thumb_save,int cartnum) {
 		super();
 		this.id = id;
 		this.pnum = pnum;
@@ -68,7 +68,7 @@ public class CartDto {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getPercent() {
+	public float getPercent() {
 		return percent;
 	}
 	public void setPercent(int percent) {

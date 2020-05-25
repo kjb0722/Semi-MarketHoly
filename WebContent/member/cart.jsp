@@ -89,7 +89,7 @@
 			<br>
 			<input type="text" name="DCprice" id="DCprice" readonly style="border:0 ;text-align: center;">
 			<br>
-			<input type="hidden" name="DCprice" value='${cart1.pp}'> 
+			<input type="hidden" name="DCprice" value='${cart1.percent}'> 
 			
 			<!-- cart.percent -->
 		</div>

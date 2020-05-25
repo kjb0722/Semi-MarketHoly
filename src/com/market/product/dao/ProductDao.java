@@ -93,10 +93,10 @@ public class ProductDao {
 			if (filter.equals("new")) {
 				sql += " where reg_date between sysdate-7 and sysdate";
 
-			} else if (filter == "best") {
-				sql += ",order_product op where p.pnum=op.pnum";
+			} else if (filter.equals("best")) {
+				sql += ",order_product op where p.pnum=op.pnum group by p.pnum";
 
-			} else if (filter == "sale") {
+			} else if (filter.equals("sale")) {
 				sql += ",sale s where p.pnum=s.pnum";
 			}
 			pstmt = con.prepareStatement(sql);
