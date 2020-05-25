@@ -246,7 +246,6 @@ public class ProductDao {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
 				pstmt.setInt(2, endRow);
-
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {
