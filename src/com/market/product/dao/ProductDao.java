@@ -160,7 +160,8 @@ public class ProductDao {
 		try {
 			con = JDBCUtil.getConn();
 
-			sql = "select * from(select aa.*,rownum rnum from (select * from product where 1=1";
+			sql = "select * from(select p.*,rownum rnum from (select p.*,nvl(s.percent,1)percent "
+					+ " from product p left outer join sale s on(p.pnum = s.pnum) where 1=1"; 
 			if (type == -1) {
 				sql += "and type=?";
 				paramList.add(cnum);
@@ -192,7 +193,7 @@ public class ProductDao {
 				break;
 			}
 
-			sql += "order by " + sort + ")aa)where rnum>=? and rnum<=? order by " + sort;
+			sql += "order by " + sort + ")p ) where rnum>=? and rnum<=? order by " + sort;
 
 			paramList.add(startRow);
 			paramList.add(endRow);
@@ -216,8 +217,9 @@ public class ProductDao {
 				String thumb_save = rs.getString("thumb_save");
 				String description = rs.getString("description");
 				String del_yn = rs.getString("del_yn");
+				float percent = rs.getFloat("percent");
 				list.add(new ProductDto(pnum, cnum, name, reg_date, price, stock, type, thumb_org, thumb_save,
-						description, null, null, del_yn));
+						description, null, null, del_yn,percent));
 
 			}
 			return list;
@@ -242,7 +244,7 @@ public class ProductDao {
 			if (filter.equals("new")) {
 				sql = "select * from (select p.*,rownum rnum from (select p.*,nvl(s.percent,1)percent " + 
 						"from product p left outer join sale s on(p.pnum = s.pnum) " + 
-						"where reg_date between sysdate-7 and sysdate " + 
+						"where reg_date between sysdate-7 and sysdate and p.del_yn='N' " + 
 						"order by reg_date desc)p ) where rnum>=? and rnum<=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
@@ -329,7 +331,9 @@ public class ProductDao {
 			con = JDBCUtil.getConn();
 
 			String sql = "select * from(select aa.*,rownum rnum from "
-					+ "(select * from product where name like ?) aa)where rnum>=? and rnum<=?";
+					+ "(select p.*,nvl(s.percent,1)percent from product p " + 
+					"left outer join sale s on(p.pnum = s.pnum) " + 
+					" where p.name like ? and p.del_yn='N')aa ) where rnum>=? and rnum<=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%" + keyword + "%");
 			pstmt.setInt(2, startRow);
@@ -342,12 +346,11 @@ public class ProductDao {
 				Date reg_date = rs.getDate("reg_date");
 				int price = rs.getInt("price");
 				int stock = rs.getInt("stock");
-				String thumb_org = rs.getString("thumb_org");
 				String thumb_save = rs.getString("thumb_save");
 				String description = rs.getString("description");
-				String del_yn = rs.getString("del_yn");
+				float percent=rs.getFloat("percent");
 				list.add(
-						new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
+						new ProductDto(pnum,name,reg_date,price,stock,thumb_save,description,percent));
 
 			}
 			return list;

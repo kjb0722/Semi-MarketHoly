@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 .pagination {
 	display: block;
@@ -37,12 +38,25 @@
 						</div>
 					</div>
 
-					<a href="${cp }/product/detail.do?pnum=${pro.pnum}">
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}" class="prod">
 						<div id="name">
 							<h2>${pro.name}<br>
 							</h2>
 						</div>
-						<div id="price"><b>${pro.price }원</b></div>
+						<div id="price">
+						<c:set var="sprice" value="${pro.price*(1-pro.percent) }"/>
+							<b> <c:choose>
+									<c:when test="${pro.percent==1}">
+										<fmt:formatNumber value="${pro.price}" type="number"/>
+									</c:when>
+									<c:otherwise>
+									<span class="orp"><del>${pro.price}원</del></span>
+									<span class="emph">→</span>
+									<span><fmt:formatNumber value="${sprice+(1-(sprice%1))%1 }" type="number"/></span>
+									</c:otherwise>
+								</c:choose> 원
+							</b>
+						</div>
 						<div><h5>${pro.description }</h5></div> <c:set var="cp"
 							value="${pageContext.request.contextPath }" />
 					</a>

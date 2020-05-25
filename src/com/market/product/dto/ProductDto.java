@@ -61,6 +61,26 @@ public class ProductDto {
 		this.description = description;
 		this.percent = percent;
 	}
+	
+	public ProductDto(int pnum, int cnum, String name, Date reg_date, int price, int stock, int type,
+			String thumb_org, String thumb_save, String description, String detail_org, String detail_save, String del_yn,
+			float percent) {
+		super();
+		this.pnum = pnum;
+		this.cnum = cnum;
+		this.name = name;
+		this.reg_date = reg_date;
+		this.price = price;
+		this.stock = stock;
+		this.type = type;
+		this.thumb_org = thumb_org;
+		this.thumb_save = thumb_save;
+		this.description = description;
+		this.detail_org = detail_org;
+		this.detail_save = detail_save;
+		this.del_yn = del_yn;
+		this.percent = percent;
+	}
 	public float getPercent() {
 		return percent;
 	}
