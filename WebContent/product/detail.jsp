@@ -20,13 +20,13 @@
 }
 
 #img {
-	width: 300px;
-	height: 200px;
+	width: 90%;
+	height: 90%;
 }
 
 #discript_img {
 	width: 100%;
-	height: 600px
+	height: 1100px
 }
 
 #imgwrap {
@@ -53,7 +53,7 @@ h1, h2, h3 {
 </style>
 <div id="imgwrap">
 	<div class="info" id="img">
-		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}" id="img" style="width: 400px; height: 400px">
+		<img src="${pageContext.request.contextPath }/img/${dto.thumb_save}" id="img" >
 	</div>
 </div>
 <div class="info">
@@ -138,7 +138,7 @@ h1, h2, h3 {
 		<a href="#qna" data-toggle="tab" tabindex="3" id="qna">상품문의</a>
 	</li>
 </ul>
-
+<br>
 
 <div id="myTabContent" class="tab-content">
 	<!-- 상품상세탭 -->
