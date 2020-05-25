@@ -243,9 +243,10 @@ public class ProductDao {
 			} else if (filter.equals("best")) {
 
 			} else if (filter.equals("sale")) {
-				/*
-				 * sql ="select * from(select aa.*,rownum rnum from " + "(select * from product p,sale s where p.pnum=s.pnum )aa)" + "where rnum>=? and rnum<=? " + "order by reg_date desc";
-				 */
+				sql = "select * from(select aa.*,rownum rnum from"
+						+ "(select p.pnum,p.price,p.description,p.thumb_save,p.stock,p.name pname,s.percent "
+						+ "from product p,sale s where p.pnum=s.pnum and p.del_yn='N' and s.del_yn='N' "
+						+ "order by p.reg_date desc)aa) where rnum>=? and rnum<=?" ;
 			}
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
