@@ -60,14 +60,14 @@ CREATE TABLE member
 	email varchar2(40),
 	birth varchar2(30),
 	phone varchar2(30),
-	-- 1:³²ÀÚ
-	-- 2:¿©ÀÚ
+	-- 1:ï¿½ï¿½ï¿½ï¿½
+	-- 2:ï¿½ï¿½ï¿½ï¿½
 	gender number,
 	addr varchar2(100),
 	reg_date date,
 	point number,
-	-- y:»èÁ¦
-	-- n:¹Ì»èÁ¦
+	-- y:ï¿½ï¿½ï¿½ï¿½
+	-- n:ï¿½Ì»ï¿½ï¿½ï¿½
 	del_yn varchar2(2),
 	del_date date,
 	PRIMARY KEY (num)
@@ -78,15 +78,15 @@ CREATE TABLE orders
 (
 	onum number NOT NULL,
 	num number NOT NULL,
-	-- 1:»óÇ° ÁØºñ
-	-- 2:¹è¼Û ÁØºñ
-	-- 3:¹è¼Û Áß
-	-- 4:¹è¼Û ¿Ï·á
-	-- 5:±¸¸Å ¿Ï·á
-	-- 6:ÁÖ¹® Ãë¼Ò
+	-- 1:ï¿½ï¿½Ç° ï¿½Øºï¿½
+	-- 2:ï¿½ï¿½ï¿½ ï¿½Øºï¿½
+	-- 3:ï¿½ï¿½ï¿½ ï¿½ï¿½
+	-- 4:ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+	-- 5:ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+	-- 6:ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½
 	status number,
-	-- N:¹Ì°áÁ¦
-	-- Y:°áÁ¦
+	-- N:ï¿½Ì°ï¿½ï¿½ï¿½
+	-- Y:ï¿½ï¿½ï¿½ï¿½
 	pay_yn varchar2(2),
 	reg_date date,
 	end_date date,
@@ -94,8 +94,8 @@ CREATE TABLE orders
 	price number,
 	use_point number,
 	sale_price number,
-	-- Ä«µå °áÁ¦
-	-- ¹«ÅëÀå
+	-- Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	pay_way number,
 	addr varchar2(100),
 	PRIMARY KEY (onum)
@@ -161,7 +161,7 @@ CREATE TABLE qna
 (
 	pnum number NOT NULL,
 	num number NOT NULL,
-	rnum number,
+	qnum number,
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
@@ -196,7 +196,7 @@ CREATE TABLE review
 	orgfilename varchar2(150),
 	savefilename varchar2(150),
 	del_yn varchar2(2),
-	UNIQUE (onum, pnum, num)
+	UNIQUE (pnum, num)
 );
 
 
@@ -309,20 +309,20 @@ ALTER TABLE sale
 
 /* Comments */
 
-COMMENT ON COLUMN member.gender IS '1:³²ÀÚ
-2:¿©ÀÚ';
-COMMENT ON COLUMN member.del_yn IS 'y:»èÁ¦
-n:¹Ì»èÁ¦';
-COMMENT ON COLUMN orders.status IS '1:»óÇ° ÁØºñ
-2:¹è¼Û ÁØºñ
-3:¹è¼Û Áß
-4:¹è¼Û ¿Ï·á
-5:±¸¸Å ¿Ï·á
-6:ÁÖ¹® Ãë¼Ò';
-COMMENT ON COLUMN orders.pay_yn IS 'N:¹Ì°áÁ¦
-Y:°áÁ¦';
-COMMENT ON COLUMN orders.pay_way IS 'Ä«µå °áÁ¦
-¹«ÅëÀå';
+COMMENT ON COLUMN member.gender IS '1:ï¿½ï¿½ï¿½ï¿½
+2:ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN member.del_yn IS 'y:ï¿½ï¿½ï¿½ï¿½
+n:ï¿½Ì»ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN orders.status IS '1:ï¿½ï¿½Ç° ï¿½Øºï¿½
+2:ï¿½ï¿½ï¿½ ï¿½Øºï¿½
+3:ï¿½ï¿½ï¿½ ï¿½ï¿½
+4:ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+5:ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+6:ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN orders.pay_yn IS 'N:ï¿½Ì°ï¿½ï¿½ï¿½
+Y:ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN orders.pay_way IS 'Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
 
 
