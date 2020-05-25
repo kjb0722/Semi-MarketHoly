@@ -23,6 +23,52 @@ public class MypageDao {
 		return instance;
 	}
 	
+	
+	public int cancleOrder(int onums) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		
+		
+		
+		try {
+			con = JDBCUtil.getConn();
+			
+			String sql2 ="select * from orders where onum=?";
+			pstmt2 =  con.prepareStatement(sql2);
+			pstmt2.setInt(1, onums);
+			rs = pstmt2.executeQuery();
+			
+			while(rs.next()) {
+				if (rs.getInt("status") == 6) {
+					return 0;
+				}
+			}
+			pstmt2.close();
+			
+			
+			String sql = "update orders set status=6 where onum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, onums);
+			int n =pstmt.executeUpdate();
+			return n;
+			
+		
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
 	public ArrayList<OrderDetailDto> orderDetail(int onums, int opnums) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

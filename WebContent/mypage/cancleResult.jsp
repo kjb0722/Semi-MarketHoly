@@ -4,14 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewResult.jsp</title>
+<title>Insert title here</title>
 </head>
+<body>
+
+
+</body>
 <script>
-	alert("구매한 상품이 아닙니다.");
-	history.go(-1);
+	alert("주문취소 되었습니다.");	
+	location.href= "${cp}/index.jsp?page=mypage/mypageOrderList.do";
+	
 </script>
 
-<body>
-	
-</body>
+
 </html>

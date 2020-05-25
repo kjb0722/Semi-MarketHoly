@@ -22,10 +22,15 @@ public class MypageOrderListController extends HttpServlet {
 		HttpSession session = req.getSession();
 		MemberDto dto = (MemberDto)session.getAttribute("memberDto");
 		MypageDao dao = MypageDao.getInstance();
+		
+		
+		
 		ArrayList<OrderListDto> list = dao.orderList(dto.getId());
+		
 		
 		req.setAttribute("list", list);
 		req.getRequestDispatcher("/index.jsp?page=mypage/mypage.jsp&mypage=mypage/orderList.jsp").forward(req, resp);
-		
+		//mypage/orderList.jsp
+		// /mypage/mypageOrderList.do
 	}
 }

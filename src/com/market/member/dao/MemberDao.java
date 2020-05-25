@@ -238,8 +238,9 @@ public class MemberDao {
 			pstmt.setString(2, pwds);
 			rs = pstmt.executeQuery();
 
-			MemberDto dto = new MemberDto();
+			MemberDto dto = null;
 			while (rs.next()) {
+				dto=new MemberDto();
 				if (rs.getString("del_yn").equals("N")) {
 					int num = rs.getInt("num");
 					String id = rs.getString("id");

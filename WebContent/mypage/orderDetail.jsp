@@ -8,8 +8,6 @@
 			<th>주문일자</th>
 			<th>opnum</th>
 			<th>pname</th>
-			
-		
 		</tr>
 		<c:forEach var='vo' items='${list }'>
 			<tr>
@@ -17,9 +15,6 @@
 				<td>${vo.reg_date }	</td>
 				<td>${vo.opnum }</td>
 				<td>${vo.pname }</td>
-				
-				
-				
 			</tr>
 		</c:forEach>
 	</table>

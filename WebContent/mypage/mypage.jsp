@@ -21,11 +21,7 @@
 				<jsp:include page="/${param.mypage }"></jsp:include>
 			</div>
 		</c:when>
-		<c:otherwise>
-			<div id ="footer">
-				<jsp:include page="/mypage/orderList.jsp"></jsp:include>
-			</div>
-		</c:otherwise>
+		
 	</c:choose>
 
 	

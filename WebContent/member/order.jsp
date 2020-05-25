@@ -13,7 +13,7 @@
 
 <br>
 
-<form action="${pageContext.request.contextPath}/pay.do">
+<form action="${pageContext.request.contextPath}/pay.do" onsubmit="return submitChk();">
 	<div id="2" class="container" style='width: 1000px;'>
 		<hr style="border: solid 1px purple;">
 		<table class="table table-hover">
@@ -99,7 +99,8 @@
 
 		<h1 style="text-align: center;">적립금</h1>
 		<hr style="border: solid 1px purple;">
-		적립금 사용:<input type="text" id="usepoint" name="usepoint">
+		적립금 사용:<input type="text" id="usepoint" name="usepoint" value="0">
+		<input type="hidden" name = "point" value="${member.point}">
 		전액사용<input type="checkbox" id="allpoint" onclick="pointAllUse()" >
 		<br>
 		<br>
@@ -140,7 +141,7 @@
 		<span class='text-muted'> 결제 금액을 정확하게 확인 후 결제를 진행하세요 </span>
 		<hr style="border: solid 1px purple;">
 		<%-- <input type="hidden" name="pnum" value="${pnum}"> --%> 
-		<button type="submit" class="btn btn-info lg">결제하기</button>
+		<button type="submit" class="btn btn-info lg" id="pay_btn">결제하기</button>
 	</div>
 	
 	
@@ -149,8 +150,6 @@
 </form>
 
 <script>
-
-
 
 function clearAddr(check) {
 	document.getElementById("orginfo").style.display = check == false ? "none" : "block";
@@ -188,9 +187,16 @@ function clearAddr(check) {
 		   alert("포인트가 부족합니다");
 		   usepoint.value="0";
 		}
-		
-
-		
 	}
 	 
+	 function submitChk(){
+		 var usepoint = document.getElementById("usepoint");
+		 var point=${member.point};
+		 if (usepoint.value > point) {
+			   alert("포인트가 부족합니다");
+			   usepoint.value="0";
+			   return false;
+		 }
+		 return true;
+	 }
 </script>

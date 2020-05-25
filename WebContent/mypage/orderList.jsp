@@ -12,6 +12,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css"> 
 	<title>jsp 게시판 웹사이트</title>
 </head>
+
+
 <body>
 <div class="container">
 	<hr style="border: solid 1px purple">

@@ -13,6 +13,7 @@ import com.market.member.dao.MemberDao;
 import com.market.member.dto.MemberDto;
 import com.market.pay.dao.PayDao;
 import com.market.pay.dto.PayDto;
+import com.sun.media.sound.AlawCodec;
 @WebServlet("/pay.do")
 public class PayController extends HttpServlet{
 @Override
@@ -31,9 +32,21 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			String [] cartPrice=req.getParameterValues("cartPrice");
 			String [] EA=req.getParameterValues("EA");
 			String [] pname=req.getParameterValues("pname");
+			PayDao paydao = new PayDao();
 			
 			//orders
-			int use_point=Integer.parseInt(req.getParameter("usepoint"));
+			int use_point=0;
+			if(use_point>0) {
+				use_point=Integer.parseInt(req.getParameter("usepoint"));
+			}
+			
+			int point=Integer.parseInt(req.getParameter("point"));
+			System.out.println("use_point:"+use_point+",point:"+point);
+			if (use_point>0 && point >= use_point) {
+				
+				paydao.updatepoint(use_point, id);
+				System.out.println("업");
+			}
 			int finalprice=Integer.parseInt(req.getParameter("finalprice"));
 			int sale_price=Integer.parseInt(req.getParameter("DCprice"));
 			int pay_way=Integer.parseInt(req.getParameter("chpay"));
@@ -46,7 +59,6 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			}
 			
 			PayDto odto=new PayDto(0, num, 0, "Y", null, null, id, finalprice, use_point, sale_price, pay_way, addr);
-			PayDao paydao = new PayDao();
 			int n = paydao.insertord(odto,id,pnum,pname,EA,cartPrice);
 			
 				
