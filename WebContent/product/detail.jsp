@@ -21,7 +21,7 @@
 
 #img {
 	width: 90%;
-	height: 90%;
+	height: 85%;
 }
 
 #discript_img {
@@ -124,7 +124,6 @@ h1, h2, h3 {
 	</div>
 
 </div>
-
 
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">
