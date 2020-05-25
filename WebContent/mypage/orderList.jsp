@@ -41,10 +41,10 @@
 				<td>${vo.price} (${vo.ea }개)</td>
 				<td>${vo.price*vo.ea}원</td>
 			<c:choose>		
-				<c:when test="${vo.pay_yn=='N' }">
+				<c:when test="${vo.pay_yn=='N'}">
 					<td>미결제</td>
 				</c:when>
-				<c:when test="${vo.pay_yn=='Y' }">
+				<c:when test="${vo.pay_yn=='Y'}">
 					<td>결제완료</td>
 				</c:when>
 			</c:choose>	
