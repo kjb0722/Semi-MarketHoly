@@ -29,7 +29,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			
 			//order_product
 			String [] pnum=req.getParameterValues("pnum");
-			String [] price=req.getParameterValues("price");
+			String [] cartPrice=req.getParameterValues("cartPrice");
 			String [] EA=req.getParameterValues("EA");
 			String [] pname=req.getParameterValues("pname");
 			
@@ -43,14 +43,16 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			PayDto odto=new PayDto(0, num, 0, "Y", null, null, id, finalprice, use_point, sale_price, pay_way, addr);
 			PayDto opdto=null;
 			for (int i = 0; i < pnum.length; i++) {
-				opdto=new PayDto(0, Integer.parseInt(pnum[i]), pname[i], Integer.parseInt(EA[i]), Integer.parseInt(price[i]));
+				opdto=new PayDto(0, Integer.parseInt(pnum[i]), pname[i], Integer.parseInt(EA[i]), Integer.parseInt(cartPrice[i]));
 			}
 				
 			PayDao paydao = new PayDao();
-			int n = paydao.insertorders(odto);
-			int n2 = paydao.insertorderproduct(opdto);
-			int n3 = paydao.deletecart(id);
-			req.getRequestDispatcher("/index.jsp?page=member/pay.jsp").forward(req, resp);
+			int n = paydao.insertorders(odto,opdto,id);
+			if (n>0) {
+				
+				req.getRequestDispatcher("/index.jsp?page=member/pay.jsp").forward(req, resp);
+			}
+			resp.sendRedirect(req.getContextPath()+"/error.do");
 			
 	}
 }

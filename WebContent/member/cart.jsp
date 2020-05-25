@@ -50,6 +50,7 @@
 
 
 		<c:forEach var="cart1" items="${requestScope.cart }" varStatus="status">
+			<input type="hidden" name="pnum" value="${cart1.pnum }">
 			<tr>
 				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}" onchange="showBox()"></td>
 				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px"

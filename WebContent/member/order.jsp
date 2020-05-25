@@ -13,7 +13,7 @@
 
 <br>
 
-<form action="/Pay.do">
+<form action="${pageContext.request.contextPath}/pay.do">
 	<div id="2" class="container" style='width: 1000px;'>
 		<hr style="border: solid 1px purple;">
 		<table class="table table-hover">
@@ -25,12 +25,15 @@
 				<th>상품금액</th>
 			</tr>
 				<c:forEach var="cartnum" items="${cartnum }" varStatus="status">
+					<input type="hidden" name="pnum" value="${pnum[status.index]}">
+					<input type="hidden" name="cartPrice" value="${cartPrice[status.index]}">
 					<tr>
 						<td><input type="checkbox" size="5" name="undercheck"></td>
-						<td>${pname[status.index]}<input type="hidden" name="pnaum" value="pnaum"></td>
-						<td>${EA[status.index]}<input type="hidden" name="EA" value="EA"></td>
+						<td>${pname[status.index]}<input type="hidden" name="pname" value=${pname[status.index]}></td>
+						<td>${EA[status.index]}<input type="hidden" name="EA" value=${EA[status.index]}></td>
 						<td>${cartPrice[status.index] * EA[status.index]}</td>
 					</tr>
+					
 				</c:forEach>
 		</table>
 	</div>
@@ -95,7 +98,7 @@
 
 		<h1 style="text-align: center;">적립금</h1>
 		<hr style="border: solid 1px purple;">
-		적립금 사용:<input type="text" id="usepoint">
+		적립금 사용:<input type="text" id="usepoint" name="usepoint">
 		전액사용<input type="checkbox" id="allpoint" onclick="pointAllUse()" >
 		<br>
 		<br>
@@ -110,7 +113,7 @@
 		<h1 style="text-align: center;">결제수단</h1>
 		<hr style="border: solid 1px purple;">
 
-		카드결제<input type="radio" name="chpay" value="1" >
+		카드결제<input type="radio" name="chpay" value="1" checked="checked">
 		<br> 
 		무통장<input type="radio" name="chpay" value="2" >
 
@@ -120,13 +123,23 @@
 	<div id="8" class="container" style='width: 1000px;'>
  		<h1 style = 'text-align:center'>결제확인</h1>
  		<hr style="border: solid 1px purple;">
-		<h3>할인금액 :${DCprice[0]} </h3>
+ 		<h1>${DCprice[0] }</h1>
+ 		<c:choose>
+ 			<c:when test="${DCprice[0] == '' }">
+ 				<h3>할인금액 :0 </h3>
+				<input type="hidden" name="DCprice" value="0">		
+ 			</c:when>
+ 			<c:otherwise>
+ 				<h3>할인금액 :${DCprice[0] } </h3>
+				<input type="hidden" name="DCprice" value="${DCprice[0] }">
+ 			</c:otherwise>
+ 		</c:choose>
 		<h3>총 결제금액 :${finalprice[0]} </h3>
+		<input type="hidden" name="finalprice" value="${finalprice[0]}">
 		<span class='text-muted'> 결제 금액을 정확하게 확인 후 결제를 진행하세요 </span>
 		<hr style="border: solid 1px purple;">
-		<input type="hidden" name="pnum" value="${pnum}"> 
+		<%-- <input type="hidden" name="pnum" value="${pnum}"> --%> 
 		<button type="submit" class="btn btn-info lg">결제하기</button>
-		
 	</div>
 	
 	
