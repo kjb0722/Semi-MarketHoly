@@ -16,6 +16,7 @@
 			<li><a href="${cp }/mypage/mypageReview.do">내가 작성한 상품후기</a></li>	
 			<li><a href="${cp }/mypage/mypageQna.do">내가 작성한 qna</a></li>	
 			<li><a href="${cp }/member/startChangeInfo.do">개인정보수정</a></li>		
+			<li><a href="${cp }/mypage/mypageShowPoint.do">포인트</a></li>	
 		</ul>
 	</div>
 </div>

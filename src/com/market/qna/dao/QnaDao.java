@@ -86,11 +86,6 @@ public class QnaDao {
 	}
 
 	
-	
-	
-	
-	
-	
 	public int getCount(int pnums) {// 전체글의 갯수 리턴
 		Connection con = null;
 		PreparedStatement pstmt = null;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.market.admin.controller.OrderListController;
 import com.market.db.JDBCUtil;
+import com.market.mypage.dto.MypagePointDto;
 import com.market.mypage.dto.MypageReviewDto;
 import com.market.mypage.dto.OrderListDto;
 import com.market.qna.dto.QnaDto;
@@ -183,6 +184,41 @@ public class MypageDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	
+	
+	public MypagePointDto pointList(String ids) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select id,name,point,rating from member where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				int point = rs.getInt("point");
+				int rating = rs.getInt("rating");
+			
+				MypagePointDto dto = new MypagePointDto(id, name, point, rating);
+				return dto;
+			}
+			return null;
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+	}
+	
+	
 	
 	
 	
