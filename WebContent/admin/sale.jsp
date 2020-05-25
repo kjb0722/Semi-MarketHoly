@@ -91,7 +91,7 @@ nav {
 		</div>
 	</div>
 	<div class="row form-group">
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<span class="label label-success">할인율</span>
 			<input name="percent" id="percent" type="number" class="form-control" placeholder="할인율을 입력하세요." min="1" max="100">
 		</div>

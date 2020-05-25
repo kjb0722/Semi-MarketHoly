@@ -17,15 +17,9 @@
 </style>
 <div class="container">
 	<ul class="nav nav-tabs stat-nav" id="stat-Tab">
-		<li>
-			<a href="#monthSell" data-toggle="tab">월별 매출</a>
-		</li>
-		<li>
-			<a href="#daySell" data-toggle="tab">일별 매출</a>
-		</li>
-		<li>
-			<a href="#genderStat" data-toggle="tab">성별 구매 건수</a>
-		</li>
+		<li><a href="#monthSell" data-toggle="tab">월별 매출</a></li>
+		<li><a href="#daySell" data-toggle="tab">일별 매출</a></li>
+		<li><a href="#genderStat" data-toggle="tab">성별 구매 건수</a></li>
 	</ul>
 
 	<div class="tab-content">
@@ -42,8 +36,7 @@
 		<div class="tab-pane" id="daySell">
 			<div class="row">
 				<div class="col-md-4 form-inline">
-					<select id="year-daySell" class="form-control"></select>
-					<select id="month-daySell" class="form-control"></select>
+					<select id="year-daySell" class="form-control"></select> <select id="month-daySell" class="form-control"></select>
 				</div>
 			</div>
 			<div class="row">
@@ -160,71 +153,73 @@
 			},
 			success : function(data) {
 				let numSell = [ "주문 건수" ];
-				numSell.push(data[0].day1);
-				numSell.push(data[0].day2);
-				numSell.push(data[0].day3);
-				numSell.push(data[0].day4);
-				numSell.push(data[0].day5);
-				numSell.push(data[0].day6);
-				numSell.push(data[0].day7);
-				numSell.push(data[0].day8);
-				numSell.push(data[0].day9);
-				numSell.push(data[0].day10);
-				numSell.push(data[0].day11);
-				numSell.push(data[0].day12);
-				numSell.push(data[0].day13);
-				numSell.push(data[0].day14);
-				numSell.push(data[0].day15);
-				numSell.push(data[0].day16);
-				numSell.push(data[0].day17);
-				numSell.push(data[0].day18);
-				numSell.push(data[0].day19);
-				numSell.push(data[0].day20);
-				numSell.push(data[0].day21);
-				numSell.push(data[0].day22);
-				numSell.push(data[0].day23);
-				numSell.push(data[0].day24);
-				numSell.push(data[0].day25);
-				numSell.push(data[0].day26);
-				numSell.push(data[0].day27);
-				numSell.push(data[0].day28);
-				numSell.push(data[0].day29);
-				numSell.push(data[0].day30);
-				numSell.push(data[0].day31);
-
+				if(typeof data[0] == undefined){
+					numSell.push(data[0].day1);
+					numSell.push(data[0].day2);
+					numSell.push(data[0].day3);
+					numSell.push(data[0].day4);
+					numSell.push(data[0].day5);
+					numSell.push(data[0].day6);
+					numSell.push(data[0].day7);
+					numSell.push(data[0].day8);
+					numSell.push(data[0].day9);
+					numSell.push(data[0].day10);
+					numSell.push(data[0].day11);
+					numSell.push(data[0].day12);
+					numSell.push(data[0].day13);
+					numSell.push(data[0].day14);
+					numSell.push(data[0].day15);
+					numSell.push(data[0].day16);
+					numSell.push(data[0].day17);
+					numSell.push(data[0].day18);
+					numSell.push(data[0].day19);
+					numSell.push(data[0].day20);
+					numSell.push(data[0].day21);
+					numSell.push(data[0].day22);
+					numSell.push(data[0].day23);
+					numSell.push(data[0].day24);
+					numSell.push(data[0].day25);
+					numSell.push(data[0].day26);
+					numSell.push(data[0].day27);
+					numSell.push(data[0].day28);
+					numSell.push(data[0].day29);
+					numSell.push(data[0].day30);
+					numSell.push(data[0].day31);
+				}
 				let amount = [ "매출액(단위:만원)" ];
-				amount.push(data[1].day1);
-				amount.push(data[1].day2);
-				amount.push(data[1].day3);
-				amount.push(data[1].day4);
-				amount.push(data[1].day5);
-				amount.push(data[1].day6);
-				amount.push(data[1].day7);
-				amount.push(data[1].day8);
-				amount.push(data[1].day9);
-				amount.push(data[1].day10);
-				amount.push(data[1].day11);
-				amount.push(data[1].day12);
-				amount.push(data[1].day13);
-				amount.push(data[1].day14);
-				amount.push(data[1].day15);
-				amount.push(data[1].day16);
-				amount.push(data[1].day17);
-				amount.push(data[1].day18);
-				amount.push(data[1].day19);
-				amount.push(data[1].day20);
-				amount.push(data[1].day21);
-				amount.push(data[1].day22);
-				amount.push(data[1].day23);
-				amount.push(data[1].day24);
-				amount.push(data[1].day25);
-				amount.push(data[1].day26);
-				amount.push(data[1].day27);
-				amount.push(data[1].day28);
-				amount.push(data[1].day29);
-				amount.push(data[1].day30);
-				amount.push(data[1].day31);
-
+				if(typeof amount == undefined){
+					amount.push(data[1].day1);
+					amount.push(data[1].day2);
+					amount.push(data[1].day3);
+					amount.push(data[1].day4);
+					amount.push(data[1].day5);
+					amount.push(data[1].day6);
+					amount.push(data[1].day7);
+					amount.push(data[1].day8);
+					amount.push(data[1].day9);
+					amount.push(data[1].day10);
+					amount.push(data[1].day11);
+					amount.push(data[1].day12);
+					amount.push(data[1].day13);
+					amount.push(data[1].day14);
+					amount.push(data[1].day15);
+					amount.push(data[1].day16);
+					amount.push(data[1].day17);
+					amount.push(data[1].day18);
+					amount.push(data[1].day19);
+					amount.push(data[1].day20);
+					amount.push(data[1].day21);
+					amount.push(data[1].day22);
+					amount.push(data[1].day23);
+					amount.push(data[1].day24);
+					amount.push(data[1].day25);
+					amount.push(data[1].day26);
+					amount.push(data[1].day27);
+					amount.push(data[1].day28);
+					amount.push(data[1].day29);
+					amount.push(data[1].day30);
+					amount.push(data[1].day31);
+				}
 				var chart = bb.generate({
 					data : {
 						/* columns : [ [ "data1", 30, 200, 100, 400, 150, 250 ],

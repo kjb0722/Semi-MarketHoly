@@ -50,6 +50,10 @@ h1, h2, h3 {
 	border: 1px solid lightgray;
 	border-radius: 6px 6px 0 0;
 }
+.nav>li>a:focus, .nav>li>a:hover{
+	background-color: lightgray;
+	text-decoration: none;
+}
 </style>
 <div id="imgwrap">
 	<div class="info" id="img">

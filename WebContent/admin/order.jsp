@@ -12,6 +12,11 @@ input[type=checkbox] {
 .hidden{
 	display: none;
 }
+
+table>tbody>tr>td>a{
+	color:#23527c !important;
+	font-weight: bold;
+}
 </style>
 <div class="container">
 	<div class="row">
