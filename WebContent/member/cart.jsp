@@ -55,7 +55,7 @@
 				<td><input type="checkbox" size="5" name="undercheck" value="${cart1.cartnum}" onchange="showBox()"></td>
 				<td><img src="${cp }/img/${cart1.thumb_save}" width="100px"
 					height="100px">
-				<td><input type="text" value="${cart1.name}" name="pname"></td>
+				<td><input type="text" value="${cart1.name}" name="pname" readonly style="border:0 ;text-align: center;"></td>
 				<td><button type="button" class="btn btn-default" onclick="minus(${status.index})">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 					</button>&nbsp <input type="text" name="EA" class="EA" value="${cart1.EA}" readonly style="border:0 ;text-align: center;">&nbsp

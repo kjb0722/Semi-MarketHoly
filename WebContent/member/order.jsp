@@ -131,7 +131,7 @@
  			</c:when>
  			<c:otherwise>
  				<h3>할인금액 :${DCprice[0] } </h3>
-				<input type="hidden" name="DCprice" value="${DCprice[0] }">
+				<input type="hidden" name="DCprice" readonly="readonly"   value="${DCprice[0] }">
  			</c:otherwise>
  		</c:choose>
 		<h3>총 결제금액 :${finalprice[0]} </h3>
@@ -171,13 +171,12 @@ function clearAddr(check) {
 		//입력 사용일 경우에는 usepoint의 값이 들어가야함.
 		var allpoint = document.getElementById("allpoint");	
 		var usepoint = document.getElementById("usepoint");
-		
 		if(allpoint.checked==true){
-			usepoint.value=${member.point}
-			usepoint.disabled=true;		
+			usepoint.value='${member.point}';
+			usepoint.readOnly=true;		
 		}else{
-			usepoint.value-=${member.point}
-			usepoint.disabled=false;
+			usepoint.value-='${member.point}';
+			usepoint.readOnly=false;		
 		}
 	}
 	

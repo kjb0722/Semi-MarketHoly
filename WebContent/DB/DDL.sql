@@ -78,7 +78,6 @@ CREATE TABLE orders
 (
 	onum number NOT NULL,
 	num number NOT NULL,
-	opnum number,
 	-- 1:상품 준비
 	-- 2:배송 준비
 	-- 3:배송 중
