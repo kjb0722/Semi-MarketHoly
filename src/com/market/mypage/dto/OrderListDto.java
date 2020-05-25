@@ -9,20 +9,22 @@ public class OrderListDto {
 	private int opnum;
 	private int status;
 	private String pay_yn;
+	private Date reg_date;
 	private Date end_date;
 	private String thum_save;
 	private String name;
 	private String description;
 	private int price;
 	private int ea;
-	public OrderListDto(int pnum,int onum, int opnum, int status, String pay_yn, Date end_date, String thum_save, String name, String description,
-			int price, int ea) {
+	public OrderListDto(int pnum, int onum, int opnum, int status, String pay_yn, Date reg_date, Date end_date,
+			String thum_save, String name, String description, int price, int ea) {
 		super();
 		this.pnum = pnum;
 		this.onum = onum;
 		this.opnum = opnum;
 		this.status = status;
 		this.pay_yn = pay_yn;
+		this.reg_date = reg_date;
 		this.end_date = end_date;
 		this.thum_save = thum_save;
 		this.name = name;
@@ -59,6 +61,12 @@ public class OrderListDto {
 	}
 	public void setPay_yn(String pay_yn) {
 		this.pay_yn = pay_yn;
+	}
+	public Date getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
 	}
 	public Date getEnd_date() {
 		return end_date;

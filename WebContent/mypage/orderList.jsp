@@ -37,7 +37,7 @@
 		<c:forEach var='vo' items='${list }'>
 			<tr>
 				<td>${vo.onum }</td>
-				<td>${vo.end_date}</td>
+				<td>${vo.reg_date}</td>
 				<td><a href="${cp }/mypage/orderDetail.do?opnum=${vo.opnum}&onum=${vo.onum }">${vo.name} 외 몇 개
 				 </a></td>
 				<td>${vo.price} (${vo.ea }개)</td>

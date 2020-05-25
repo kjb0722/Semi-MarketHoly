@@ -30,8 +30,8 @@ public class MypageDao {
 		
 		try {
 			con= JDBCUtil.getConn();
-			String sql = "select o.onum, o.num, o.opnum, o.status, o.pay_yn, o.reg_date, o.end_date, o.id, o.price, o.use_point,\r\n" + 
-					"o.sale_price,o.pay_way, op.pnum, op.pname, op.ea, op.price\r\n" + 
+			String sql = "select o.onum, o.num, op.opnum, o.status, o.pay_yn, o.reg_date, o.end_date, o.id, o.price, o.use_point,\r\n" + 
+					"o.sale_price,o.pay_way, op.pnum, op.pname, op.ea, op.price price2\r\n" + 
 					"from orders o, order_product op \r\n" + 
 					"where o.onum = op.onum and o.onum=? and op.opnum=?";
 			
@@ -45,7 +45,7 @@ public class MypageDao {
 				int onum = rs.getInt("onum");
 				int	num = rs.getInt("num");
 				int opnum =	rs.getInt("opnum");
-				int status = rs.getInt("stauts");
+				int status = rs.getInt("status");
 				String pay_yn = rs.getString("pay_yn");
 				Date reg_date = rs.getDate("reg_date");
 				Date end_date = rs.getDate("end_date");
@@ -57,7 +57,7 @@ public class MypageDao {
 				int pnum= rs.getInt("pnum");
 				String pname = rs.getString("pname");
 				int ea= rs.getInt("ea");
-				int price2= rs.getInt("price");				
+				int price2= rs.getInt("price2");				
 				OrderDetailDto dto = new OrderDetailDto(onum, num, opnum, status, pay_yn, reg_date, end_date, id, price, use_point, sale_price, pay_way, pnum, pname, ea, price2);
 				list.add(dto);
 			}
@@ -89,7 +89,7 @@ public class MypageDao {
 		ResultSet rs= null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql ="select p.pnum,o.onum,op.opnum,o.status,o.pay_yn,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
+			String sql ="select p.pnum,o.onum,op.opnum,o.status,o.pay_yn,o.reg_date,o.end_date,p.thumb_save,p.name,p.description,op.price,op.ea "+ 
 					"from orders o,product p,order_product op "+ 
 					" where o.onum=op.onum and op.pnum=p.pnum and id=?";
 			pstmt = con.prepareStatement(sql);
@@ -102,13 +102,14 @@ public class MypageDao {
 				int opnum = rs.getInt("opnum");
 				int status = rs.getInt("status");
 				String pay_yn = rs.getString("pay_yn");
+				Date reg_date = rs.getDate("reg_date");
 				Date end_date = rs.getDate("end_date");
 				String thum_save = rs.getString("thumb_save");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				int price= rs.getInt("price");
 				int ea = rs.getInt("ea");
-				OrderListDto dto = new OrderListDto(pnum,onum,opnum,status,pay_yn,end_date, thum_save, name, description, price, ea);
+				OrderListDto dto = new OrderListDto(pnum,onum,opnum,status,pay_yn,reg_date,end_date, thum_save, name, description, price, ea);
 				list.add(dto);
 			}			
 			return list;
