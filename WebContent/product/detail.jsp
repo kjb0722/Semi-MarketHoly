@@ -258,11 +258,7 @@ h1, h2, h3 {
 	}
 	function incart() {
 		var id = '${sessionScope.memberDto.id}';
-		var pnum = $
-		{
-			param.pnum
-		}
-		;
+		var pnum = ${param.pnum};
 		var EA = document.getElementById("EA");
 		location = "${cp }/member/cartAdd.do?pnum=" + pnum + "&id=" + id
 				+ "&EA=" + parseInt(EA.innerHTML);
