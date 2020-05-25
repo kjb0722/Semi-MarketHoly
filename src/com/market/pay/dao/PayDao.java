@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import com.market.db.JDBCUtil;
 import com.market.pay.dto.PayDto;
 
+import oracle.net.aso.p;
+
 public class PayDao {
 	
-	public int insertdrders(PayDto dto) {
+	public int insertorders(PayDto dto) {
 		Connection con=null;
 		PreparedStatement pstmt = null;
 		
@@ -64,5 +66,27 @@ public class PayDao {
 		JDBCUtil.close(null, pstmt, con);
 
 		}
+	}
+	public int deletecart(String id) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int n=0;
+		String sql="delete from cart where id=?";
+		try {
+			
+			con = JDBCUtil.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,id);
+			n=pstmt.executeUpdate();
+			
+			return n;
+		
+		}catch (SQLException e) {
+			// TODO: handle exception
+			return -1;
+		}finally {
+			JDBCUtil.close(null, pstmt, con);
+		}
+	
 	}
 }
