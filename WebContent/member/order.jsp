@@ -184,7 +184,7 @@ function clearAddr(check) {
 	function overpoint() {
 		var usepoint = document.getElementById("usepoint");
 		var point=${member.point}
-		if (usepoint.value >= point) {
+		if (usepoint.value > point) {
 		   alert("포인트가 부족합니다");
 		   usepoint.value="0";
 		}

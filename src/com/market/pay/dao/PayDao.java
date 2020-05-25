@@ -19,17 +19,16 @@ public class PayDao {
 
 		try {
 			con = JDBCUtil.getConn();
-			pstmt2 = con.prepareStatement("insert into orders values(seq_orders_onum.nextval,?,?,?,?,sysdate,null,?,?,?,?,?,?)");
+			pstmt2 = con.prepareStatement("insert into orders values(seq_orders_onum.nextval,?,?,1,?,sysdate,null,?,?,?,?,?,?)");
 			pstmt2.setInt(1, dDto.getNum());
 			pstmt2.setInt(2, dDto.getOpnum());
-			pstmt2.setInt(3, dDto.getStatus());
-			pstmt2.setString(4, dDto.getPay_yn());
-			pstmt2.setString(5, dDto.getId());
-			pstmt2.setInt(6, dDto.getPrice());
-			pstmt2.setInt(7, dDto.getUse_point());
-			pstmt2.setInt(8, dDto.getSale_price());
-			pstmt2.setInt(9, dDto.getPay_way());
-			pstmt2.setString(10, dDto.getAddr());
+			pstmt2.setString(3, dDto.getPay_yn());
+			pstmt2.setString(4, dDto.getId());
+			pstmt2.setInt(5, dDto.getPrice());
+			pstmt2.setInt(6, dDto.getUse_point());
+			pstmt2.setInt(7, dDto.getSale_price());
+			pstmt2.setInt(8,dDto.getPay_way());
+			pstmt2.setString(9, dDto.getAddr());
 			int n = pstmt2.executeUpdate();
 
 			pstmt1 = con.prepareStatement("insert into order_product values(seq_order_product_opnum.nextval,seq_orders_onum.currval,?,?,?,?)");
