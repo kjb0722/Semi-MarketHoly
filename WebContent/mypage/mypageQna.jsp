@@ -7,7 +7,6 @@
 			<thead>
 				<tr>
 					<th>qna번호</th>
-					<th>제품명</th>
 					<th>제목</th>
 					<th>아이디</th>
 					<th>등록일</th>

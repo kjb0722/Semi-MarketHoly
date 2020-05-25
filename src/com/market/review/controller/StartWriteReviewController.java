@@ -22,11 +22,12 @@ public class StartWriteReviewController extends HttpServlet{
 		
 		HttpSession session = req.getSession();
 		MemberDto dto = (MemberDto)session.getAttribute("memberDto");
-		if(dto==null) {
-			resp.sendRedirect(req.getContextPath()+"/review/reviewResult.jsp");
-	
 		
+
+		if(dto.getId()==null) {
+			resp.sendRedirect(req.getContextPath()+"/review/reviewResult.jsp");
 		}else {
+			
 			int num = dto.getNum();
 			String name = dto.getName();
 			String id = dto.getId();
