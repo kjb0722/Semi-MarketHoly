@@ -66,7 +66,7 @@ a:visited {
 						<div id="price">
 							<b> <c:choose>
 									<c:when test=${pro.price!=sale.price }>
-										${pro.price*sale.percent }
+										${pro.price*pro.percent }
 									</c:when>
 									<c:otherwise>${pro.price }</c:otherwise>
 								</c:choose> 원
