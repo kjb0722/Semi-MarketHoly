@@ -35,7 +35,10 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			PayDao paydao = new PayDao();
 			
 			//orders
-			int use_point=Integer.parseInt(req.getParameter("usepoint"));
+			int use_point=0;
+			if(use_point>0) {
+				use_point=Integer.parseInt(req.getParameter("usepoint"));
+			}
 			
 			int point=Integer.parseInt(req.getParameter("point"));
 			System.out.println("use_point:"+use_point+",point:"+point);
