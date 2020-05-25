@@ -170,7 +170,7 @@ public class OrderAdminDao {
 				}
 				
 				//포인트 적립
-				String sql1 = "update member set point=point+(select price * ? from orders where onum = ?) where num = ?";
+				String sql1 = "update member set point=round(point+(select price * ? from orders where onum = ?)) where num = ?";
 				pstmt1 = con.prepareStatement(sql1);
 				pstmt1.setDouble(1, multip);
 				pstmt1.setInt(2, onum);
@@ -195,15 +195,15 @@ public class OrderAdminDao {
 					afterRating = 20;
 				}else if(totalPurchase >= 150000 && totalPurchase < 200000) {
 					afterRating = 30;
-				}else if(totalPurchase >= 200000 && totalPurchase < 250000) {
+				}else if(totalPurchase >= 200000) {
 					afterRating = 40;
 				}
 				
 				if(rating != afterRating && rating != 99) {
-					String sql3 = "update member rating = ? where num = ?";
+					String sql3 = "update member set rating = ? where num = ?";
 					pstmt3 = con.prepareStatement(sql3);
 					pstmt3.setInt(1, afterRating);
-					pstmt3.setInt(1, num);
+					pstmt3.setInt(2, num);
 					pstmt3.executeUpdate();
 				}
 				
