@@ -27,8 +27,8 @@
 				<c:forEach var="cartnum" items="${cartnum }" varStatus="status">
 					<tr>
 						<td><input type="checkbox" size="5" name="undercheck"></td>
-						<td>${pname[status.index]}</td>
-						<td>${EA[status.index]}</td>
+						<td>${pname[status.index]}<input type="hidden" name="pnaum" value="pnaum"></td>
+						<td>${EA[status.index]}<input type="hidden" name="EA" value="EA"></td>
 						<td>${cartPrice[status.index] * EA[status.index]}</td>
 					</tr>
 				</c:forEach>
@@ -68,21 +68,21 @@
 
 		<div id="orginfo">
 			<!-- 얻어온 정보가 자동으로 넘어오게  -->
-			주소* :<input type="text" class="form-control" name="info" id="addr" value="${member.addr} " disabled="disabled">
+			주소* :<input type="text" class="form-control" name="addr" id="addr" value="${member.addr} " disabled="disabled">
 			<br>
-			수령인 이름* :<input type="text" class="form-control" name="info" id="recname" value="${member.name} " disabled="disabled">
+			수령인 이름* :<input type="text" class="form-control" name="recname" id="recname" value="${member.name} " disabled="disabled">
 			<br>
-			휴대폰* :<input type="text" class="form-control" name="info" id="phone" value="${member.phone} " disabled="disabled">
+			휴대폰* :<input type="text" class="form-control" name="phone" id="phone" value="${member.phone} " disabled="disabled">
 			<br>
 			<p>배송요청사항</p>
 			<textarea cols="100" rows="5" id="wants"></textarea>
 		</div>
 		<div id="newinfo" style="display: none;">
-			주소* :<input type="text" class="form-control" name="info" id="addr" placeholder="주소를 입력해 주세요">
+			주소* :<input type="text" class="form-control" name="addr" id="addr" placeholder="주소를 입력해 주세요">
 			<br>
-			수령인 이름* :<input type="text" class="form-control" name="info" id="recname" placeholder="이름를 입력해 주세요">
+			수령인 이름* :<input type="text" class="form-control" name="recname" id="recname" placeholder="이름를 입력해 주세요">
 			<br>
-			휴대폰* :<input type="text" class="form-control" name="info" id="phone" placeholder="번호를 입력해 주세요">
+			휴대폰* :<input type="text" class="form-control" name="phone" id="phone" placeholder="번호를 입력해 주세요">
 			<br>
 			<p>배송요청사항</p>
 			<textarea cols="100" rows="5" id="wants"></textarea>
@@ -110,9 +110,9 @@
 		<h1 style="text-align: center;">결제수단</h1>
 		<hr style="border: solid 1px purple;">
 
-		카드결제<input type="radio" name="chpay" value="card" >
+		카드결제<input type="radio" name="chpay" value="1" >
 		<br> 
-		무통장<input type="radio" name="chpay" value="nocard" >
+		무통장<input type="radio" name="chpay" value="2" >
 
 
 	</div>
@@ -124,6 +124,7 @@
 		<h3>총 결제금액 :${finalprice[0]} </h3>
 		<span class='text-muted'> 결제 금액을 정확하게 확인 후 결제를 진행하세요 </span>
 		<hr style="border: solid 1px purple;">
+		<input type="hidden" name="pnum" value="${pnum}"> 
 		<button type="submit" class="btn btn-info lg">결제하기</button>
 		
 	</div>

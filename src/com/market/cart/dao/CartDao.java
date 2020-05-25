@@ -34,7 +34,7 @@ public class CartDao {
 
 		}
 	}
-
+  
 	public ArrayList<CartDto> getcart(String id) {
 		// 회원 아이디,상품번호,상품이름(name),개수,상품금액,상품 할인률,상품사진
 		Connection con = null;
@@ -98,5 +98,4 @@ public class CartDao {
 		
 		}
 
-	
 	}

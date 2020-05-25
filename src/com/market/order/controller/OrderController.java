@@ -32,7 +32,6 @@ public class OrderController extends HttpServlet{
 			//하나하나의 바뀐가격도 가져오고 갯수도 가져와야함.
 			String []cartnum=req.getParameterValues("undercheck");
 			String []total=req.getParameterValues("total");
-			//int finalprice=Integer.parseInt(req.getParameter("finalprice"));//총 상품금액
 			String []finalprice=req.getParameterValues("finalprice");//총 상품금액
 			String []EA=req.getParameterValues("EA");
 			String []DCprice=req.getParameterValues("DCprice");
@@ -40,7 +39,7 @@ public class OrderController extends HttpServlet{
 			String []shipping=req.getParameterValues("shipping");
 			String []pname = req.getParameterValues("pname");
 			String []cartPrice = req.getParameterValues("cart-price");
-			//int shipping=Integer.parseInt(req.getParameter("shipping"));
+	
 			
 			req.setAttribute("cartnum", cartnum);
 			req.setAttribute("total", total);
@@ -49,7 +48,6 @@ public class OrderController extends HttpServlet{
 			req.setAttribute("shipping", shipping);
 			req.setAttribute("DCprice", DCprice);
 			req.setAttribute("sum", sum);
-			//req.setAttribute("cart", cart);
 			req.setAttribute("member", member);
 			req.setAttribute("pname", pname);
 			req.setAttribute("cartPrice", cartPrice);

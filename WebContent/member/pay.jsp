@@ -8,7 +8,7 @@
 </head>
 <body>
 <form>
-	<div class="container" style='width: 1000px;'>
+	<div class="container" style='width: 1000px; text-align: center;'>
 		<hr style="border: solid 1px purple;">
 
 		<h1>결제가 완료되었습니다.</h1>

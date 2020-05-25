@@ -117,25 +117,34 @@ public class PayDto {
 	public void setEA(int eA) {
 		EA = eA;
 	}
-	public PayDto(int onum, int num, int opnum, int status, String pay_yn, Date reg_date, Date end_date, String id,
-			int price, int use_point, int sale_price, int pay_way, int pnum, int EA,String addr,String pname) {
+	
+	public PayDto(int onum, int num, int status, String pay_yn, Date reg_date, Date end_date,
+			String id,int price, int use_point, int sale_price,
+			int pay_way,String addr) {
+		
 		super();
 		this.onum = onum;
 		this.num = num;
-		this.opnum = opnum;
 		this.status = status;
 		this.pay_yn = pay_yn;
 		this.reg_date = reg_date;
 		this.end_date = end_date;
 		this.id = id;
-		this.price = price;
+		this.price=price;
 		this.use_point = use_point;
 		this.sale_price = sale_price;
 		this.pay_way = pay_way;
+		this.addr = addr;
+	}
+	
+	public PayDto(int opnum,int pnum,String pname, int EA,int price) {
+		super();
+		this.opnum = opnum;
 		this.pnum = pnum;
 		this.EA = EA;
-		this.addr = addr;
 		this.pname = pname;
-	}
+		this.price = price;
+		
 
+	}
 }
