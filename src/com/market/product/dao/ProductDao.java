@@ -262,8 +262,30 @@ public class ProductDao {
 					list.add(
 							new ProductDto(pnum, name, reg_date, price, stock, thumb_org, thumb_save, description, del_yn));
 				}
-			} else if (filter.equals("best")) {
+			}else if(filter.equals("best")) {
+				sql = "select * from(select aa.*,rownum rnum from " + 
+						"(select a.*,b.percent from(select p.pnum,p.name pname,p.reg_date,p.price,p.stock,p.thumb_save,p.description,NVL(count(op.pnum),0)cnt " + 
+						"from order_product op,product p " + 
+						"where p.pnum=op.pnum group by p.pnum,p.name,p.reg_date,p.price,p.stock,p.thumb_save,p.description order by NVL(count(op.pnum),0)desc)a, sale b " + 
+						"where a.pnum = b.pnum)aa) where rnum>=? and rnum<=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
 
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					int pnum = rs.getInt("pnum");
+					String name = rs.getString("pname");
+					Date reg_date = rs.getDate("reg_date");
+					int price = rs.getInt("price");
+					int stock = rs.getInt("stock");
+					String thumb_save = rs.getString("thumb_save");
+					String description = rs.getString("description");
+					int percent=rs.getInt("percent");
+					list.add(
+							new ProductDto(pnum, name, reg_date, price, stock, thumb_save, description, percent));
+				}
 			} else if (filter.equals("sale")) {
 				sql = "select * from(select aa.*,rownum rnum from"
 						+ "(select p.pnum,p.name pname,p.reg_date,p.price,p.stock,p.thumb_save,p.description,s.percent "
