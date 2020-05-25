@@ -18,8 +18,8 @@
 .pagination>li>a {
 	float: none;
 }
-a:link { color: black; text-decoration: none;}
-a:visited { color: black; text-decoration: none;}
+.prod:link { color: black; text-decoration: none;}
+.prod:visited { color: black; text-decoration: none;}
 #price{color: rebeccapurple;}
 </style>
 <h3>${ cname}</h3>
@@ -51,7 +51,7 @@ a:visited { color: black; text-decoration: none;}
 			<c:forEach var="pro" items="${requestScope.list }">
 				<div class="col-sm-4">
 					<div style="position: relative;">
-					<a href="${cp }/product/detail.do?pnum=${pro.pnum}&cnum=${cnum}">
+					<a href="${cp }/product/detail.do?pnum=${pro.pnum}&cnum=${cnum}" class="prod">
 						<img src="${cp }/img/${pro.thumb_save}" width="300px"
 							height="400px">
 					</a>

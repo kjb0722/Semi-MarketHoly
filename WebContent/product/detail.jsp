@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
+
 .info {
 	float: left;
 	width: 50%;
@@ -50,7 +51,7 @@ h1, h2, h3 {
 	border: 1px solid lightgray;
 	border-radius: 6px 6px 0 0;
 }
-.nav>li>a:focus, .nav>li>a:hover{
+.nav>li>a:focus{
 	background-color: lightgray;
 	text-decoration: none;
 }
