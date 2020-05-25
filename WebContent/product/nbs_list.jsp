@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 .pagination {
 	display: block;
@@ -36,7 +37,6 @@ a:visited {
 	<br>
 </div>
 <!-- 상품리스트 -->
-
 <div class="container">
 	<div class="row">
 		<ul>
@@ -62,13 +62,17 @@ a:visited {
 							</h2>
 						</div>
 
-
 						<div id="price">
+						<c:set var="sprice" value="${pro.price*(1-pro.percent) }"/>
 							<b> <c:choose>
-									<c:when test="${pro.price!=pro.price*pro.percent }">
-										${pro.price*pro.percent }
+									<c:when test="">
+									
 									</c:when>
-									<c:otherwise>${pro.price }</c:otherwise>
+									<c:otherwise>
+									<span class="orp"><del>${pro.price}원</del></span>
+									<span class="emph">→</span>
+									<span><fmt:formatNumber value="${sprice+(1-(sprice%1))%1 }" type="number"/></span>
+									</c:otherwise>
 								</c:choose> 원
 							</b>
 						</div>

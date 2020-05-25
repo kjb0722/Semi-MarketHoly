@@ -16,7 +16,7 @@ public class ProductDto {
 	String detail_org;
 	String detail_save;
 	String del_yn;
-	int percent;
+	float percent;
 	public ProductDto() {}
 	public ProductDto(int pnum, int cnum, String name, Date reg_date, int price, int stock, int type, String thumb_org,
 			String thumb_save, String description, String detail_org, String detail_save, String del_yn) {
@@ -50,7 +50,7 @@ public class ProductDto {
 		
 	}
 	public ProductDto(int pnum, String name, Date reg_date, int price, int stock, String thumb_save,
-			String description, int percent) {
+			String description, float percent) {
 		super();
 		this.pnum = pnum;
 		this.name = name;
@@ -61,10 +61,10 @@ public class ProductDto {
 		this.description = description;
 		this.percent = percent;
 	}
-	public int getPercent() {
+	public float getPercent() {
 		return percent;
 	}
-	public void setPercent(int percent) {
+	public void setPercent(float percent) {
 		this.percent = percent;
 	}
 	public int getPnum() {

@@ -304,7 +304,7 @@ public class ProductDao {
 					int stock = rs.getInt("stock");
 					String thumb_save = rs.getString("thumb_save");
 					String description = rs.getString("description");
-					int percent=rs.getInt("percent");
+					float percent=rs.getFloat("percent");
 					list.add(
 							new ProductDto(pnum, name, reg_date, price, stock, thumb_save, description, percent));
 				}
