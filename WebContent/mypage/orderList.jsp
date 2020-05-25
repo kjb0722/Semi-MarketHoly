@@ -32,12 +32,14 @@
 			<th>결제금액</th>
 			<th>결제상태</th>
 			<th>주문상태</th>
+			<th>구매취소</th>
 		</tr>
 		<c:forEach var='vo' items='${list }'>
 			<tr>
 				<td>${vo.onum }</td>
 				<td>${vo.end_date}</td>
-				<td><a href="${cp }/product/detail.do?pnum=${vo.pnum}">${vo.name}</a></td>
+				<td><a href="${cp }/mypage/orderDetail.do?opnum=${vo.opnum}&onum=${vo.onum }">${vo.name} 외 몇 개
+				 </a></td>
 				<td>${vo.price} (${vo.ea }개)</td>
 				<td>${vo.price*vo.ea}원</td>
 			<c:choose>		
@@ -68,6 +70,7 @@
 					<td>주문취소</td>	
 				</c:when>
 			</c:choose>	
+			<td><a href="${cp }/mypage/cancleOrder.do?onum=${vo.onum}">구매취소</a></td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -11,6 +11,7 @@ import com.market.admin.controller.OrderListController;
 import com.market.db.JDBCUtil;
 import com.market.mypage.dto.MypagePointDto;
 import com.market.mypage.dto.MypageReviewDto;
+import com.market.mypage.dto.OrderDetailDto;
 import com.market.mypage.dto.OrderListDto;
 import com.market.qna.dto.QnaDto;
 import com.market.review.dao.ReviewDao;
@@ -21,6 +22,66 @@ public class MypageDao {
 	public static MypageDao getInstance() {
 		return instance;
 	}
+	
+	public ArrayList<OrderDetailDto> orderDetail(int onums, int opnums) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con= JDBCUtil.getConn();
+			String sql = "select o.onum, o.num, o.opnum, o.status, o.pay_yn, o.reg_date, o.end_date, o.id, o.price, o.use_point,\r\n" + 
+					"o.sale_price,o.pay_way, op.pnum, op.pname, op.ea, op.price\r\n" + 
+					"from orders o, order_product op \r\n" + 
+					"where o.onum = op.onum and o.onum=? and op.opnum=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, onums);
+			pstmt.setInt(2, opnums);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<OrderDetailDto> list = new ArrayList<OrderDetailDto>();
+			while(rs.next()) {
+				int onum = rs.getInt("onum");
+				int	num = rs.getInt("num");
+				int opnum =	rs.getInt("opnum");
+				int status = rs.getInt("stauts");
+				String pay_yn = rs.getString("pay_yn");
+				Date reg_date = rs.getDate("reg_date");
+				Date end_date = rs.getDate("end_date");
+				String id = rs.getString("id");
+				int price =	rs.getInt("price");
+				int use_point= rs.getInt("use_point");
+				int sale_price=	rs.getInt("sale_price");
+				int pay_way= rs.getInt("pay_way");
+				int pnum= rs.getInt("pnum");
+				String pname = rs.getString("pname");
+				int ea= rs.getInt("ea");
+				int price2= rs.getInt("price");				
+				OrderDetailDto dto = new OrderDetailDto(onum, num, opnum, status, pay_yn, reg_date, end_date, id, price, use_point, sale_price, pay_way, pnum, pname, ea, price2);
+				list.add(dto);
+			}
+			System.out.println(list.get(0).getOnum());
+			return list;
+			
+			
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+			
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	public ArrayList<OrderListDto> orderList(String ids){
 		Connection con= null;
