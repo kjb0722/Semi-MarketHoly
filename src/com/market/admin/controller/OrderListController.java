@@ -72,6 +72,7 @@ public class OrderListController extends HttpServlet {
 			
 			json.put("num", dto.getNum());
 			json.put("rating", dto.getRating());
+			json.put("status", dto.getStatus());
 			
 			jarr.put(json);
 		}

@@ -69,6 +69,7 @@ table>tbody>tr>td>a{
 					<th style="width: 11%;">등록 날짜</th>
 					<th style="width: 11%;" class="hidden">회원 번호</th>
 					<th style="width: 11%;" class="hidden">rating</th>
+					<th style="width: 11%;" class="hidden">status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -96,9 +97,13 @@ table>tbody>tr>td>a{
 		let onums = [];
 		$("#order-table>tbody>tr").each(function(i, element) {
 			if($(this).eq(0).find("input[type='checkbox']").prop("checked") == true){
-				onums.push($(this).find("td").eq(1).text());
-				num.push($(this).find("td").eq(11).text());
-				rating.push($(this).find("td").eq(12).text());
+				if(status == $(this).find("td").eq(13).text()){
+					alert($(this).find("td").eq(11).text()+" 번호의 주문 상품은 주문 상태가 동일합니다.");
+				}else{
+					onums.push($(this).find("td").eq(1).text());
+					num.push($(this).find("td").eq(11).text());
+					rating.push($(this).find("td").eq(12).text());
+				}
 			}
 		});
 
@@ -116,7 +121,7 @@ table>tbody>tr>td>a{
 						alert(data.n+"건 수정 완료");
 						$("#btnSearch").click();
 					}else{
-						//location = `${cp}/error.do`;
+						location = `${cp}/error.do`;
 					}
 				}
 			});			
@@ -194,7 +199,8 @@ table>tbody>tr>td>a{
 			row += "<td class='hidden'>"+dto.use_point+"</td>";
 			row += "<td>"+dto.reg_date+"</td>";		
 			row += "<td class='hidden'>"+dto.num+"</td>";	
-			row += "<td class='hidden'>"+dto.rating+"</td>";	
+			row += "<td class='hidden'>"+dto.rating+"</td>";
+			row += "<td class='hidden'>"+dto.status+"</td>";
 			row += "</tr>";
 			tbody.append(row);
 		}
