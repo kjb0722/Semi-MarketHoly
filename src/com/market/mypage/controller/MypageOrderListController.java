@@ -21,9 +21,7 @@ public class MypageOrderListController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		MemberDto dto = (MemberDto)session.getAttribute("memberDto");
-		MypageDao dao = MypageDao.getInstance();
-		
-		
+		MypageDao dao = MypageDao.getInstance();	
 		
 		ArrayList<OrderListDto> list = dao.orderList(dto.getId());
 		

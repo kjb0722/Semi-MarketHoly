@@ -2,19 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<!-- 뷰포트 -->
-	<meta name="viewport" content="width=device-width" initial-scale="1">
-	<!-- 스타일시트 참조  -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css"> 
-	<title>jsp 게시판 웹사이트</title>
-</head>
 
-
-<body>
 <div class="container">
 	<hr style="border: solid 1px purple">
 	<strong><h1>주문내역</h1></strong>
@@ -34,14 +22,13 @@
 			<th>결제금액</th>
 			<th>결제상태</th>
 			<th>주문상태</th>
-			<th>구매취소</th>
+			<th>주문취소</th>
 		</tr>
 		<c:forEach var='vo' items='${list }'>
 			<tr>
 				<td>${vo.onum }</td>
 				<td>${vo.reg_date}</td>
-				<td><a href="${cp }/mypage/orderDetail.do?opnum=${vo.opnum}&onum=${vo.onum }">${vo.name} 외 몇 개
-				 </a></td>
+				<td><a href="${cp }/product/detail.do?pnum=${vo.pnum}">${vo.name}</a></td>
 				<td>${vo.price} (${vo.ea }개)</td>
 				<td>${vo.price*vo.ea}원</td>
 			<c:choose>		
@@ -69,13 +56,11 @@
 					<td>구매완료</td>	
 				</c:when>
 				<c:when test="${vo.status==6 }">
-					<td>주문취소</td>	
+					<td style="color: red;">주문취소</td>	
 				</c:when>
-			</c:choose>	
-			<td><a href="${cp }/mypage/cancleOrder.do?onum=${vo.onum}">구매취소</a></td>
+			</c:choose>
+			<td><a href="${cp }/mypage/cancleOrder.do?onum=${vo.onum}">주문취소하기</a>	</td>	
 			</tr>
 		</c:forEach>
 	</table>
 </div>
-</body>
-</html>

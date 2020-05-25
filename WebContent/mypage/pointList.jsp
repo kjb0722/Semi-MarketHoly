@@ -27,7 +27,21 @@
 			<td>${pointDto.id }	</td>
 			<td>${pointDto.name }	</td>
 			<td>${pointDto.point }	</td>	
-			<td>${pointDto.rating }	</td>
+			<c:choose>	
+				<c:when test="	${pointDto.rating>=0}	">
+					<td>일반회원</td>
+				</c:when>
+				<c:when test="	${pointDto.rating>=20}	">
+					<td>화이트</td>
+				</c:when>
+				<c:when test="	${pointDto.rating>=30}	">
+					<td>라벤더</td>
+				</c:when>
+				<c:otherwise>
+					<td>퍼플</td>
+				</c:otherwise>
+
+			</c:choose>	
 		</tr>
 	</table>
 </body>

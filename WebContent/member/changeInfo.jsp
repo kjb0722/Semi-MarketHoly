@@ -78,7 +78,7 @@
 		
 		var pwCheck = /^[a-zA-Z0-9]{6,12}$/;
 		
-		if(curPwd.value==""){
+		if(curPwd.value!=""){
 			if(!pwCheck.test(nextPwd.value)){
 	        	alert("비밀번호는 6~12자리로 특수기호 없이 입력해주세요.");
 	        	return false;
@@ -87,17 +87,13 @@
 				alert("비밀번호가 다릅니다.");
 				return false;
 			}
-			alert("현재 사용중인 비밀번호를 입력해주세요.");
-			return false;
 		}
-		
-		
 		return true;
 	}
 		
 
 	function checkPwd1(){
-		var curpwd = document.getElementById("curpwd").value;
+		var curpwd = document.getElementById("curPwd").value;
 		var nextPwd = document.getElementById("nextPwd").value;
 		var div = document.getElementById("checkDiv");
 		
@@ -111,6 +107,7 @@
 	}
 	
 	
+	
 	function checkPwd2(){
 		var nextPwd = document.getElementById("nextPwd").value;
 		var checkPwd = document.getElementById("checkPwd").value;
@@ -120,7 +117,7 @@
 			div.innerHTML="일치하는 비밀번호입니다.";
 			div.style.color="green";
 		}else{
-			div.innerHTML="비밀번호가 일치하지 않습니다."
+			div.innerHTML="비밀번호가 일치하지 않습니다.";
 			div.style.color="red";
 		}
 	}

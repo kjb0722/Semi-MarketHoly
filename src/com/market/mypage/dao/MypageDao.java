@@ -48,10 +48,10 @@ public class MypageDao {
 			pstmt2.close();
 			
 			
-			String sql = "update orders set status=6 where onum=?";
+			String sql = "update orders set status=6 where onum=? and status<=2";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, onums);
-			int n =pstmt.executeUpdate();
+			int n =pstmt.executeUpdate();			
 			return n;
 			
 		
@@ -60,15 +60,10 @@ public class MypageDao {
 			return -1;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
-		}
-		
-		
+		}		
 	}
 	
-	
-	
-	
-	
+
 	public ArrayList<OrderDetailDto> orderDetail(int onums, int opnums) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -129,7 +124,7 @@ public class MypageDao {
 	
 	
 	
-	public ArrayList<OrderListDto> orderList(String ids){
+	public ArrayList<OrderListDto> orderList( String ids){
 		Connection con= null;
 		PreparedStatement pstmt = null;
 		ResultSet rs= null;
