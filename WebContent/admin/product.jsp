@@ -19,11 +19,15 @@
 								<option value="${dto.cnum }">${dto.name }</option>
 							</c:forEach>
 						</select>
-						<span class="label label-success">세부 카테고리명</span>
-						<select name="catType" class="form-control">
-
-						</select>
 					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group form-inline">
+					<span class="label label-success">세부 카테고리명</span>
+					<select name="catType" class="form-control">
+
+					</select>
 				</div>
 			</div>
 			<div class="row">

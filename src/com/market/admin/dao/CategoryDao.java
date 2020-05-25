@@ -29,15 +29,19 @@ public class CategoryDao {
 		try {
 			con = JDBCUtil.getConn();
 			String sql = "SELECT a.cnum, \r\n" + 
-						"       a.name, \r\n" + 
-						"       b.cnum tnum, \r\n" + 
-						"       b.name tname \r\n" + 
-						" FROM   category a \r\n" + 
-						"       inner join category b \r\n" + 
-						"               ON a.cnum = b.TYPE(+) \r\n" + 
-						" WHERE  a.TYPE = -1 and a.del_yn = 'N' and b.del_yn='N' \r\n" + 
-						" ORDER  BY a.cnum, \r\n" + 
-						"          b.cnum ";
+					"       a.name, \r\n" + 
+					"       b.cnum tnum, \r\n" + 
+					"       b.name tname \r\n" + 
+					"FROM   category a \r\n" + 
+					"       inner join (SELECT * \r\n" + 
+					"                   FROM   category \r\n" + 
+					"                   WHERE  del_yn = 'N') b \r\n" + 
+					"               ON a.cnum = b.TYPE(+) \r\n" + 
+					"WHERE  a.TYPE = -1 \r\n" + 
+					"       AND a.del_yn = 'N' \r\n" + 
+					"ORDER  BY a.cnum, \r\n" + 
+					"          b.cnum ";
+			
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

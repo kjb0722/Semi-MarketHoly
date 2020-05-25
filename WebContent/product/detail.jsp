@@ -302,7 +302,7 @@ h1, h2, h3 {
 				success:function(data){
 					if(data.n > 0){
 						alert("삭제 성공");
-						location = `${cp}/product/list.do?cnum=${cnum }`;
+						location = `${cp}/product/list.do?cnum=${dto.cnum }`;
 					}
 				}
 			});
