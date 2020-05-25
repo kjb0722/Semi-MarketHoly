@@ -61,6 +61,7 @@
 		<h4>배송지 선택</h4>
 		기본배송지<input type="radio" name="chaddr" value="oraddr" checked="checked" onclick="clearAddr(true)"> 
 		새로운배송지<input type="radio" name="chaddr" value="newaddr" onclick="clearAddr(false)"> <br> 
+
 		* 배송 휴무일 <p class="text-danger">- 일요일 및 공휴일 -</p>
 		<hr style="border: solid 1px purple;">
 
@@ -71,17 +72,17 @@
 
 		<div id="orginfo">
 			<!-- 얻어온 정보가 자동으로 넘어오게  -->
-			주소* :<input type="text" class="form-control" name="addr" id="addr" value="${member.addr} " disabled="disabled">
+			주소* :<input type="text" class="form-control" name="oraddr" id="addr" value="${member.addr} " readonly="readonly">
 			<br>
-			수령인 이름* :<input type="text" class="form-control" name="recname" id="recname" value="${member.name} " disabled="disabled">
+			수령인 이름* :<input type="text" class="form-control" name="recname" id="recname" value="${member.name} " readonly="readonly">
 			<br>
-			휴대폰* :<input type="text" class="form-control" name="phone" id="phone" value="${member.phone} " disabled="disabled">
+			휴대폰* :<input type="text" class="form-control" name="phone" id="phone" value="${member.phone} " readonly="readonly">
 			<br>
 			<p>배송요청사항</p>
 			<textarea cols="100" rows="5" id="wants"></textarea>
 		</div>
 		<div id="newinfo" style="display: none;">
-			주소* :<input type="text" class="form-control" name="addr" id="addr" placeholder="주소를 입력해 주세요">
+			주소* :<input type="text" class="form-control" name="nwaddr" id="addr" placeholder="주소를 입력해 주세요">
 			<br>
 			수령인 이름* :<input type="text" class="form-control" name="recname" id="recname" placeholder="이름를 입력해 주세요">
 			<br>
@@ -187,6 +188,8 @@ function clearAddr(check) {
 		   alert("포인트가 부족합니다");
 		   usepoint.value="0";
 		}
+		
+
 		
 	}
 	 

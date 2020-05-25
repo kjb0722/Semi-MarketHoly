@@ -40,7 +40,6 @@ public class OrderController extends HttpServlet{
 			String []pname = req.getParameterValues("pname");
 			String []cartPrice = req.getParameterValues("cart-price");
 			String []pnum = req.getParameterValues("pnum");
-	
 			
 			req.setAttribute("pnum", pnum);
 			req.setAttribute("cartnum", cartnum);

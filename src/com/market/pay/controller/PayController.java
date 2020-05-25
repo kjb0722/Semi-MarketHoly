@@ -19,7 +19,6 @@ public class PayController extends HttpServlet{
 protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			req.setCharacterEncoding("utf-8");	
 			HttpSession session = req.getSession();
-			PayDao dao=new PayDao();
 			MemberDao mdao=MemberDao.getInstance();
 			MemberDto dto=(MemberDto) session.getAttribute("memberDto");
 			String id=dto.getId();
@@ -34,20 +33,23 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			String [] pname=req.getParameterValues("pname");
 			
 			//orders
-			String addr=req.getParameter("addr");
 			int use_point=Integer.parseInt(req.getParameter("usepoint"));
 			int finalprice=Integer.parseInt(req.getParameter("finalprice"));
 			int sale_price=Integer.parseInt(req.getParameter("DCprice"));
 			int pay_way=Integer.parseInt(req.getParameter("chpay"));
+			String chaddr = req.getParameter("chaddr");
+			String addr = "";
+			if(chaddr.equals("oraddr")) {
+				addr = req.getParameter("oraddr");
+			}else {
+				addr = req.getParameter("nwaddr");
+			}
 			
 			PayDto odto=new PayDto(0, num, 0, "Y", null, null, id, finalprice, use_point, sale_price, pay_way, addr);
-			PayDto opdto=null;
-			for (int i = 0; i < pnum.length; i++) {
-				opdto=new PayDto(0, Integer.parseInt(pnum[i]), pname[i], Integer.parseInt(EA[i]), Integer.parseInt(cartPrice[i]));
-			}
-				
 			PayDao paydao = new PayDao();
-			int n = paydao.insertorders(odto,opdto,id);
+			int n = paydao.insertord(odto,id,pnum,pname,EA,cartPrice);
+			
+				
 			if (n>0) {
 				req.getRequestDispatcher("/index.jsp?page=member/pay.jsp").forward(req, resp);
 			}else {
