@@ -220,6 +220,7 @@ public class QnaAdminDao {
 			return -1;
 		} finally {
 			try {
+				con.commit();
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -496,9 +497,15 @@ public class QnaAdminDao {
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
 			return -1;
 		} finally {
 			try {
+				con.commit();
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());

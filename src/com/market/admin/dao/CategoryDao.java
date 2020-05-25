@@ -203,6 +203,7 @@ public class CategoryDao {
 			return -1;
 		} finally {
 			try {
+				con.commit();
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -319,6 +320,7 @@ public class CategoryDao {
 			return -1;
 		} finally {
 			try {
+				con.commit();
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
