@@ -11,6 +11,7 @@ import com.market.admin.controller.OrderListController;
 import com.market.db.JDBCUtil;
 import com.market.mypage.dto.MypageReviewDto;
 import com.market.mypage.dto.OrderListDto;
+import com.market.qna.dto.QnaDto;
 import com.market.review.dao.ReviewDao;
 
 public class MypageDao {
@@ -57,6 +58,84 @@ public class MypageDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	
+	
+	
+	public int getCount2(String ids) {// 전체글의 갯수 리턴
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select NVL(count(qnum),0) cnt from qna where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("cnt");
+			} else {
+				return 0;
+			}
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		} finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	
+	public ArrayList<QnaDto> mypageQna(String ids,int startRow, int endRow) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = JDBCUtil.getConn();
+			String sql = "select * from(select bb.*,rownum rnum2 from (select * from(select aa.*,rownum rnum from (select level,a.* from qna a where del_yn = 'N' start with ref is null connect by prior qnum = ref ORDER SIBLINGS BY qnum desc) aa) where id=?) bb)"
+					+ "where rnum2>=? and rnum2<=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ids);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<QnaDto> list = new ArrayList<QnaDto>();
+			while(rs.next()) {
+				int pnum = rs.getInt("pnum");
+				int num = rs.getInt("num");
+				int qnum = rs.getInt("qnum");
+				String id  =rs.getString("id");
+				String name = rs.getString("name");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				int ref = rs.getInt("ref");
+				Date reg_date = rs.getDate("reg_date");
+				String del_yn = rs.getString("del_yn");
+				String locker =rs.getString("locker");
+				int level = rs.getInt("level");
+				int rnum2 = rs.getInt("rnum2");
+				QnaDto dto = new QnaDto(pnum, pnum, qnum, id, name, title, content, ref, reg_date, del_yn, locker, level, rnum2); 			
+				list.add(dto);
+			}
+			return list;
+	
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

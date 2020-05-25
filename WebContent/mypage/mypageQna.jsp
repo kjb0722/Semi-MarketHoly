@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 	<div class="container">
@@ -60,7 +61,7 @@
 <div>
 <c:choose>
 	<c:when test ="${startPage>4 }">
-		<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${startPage-1}&pnum=${pnum}">[이전]</a>
+		<a href="${pageContext.request.contextPath }/mypage/mypageQna.do?pageNum=${startPage-1}">[이전]</a>
 	</c:when>
 	<c:otherwise>
 		이전
@@ -69,32 +70,24 @@
 <c:forEach var="i" begin="${startPage }" end="${endPage }">
 	<c:choose>
 		<c:when test="${i==pageNum }">
-			<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}&pnum=${pnum}">
+			<a href="${pageContext.request.contextPath }/mypage/mypageQna.do?pageNum=${i}">
 			<span style='color:blue'>[${i }]</span></a>
 		</c:when>		
 		<c:otherwise>
-			<a href = "${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${i}&pnum=${pnum}">
+			<a href = "${pageContext.request.contextPath }/mypage/mypageQna.do?pageNum=${i}">
 			<span style='color:#999'>[${i }]</span></a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
 <c:choose>
 	<c:when test ="${endPage<pageCount }">
-		<a href="${pageContext.request.contextPath }/qna/qnaList.do?pageNum=${endPage+1}&pnum=${pnum}">[다음]</a>
+		<a href="${pageContext.request.contextPath }/mypage/mypageQna.do?pageNum=${endPage+1}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		다음
 	</c:otherwise>
 </c:choose>
 </div>
-
-
-
-
-
-
-
-
 
 
 <script>
