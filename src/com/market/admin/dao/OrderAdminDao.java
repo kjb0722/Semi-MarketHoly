@@ -83,7 +83,7 @@ public class OrderAdminDao {
 						"WHERE  rnum >= ? \r\n" + 
 						"       AND rnum <= ? ";
 			}
-			
+
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -114,14 +114,15 @@ public class OrderAdminDao {
 		}
 	}
 
-	public int selOrdCnt(String kind, String word, String status) {
+	public int selOrdCnt(int startRow, int endRow, String kind, String word, String status) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = JDBCUtil.getConn();
-			String sql = "SELECT Nvl(Count(*), 0) cnt "
-					+ " FROM   orders a \r\n" + " WHERE  status NOT IN( " + status + " ) ";
+			String sql = "SELECT Nvl(Count(*), 0) cnt \r\n" + 
+					" FROM   orders a WHERE  status IN("+status+")";
+			
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();
