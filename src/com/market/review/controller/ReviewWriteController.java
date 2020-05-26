@@ -23,9 +23,7 @@ public class ReviewWriteController extends HttpServlet {
 	
 		String upload = req.getServletContext().getRealPath("/img");
 	
-		
-		System.out.println(upload);
-		
+
 		
 		MultipartRequest mr = new MultipartRequest(
 					req,

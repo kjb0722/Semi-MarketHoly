@@ -196,7 +196,7 @@ CREATE TABLE review
 	orgfilename varchar2(150),
 	savefilename varchar2(150),
 	del_yn varchar2(2),
-	UNIQUE (pnum)
+	UNIQUE (num)
 );
 
 
