@@ -9,13 +9,24 @@ input[type=checkbox] {
 	zoom: 1.5;
 }
 
-.hidden{
+.hidden {
 	display: none;
 }
 
-table>tbody>tr>td>a{
-	color:#23527c !important;
+table>tbody>tr>td>a {
+	color: #23527c !important;
 	font-weight: bold;
+}
+
+nav {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.cursor-pointer {
+	cursor: pointer;
 }
 </style>
 <div class="container">
@@ -54,9 +65,7 @@ table>tbody>tr>td>a{
 		<table class="table table-bordered" id="order-table">
 			<thead>
 				<tr>
-					<th style="width: 5%;">
-						<input type="checkbox" id="chkAll">
-					</th>
+					<th style="width: 5%;"><input type="checkbox" id="chkAll"></th>
 					<th style="width: 5%;">번호</th>
 					<th style="width: 8%;">주문자</th>
 					<th style="width: 10%;">상태</th>
@@ -77,6 +86,7 @@ table>tbody>tr>td>a{
 			</tbody>
 		</table>
 	</div>
+	<div id="page-div" class="row"></div>
 </div>
 
 <script>
@@ -175,6 +185,43 @@ table>tbody>tr>td>a{
 				status:status},
 			success:function(data){
 				tbodyRowAdd(data[0]);
+				
+				//페이징//
+				pageDiv = $("#page-div");
+				pageDiv.empty();
+				
+				let startPageNum = data[1];
+				let endPageNum = data[2];
+				let pageNum = data[3];
+				let pageCount = data[4];
+				
+				let row = "<nav>";
+				row += "<ul class='pagination'>";
+				
+				if(startPageNum != 1){
+					row += "<li>";
+					row += "<a onclick='ordPageMove("+(pageNum-1)+")' class='cursor-pointer' aria-label='Previous'>";
+					row += "<span aria-hidden='true'>&laquo</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				for(let i=startPageNum;i<=endPageNum;i++){
+					row += "<li><a onclick='ordPageMove("+(i)+")' class='cursor-pointer'>"+i+"</a></li>";
+				}
+				
+				if(pageCount > endPageNum){
+					row += "<li>";
+					row += "<a onclick='ordPageMove("+(pageNum+1)+")' class='cursor-pointer' aria-label='Next'>";
+					row += "<span aria-hidden='true'>&raquo;</span>";
+					row += "</a>";
+					row += "</li>";
+				}
+				
+				row += "</ul>";
+				row += "</nav>";
+				pageDiv.append(row);
+				//페이징//
 			}
 		});
 	}
@@ -204,5 +251,11 @@ table>tbody>tr>td>a{
 			row += "</tr>";
 			tbody.append(row);
 		}
+	}
+	
+	function ordPageMove(page){
+		let kind = $("#kind").val();
+		let status = $("#cboSrhStatus").val();
+		orderListLoad(kind,"",page,status);
 	}
 </script>
