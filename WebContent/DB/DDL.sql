@@ -158,10 +158,10 @@ CREATE TABLE Prod_Info
 
 
 CREATE TABLE qna
-(
+(							
 	pnum number NOT NULL,
 	num number NOT NULL,
-	qnum number,
+	qnum number,			/*qnum과 rnum 자꾸 에러뜸*/
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
@@ -187,7 +187,7 @@ CREATE TABLE review
 	onum number NOT NULL,
 	pnum number NOT NULL,
 	num number NOT NULL,
-	rnum number,
+	rnum number NOT NULL,	/*qnum과 rnum 자꾸 에러뜸*/
 	id varchar2(40),
 	name varchar2(40),
 	title varchar2(50),
@@ -196,7 +196,7 @@ CREATE TABLE review
 	orgfilename varchar2(150),
 	savefilename varchar2(150),
 	del_yn varchar2(2),
-	UNIQUE (num)
+	PRIMARY KEY (rnum)
 );
 
 
