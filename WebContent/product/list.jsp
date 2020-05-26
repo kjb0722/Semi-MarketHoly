@@ -142,10 +142,10 @@
 				<h1 class="modal-title" id="myModalLabel">상품선택</h1>
 			</div>
 			<div class="modal-body">
-				<label id="name"></label><br>
+				<label id="modal-name"></label><br>
 				<hr style="border: solid 1px purple;">
 				<label id="opname"></label><br>
-				<label id="price"></label>원
+				<label id="modal-price"></label>원
 				<input type="hidden" id="pnum"> 
 				<div class="pull-right">
 				<button type="button" class="btn btn-default" onclick="minus()">
@@ -173,8 +173,8 @@
 <script>
 	// 부모창에서 모달로 데이터넘기기
 	function getProd(name,price,pnum) {		
-		var pname=document.getElementById("name");
-		var pprice=document.getElementById("price");
+		var pname=document.getElementById("modal-name");
+		var pprice=document.getElementById("modal-price");
 		var opname=document.getElementById("opname");
 		var sum=document.getElementById("sum");
 		var EA=document.getElementById("EA");
