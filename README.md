@@ -17,6 +17,7 @@
 * Oracle 11g xe
 * HTML, CSS, JavaScript(jQuery, Ajax), BootStrap
 * Java, JSP/Servlet
+* BillBoard.js
 ## 데이터베이스 다이어그램
 ![ERD](https://user-images.githubusercontent.com/58472980/98433023-efb3f200-2106-11eb-9662-3d577afdd68f.png)
 ## 화면
@@ -41,6 +42,6 @@
 * ### 주문 관리
 ![주문 관리](https://user-images.githubusercontent.com/58472980/98433038-12460b00-2107-11eb-8db2-d92e287e50c6.PNG)
 <br><br>
-* ### 통계
+* ### 통계(BillBoard.js)
 ![image00023](https://user-images.githubusercontent.com/58472980/98433039-140fce80-2107-11eb-8ae2-2a5758b0db1a.PNG)
 <br><br>
