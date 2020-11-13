@@ -16,7 +16,7 @@
 ## 사용 기술
 * Oracle 11g xe
 * HTML, CSS, JavaScript(jQuery, Ajax), BootStrap
-* Java, JSP/Servlet
+* Java 8, JSP/Servlet
 * BillBoard.js
 ## 데이터베이스 다이어그램
 ![ERD](https://user-images.githubusercontent.com/58472980/98433023-efb3f200-2106-11eb-9662-3d577afdd68f.png)
